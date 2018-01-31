@@ -1,0 +1,93 @@
+.routedisplayer{
+    margin-left: 2rem ;
+    margin-top: 19rem ;
+}
+
+.navbar-default{
+    background-color: transparent; 
+}
+
+#wrapper > .navbar{
+    border-style: hidden ;
+}
+
+
+#wrapper{
+	background-color: transparent ;
+	height: 100%;
+}
+
+
+
+#navbHead{
+	background-color: transparent !important ;
+    border-color: transparent;
+    border-style : hidden;
+    color : white;
+	width : 100%;
+}
+
+#navbHead a{
+    background-color: #337ab7;
+    border-color: #e7e7e7;
+    color : white;
+}
+#navbHead a:hover{
+    color : #F39200 !important ;
+}
+
+#side-menu{
+    border: 2px solid;
+    border-color: #36A9E0;
+    border-radius: 3rem 0rem 3rem 3rem;
+    margin-right: -3rem ;
+}
+
+
+#side-menu a{
+    background-color: transparent ;
+    color : #F39200 !important ;
+}
+
+
+
+#side-menu a:hover{
+    border-color: #337ab7;
+    color : #337ab7 !important ;
+}
+
+#side-menu li{
+    background-color: white ;
+}
+
+#side-menu li:first-child{
+ border-radius: 3rem 0 0 0 ;
+}
+
+#side-menu li:last-child{
+ background-color: white;
+ border-radius: 0 0 3rem 3rem ;
+}
+
+
+#leftsidemenu{
+  margin-left: 1rem;
+    width: 23.5rem ;
+    margin-top: 0 ;
+/*    height: 70rem;*/
+    background-color: white !important;
+}
+
+
+@media screen and (max-width:640px) {
+
+ #leftsidemenu{
+    height:100%;
+ }
+
+}
+
+
+a > i{
+  color: #337ab7;
+}

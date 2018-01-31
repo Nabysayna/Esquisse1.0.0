@@ -1,0 +1,165 @@
+
+<div class="panel-body" >
+
+
+    <div class="row">
+	    	    <div class="text-center" *ngIf="alert">
+					<alert type="success" dismissOnTimeout="10000" dismissible="true">
+				  		<strong style="color: orange">Merci d'avoir commande chez nous!</strong><br>
+				  		<strong style="color: orange">Un mail contenant les informations de paiement pour cette commande vous a ete envoyé sur votre compte.</strong>
+					</alert>
+				</div>
+				<div class="table-responsive cart_info" *ngIf="orderedarticles.length!==0">
+					<table class="table table-condensed">
+						<thead>
+							<tr class="cart_menu">
+								<td class="image" >Article</td>
+								<td class="description"></td>
+								<td class="price">Prix</td>
+								<td class="quantity">Quantité</td>
+								<td class="total">Total</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let ordered of orderedarticles;let i=index;" >
+								<td class="cart_product">
+
+									<a><img src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{ordered.nomImg}}" alt="" height="150" ></a>
+
+								</td>
+								<td class="cart_description">
+									<h4>{{ordered.designation}}</h4>
+								</td>
+								<td class="cart_price">
+									<p>{{ordered.prix}} FCFA</p>
+								</td>
+								<td class="cart_quantity">
+									<div class="cart_quantity_button">
+										<a class="cart_quantity_up" (click)="augmenterqte(i)" style="cursor: pointer;"> + </a>
+										<input class="cart_quantity_input" type="text" name="quantity" [(ngModel)]="ordered.qte" autocomplete="off" size="2">
+										<span><a class="cart_quantity_down" (click)="diminuerqte(i)" style="cursor: pointer;"> - </a></span>
+									</div>
+								</td>
+								<td class="cart_total">
+									<p class="cart_total_price">{{ordered.montant}} FCFA</p>
+								</td>
+								<td class="cart_delete">
+									<a class="cart_quantity_delete" (click)="supprimerarticle(ordered)"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">&nbsp;</td>
+								<td colspan="2">
+									<table class="table table-condensed total-result">
+										<tr class="shipping-cost">
+											<td>Nombre d'articles</td>
+											<td>{{orderedarticles.length}}</td>										
+										</tr>
+										<tr>
+											<td>Total</td>
+											<td><span>{{montant}} FCFA</span></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" class="text-center">
+									<a class="btn btn-default update" (click)="viderordered()">Nouveau panier</a>
+									<a class="btn btn-default check_out" *ngIf="orderedarticles.length!=0" (click)="showChildModalCommand()">Passer la commande</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+		        <div class="row">
+					<div class="form-group input-group col-xs-12 col-sm-6 col-xs-offset-1 col-sm-offset-1" style="padding-bottom: 2rem" >
+						<input type="search" style="width: 50rem ;" class="form-control input-sm" 
+						[(ngModel)]="asyncSelected"
+		        		[typeahead]="dataSource"
+				        (typeaheadLoading)="changeTypeaheadLoading($event)"
+			            (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+			            (typeaheadOnSelect)="typeaheadOnSelect($event)"
+				        typeaheadOptionsLimit="7"
+			        	typeaheadOptionField="designation"
+				        typeaheadGroupField="prix"
+				        placeholder="Rechercher..."
+					    class="form-control">
+						<div *ngIf="typeaheadLoading===true">
+						    <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
+						</div>
+						<div *ngIf="typeaheadNoResults===true" class="" style="">
+						    <i class="glyphicon glyphicon-remove" (click)="initialiserreseach()"></i> Aucun article disponible ne correspond à votre recherche.
+						</div>
+					</div>
+					<div class="col-sm-4" *ngFor="let article of listarticles | filtrecataloguecommande : filterQuery | paginate: { itemsPerPage: 4, currentPage: p } ; let i=index" id="art-{{i}}" style="width: 24rem;margin-top: 2rem;">
+	                    <div class="well well-sm">
+                            <h4 class="card-title">{{getFormatted(article.designation) }}</h4>
+	                        <img class="card-img-top" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.nomImg}}" alt="Card image cap" height="200" width="200">
+	                    </div>
+                        <div class="text-center">
+							<p class="card-text">{{article.prix}}.FCFA</p>
+<!--                             <input name="Gender-{{i}}" (click)="selectionnerarticle(article)" type="checkbox"> -->
+                            <a id="Gender-{{i}}" class="yeurr" (click)="showAddChildModal(article)"> voir</a>
+                        </div>
+	                </div>
+				</div>
+				<div class="row text-center">
+					<pagination-controls class="my-pagination" previousLabel="Précedant" nextLabel="Suivant" (pageChange)="p = $event"></pagination-controls>
+				</div>
+				
+    </div>
+</div>
+
+
+<div *ngIf="this.loading">
+    <app-loader></app-loader>    
+</div>
+
+<div bsModal #viewMore="bs-modal" *ngIf="currentArticle" class="modal fade" tabindex="-1" style="z-index: 100000290" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" >
+      <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddChildModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body row">
+      	<div class="col-sm-4">
+            <div class="well well-sm">
+                <h4 class="card-title" style="width: 108.3%">{{getFormatted(currentArticle.designation) }}</h4>
+                <img class="card-img-top" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{currentArticle.nomImg}}" alt="Card image cap" height="200" width="200">
+            </div>
+            <div class="text-center">
+				<p class="card-text">{{currentArticle.prix}}.FCFA</p>
+            </div>
+        </div>
+      	<div class="col-sm-8" style="padding-left: 12rem ;">
+      		<div class="row descripteur">{{currentArticle.description}}</div>
+      		<div class="row prizer">Prix: {{currentArticle.prix}} fcfa</div>
+      		<div class="row commandeur" > <input  type="number" value="1" min="1" name="qtecmd"/> <button (click)="ajouter_au_panier(currentArticle)">Ajouter Au Panier</button> </div>
+      	    <div class="row">
+			
+				<img style="margin-top:10px;width:100%" class="col-lg-8 col-md-8" src=".././assets/bar-mag.png" alt="image" />
+				  <div style="margin-top:5px;margin-bottom:5px;color:#1071B7;text-align:center" class="row designateur col-md-12 col-lg-12"><b style="">{{currentArticle.designation}}</b></div>
+				<img style="width:100%" class="col-lg-8 col-md-8" src="../../assets/bar-mag.png" alt="image" />
+				<div style="margin-top:30px;text-align:left" class="row sharer col-md-10 col-lg-10"><i style="color:#0033ff">Partager ce produit</i></div>
+				<div class="col-md-offset-3 col-lg-offset-3 col-lg-7 col-md-7">
+					<div class="row" style="margin-top:20px">
+						<a title="facebook" style="margin:5px" href="#" ><i class="fa fa-facebook-official color"  aria-hidden="true"></i></a>
+						<a title="twitter" style="margin:5px" href="#" ><i class="fa fa-twitter color" aria-hidden="true"></i></a>
+						<a title="google+" style="margin:5px" href="#" ><i class="fa fa-google-plus-square color" aria-hidden="true"></i></a>
+						<a title="linkedin"style="margin:5px" href="#" ><i class="fa fa-linkedin color" aria-hidden="true"></i></a>
+						<!--4837 lastone 4831 next =>4838-->
+						
+					 </div>
+				</div>
+			
+      		</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
