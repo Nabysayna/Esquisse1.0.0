@@ -52,7 +52,8 @@
                   <button type="button" *ngIf="item.isconnect" class="btn btn-outline adminpdvparametrecompteBorder" (click)="deconnexionsession(item,i)">Deconnecter</button>
                 </td>
                 <td>
-                  <button type="button" class="btn adminpdvparametrecompteBorder" (click)="autoriseravoirdeposir(item, 1)">Autoriser</button>
+                  <button type="button" *ngIf="item.estautorise==0" class="btn adminpdvparametrecompteBorder" (click)="autoriseravoirdeposir(item, 1)">Autoriser</button>
+                  <button type="button" *ngIf="item.estautorise==1" class="btn adminpdvparametrecompteBorder" (click)="autoriseravoirdeposir(item, 0)">Interdire</button>
                 </td>
               </tr>
             </tbody>

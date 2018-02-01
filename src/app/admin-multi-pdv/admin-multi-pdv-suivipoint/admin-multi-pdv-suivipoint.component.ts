@@ -7,11 +7,11 @@ import {BaseChartDirective} from "ng2-charts";
 
 
 @Component({
-  selector: 'app-admin-multi-pdv-update-caution',
-  templateUrl: './admin-multi-pdv-update-caution.component.html',
-  styleUrls: ['./admin-multi-pdv-update-caution.component.css']
+  selector: 'app-admin-multi-pdv-suivipoint',
+  templateUrl: 'admin-multi-pdv-suivipoint.component.html',
+  styleUrls: ['admin-multi-pdv-suivipoint.component.css']
 })
-export class AdminmultipdvUpdateCautionComponent implements OnInit {
+export class AdminmultipdvSuivipointComponent implements OnInit {
 
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
@@ -176,7 +176,7 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
 //************************DEPOT DIAGRAM*************************
   public barChartOptions:any = { scaleShowVerticalLines: false, responsive: true };
   public barChartLabels:string[] = [];
-  public barChartType:string = 'bar';
+  public barChartType:string = 'line';
   public barChartLegend:boolean = true;
   public barChartData:any[] = [];
 

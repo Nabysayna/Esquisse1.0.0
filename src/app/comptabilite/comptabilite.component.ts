@@ -284,7 +284,13 @@ export class ComptabiliteComponent implements OnInit {
   exploitation:Exploitation[];
   exploitationaveccommission:Exploitationaveccommission[];
   exploitationbilan:any[]=[];
-  bilanexploitationaveccommission = [{service:'tnt', cashin:0, cashout:0, commission:0},{service:'postcash', cashin:0, cashout:0, commission:0},{service:'wizall', cashin:0, cashout:0, commission:0},{service:'orangemoney', cashin:0, cashout:0, commission:0},]
+  bilanexploitationaveccommission = [
+    {service:'tnt', cashin:0, cashout:0, commission:0},
+    {service:'postcash', cashin:0, cashout:0, commission:0},
+    {service:'wizall', cashin:0, cashout:0, commission:0},
+    {service:'orangemoney', cashin:0, cashout:0, commission:0},
+    {service:'tigocash', cashin:0, cashout:0, commission:0},
+  ]
 
   listeruserexploitation(){
     this.loading = true ;
@@ -314,7 +320,7 @@ export class ComptabiliteComponent implements OnInit {
           stocki: type.stocki,
           vente: type.vente,
           stockf: type.stockf,
-          mnt: type.mnt,
+          mnt: Number(type.mnt),
         }
       });
       this.loading = false ;
@@ -336,10 +342,10 @@ export class ComptabiliteComponent implements OnInit {
         return {
           dateajout: type.dateajout.date.split(".")[0],
           designation: type.designation,
-          mnt: type.mnt,
-          frais: type.frais,
-          commission: type.commission,
-          service: type.service,
+          mnt: Number(type.mnt),
+          frais: Number(type.frais),
+          commission: Number(type.commission),
+          service: type.service.toLowerCase(),
         }
       });
       this.loading = false ;
@@ -349,17 +355,18 @@ export class ComptabiliteComponent implements OnInit {
         {service:'postcash', cashin:0, cashout:0, commission:0},
         {service:'wizall', cashin:0, cashout:0, commission:0},
         {service:'orangemoney', cashin:0, cashout:0, commission:0},
+        {service:'tigocash', cashin:0, cashout:0, commission:0},
         {service:'Total', cashin:0, cashout:0, commission:0},
       ];
       this.exploitationbilan = this.exploitationaveccommission;
       this.exploitationbilan.forEach(type => {
-        this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-        this.bilanexploitationaveccommission[4].commission+=type.commission;
-        if(type.service == 'TNT'){
+        this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[5].commission+=type.commission;
+        if(type.service == 'tnt'){
           this.bilanexploitationaveccommission[0].cashin+=type.mnt;
           this.bilanexploitationaveccommission[0].commission+=type.commission;
         }
-        if(type.service == 'POSTCASH'){
+        if(type.service == 'postcash'){
           this.bilanexploitationaveccommission[1].cashin+=type.mnt;
           this.bilanexploitationaveccommission[1].commission+=type.commission;
         }
@@ -373,10 +380,21 @@ export class ComptabiliteComponent implements OnInit {
           }
           else{
             this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-            this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-            this.bilanexploitationaveccommission[4].cashin-=type.mnt;
+            this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+            this.bilanexploitationaveccommission[5].cashin-=type.mnt;
           }
           this.bilanexploitationaveccommission[3].commission+=type.commission;
+        }
+        if(type.service == 'tigocash'){
+          if(type.designation == 'depot'){
+            this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+          }
+          else{
+            this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+            this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+            this.bilanexploitationaveccommission[5].cashin-=type.mnt;
+          }
+          this.bilanexploitationaveccommission[4].commission+=type.commission;
         }
       });
     });
@@ -394,10 +412,10 @@ export class ComptabiliteComponent implements OnInit {
           return {
             dateajout: type.dateajout.date.split(".")[0],
             designation: type.designation,
-            mnt: type.mnt,
-            frais: type.frais,
-            commission: type.commission,
-            service: type.service,
+            mnt: Number(type.mnt),
+            frais: Number(type.frais),
+            commission: Number(type.commission),
+            service: type.service.toLowerCase(),
           }
         });
         this.loading = false ;
@@ -407,17 +425,18 @@ export class ComptabiliteComponent implements OnInit {
           {service:'postcash', cashin:0, cashout:0, commission:0},
           {service:'wizall', cashin:0, cashout:0, commission:0},
           {service:'orangemoney', cashin:0, cashout:0, commission:0},
+          {service:'tigocash', cashin:0, cashout:0, commission:0},
           {service:'Total', cashin:0, cashout:0, commission:0},
         ];
         this.exploitationbilan = this.exploitationaveccommission;
         this.exploitationbilan.forEach(type => {
-          this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[4].commission+=type.commission;
-          if(type.service == 'TNT'){
+          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+          this.bilanexploitationaveccommission[5].commission+=type.commission;
+          if(type.service == 'tnt'){
             this.bilanexploitationaveccommission[0].cashin+=type.mnt;
             this.bilanexploitationaveccommission[0].commission+=type.commission;
           }
-          if(type.service == 'POSTCASH'){
+          if(type.service == 'postcash'){
             this.bilanexploitationaveccommission[1].cashin+=type.mnt;
             this.bilanexploitationaveccommission[1].commission+=type.commission;
           }
@@ -431,10 +450,21 @@ export class ComptabiliteComponent implements OnInit {
             }
             else{
               this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[4].cashin-=type.mnt;
+              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
             }
             this.bilanexploitationaveccommission[3].commission+=type.commission;
+          }
+          if(type.service == 'tigocash'){
+            if(type.designation == 'depot'){
+              this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+            }
+            else{
+              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
+            }
+            this.bilanexploitationaveccommission[4].commission+=type.commission;
           }
         });
       });
@@ -470,10 +500,10 @@ export class ComptabiliteComponent implements OnInit {
           return {
             dateajout: type.dateajout.date.split(".")[0],
             designation: type.designation,
-            mnt: type.mnt,
-            frais: type.frais,
-            commission: type.commission,
-            service: type.service,
+            mnt: Number(type.mnt),
+            frais: Number(type.frais),
+            commission: Number(type.commission),
+            service: type.service.toLowerCase(),
           }
         });
         this.loading = false ;
@@ -483,17 +513,18 @@ export class ComptabiliteComponent implements OnInit {
           {service:'postcash', cashin:0, cashout:0, commission:0},
           {service:'wizall', cashin:0, cashout:0, commission:0},
           {service:'orangemoney', cashin:0, cashout:0, commission:0},
+          {service:'tigocash', cashin:0, cashout:0, commission:0},
           {service:'Total', cashin:0, cashout:0, commission:0},
         ];
         this.exploitationbilan = this.exploitationaveccommission;
         this.exploitationbilan.forEach(type => {
-          this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[4].commission+=type.commission;
-          if(type.service == 'TNT'){
+          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+          this.bilanexploitationaveccommission[5].commission+=type.commission;
+          if(type.service == 'tnt'){
             this.bilanexploitationaveccommission[0].cashin+=type.mnt;
             this.bilanexploitationaveccommission[0].commission+=type.commission;
           }
-          if(type.service == 'POSTCASH'){
+          if(type.service == 'postcash'){
             this.bilanexploitationaveccommission[1].cashin+=type.mnt;
             this.bilanexploitationaveccommission[1].commission+=type.commission;
           }
@@ -507,10 +538,21 @@ export class ComptabiliteComponent implements OnInit {
             }
             else{
               this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[4].cashin-=type.mnt;
+              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
             }
             this.bilanexploitationaveccommission[3].commission+=type.commission;
+          }
+          if(type.service == 'tigocash'){
+            if(type.designation == 'depot'){
+              this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+            }
+            else{
+              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
+            }
+            this.bilanexploitationaveccommission[4].commission+=type.commission;
           }
         });
       });
@@ -547,10 +589,10 @@ export class ComptabiliteComponent implements OnInit {
             return {
               dateajout: type.dateajout.date.split(".")[0],
               designation: type.designation,
-              mnt: type.mnt,
-              frais: type.frais,
-              commission: type.commission,
-              service: type.service,
+              mnt: Number(type.mnt),
+              frais: Number(type.frais),
+              commission: Number(type.commission),
+              service: type.service.toLowerCase(),
             }
           });
           this.loading = false ;
@@ -560,17 +602,18 @@ export class ComptabiliteComponent implements OnInit {
             {service:'postcash', cashin:0, cashout:0, commission:0},
             {service:'wizall', cashin:0, cashout:0, commission:0},
             {service:'orangemoney', cashin:0, cashout:0, commission:0},
+            {service:'tigocash', cashin:0, cashout:0, commission:0},
             {service:'Total', cashin:0, cashout:0, commission:0},
           ];
           this.exploitationbilan = this.exploitationaveccommission;
           this.exploitationbilan.forEach(type => {
-            this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[4].commission+=type.commission;
-            if(type.service == 'TNT'){
+            this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+            this.bilanexploitationaveccommission[5].commission+=type.commission;
+            if(type.service == 'tnt'){
               this.bilanexploitationaveccommission[0].cashin+=type.mnt;
               this.bilanexploitationaveccommission[0].commission+=type.commission;
             }
-            if(type.service == 'POSTCASH'){
+            if(type.service == 'postcash'){
               this.bilanexploitationaveccommission[1].cashin+=type.mnt;
               this.bilanexploitationaveccommission[1].commission+=type.commission;
             }
@@ -584,10 +627,21 @@ export class ComptabiliteComponent implements OnInit {
               }
               else{
                 this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[4].cashin-=type.mnt;
+                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
               }
               this.bilanexploitationaveccommission[3].commission+=type.commission;
+            }
+            if(type.service == 'tigocash'){
+              if(type.designation == 'depot'){
+                this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+              }
+              else{
+                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
+              }
+              this.bilanexploitationaveccommission[4].commission+=type.commission;
             }
           });
         });
@@ -623,10 +677,10 @@ export class ComptabiliteComponent implements OnInit {
           return {
             dateajout: type.dateajout.date.split(".")[0],
             designation: type.designation,
-            mnt: type.mnt,
-            frais: type.frais,
-            commission: type.commission,
-            service: type.service,
+            mnt: Number(type.mnt),
+            frais: Number(type.frais),
+            commission: Number(type.commission),
+            service: type.service.toLowerCase(),
           }
         });
         this.loading = false ;
@@ -636,17 +690,18 @@ export class ComptabiliteComponent implements OnInit {
           {service:'postcash', cashin:0, cashout:0, commission:0},
           {service:'wizall', cashin:0, cashout:0, commission:0},
           {service:'orangemoney', cashin:0, cashout:0, commission:0},
+          {service:'tigocash', cashin:0, cashout:0, commission:0},
           {service:'Total', cashin:0, cashout:0, commission:0},
         ];
         this.exploitationbilan = this.exploitationaveccommission;
         this.exploitationbilan.forEach(type => {
-          this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[4].commission+=type.commission;
-          if(type.service == 'TNT'){
+          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+          this.bilanexploitationaveccommission[5].commission+=type.commission;
+          if(type.service == 'tnt'){
             this.bilanexploitationaveccommission[0].cashin+=type.mnt;
             this.bilanexploitationaveccommission[0].commission+=type.commission;
           }
-          if(type.service == 'POSTCASH'){
+          if(type.service == 'postcash'){
             this.bilanexploitationaveccommission[1].cashin+=type.mnt;
             this.bilanexploitationaveccommission[1].commission+=type.commission;
           }
@@ -660,10 +715,21 @@ export class ComptabiliteComponent implements OnInit {
             }
             else{
               this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[4].cashin-=type.mnt;
+              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
             }
             this.bilanexploitationaveccommission[3].commission+=type.commission;
+          }
+          if(type.service == 'tigocash'){
+            if(type.designation == 'depot'){
+              this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+            }
+            else{
+              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
+            }
+            this.bilanexploitationaveccommission[4].commission+=type.commission;
           }
         });
       });
@@ -700,10 +766,10 @@ export class ComptabiliteComponent implements OnInit {
             return {
               dateajout: type.dateajout.date.split(".")[0],
               designation: type.designation,
-              mnt: type.mnt,
-              frais: type.frais,
-              commission: type.commission,
-              service: type.service,
+              mnt: Number(type.mnt),
+              frais: Number(type.frais),
+              commission: Number(type.commission),
+              service: type.service.toLowerCase(),
             }
           });
           this.loading = false ;
@@ -713,17 +779,18 @@ export class ComptabiliteComponent implements OnInit {
             {service:'postcash', cashin:0, cashout:0, commission:0},
             {service:'wizall', cashin:0, cashout:0, commission:0},
             {service:'orangemoney', cashin:0, cashout:0, commission:0},
+            {service:'tigocash', cashin:0, cashout:0, commission:0},
             {service:'Total', cashin:0, cashout:0, commission:0},
           ];
           this.exploitationbilan = this.exploitationaveccommission;
           this.exploitationbilan.forEach(type => {
-            this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[4].commission+=type.commission;
-            if(type.service == 'TNT'){
+            this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+            this.bilanexploitationaveccommission[5].commission+=type.commission;
+            if(type.service == 'tnt'){
               this.bilanexploitationaveccommission[0].cashin+=type.mnt;
               this.bilanexploitationaveccommission[0].commission+=type.commission;
             }
-            if(type.service == 'POSTCASH'){
+            if(type.service == 'postcash'){
               this.bilanexploitationaveccommission[1].cashin+=type.mnt;
               this.bilanexploitationaveccommission[1].commission+=type.commission;
             }
@@ -737,10 +804,21 @@ export class ComptabiliteComponent implements OnInit {
               }
               else{
                 this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[4].cashin-=type.mnt;
+                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
               }
               this.bilanexploitationaveccommission[3].commission+=type.commission;
+            }
+            if(type.service == 'tigocash'){
+              if(type.designation == 'depot'){
+                this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+              }
+              else{
+                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
+              }
+              this.bilanexploitationaveccommission[4].commission+=type.commission;
             }
           });
         });

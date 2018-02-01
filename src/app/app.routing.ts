@@ -71,7 +71,7 @@ import {GuideUserCaisseComponent} from "./guideusercaisse/guideusercaisse.compon
 import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersuperviseur.component";
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
 import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi-pdv-creditation-cc/admin-multi-pdv-creditation-cc.component";
-import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
+import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
 
   //
 
@@ -107,19 +107,16 @@ const appRoutes: Routes = [
     },
     { path: 'accueiladmmpdv', component: AccueilAdminMultiPdvComponent, canActivate: [AuthGuard],
         children: [
-            {
-                path: '',
-                children: [
-                    { path: 'dashboard', component: AdminmultipdvDashboardComponent },
-                    { path: 'monitoring', component: AdminmultipdvMonitoringComponent },
-                    { path: 'statuspdv', component: AdminmultipdvStatusPdvComponent },
-                    { path: 'statusreclamation', component: AdminmultipdvStatusReclamationComponent },
-                    { path: 'crediterccc', component: AdminmultipdvCreditationCCComponent  },
-                    { path: 'demanderetrait', component: AdminmultipdvDemandeRetraitComponent },
-                    { path: 'updatecaution', component: AdminmultipdvUpdateCautionComponent },
-                    { path: 'zoning', component: ZoningComponent }
-                ]
-            }
+            { path: '', component: AdminmultipdvDashboardComponent },
+            { path: 'dashboard', component: AdminmultipdvDashboardComponent },
+            { path: 'monitoring', component: AdminmultipdvMonitoringComponent },
+            { path: 'statuspdv', component: AdminmultipdvStatusPdvComponent },
+            { path: 'statusreclamation', component: AdminmultipdvStatusReclamationComponent },
+            { path: 'crediterccc', component: AdminmultipdvCreditationCCComponent  },
+            { path: 'demanderetrait', component: AdminmultipdvDemandeRetraitComponent },
+            { path: 'suivipoints', component: AdminmultipdvSuivipointComponent },
+            { path: 'updatecaution', component: AdminmultipdvUpdateCautionComponent },
+            { path: 'zoning', component: ZoningComponent }
         ]
     },
     { path: 'accueilcoursier', component: AccueilcoursierComponent, canActivate: [AuthGuard],
@@ -189,7 +186,7 @@ const appRoutes: Routes = [
                 children: [
                     { path: 'challenge', component: ChallengeresultsComponent },
                     { path: 'commissionnement', component: CommissionnementComponent },
-                    { path: 'dashboard', component: AdminpdvDashboardTestComponent },
+                    { path: 'dashboard', component: AdminpdvDashboardComponent },
                     { path: 'monitoring', component: AdminpdvMonitoringComponent },
                     { path: 'parametrecompte', component: AdminpdvparametrecompteComponent },
                     { path: 'reclamation', component: AdminpdvStatusReclamationComponent },
@@ -197,7 +194,7 @@ const appRoutes: Routes = [
                     { path: 'comptabilite', component: ComptabiliteComponent },
                     { path: 'CRM', component: CrmComponent },
                     { path: 'consulterpret', component: ConsulterpretComponent },
-                    { path: '', component: AdminpdvDashboardTestComponent },
+                    { path: '', component: AdminpdvDashboardComponent },
                     {path: 'Guide_utilisation', component: GuideUserSuperviseurComponent},
                     {path: 'gestionnaire', component: GestionnaireComponent},
                     {path: 'impressionadminpdv', component: ImpressionadminpdvComponent},

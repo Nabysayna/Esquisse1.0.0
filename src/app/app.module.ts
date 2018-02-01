@@ -211,7 +211,7 @@ import { ZoningComponent } from './zoning/zoning.component';
 import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
 import {WizallWebService} from "./webServiceClients/Wizall/wizall.service";
-import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
+import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
 
 
 /*--------------------------------------------------------------------------------------------------------*/
@@ -294,7 +294,7 @@ import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/
     AdminmultipdvStatusReclamationPipe,
     AdminmultipdvUpdateCautionPipe,
     AdminmultipdvDemandeRetraitPipe,
-
+    AdminmultipdvSuivipointComponent,
     AdminpdvparametrecomptePipe,
     AdminpdvStatusReclamationPipe,
     AdminpdvgestionnaireservicePipe,
@@ -325,7 +325,6 @@ import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/
     FiltresouszonesupplierPipe,
     FiltrezonesupplierPipe,
     FirstlogComponent,
-    AdminpdvDashboardTestComponent,
     GestionnaireComponent,
     GuideUserCaisseComponent,
     GuideUserSuperviseurComponent,
