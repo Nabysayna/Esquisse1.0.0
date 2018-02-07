@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SoapService} from "../../soap.service";
+import { Http,Headers} from '@angular/http';
 
 
 @Injectable()
@@ -9,14 +10,16 @@ export class WizallWebService {
   private servicePort:string = 'http://51.254.200.129' ;
   private servicePath:string = '/backendprod/EsquisseBackEnd/web/app.php/invest/wizall?wsdl' ;
   private targetNamespace:string = 'urn:wizallwsdl' ;
+  private lien="http://127.0.0.1/backendProductiveEsquisse/index.php";
 
   public responseJso : any;
   public resp : string  ;
   private soapService:SoapService;
+  private headers:Headers=new Headers();
 
   private token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
 
-  constructor() {
+  constructor(private http:Http) {
         this.soapService = new SoapService();
         this.soapService.setServicePort(this.servicePort) ;
         this.soapService.setServicePath(this.servicePath);
@@ -26,6 +29,7 @@ export class WizallWebService {
         this.soapService.envelopeBuilder = this.envelopeBuilder;
         this.soapService.jsoResponseHandler = (response:{}) => { this.responseJso = response ; };
         this.soapService.localNameMode = true;
+        this.headers.append('Content-Type','application/x-www-form-urlencoded');
    }
 
   public intouchCashin(frommsisdn : string, tomsisdn : string, amount : number): Promise<any>  {
@@ -86,14 +90,20 @@ export class WizallWebService {
     var reEspParams = {token:this.token, reference_client: reference_client} ;
     var params:{}[] = [] ;
     params["params"] = reEspParams ;
-
+    let link=this.lien+"/wizall/recuperefacturesde";
+   // let params="params="+JSON.stringify(reEspParams);
     parameters['intouchRecupereFactureSde xmlns="urn:wizallwsdl#"'] = params;
 
     return new Promise( (resolve, reject) => {
-      this.soapService.post(method, parameters, 'intouchRecupereFactureSdeResponse').then(response=>{
-        console.log(response) ;
-        var reponse:any = JSON.parse(response['intouchRecupereFactureSdeResponse'].return.$);
-        resolve(reponse) ;
+       /* this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
+            console.log(data);
+            resolve(data);
+        });*/
+        this.soapService.post(method, parameters, 'intouchRecupereFactureSdeResponse').then(response=>{
+			//var reponse:any = JSON.parse(response['intouchRecupereFactureSdeResponse'].return);
+			//console.log(response['intouchRecupereFactureSdeResponse'].return) ;
+        //resolve(response['intouchRecupereFactureSdeResponse'].return) ;
+        resolve(response) ;
       });
     });
   }

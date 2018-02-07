@@ -51,6 +51,7 @@ import { AdminpdvDashboardService }    from './services/adminpdv-dashboard.servi
 import { AdminpdvMonitoringService }    from './services/adminpdv-monitoring.service';
 import { AuthentificationServiceWeb } from './webServiceClients/Authentification/authentification.service';
 import { PostCashServiceWeb } from './webServiceClients/PostcashClient/Postcash.service';
+import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
 //import { PostCashWebService } from './webServiceClients/Postcash/postcash.service';
 import { ExpressoCashWebService } from './webServiceClients/ExpressoCash/expressocash.service';
 import { TigoCashService } from './webServiceClients/Tigocash/tigocash.service';
@@ -115,7 +116,7 @@ import { AdminmultipdvStatusReclamationComponent } from './admin-multi-pdv/admin
 import { AdminmultipdvUpdateCautionComponent } from './admin-multi-pdv/admin-multi-pdv-update-caution/admin-multi-pdv-update-caution.component';
 
 import { AdmincoursierComponent } from './admincoursier/admincoursier.component';
-
+import { RapidoComponent} from './rapido/rapido.component';
 import { OrangeMoneyComponentComponent } from './orange-money-component/orange-money-component.component';
 import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-component.component';
 
@@ -145,6 +146,8 @@ import { ManagerComponent } from './manager/manager.component';
 import { ComptabiliteComponent } from './comptabilite/comptabilite.component';
 import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { panierComponent } from './panier/panier.component';
+import { SenelecComponent } from './senelec/senelec.component';
+import { OoluComponent } from './oolu/oolu.component';
 
 import { GeomapComponentComponent } from './geomap-component/geomap-component.component';
 
@@ -212,6 +215,8 @@ import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
 import {WizallWebService} from "./webServiceClients/Wizall/wizall.service";
 import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
+import { SdeComponent } from './sde/sde.component';
+import { WoyofalComponent } from './woyofal/woyofal.component';
 
 
 /*--------------------------------------------------------------------------------------------------------*/
@@ -238,6 +243,11 @@ import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/
     GestionreportingComponent,
     SoldecompteComponent,
     panierComponent,
+    RapidoComponent,
+    SdeComponent,
+    WoyofalComponent,
+    SenelecComponent,
+    OoluComponent,
 
     ImpressionComponent,
     ImpressionadminpdvComponent,
@@ -405,6 +415,7 @@ import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/
       CrmDoorServiceWeb,
       UtilService,
       WizallWebService,
+      FacturierServiceWeb,
   ],
   bootstrap: [AppComponent]
 })

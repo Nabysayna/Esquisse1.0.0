@@ -38,6 +38,7 @@ import { PostcashComponent } from './postcash/postcash.component';
 import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-component.component';
 import { WizallComponent } from './wizall/wizall.component';
 import { panierComponent } from './panier/panier.component';
+import { RapidoComponent} from './rapido/rapido.component';
 
 //import { WesternUnionComponentComponent } from './western-union-component/western-union-component.component';
 
@@ -63,6 +64,10 @@ import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { ChallengeresultsComponent } from './challengeresults/challengeresults.component';
 import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
+import { SdeComponent } from './sde/sde.component';
+import { WoyofalComponent } from './woyofal/woyofal.component';
+import { SenelecComponent } from './senelec/senelec.component';
+import { OoluComponent } from './oolu/oolu.component';
 
 
 import { AdminpdvparametrecompteComponent } from './adminpdv/adminpdv-parametre-compte/adminpdv-parametre-compte.component';
@@ -72,6 +77,7 @@ import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersup
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
 import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi-pdv-creditation-cc/admin-multi-pdv-creditation-cc.component";
 import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
+
 
   //
 
@@ -103,6 +109,11 @@ const appRoutes: Routes = [
                 {path: 'gestionnaire', component: GestionnaireComponent},
                 {path: 'annonce', component: AnnoncesComponent},
                 {path: 'panier', component: panierComponent},
+                {path: 'rapido',component:RapidoComponent},
+                {path: 'sde',component:SdeComponent},
+                {path: 'woyofal',component:WoyofalComponent},
+                {path: 'senelec',component:SenelecComponent},
+                {path: 'oolu',component:OoluComponent}
     		]
     },
     { path: 'accueiladmmpdv', component: AccueilAdminMultiPdvComponent, canActivate: [AuthGuard],
