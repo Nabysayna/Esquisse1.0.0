@@ -1,163 +1,186 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminpdvServiceWeb } from '../../webServiceClients/Adminpdv/adminpdv.service';
+import {UtilService} from "../../services/util.service";
+import {BaseChartDirective} from "ng2-charts";
 
 @Component({
   selector: 'app-adminpdv-dashboard',
-  templateUrl: './adminpdv-dashboard.component.html',
-  styleUrls: ['./adminpdv-dashboard.component.css']
+  templateUrl: 'adminpdv-dashboard.component.html',
+  styleUrls: ['adminpdv-dashboard.component.css']
 })
 export class AdminpdvDashboardComponent implements OnInit {
 
-  adminpdvDashboardPerformancepdv: any;
   adminpdvDashboardNbreReclVente: any;
   loading = false ;
-  public checkPerformance:any = {journee: true, semaine: false, mois: false, annee: false, tous: false};
-  typeperformance:string = " de la journée";
-  detailperformancepdv:any;
-  performancepdv:any;
 
-  constructor(private adminpdvServiceWeb: AdminpdvServiceWeb) {
+  constructor(private adminpdvServiceWeb: AdminpdvServiceWeb, private _utilService:UtilService) {
 
   }
 
   ngOnInit(): void {
     this.adminpdvServiceWeb.nombredereclamationpdvvente('azrrtt').then(adminpdvServiceWebList => {
-      console.log(adminpdvServiceWebList);
       this.adminpdvDashboardNbreReclVente = adminpdvServiceWebList.response ;
-      this.lineChartData = this.adminpdvDashboardNbreReclVente.activitesoperateur.datas;
-      this.lineChartLabels = this.adminpdvDashboardNbreReclVente.activitesoperateur.dateactivite;
-      console.log(this.lineChartLabels);
+    }).then( () => {
+      console.log("Here Dashboard Test")
+      this.suivionepointIntervalleDashboard();
     });
 
-    this.estcheckPerformance('journee');
   }
 
-  estcheckPerformance(type: string){
-    if(type == 'journee'){
-      this.checkPerformance.journee = true;
-      this.checkPerformance.semaine = false;
-      this.checkPerformance.mois = false;
-      this.checkPerformance.annee = false;
-      this.checkPerformance.tous = false;
-      this.typeperformance = "de la journée";
 
-      this.adminpdvServiceWeb.performancepdv('journee').then(adminpdvServiceWebList => {
-        this.adminpdvDashboardPerformancepdv = adminpdvServiceWebList.response;
-        console.log(this.adminpdvDashboardPerformancepdv);
+  /************************************************************************************
+   *********************************   PARTIE SUIVI ONE POINT   ****************************
+   ***********************************************************************************/
 
-      });
-
-      this.detailperformancepdv = null;
-      this.performancepdv = null;
-    }
-    else if(type == 'semaine'){
-      this.checkPerformance.journee = false;
-      this.checkPerformance.semaine = true;
-      this.checkPerformance.mois = false;
-      this.checkPerformance.annee = false;
-      this.checkPerformance.tous = false;
-      this.typeperformance = "de la semaine";
-
-      this.adminpdvServiceWeb.performancepdv('semaine').then(adminpdvServiceWebList => {
-        console.log(adminpdvServiceWebList);
-        this.adminpdvDashboardPerformancepdv = adminpdvServiceWebList.response;
-      });
-
-      this.detailperformancepdv = null;
-      this.performancepdv = null;
-    }
-    else if(type == 'annee'){
-      this.checkPerformance.journee = false;
-      this.checkPerformance.semaine = false;
-      this.checkPerformance.mois = false;
-      this.checkPerformance.annee = true;
-      this.checkPerformance.tous = false;
-      this.typeperformance = "dans l'année";
-
-      this.adminpdvServiceWeb.performancepdv('annee').then(adminpdvServiceWebList => {
-        console.log(adminpdvServiceWebList);
-        this.adminpdvDashboardPerformancepdv = adminpdvServiceWebList.response;
-      });
-
-      this.detailperformancepdv = null;
-      this.performancepdv = null;
-    }
-    else if(type == 'tous'){
-      this.checkPerformance.journee = false;
-      this.checkPerformance.semaine = false;
-      this.checkPerformance.mois = false;
-      this.checkPerformance.annee = false;
-      this.checkPerformance.tous = true;
-      this.typeperformance = "de l'ensemble";
-
-      this.adminpdvServiceWeb.performancepdv('tous').then(adminpdvServiceWebList => {
-        console.log(adminpdvServiceWebList);
-        this.adminpdvDashboardPerformancepdv = adminpdvServiceWebList.response;
-      });
-
-      this.detailperformancepdv = null;
-      this.performancepdv = null;
-    }
-    else if(type == 'mois'){
-      this.checkPerformance.journee = false;
-      this.checkPerformance.semaine = false;
-      this.checkPerformance.mois = true;
-      this.typeperformance = "du mois";
-
-      this.adminpdvServiceWeb.performancepdv('mois').then(adminpdvServiceWebList => {
-        console.log(adminpdvServiceWebList);
-        this.adminpdvDashboardPerformancepdv = adminpdvServiceWebList.response;
-      });
-
-      this.detailperformancepdv = null;
-      this.performancepdv = null;
-    }
+  tocurrency(number){
+    return Number(number).toLocaleString();
   }
 
-  currencyFormat(somme) : String{
-    return Number(somme).toLocaleString() ;
-  }
+  public datapointrecup:any;
+  public touslesgerants:any[] = [];
+  public suivionepointSelectionintervalledateinit:string;
+  public suivionepointSelectionintervalledatefinal:string;
 
-  estdetailPerformance(pdv:any){
-    this.performancepdv = pdv;
-    let type:string="";
-    if (this.checkPerformance.journee) {
-      type = "journee";
-    }
-    if (this.checkPerformance.semaine) {
-      type = "semaine";
-    }
-    if (this.checkPerformance.mois) {
-      type = "mois";
-    }
-    if (this.checkPerformance.annee) {
-      type = "annee";
-    }
-    if (this.checkPerformance.tous) {
-      type = "tous";
-    }
-    this.adminpdvServiceWeb.detailperformancepdv(type, pdv.idpdv).then(adminpdvServiceWebList => {
-      this.detailperformancepdv = adminpdvServiceWebList.response.map(function (op) {
-        return{
-          dateoperation: op.dateoperation.date.split('.')[0],
-          operateur:op.operateur,
-          traitement:op.traitement,
-          montant:op.montant
+  public suivionepointIntervalleDashboard(){
+    this.loading = true;
+    this._utilService.getOnePointSuivicc({infoinit:'initdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
+      .subscribe(
+        data => {
+          this.id_gerant_selectionne = -1;
+          if(data.errorCode){
+            this.datapointrecup = data.message;
+            this.suivionepointSelectionintervalledateinit = data.dateinitial;
+            this.suivionepointSelectionintervalledatefinal = data.datefinale;
+            this.touslesgerants = this.datapointrecup.gerants.map(function(type){
+              return {
+                id_gerant: type.id_gerant,
+                nom_gerant: type.nom_gerant,
+                telephone: type.telephone,
+                last_connection: type.last_connection.date.split('.')[0],
+              }
+            });
+            this.touslescommissions = this.datapointrecup.commissions.map(function(type){
+              return {
+                id_gerant: type.idUser,
+                dateop: type.dateoperation.date.split('.')[0],
+                dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+                montant: Number(type.montant),
+                commission: Number(type.commissionpdv),
+                service: type.nomservice.toLowerCase(),
+                produit: type.libelleoperation.toLowerCase(),
+              }
+            });
+          }
+        },
+        error => alert(error),
+        () => {
+          this.suivionepointSelectionGerant(-1);
+          this.loading = false;
         }
-      });
-      console.log(adminpdvServiceWebList);
-
-    });
+      );
   }
 
-  public lineChartData:Array<any> = [{data: [], label: ''}];
+
+  //*********** DETAIL SUIVI ONE POINT *****************
+  @ViewChild("baseChart")  chart: BaseChartDirective;
+  public suivionepointIntervalle(gerant:any){
+    this.touslescommissions = [];
+    this.loading = true;
+    this._utilService.getOnePointSuivicc({infoinit:'notinitdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
+      .subscribe(
+        data => {
+          this.id_gerant_selectionne = -1;
+          if(data.errorCode){
+            this.touslescommissions = data.message.map(function(type){
+              return {
+                id_gerant: type.idUser,
+                dateop: type.dateoperation.date.split('.')[0],
+                dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+                montant: Number(type.montant),
+                commission: Number(type.commissionpdv),
+                service: type.nomservice.toLowerCase(),
+                produit: type.libelleoperation.toLowerCase(),
+              }
+            });
+          }
+        },
+        error => alert(error),
+        () => {
+          this.suivionepointSelectionGerant(-1);
+          this.loading = false;
+        }
+      );
+  }
+
+  public touslescommissions:any[] = [];
+  public touslesjours:any[] = [];
+  public touslescommissionsbyGerant:any[] = [];
+  public id_gerant_selectionne:number=-1;
+
+  public test(){
+    console.log("Hi, je teste");
+  }
+
+  public suivionepointSelectionGerant(indice: number){
+    this.lineChartData = [];
+    this.lineChartLabels = [];
+    this.touslesjours = [];
+
+    this.id_gerant_selectionne = indice;
+    if(this.id_gerant_selectionne==-1){ this.touslescommissionsbyGerant = this.touslescommissions;  }
+    else {  this.touslescommissionsbyGerant = this.touslescommissions.filter( opt => opt.id_gerant==this.id_gerant_selectionne); }
+
+    this.touslesjours = this.touslescommissions.map( type => type.dateop_jour);
+    this.touslesjours.sort();
+    let tabjours:string[] = [];
+    let jour:string = this.touslesjours[0];
+    tabjours.push(jour);
+    this.lineChartLabels.push(jour);
+    this.touslesjours.forEach(type => {
+      if(type!=jour){
+        tabjours.push(type);
+        this.lineChartLabels.push(type);
+        jour = type;
+      }
+    });
+
+    if(this.chart !== undefined){
+      this.chart.chart.config.data.labels = this.lineChartLabels;
+    }
+
+    let nbrebyjourom:number[] = [];
+    let nbrebyjourtnt:number[] = [];
+    let nbrebyjourpost:number[] = [];
+    let nbrebyjourwizall:number[] = [];
+    let nbrebyjourtigocash:number[] = [];
+    tabjours.forEach(type => {
+      let nbrebyjouromSom:number = 0;
+      let nbrebyjourtntSom:number = 0;
+      let nbrebyjourpostSom:number = 0;
+      let nbrebyjourwizallSom:number = 0;
+      let nbrebyjourtigocashSom:number = 0;
+
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='orangemoney'){ nbrebyjouromSom += Number(opt.montant); } }); nbrebyjourom.push( nbrebyjouromSom );
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='tnt'){ nbrebyjourtntSom += Number(opt.montant); } }); nbrebyjourtnt.push( nbrebyjourtntSom );
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='postcash'){ nbrebyjourpostSom += Number(opt.montant); } }); nbrebyjourpost.push( nbrebyjourpostSom );
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='wizall'){ nbrebyjourwizallSom += Number(opt.montant); } }); nbrebyjourwizall.push( nbrebyjourwizallSom );
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='tigocash'){ nbrebyjourtigocashSom += Number(opt.montant); } }); nbrebyjourtigocash.push( nbrebyjourtigocashSom );
+    });
+
+    this.lineChartData = [
+      {data: nbrebyjourom, label: 'OM'},
+      {data: nbrebyjourtnt, label: 'TNT'},
+      {data: nbrebyjourpost, label: 'POSTECASH'},
+      {data: nbrebyjourwizall, label: 'WIZALL'},
+      {data: nbrebyjourtigocash, label: 'TIGOCASH'},
+    ];
+  }
+
+  public lineChartData:Array<any> = [];
   public lineChartLabels:Array<any> = [];
-  public lineChartOptions:any = {
-    responsive: true
-  };
-
-
+  public lineChartOptions:any = { responsive: true };
+  public lineChartType:string = 'line';
+  public lineChartLegend:boolean = true;
 
 
 }

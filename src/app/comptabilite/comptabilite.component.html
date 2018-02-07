@@ -232,33 +232,36 @@
                                           </th>
                                         </tr>
                                         <tr>
-                                          <table width="100%" class="table table-responsive table-bordered table-striped" [mfData]="bilanexploitationaveccommission" #fopdacbilan="mfDataTable" [mfRowsOnPage]="10" [(mfSortBy)]="nom" [(mfSortOrder)]="asc" style="width: 100%;">
-                                            <thead>
-                                            <tr>
-                                              <th colspan="4" class="comptabiliteBorder"><h4>Bilan</h4></th>
-                                            </tr>
-                                            <tr>
+                                          <td colspan="6">
+                                            <table width="100%" class="table table-responsive table-bordered table-striped" [mfData]="bilanexploitationaveccommission" #fopdacbilan="mfDataTable" [mfRowsOnPage]="10" [(mfSortBy)]="nom" [(mfSortOrder)]="asc" style="width: 100%;">
+                                              <thead>
+                                              <tr>
+                                                <th colspan="4" class="comptabiliteBorder"><h4>Bilan</h4></th>
+                                              </tr>
+                                              <tr>
                                                 <th><mfDefaultSorter by="service">Service</mfDefaultSorter></th>
                                                 <th><mfDefaultSorter by="cashin">Total Entrée</mfDefaultSorter></th>
                                                 <th><mfDefaultSorter by="cashout">Total Sortie</mfDefaultSorter></th>
                                                 <th><mfDefaultSorter by="commission">Total commissions</mfDefaultSorter></th>
                                               </tr>
-                                            </thead>
-                                            <tbody *ngIf="this.bilanexploitationaveccommission">
+                                              </thead>
+                                              <tbody *ngIf="this.bilanexploitationaveccommission">
                                               <tr *ngFor="let bilan of fopdacbilan.data">
                                                 <td>{{bilan.service}}</td>
                                                 <td>{{currencyFormat(bilan.cashin)}}</td>
                                                 <td>{{currencyFormat(bilan.cashout)}}</td>
                                                 <td>{{currencyFormat(bilan.commission)}}</td>
                                               </tr>
-                                            </tbody>
-                                          </table>
+                                              </tbody>
+                                            </table>
+                                          </td>
                                         </tr>
                                         <tr>
-                                          <th colspan="5" class="comptabiliteBorder"><h4>Détail</h4></th>
+                                          <th colspan="6" class="comptabiliteBorder"><h4>Détail</h4></th>
                                         </tr>
                                         <tr>
                                           <th><mfDefaultSorter by="dateajout">Date</mfDefaultSorter></th>
+                                          <th><mfDefaultSorter by="service">Service</mfDefaultSorter></th>
                                           <th><mfDefaultSorter by="designation">Désignation</mfDefaultSorter></th>
                                           <th><mfDefaultSorter by="mnt">Montant</mfDefaultSorter></th>
                                           <th><mfDefaultSorter by="frais">Frais</mfDefaultSorter></th>
@@ -268,6 +271,7 @@
                                         <tbody *ngIf="this.exploitationaveccommission">
                                         <tr *ngFor="let exploitation of fopdac.data">
                                           <td>{{exploitation.dateajout }}</td>
+                                          <td>{{exploitation.service}}</td>
                                           <td>{{exploitation.designation}}</td>
                                           <td>{{currencyFormat(exploitation.mnt)}}</td>
                                           <td>{{currencyFormat(exploitation.frais)}}</td>
@@ -276,7 +280,7 @@
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                          <td colspan="4"><mfBootstrapPaginator ></mfBootstrapPaginator></td>
+                                          <td colspan="6"><mfBootstrapPaginator ></mfBootstrapPaginator></td>
                                         </tr>
                                         </tfoot>
                                       </table>

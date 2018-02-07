@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 
 import { AdminmultipdvDeposit }    from '../../models/adminmultipdv-monitoring';
 import { AdminmultipdvDepositInitialConsommeParService }    from '../../models/adminmultipdv-monitoring-dicps';
@@ -34,6 +34,8 @@ export class AdminmultipdvMonitoringComponent implements OnInit {
   public barChartLegend:boolean = true;
   public barChartData:any[];
 
+  @ViewChild('closeBtn') closeBtn: ElementRef;
+
 
 
   constructor(private adminmultipdvServiceWeb: AdminmultipdvServiceWeb) { }
@@ -63,6 +65,14 @@ export class AdminmultipdvMonitoringComponent implements OnInit {
 
 
 
+  }
+
+  private closeModal(): void {
+    this.closeBtn.nativeElement.click();
+  }
+
+  public maj(item):void {
+    console.log(item);
   }
 
 

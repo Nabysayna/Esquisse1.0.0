@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="adminpdvDashboardNbreReclVente" style="margin-bottom: 3rem ;">
+    <div class="row" *ngIf="adminpdvDashboardNbreReclVente" style="margin-bottom: 3rem ;  margin-top: 19rem ;">
         <div class="col-sm-4">
             <div class="panel adminpdvDashboardNbreReclVente">
                 <div class="panel-heading">
@@ -56,89 +56,35 @@
         </div>
     </div>
 
-    <div class="row" style="margin-bottom: 3rem ;">
-      <div class="col-sm-12">
-        <div class="panel"  style="border: none;">
-          <div class="panel-heading adminpdvDashboardTitle center-block" style="margin-top: 8rem">
-            <h4><i class="fa fa-bar-chart-o fa-fw"></i>Niveau d'activité par Service</h4>
-          </div>
-          <div class="panel-body" *ngIf="adminpdvDashboardNbreReclVente && adminpdvDashboardNbreReclVente.activitesoperateur">
-            <canvas baseChart  class="table-responsive"
-                    [datasets]="lineChartData"
-                    [labels]="lineChartLabels"
-                    [options]="lineChartOptions"
-                    [legend]="true"
-                    [chartType]="'line'"></canvas>
-          </div>
+    <div class="row" *ngIf="datapointrecup" style="background-color: white; margin-bottom: 10rem">
+      <h5 class="card-header card-success adminpdvDashboardTitle">
+        <i class="fa fa-bar-chart-o fa-fw"></i>Montant des Transactions par intervalle
+        <input type="date" [(ngModel)]="suivionepointSelectionintervalledateinit" style="margin-right: 0.5rem"/> à <input type="date" [(ngModel)]="suivionepointSelectionintervalledatefinal"  style="margin-left: 0.5rem; margin-right: 1rem" />
+        <button type="button" class="btn btn-primary btn-sm" (click)="suivionepointIntervalle()" [disabled]="suivionepointSelectionintervalledateinit>suivionepointSelectionintervalledatefinal || suivionepointSelectionintervalledateinit==undefined || suivionepointSelectionintervalledatefinal==undefined " ><i class="fa fa-search" aria-hidden="true"></i></button>
+      </h5>
+      <div class="col-sm-4">
+        <a style="cursor: pointer; text-align: left" [ngClass]="{'list-group-item': true, 'list-group-item-action': true, 'active': id_gerant_selectionne==-1}" (click)="suivionepointSelectionGerant(-1)">
+          All ({{touslesgerants.length}} Gérants)
+        </a>
+        <li *ngFor="let item of touslesgerants; let i = index " [ngClass]="{'list-group-item': true, 'list-group-item-action': true, 'active': id_gerant_selectionne==item.id_gerant}">
+          <p style="cursor: pointer; text-align: left" (click)="test(); suivionepointSelectionGerant(item.id_gerant)">
+            Gérant: {{item.nom_gerant}}, {{item.telephone}}
+            <br>Last connection: {{item.last_connection}}.
+          </p>
+        </li>
+      </div>
+      <div class="col-sm-8">
+        <div *ngIf="touslesjours.length!=0 && lineChartData.length!=0 && lineChartLabels.length!=0">
+          <canvas baseChart #baseChart="base-chart"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType" ></canvas>
         </div>
       </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12 col-xs-12">
-            <div class="panel" style="border: none; margin-top: 0rem ">
-                <div class="panel-heading  adminpdvDashboardTitle center-block">
-                    <label class="btn adminpdvDashboardBorder" (click)="estcheckPerformance('journee')">La journée</label>&nbsp;
-                    <label class="btn adminpdvDashboardBorder" (click)="estcheckPerformance('semaine')" >La semaine</label>&nbsp;
-                    <label class="btn adminpdvDashboardBorder" (click)="estcheckPerformance('mois')" >Le mois</label>
-                    <label class="btn adminpdvDashboardBorder" (click)="estcheckPerformance('annee')" >L'année</label>
-                    <label class="btn adminpdvDashboardBorder" (click)="estcheckPerformance('tous')" >All</label>
-                    <h3>Performances des points de vente {{ typeperformance }}.</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="panel panel-default table-responsive" style="margin-top: 0">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th><p class="adminpdvDashboardBorder">#</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Pdv</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Téléphone</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Recette</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Option</p></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of adminpdvDashboardPerformancepdv; let i = index " style="color: #337ab7; text-align: center">
-                                            <td>{{i + 1}}</td>
-                                            <td>{{item.fullname}}</td>
-                                            <td>{{item.telephone}}</td>
-                                            <td style="text-align: right">{{currencyFormat(item.montanttotal)}}</td>
-                                            <td class="text-center"><button type="button"  (click)="estdetailPerformance(item)" class="btn btn-danger">Détail</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6" *ngIf="detailperformancepdv">
-                            <h3><strong>{{ performancepdv.fullname }}</strong></h3>
-                            <div class="panel panel-default table-responsive" style="margin-top: 0">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th><p class="adminpdvDashboardBorder">#</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Service</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Traitement</p></th>
-                                            <th><p class="adminpdvDashboardBorder">Montant</p></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of detailperformancepdv; let i = index " style="color: #337ab7; text-align: center">
-                                            <td>{{i + 1}}</td>
-                                            <td>{{item.operateur}}</td>
-                                            <td>{{item.traitement}}</td>
-                                            <td style="text-align: right">{{currencyFormat(item.montant)}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div *ngIf="this.loading">

@@ -214,9 +214,13 @@ import { ZoningComponent } from './zoning/zoning.component';
 import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
 import {WizallWebService} from "./webServiceClients/Wizall/wizall.service";
-import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
+
+//import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
 import { SdeComponent } from './sde/sde.component';
 import { WoyofalComponent } from './woyofal/woyofal.component';
+
+import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
+
 
 
 /*--------------------------------------------------------------------------------------------------------*/
@@ -304,7 +308,7 @@ import { WoyofalComponent } from './woyofal/woyofal.component';
     AdminmultipdvStatusReclamationPipe,
     AdminmultipdvUpdateCautionPipe,
     AdminmultipdvDemandeRetraitPipe,
-
+    AdminmultipdvSuivipointComponent,
     AdminpdvparametrecomptePipe,
     AdminpdvStatusReclamationPipe,
     AdminpdvgestionnaireservicePipe,
@@ -335,7 +339,6 @@ import { WoyofalComponent } from './woyofal/woyofal.component';
     FiltresouszonesupplierPipe,
     FiltrezonesupplierPipe,
     FirstlogComponent,
-    AdminpdvDashboardTestComponent,
     GestionnaireComponent,
     GuideUserCaisseComponent,
     GuideUserSuperviseurComponent,
