@@ -173,19 +173,21 @@ export class PostCashWebService {
     });
   }
 
-  public rechargerapido(tel_destinataire : string, montant : string, badge : string): Promise<any>  {
+  public rechargerapido(tel_destinataire : string, montant : string, badge : any): Promise<any>  {
     var method:string = 'RechargeBadgeRapido';
     var parameters:{}[] = [];
-    var reEspParams = {token:this.token, telephone: tel_destinataire, montant: montant, badge: badge} ;
+    var reEspParams = {token:this.token, telephone: tel_destinataire, montant: montant, badge: "00"+badge.toString()} ;
     var params:{}[] = [] ;
     params["params"] = reEspParams ;
 
     parameters['RechargeBadgeRapido xmlns="urn:postcashwsdl#"'] = params;
 
+    console.log( parameters) ;
+
     return new Promise( (resolve, reject) => {
       this.soapService.post(method, parameters, 'RechargeBadgeRapidoResponse').then(response=>{
 
-        console.log( response['RechargeBadgeRapidoResponse'].return ) ;
+        console.log( response ) ;
         var reponse:any = JSON.parse(response['RechargeBadgeRapidoResponse'].return.$);
         resolve(reponse) ;
       });
@@ -201,6 +203,8 @@ export class PostCashWebService {
 
     parameters['PaiementOoluSolar xmlns="urn:postcashwsdl#"'] = params;
 
+    console.log(parameters) ;
+    
     return new Promise( (resolve, reject) => {
       this.soapService.post(method, parameters, 'PaiementOoluSolarResponse').then(response=>{
         console.log(response) ;

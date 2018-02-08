@@ -553,6 +553,76 @@
     </div>
   </div>
 
+  <div class="panel-heading" *ngIf="dataImpression.apiservice=='wizall' && dataImpression.service=='senelec'">
+    <div class="panel panel-default"  id="tntrecuimpressionventedecodeur">
+      <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+      <div class="panel-heading">
+        <p align="right" >
+          <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+          <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+          <strong>Service clientèle:</strong><br>
+          77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+        </p>
+      </div>
+      <div class="panel-body">
+        Numéro Transaction Sentool: {{dataImpression.infotransaction.client.transactionBBS}}<br>
+        <table>
+          <tr class="text-uppercase">
+            <td width="200px">&nbsp;&nbsp;</td>
+            <td >
+              Réfèrence Facture: {{dataImpression.infotransaction.client.police}}<br>
+
+              Réfèrence Facture: {{dataImpression.infotransaction.client.numfacture}}<br>
+
+              Montant Facture: {{dataImpression.infotransaction.client.montant}}<br>
+            </td>
+
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-heading" *ngIf="dataImpression.apiservice=='wizall' && dataImpression.service=='sde'">
+    <div class="panel panel-default"  id="tntrecuimpressionventedecodeur">
+      <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+      <div class="panel-heading">
+        <p align="right" >
+          <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+          <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+          <strong>Service clientèle:</strong><br>
+          77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+        </p>
+      </div>
+      <div class="panel-body">
+        Numéro Transaction Sentool: {{dataImpression.infotransaction.client.transactionBBS}}<br>
+        <table>
+          <tr class="text-uppercase">
+            <td>
+              Nom Client: {{dataImpression.infotransaction.client.nom}}<br>
+              Prénom Client: {{dataImpression.infotransaction.client.prenom}}<br>
+              Téléphone Client: {{dataImpression.infotransaction.client.telephone}}<br>
+            </td>
+
+            <td width="200px">&nbsp;&nbsp;</td>
+
+            <td>
+              Réfèrence Client: {{dataImpression.infotransaction.client.reference_client}}<br>
+
+              Réfèrence Facture: {{dataImpression.infotransaction.client.reference_facture}}<br>
+
+              Montant Facture: {{dataImpression.infotransaction.client.montant}}<br>
+
+              Date Echéance: {{dataImpression.infotransaction.client.date_echeance}}<br>
+            </td>
+
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
   <div class="row container" style="text-align: center" *ngIf="dataImpression">
       <button type="button" class="btn btn-primary" (click)="print()">Imprimer</button>
       <button type="button" class="btn btn-secondary" (click)="backClicked()">Retour</button>

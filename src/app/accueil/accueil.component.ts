@@ -985,14 +985,32 @@ export class AccueilComponent implements OnInit {
     payerSDEWizall(objet : any){
       console.log('payerSDEWizall');
       this.wizallwebservice.intouchPayerFactureSde(objet.data.montant, objet.data.refclient, objet.data.refFacture).then( response =>{
-        console.log(response)
+        if(response=="ok"){
+          objet.dataI = {
+            apiservice:'wizall',
+            service:'senelec',
+           infotransaction:{
+              client:{
+            },
+
+          },
+        };
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+        }
+        else{
+           objet.etats.etat=true;
+           objet.etats.load='terminated';
+           objet.etats.color='red';
+           objet.etats.errorCode=response.code;
+        }
       });
     }
 
     payerSenelecWizall(objet : any){
       console.log('payerSenelecWizall');
       this.wizallwebservice.intouchPayerFactureSenelec(objet.data.montant, objet.data.police, objet.data.numfacture).then( response =>{
-        console.log(response)
         if(response=="ok"){
           objet.dataI = {
             apiservice:'wizall',
