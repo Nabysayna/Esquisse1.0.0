@@ -6,6 +6,7 @@ import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 
+
 class Article {
   public id:number;
   public nomImg:string;
@@ -24,12 +25,7 @@ class Article {
 export class AccueilComponent implements OnInit {
   articles=[];
   process=[];
-  autorisedUser = 0 ;
-  solde = 450000 ;
    quinzeMinutes = 900000;
-//  quinzeMinutes = 15000;
-
-//  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'TIGOCASH', 'TNT BY EXCAF', 'WIZALL'] ;
   registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'TIGOCASH', 'WIZALL'] ;
 
   authorisedToUseCRM = false ;
@@ -37,6 +33,8 @@ export class AccueilComponent implements OnInit {
   private tntCaller: TntServiceWeb ;
   actif = -1 ;
   dataImpression:any;
+
+
   constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
 
   }
@@ -45,7 +43,6 @@ export class AccueilComponent implements OnInit {
 
 
   ngOnInit() {
-
     localStorage.removeItem('om-depot') ;
     localStorage.removeItem('om-retrait') ;
 
@@ -59,7 +56,6 @@ export class AccueilComponent implements OnInit {
   }
 
 /******************************************************************************************************/
-
 
   processus(){
 
@@ -88,7 +84,7 @@ export class AccueilComponent implements OnInit {
       else{
            this.process.push(sesion);
       }
-     
+
       console.log(sesion.etats.id);
       sessionStorage.removeItem('curentProcess');
       var operateur=sesion.data.operateur;
@@ -767,8 +763,8 @@ export class AccueilComponent implements OnInit {
       if(etat.data.operateur==5){
           this.router.navigate(['/accueil','panier']);
         }
-     if(etat.etats.etat==true){ 
-       
+     if(etat.etats.etat==true){
+
      if(etat.etats.etat==true){
 
        if(etat.data.operateur!=2 && etat.etats.color=='green'){
@@ -853,7 +849,7 @@ export class AccueilComponent implements OnInit {
 
 
    vendreDecodeur(objet:any){
- 
+
     this.tntCaller.vendreDecodeur(objet.data.token, objet.data.prenom,objet.data.nomclient,objet.data.tel, objet.data.adresse, objet.data.region, objet.data.cni,objet.data.chip,objet.data.carte, objet.data.duree, objet.data.typedebouquet, objet.data.montant).then( response =>
       {
         if(response=="ok"){

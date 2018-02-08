@@ -6,12 +6,11 @@
                 <app-navbar-top></app-navbar-top>
         </div>
 
-        <div id="horizontalcenter">  
+        <div id="horizontalcenter">
           <ul>
-             <li role="presentation"><a [routerLink]="['/accueil', 'GESTIONREPORTING']" ><!-- <i class="fa fa-calculator fa-2x pull-left"> </i>--> <b>GESTION REPORTING</b> </a></li>
+            <li role="presentation"><a [routerLink]="['/accueil', 'GESTIONREPORTING']" ><!-- <i class="fa fa-calculator fa-2x pull-left"> </i>--> <b>GESTION REPORTING</b> </a></li>
             <li role="presentation"><a [routerLink]="['/accueil', 'DEMANDEPRET']" > <!-- <img src="assets/menuticker.png" /> --><b>DEMANDE DE PRET</b> </a></li>
-            <li role="presentation" ><a [routerLink]="['/accueil', 'Guide_utilisation']" ><!-- <i class="fa fa-book fa-2x pull-left"></i> --> <b>Guide d'utilisation</b> </a></li>
-
+            <li role="presentation"><a [routerLink]="['/accueil', 'Guide_utilisation']" ><!-- <i class="fa fa-book fa-2x pull-left"></i> --> <b>Guide d'utilisation</b> </a></li>
           </ul>
         </div>
 
@@ -29,7 +28,7 @@
                   <li role="presentation" ><a [routerLink]="['/accueil', 'Guide_utilisation']" ><i class="fa fa-book fa-2x pull-left"></i> <b>Guide d'utilisation</b> </a></li>
 -->
                   <li role="presentation"><a [routerLink]="['/accueil', 'E-COMMERCE']"> <i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>
-                  
+
                   <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
 
                 </ul>
@@ -43,7 +42,7 @@
                 <div  (click)="finprocess(item,item.dataI)"  [ngStyle]="{'background-color':item.data.operateur==5?'orange':item.etats.color}"     class="row pendingTask" [popover]="popTemplate" popoverTitle="{{item.data.nom}}" triggers="mouseenter:mouseleave">
 
               <div  class="{{item.etats.load}}" style="text-align: end ;">
-				  
+
                 <i *ngIf="item.etats.etat&&item.etats.color=='green'" class="fa fa-check fa-2x" aria-hidden="true"></i>
                 <i *ngIf="item.etats.etat&&item.etats.color=='red'" class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
               </div>
@@ -89,20 +88,20 @@
 							  <div class="row">
 								  <p style="color:blue;font-size:0.8em;text-align:center">{{getFormatted(article.data.designation)}}</p>
 							  </div>
-							  <div class="row"  style="background-image:url(../../assets/mag-rondell.png);background-repeat:no-repeat;"> 
+							  <div class="row"  style="background-image:url(../../assets/mag-rondell.png);background-repeat:no-repeat;">
 							    <img class="card-img-top  col-lg-8 col-md-8 col-xs-8 col-sm-8 img-circle" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.data.nomImg}}" style="width:90px;height:90px;margin-left:6%;margin-top:5px" alt="Card image cap">
 							  </div>
 							  <div class="row">
 							     <p class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="max-width:150px"><b style="color:blue;font-size:0.9em">{{currency(article.data.prix)}} fcfa</b></p>
-							  </div>	
-							   
+							  </div>
+
 						  </div>
-						  
-						  	
+
+
                           <div class="row">
 							  <b class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="color:blue">Total : {{currency(totalpanier())}}</b>
                           </div>
-                         
+
                     </div>
 
                     <!-- TNT -->
@@ -256,7 +255,7 @@
     <div class="sidebar-nav navbar-collapse" id="facturers" style="background-color: transparent ;">
 
         <img src="assets/factures.png" style="margin-bottom : 1rem ; margin-left: 4rem ; height:54px ;"/><b style="font-size: 2.3rem; color: #F39200;"> Facturiers</b>
-        <ul id="gauche" class="nav in" id="side-menu"> 
+        <ul id="gaucheF" class="nav in" id="side-menuF">
 
 <!--                   <li role="presentation" style="background-color: #f39200; color: white;"><a style="color: white;" [routerLink]="['/accueil', 'annonce']" >VIDEO ANNONCE</a></li> -->
           <li role="presentation"><a [routerLink]="['/accueil', 'TNT BY EXCAF']" ><img src="assets/icoservice-5.png" /><b>TNT</b> By Excaf</a></li>

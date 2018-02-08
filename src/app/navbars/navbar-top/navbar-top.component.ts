@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { AuthentificationServiceWeb } from '../../webServiceClients/Authentification/authentification.service';
 import { UtilServiceWeb } from '../../webServiceClients/utils/Util.service' ;
 
-import * as sha1 from 'js-sha1';
-
 @Component({
   selector: 'app-navbar-top',
   templateUrl: './navbar-top.component.html',
@@ -15,9 +13,8 @@ export class NavbarTopComponent implements OnInit {
   authentiService: AuthentificationServiceWeb;
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   message : string  ;
-  autorisedUser = 0 ; 
-
- solde : number ;
+  autorisedUser = 0 ;
+  solde : number ;
 
 	currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
   constructor(private router: Router, private utilService : UtilServiceWeb) {
@@ -44,10 +41,11 @@ export class NavbarTopComponent implements OnInit {
         this.message=donnee ;
     });
 
-    },3000);
+    },60000);
   }
 
   updateCaution(){
+    console.log("updateCaution");
     if ( this.autorisedUser == 1)
       this.utilService.checkCaution().then( resp => {
         this.solde = resp._body ;
@@ -64,7 +62,7 @@ export class NavbarTopComponent implements OnInit {
   	 } else
   	 	console.log("Echec deconnexion!") ;
 
-  	 }) ; 
+  	 }) ;
   }
 
 }
