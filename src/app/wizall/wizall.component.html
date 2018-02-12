@@ -160,7 +160,7 @@
 		     </div>
 		     <div class="modal-body">
 		
-				 <div>
+				 <div *ngIf="etat">
 				 	
 					 <form class="form">
 						 <div class="form-group">
@@ -185,9 +185,12 @@
 					 </form>
 					
 				 </div>
+				 <div *ngIf="!etat">
+					 <p class="alert alert-danger">facture deja payé ou reference incorrecte</p>
+				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="payerSDE()" class="btn btn-success" />
+				  <input type="button" *ngIf="etat" value="valider" (click)="payerSDE()" class="btn btn-success" />
 				  <input type="button" value="annuler" (click)="fermersdemodal()" class="btn btn-danger" />
 		     </div>
 		  </div> 
@@ -206,7 +209,7 @@
 		     </div>
 		     <div class="modal-body">
 		
-				 <div>
+				 <div *ngIf="etat">
 
 					 <form class="form">
 						 <div class="form-group">
@@ -230,9 +233,12 @@
 			             </div>
 					 </form>					
 				 </div>
+				 <div *ngIf="!etat">
+					 <p class="alert alert-danger">facture deja payé ou numero facture incorrecte</p>
+				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="payerSenelec()" class="btn btn-success" />
+				  <input type="button" *ngIf="etat" value="valider" (click)="payerSenelec()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="fermersenelecmodal()" class="btn btn-danger" />
 		     </div>
 		  </div> 

@@ -21,6 +21,7 @@ export class AdminpdvMonitoringComponent implements OnInit {
   public monitoringAdminpdvDeposit: any;
   public montantdeposit:number;
   agentcc:any;
+  modeversement : string = "Direct";
   montant:number;
   ibanExcessif = false ;
   listedeposit:any[] = [];
@@ -278,7 +279,37 @@ export class AdminpdvMonitoringComponent implements OnInit {
           this.loading = false;
         }
       );
-
   }
+
+/*
+  var apiEndPoint = 'http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/index.php' ;
+
+  fileChange(event) {
+      let fileList: FileList = event.target.files;
+      if(fileList.length > 0) {
+          let file: File = fileList[0];
+          let formData:FormData = new FormData();
+          formData.append('file', file, file.name);
+          let headers = new Headers();
+
+          headers.append('Accept', 'application/json');
+          let options = new RequestOptions({
+                              headers: headers
+                            });
+
+          this.http.post(`${this.apiEndPoint}`, formData, options)
+              .map(res => res.json())
+              .catch(error => Observable.throw(error))
+              .subscribe(
+                  data => { 
+                           let newData = data;
+                           this.uploadFile = newData;
+                           this.newImage = this.uploadFile.generatedName ;
+                        },
+                  error => {}
+              )
+      }
+  }
+*/
 
 }

@@ -1,0 +1,72 @@
+<div class="col-sm-12">
+    <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
+        <div class="panel-heading">
+            
+            <h2>Paiment senelec</h2>
+
+        </div>
+        <!-- /.panel-heading -->
+
+		<div class="cover"></div>
+
+        <div class="panel-body">
+            <!-- Nav tabs -->
+            
+
+            <!-- Tab panes -->
+            
+
+            <div class="col-lg-offset-3 col-sm-offset-3 col-lg-5 col-sm-5 col-xs-5" id="woyofal">
+                <form name="transnat" #formsenelec="ngForm" (ngSubmit)="showmodalsenelec()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                  
+                    <div class="form-group row">
+                        <label class="col-lg-5 col-md-5" style="display:block;float:left">Numero de police :</label>
+                        <div class="col-lg-5 col-md-5">
+                            <input class="form-control"  type="number" autocomplete="off" [(ngModel)]="this.police" name="verifiernuminput" id="numclient"   placeholder="Numéro du client" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group row" >
+                        <label class="col-lg-5 col-md-5" style="display:block;float:left">Numero Facture :</label>
+                        <div class="col-lg-5 col-md-5">
+                          <input class="form-control"  type="number" autocomplete="off" [(ngModel)]="this.num_facture" name="verifiernuminput" id="numclient"   placeholder="Numéro du client" required autofocus>
+                        </div>
+                    </div>
+                    <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsenelec.form.valid">Valider</button>
+                  
+                </form>
+           </div>    
+        </div>
+    </div>
+</div>
+<div bsModal #modalsenelec="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+     
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" >
+                <div class="modal-header">
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalsenelec()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Informations Compteur Woyofal</h4>
+                </div>
+                <div class="modal-body">
+            
+                    <div *ngIf="etat1">
+                            <p class="alert alert-danger">Erreur de saisie</p>
+                            <p class="alert alert-danger">Veuillez-reverifier les données saisie</p>
+                    </div>
+                   <div *ngIf="etat2">
+                        <p><strong>Police: {{detailfacturesenelec.police}}</strong></p>
+                        <p><strong>Numéro de facture: {{detailfacturesenelec.numeroFacture}}</strong></p>
+                        <p><strong>Client: {{detailfacturesenelec.nom_client}}</strong></p>
+                        <p><strong>Montant: {{detailfacturesenelec.montant}}</strong></p>
+                        <p><strong>Date Echeance: {{detailfacturesenelec.dateEcheance}}</strong></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" *ngIf="etat2" value="valider" (click)="validerpaimentsenelec()" class="btn btn-success" />
+                    <input type="button" value="annuler" (click)="hidemodalsenelec()" class="btn btn-danger" />
+                </div>
+        </div> 
+    </div>  
+</div>
+

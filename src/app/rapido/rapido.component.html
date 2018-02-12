@@ -1,0 +1,70 @@
+<div class="col-lg-12 col-md-12" >
+  <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
+      <div class="panel-heading">
+          <h2>RAPIDO</h2>
+      </div>
+      <div class="cover"></div>
+      <div class="panel-body">
+        <div class="col-lg-offset-4 col-md-offset-4 col-xs-offset-4">
+			<form>
+			   <div class="row">
+				  <label class="col-lg-3 col-md-3">Telephone</label>
+				  <div class="col-lg-3 col-md-3">
+					<input type="text" [(ngModel)]="numclient" name="numclient"  placeholder="telephone" class="form-control" />
+				  </div>
+			   </div>
+			   <div class="row">
+				  <label class="col-lg-3 col-md-3 col-lg-3">Montant a recharger</label>
+				  <div class="col-lg-3 col-md-3">
+					<input type="text" [(ngModel)]="montant" name="montant"  placeholder="montant" class="form-control" />
+				  </div>
+			   </div>
+			   <div class="row">
+					<label class="col-lg-3 col-md-3">Badge</label>
+					<div class="col-lg-3 col-md-3">
+					  <input type="text" [(ngModel)]="badge" name="badge"  placeholder="badge" class="form-control" />
+					</div>
+			   </div>
+			   <div class="col-lg-2 col-md-2">
+				   <button class="btn btn-success" (click)="showmodalrapido()">valider</button>
+			   </div>
+		   </form>
+        </div>
+      </div>
+  </div>
+</div>
+<div bsModal #modalrapido="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-sm">
+	   <div class="modal-content" >
+			<div class="modal-header">
+			   <button type="button" class="close pull-right" aria-label="Close" (click)="fermermodaldepot()">
+			      <span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Dépôt.</h4>
+		    </div>
+		   <div class="modal-body">
+				<form class="form">
+					<div class="form-group">
+						 <label >Telephone : {{this.numclient}}</label>
+					 </div>
+					 <div class="form-group">
+						 <label >Montant  : {{this.montant}}</label>
+					 </div>
+					 <div class="form-group">
+						<label >Badge  : {{this.badge}}</label>
+					 </div>
+			    </form>
+		   </div>
+		   <div class="modal-footer">
+				<input type="button" (click)="validerrapido()" value="valider" class="btn btn-success" />
+				<input type="button" value="fermer" (click)="hidemodalraoido()"  class="btn btn-danger" />
+		   </div>
+	  </div> 
+   </div>  
+</div>
+
+
+
+<!--<div *ngIf="this.loading">
+  <app-loader></app-loader>    
+</div>-->

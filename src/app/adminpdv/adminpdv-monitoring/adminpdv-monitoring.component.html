@@ -107,6 +107,19 @@
               <label>montant du deposit :</label>
               <input type="number" [(ngModel)]="montantdeposit" min="0" placeholder="montant" class="form-control" />
             </div>
+
+            <div class="form-group">
+              <label>Mode de versement</label>
+                    <select class="form-control input-sm" [(ngModel)]="modeversement">
+                      <option>Direct</option>
+                      <option>CPS</option>
+                      <option>CBAO</option>
+                    </select>
+<!-- 
+             <input type="file" (change)="fileChange($event)" placeholder="Uploader Image" accept=".png,.jpg">
+ -->
+            </div>
+
           </div>
           <div class="col-sm-offset-1 col-xs-3">
             <img style="width:150px;height:150px" src="assets/bbs.png"  class="img-responsive" alt="photo de l'agent" />
