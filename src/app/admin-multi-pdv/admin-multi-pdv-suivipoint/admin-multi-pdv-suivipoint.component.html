@@ -40,10 +40,17 @@
             <th colspan="8">
               <div style="color: black; text-align: center;">
                 <button type="button" (click)="getCategorie('Tous')" class="btn btn-dark btn-sm"> Tous </button>&nbsp;&nbsp;
+                <button type="button" (click)="getCategorie('Pas de depot')" class="btn btn-info btn-sm" style="color: black; background-color: blue;"> Pas de depot </button>&nbsp;&nbsp;
+                <button type="button" (click)="getCategorie('Pas de depot Avec caution')" class="btn btn-info btn-sm" style="color: black; background-color: yellow;"> Pas de depot Avec caution </button>&nbsp;&nbsp;
+                <button type="button" (click)="getCategorie('Faible')" class="btn btn-info btn-sm" style="color: black; background-color: red;"> Faible </button>&nbsp;&nbsp;
+                <button type="button" (click)="getCategorie('Passable')" class="btn btn-info btn-sm" style="color: black; background-color: orange;"> Passable </button>&nbsp;&nbsp;
+                <button type="button" (click)="getCategorie('Bien')" class="btn btn-info btn-sm" style="color: black; background-color: green;"> Bien </button>
+
+                <!--<button type="button" (click)="getCategorie('Tous')" class="btn btn-dark btn-sm"> Tous </button>&nbsp;&nbsp;
                 <button type="button" (click)="getCategorie('Pas de depot')" class="btn btn-info btn-sm" style="background-color: blue;"> Pas de depot </button>&nbsp;&nbsp;
                 <button type="button" (click)="getCategorie('Faible')" class="btn btn-info btn-sm" style="background-color: red;"> Faible </button>&nbsp;&nbsp;
                 <button type="button" (click)="getCategorie('Passable')" class="btn btn-info btn-sm" style="background-color: orange;"> Passable </button>&nbsp;&nbsp;
-                <button type="button" (click)="getCategorie('Bien')" class="btn btn-info btn-sm" style="background-color: green;"> Bien </button>
+                <button type="button" (click)="getCategorie('Bien')" class="btn btn-info btn-sm" style="background-color: green;"> Bien </button>-->
                 <br/>
               </div>
             </th>
@@ -51,7 +58,7 @@
 
           </thead>
           <tbody>
-          <tr *ngFor="let item of mf.data; let i = index " [ngStyle]="{'color': 'black', 'background-color': item.cautioninitiale==0?'blue':((item.montantconsomme*100)/item.cautioninitiale)<25?'red':((item.montantconsomme*100)/item.cautioninitiale)>=25 && ((item.montantconsomme*100)/item.cautioninitiale)<50?'yellow':'green'}">
+          <tr *ngFor="let item of mf.data; let i = index " [ngStyle]="{'color': 'black', 'background-color': (item.cautioninitiale==0 && item.montantconsomme==0 )?'blue':(item.cautioninitiale==0 && item.montantconsomme!=0 )?'yellow':((item.montantconsomme*100)/item.cautioninitiale)<25?'red':((item.montantconsomme*100)/item.cautioninitiale)>=25 && ((item.montantconsomme*100)/item.cautioninitiale)<50?'orange':'green'}">
             <td>{{ i + 1  }}</td>
             <td>{{item.adminpdv}}</td>
             <td>{{item.telephone}}</td>

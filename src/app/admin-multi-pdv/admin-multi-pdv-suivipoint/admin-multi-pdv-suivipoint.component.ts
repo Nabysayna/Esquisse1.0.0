@@ -45,7 +45,7 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
             iduser:elt.idUser,
             montantconsomme:elt.montantconsomme,
             telephone:elt.telephone,
-            categorie: (elt.cautioninitiale==0)?'pas':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
+            categorie: (elt.cautioninitiale==0 && elt.montantconsomme==0 )?'pas':(elt.cautioninitiale==0 && elt.montantconsomme!=0 )?'pasdepot_aveccaution':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
           }
         })
         console.log(this.adminmultipdvMajcaution);
@@ -102,6 +102,11 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     if(categorie=='Pas de depot'){
       this.categorie = 'Pas de depot';
       this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pas');
+    }
+    if(categorie=='Pas de depot Avec caution'){
+      this.categorie = 'Pas de depot Avec caution';
+      console.log(this.listepoints);
+      this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pasdepot_aveccaution');
     }
     if(categorie=='Faible'){
       this.categorie = 'Faible';
