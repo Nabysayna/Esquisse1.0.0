@@ -1,6 +1,7 @@
 
 img{
 	width: 19rem;
+    cursor: pointer;
 }
 .card{
 	width: 20rem !important;

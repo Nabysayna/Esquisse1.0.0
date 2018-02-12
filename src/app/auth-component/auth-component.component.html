@@ -12,6 +12,7 @@
 
               </form>
 
+
             <form class="form form-inline pull-right" style="position: relative;z-index: 1;" (ngSubmit)="authentificateBySMS()" #loginNextForm="ngForm" *ngIf="!phase1">
                 <div class="form-group" style="color: red ;" *ngIf="!this.phase2fakevalues">Le code que vous avez saisi est incorrect! Veuillez reprendre la saisie.</div>
 
@@ -40,10 +41,10 @@
 
    <div class="row" id="inscription">
             <div id="form" class="col-sm-12 col-xs-12">
-                <form #suscriptionForm="ngForm" (ngSubmit)="authentificate()" name="form">
+                <form #suscriptionForm="ngForm" (ngSubmit)="inscrire()" name="form">
                     <div  class="form-inline form-group row">
                         <div class="col-sm-6 col-xs-12 suscriber">
-                            <label style="color: #337ab7 ;">Prenom</label>
+                            <label style="color: #337ab7 ;">Prénom</label>
                             <input  type="text" id="prenom" required [(ngModel)]="prenom" name="prenom" placeholder="prenom" class="form-control" />
                         </div>
 
@@ -54,6 +55,7 @@
                     </div>
                     <div class="form-inline form-group row">
                         <div class="col-sm-6 col-xs-12 suscriber">
+                            <b *ngIf="usedLogin==true" style="color:red">Login déjà utilisé. Veuillez en choisir un nouveau.</b>
                             <label style="color: #337ab7 ;">Email</label>
                             <input type="email" [(ngModel)]="email" name="email" required  name="email" placeholder="email" class="form-control"  />
                         </div>
@@ -74,37 +76,35 @@
                             <input type="text" [(ngModel)]="nomshop" name="boutique" placeholder="Boutique en ligne(facultatif)" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group form-inline row" *ngIf="!region">
 
-                        <label class="col-sm-4" style="text-align: end ;">Région </label>
-                        <div class="col-sm-8 form-control address" style="text-align: start ;" >
-                            <select #t [(ngModel)]="region" name="region" required (change)="departement(t.value)">
-                                <option *ngFor="let region of regions" [value]="region.id">{{region.name}}</option>
-                            </select>
-                        </div>
 
-                    </div>
-                    <div class="form-group form-inline row" *ngIf="region&&!zone">
-                        <label class="col-sm-4" style="text-align: end ;"> Votre zone dans {{getRegionName(region)}} </label>
-                        <div class="col-sm-8 form-control address" style="text-align: start ;" >
-                            <select name="zone" #d [(ngModel)]="zone" required (change)="souszones(zone)"  placeholder="--veuillez choisir votre département--">
-                                <option *ngFor="let dep of departements" [value]="dep.id">{{dep.name}}</option>
-                            </select>
-                        </div>
-                    </div>
+              <div class="form-group" style="color: #337ab7" *ngIf="!iszones && !issouszones">
+                <b>Région</b>
+                  <select class="input-sm" id="regionnewcaisse" name="regionnewcaisse" required [(ngModel)]="region" (change)="selectRegionNewCaissier()">
+                    <option selected>Choisir région</option>
+                    <option *ngFor="let region of regions">{{region.nom}}</option>
+                  </select>
+              </div>
+              <div class="form-group" style="color: #337ab7" *ngIf="iszones && !issouszones">
+                <b>Zones</b>
+                  <select class="input-sm" id="zonenewcaisse" name="zonenewcaisse" required [(ngModel)]="zone" (change)="selectZoneNewCaissier()">
+                    <option>Choisir zone</option>
+                    <option  *ngFor="let zone of zones">{{zone.nom}}</option>
+                  </select>
+              </div>
+              <div class="form-group" style="color: #337ab7" *ngIf="issouszones && !isadresse &&zone!='Choisir zone'">
+                <b>Sous zones</b>
+                  <select class="input-sm" id="souszonenewcaisse" name="souszonenewcaisse" required [(ngModel)]="souszone" (change)="selectsousZoneNewCaissier()">
+                    <option>Choisir sous zone</option>
+                    <option  *ngFor="let souszone of souszones">{{souszone.nom}}</option>
+                  </select>
+              </div>
+              <div class="form-group" style="color: #337ab7" *ngIf="isadresse">
+                <b>Adresse exacte</b>
+                  <input id="adressenewcaisse" type="text" name="adressenewcaisse" required [(ngModel)]="adresse" placeholder=".....Adresse exacte" rows="3" style="width: 60rem ;"/>
+              </div>
 
-                    <div class="form-group form-inline row" *ngIf="zone&&!souszone">
-                        <label class="col-sm-4" style="text-align: end ;"> Votre sous zone dans {{getZoneName(zone)}} </label>
-                        <div class="col-sm-8 form-control address" style="text-align: start ;" >
-                            <select name="sdep" [(ngModel)]="souszone" required  placeholder="--veuillez choisir votre zone--">
-                                <option *ngFor="let sdep of sdepartements" [value]="sdep.name">{{sdep.name}}</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="form-group form-inline  row" *ngIf="souszone">
-                        <label class="col-sm-4" style="text-align: end ;"> Adresse exacte dans {{souszone}} </label>
-                    </div>
                     <div class="col-sm-12" style="text-align: center ;">
                         <button class="btn btn-success" style="border-radius: 2rem ; background-color: orange ; color : white ; border-style: hidden ;" [disabled]="!suscriptionForm .valid"><i class="fa fa-check" aria-hidden="true"></i> Valider</button>
                     </div>
@@ -116,6 +116,21 @@
 
 </div>
 
+<div bsModal #viewMore="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background-color: #f39200; color: white;">
+      <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body" style="text-align: center ;">
+         <b>Le compte a été  créé avec succès. Vous allez recevoir un SMS contenant vos paramètres d'accès.</b>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 <div *ngIf="this.loading">

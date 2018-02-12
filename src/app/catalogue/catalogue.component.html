@@ -95,7 +95,7 @@
           <div class="col-sm-4" *ngFor="let article of listarticles | filtrecataloguecommande : filterQuery | paginate: { itemsPerPage: 3, currentPage: p } ; let i=index" id="art-{{i}}" style="width: 24rem;margin-top: 2rem;">
 	            <div class="well well-sm">
                   <h4 class="card-title">{{getFormatted(article.designation) }}</h4>
-	                <img class="card-img-top" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.nomImg}}" alt="Card image cap" height="200" width="200">
+	                <img class="card-img-top" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.nomImg}}" alt="Card image cap" height="200" width="200" (click)="showAddChildModal(article)">
 	            </div>
               <div class="text-center">
 							  <p class="card-text">{{article.prix}}.FCFA</p>

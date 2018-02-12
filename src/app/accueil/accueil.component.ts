@@ -292,7 +292,7 @@ export class AccueilComponent implements OnInit {
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifier) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=10){
+                            if(donnee=='-1' && objet.etats.nbtour>=45){
                               this.omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){

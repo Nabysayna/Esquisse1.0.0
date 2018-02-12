@@ -201,6 +201,7 @@ import {GuideUserCaisseComponent} from "./guideusercaisse/guideusercaisse.compon
 import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersuperviseur.component";
 import { WizallComponent } from './wizall/wizall.component';
 import {UtilService} from "./services/util.service";
+import {RegistrationService} from "./services/registration.service";
 import {CrmDoorServiceWeb} from "./webServiceClients/CrmDoor/crmdoor.service";
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
 import { CommissionnementComponent } from './commissionnement/commissionnement.component';
@@ -403,8 +404,10 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
       DemandepretServiceWeb,
       CrmDoorServiceWeb,
       UtilService,
+      RegistrationService,
       WizallWebService,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 
