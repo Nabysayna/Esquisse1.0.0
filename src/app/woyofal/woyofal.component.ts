@@ -6,6 +6,7 @@ import { PostCashWebService } from '../webServiceClients/PostCash/postcash.servi
 import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
+import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
 
 
 
@@ -17,10 +18,11 @@ import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 })
 export class WoyofalComponent implements OnInit {
    etat:boolean=true;
-   
-   numerocompteur:number=undefined;
-   montant:number=undefined;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
+   api:number=5;
+   compteur:string;
+   montant:number;
+   dataImpression:any;
+  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) {
 
   }
 
@@ -33,15 +35,36 @@ export class WoyofalComponent implements OnInit {
   }
   @ViewChild('modalwoyofal') public modalwoyofal:ModalDirective;
   showmodalwoyofal(){
-   
    this.modalwoyofal.show();
   }
-  validerachatwoyofal(){
+  /*validerachatwoyofal(){
     this.modalwoyofal.hide();
-  }
+  }*/
     
   hidemodalwoyofal(){
    this.modalwoyofal.hide();
+  }
+  validerwoyofal(){
+    this.FacturierServiceWeb.validerwoyofal(this.api,this.montant,this.compteur).then(response =>{
+      console.log(response);
+      this.modalwoyofal.hide();
+      this.dataImpression = {
+          apiservice:'postecash',
+          service:'achatcodewayafal',
+          infotransaction:{
+            client:{
+              transactionPostCash: response.transactionId,
+              transactionBBS: 'Id BBS',
+               codewoyafal: response.code,
+               montant: this.montant,
+               compteur: this.compteur,
+            },
+
+          },
+        }
+        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+        this.router.navigate(['accueil/impression']);
+    });
   }
 
 /******************************************************************************************************/

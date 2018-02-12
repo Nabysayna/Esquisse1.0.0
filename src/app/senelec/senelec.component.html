@@ -34,10 +34,7 @@
                     <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsenelec.form.valid">Valider</button>
                   
                 </form>
-        </div>
-          
-
-            
+           </div>    
         </div>
     </div>
 </div>
@@ -53,11 +50,11 @@
                 </div>
                 <div class="modal-body">
             
-                    <div *ngIf="detailfacturesenelec.errorCode=='0'">
-                            <p>Erreur de saisie</p>
-                            <p>Veuillez-reverifier les données saisie</p>
+                    <div *ngIf="etat1">
+                            <p class="alert alert-danger">Erreur de saisie</p>
+                            <p class="alert alert-danger">Veuillez-reverifier les données saisie</p>
                     </div>
-                   <div *ngIf="!detailfacturesenelec.errorCode">
+                   <div *ngIf="etat2">
                         <p><strong>Police: {{detailfacturesenelec.police}}</strong></p>
                         <p><strong>Numéro de facture: {{detailfacturesenelec.numeroFacture}}</strong></p>
                         <p><strong>Client: {{detailfacturesenelec.nom_client}}</strong></p>
@@ -66,7 +63,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" *ngIf="etat" value="valider" (click)="payersenelec()" class="btn btn-success" />
+                    <input type="button" *ngIf="etat2" value="valider" (click)="validerpaimentsenelec()" class="btn btn-success" />
                     <input type="button" value="annuler" (click)="hidemodalsenelec()" class="btn btn-danger" />
                 </div>
         </div> 

@@ -18,12 +18,13 @@ import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.serv
 export class SdeComponent implements OnInit {
    etat:boolean=false;
    message:boolean=false;
-   mntsde:number=545;
-   echeance:any="12/8/2008";
-   refclientsde:number=566;
-   refFactureSDE:number=545;
-   nomclient:string="mag";
+   mntsde:number;
+   echeance:any;
+   refclientsde:number;
+   refFactureSDE:number;
+   nomclient:string;
    statuspayment:boolean;
+   dataImpression:any;
 
    constructor(private FacturierServiceWeb:FacturierServiceWeb,private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
 
@@ -75,15 +76,31 @@ export class SdeComponent implements OnInit {
   paimantsde(){
     this.FacturierServiceWeb.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
        this.hidemodalsde();
+        this.dataImpression = {
+          apiservice:'postecash',
+          service:'achatcodewayafal',
+          infotransaction:{
+            client:{
+              transactionPostCash: response.transactionId,
+              transactionBBS: 'Id BBS',
+               referenceclient: this.refclientsde,
+               montant: this.mntsde,
+               refFacture: this.refFactureSDE,
+            },
+
+          },
+        }
+        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+        this.router.navigate(['accueil/impression']);
     });
   }
   hidemodalsde(){
    this.modalsde.hide();
   }
-  payerfacturesde(){
+  /*payerfacturesde(){
     this.modalsde.hide() ;
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall SDE','operateur':6,'operation':3,'montant':this.mntsde,'refclient':this.refclientsde,'refFacture':this.refFactureSDE}));
-  }
+  }*/
 
 /******************************************************************************************************/
 

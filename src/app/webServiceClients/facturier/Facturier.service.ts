@@ -15,7 +15,7 @@ export class FacturierServiceWeb {
   public resp : string ;
 
   private soapService:SoapService;
-
+  
   private token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
 
 
@@ -67,9 +67,89 @@ export class FacturierServiceWeb {
             resolve(JSON.parse(rep));
         });
       });
-
-
   }
+  public validerrapido(telephone:string,montant:string,badge:string):Promise<any>{
+    let method:string='achatrapido';
+    let parameters:{}[]=[];
+    let reEspParams={token:this.token,telephone:telephone,montant:montant,badge:badge};
+    let params:{}[]=[];
+    params["params"]=reEspParams;
+
+    parameters['achatrapido xmlns="urn:facturierwsdl#"']=params;
+
+    return new Promise((resolve,reject) =>{       
+      this.soapService.post(method,parameters,'achatrapidoResponse').then(response =>{
+        console.log(response);
+        let rep=response["achatrapidoResponse"]["return"].$;
+          resolve(rep);
+      });
+    });
+}
+public validerwoyofal(api:number,montant:number,compteur:string):Promise<any>{
+    let method:string='achatcodewoyofal';
+    let parameters:{}[]=[];
+    let reEspParams={api:api,token:this.token,montant:montant,compteur:compteur};
+    let params:{}[]=[];
+    params["params"]=reEspParams;
+
+    parameters['achatcodewoyofal xmlns="urn:facturierwsdl#"']=params;
+
+    return new Promise((resolve,reject) =>{       
+      this.soapService.post(method,parameters,'achatcodewoyofalResponse').then(response =>{
+          let rep=response["achatcodewoyofalResponse"]["return"].$;
+          resolve(JSON.parse(rep));
+      });
+    });
+}
+public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
+    let method:string='detailreglementsenelecRequest';
+    let parameters:{}[]=[];
+    let reEspParams={token:this.token,police:police,num_facture:numfacture};
+    let params:{}[]=[];
+    params["params"]=reEspParams;
+
+    parameters['detailreglementsenelec xmlns="urn:facturierwsdl#"']=params;
+
+    return new Promise((resolve,reject) =>{       
+      this.soapService.post(method,parameters,'detailreglementsenelecResponse').then(response =>{
+          let rep=response["detailreglementsenelecResponse"]["return"].$;
+          resolve(JSON.parse(rep));
+      });
+    });
+}
+public validerpaimentsenelec(montant:number,police:string,num_facture:string,service:string):Promise<any>{
+    let method:string='reglementsenelecRequest';
+    let parameters:{}[]=[];
+    let reEspParams={token:this.token,police:police,num_facture:num_facture,service:service};
+    let params:{}[]=[];
+    params["params"]=reEspParams;
+
+    parameters['reglementsenelec xmlns="urn:facturierwsdl#"']=params;
+
+    return new Promise((resolve,reject) =>{       
+      this.soapService.post(method,parameters,'reglementsenelecResponse').then(response =>{
+          let rep=response["reglementsenelecResponse"]["return"].$;
+          resolve(JSON.parse(rep));
+      });
+    });
+}
+public payeroolusolar(tel:string,numcompte:string,mtt:string):Promise<string>{
+    let method:string='paiementoolusolarRequest';
+    let parameters:{}[]=[];
+    let reEspParams={token:this.token,tel:tel,numcompte:numcompte,mtt:mtt};
+    let params:{}[]=[];
+    params["params"]=reEspParams;
+
+    parameters['paiementoolusolar xmlns="urn:facturierwsdl#"']=params;
+
+    return new Promise((resolve,reject) =>{       
+      this.soapService.post(method,parameters,'paiementoolusolarResponse').then(response =>{
+          let rep=response["paiementoolusolarResponse"]["return"].$;
+          console.log(response);
+          resolve(rep);
+      });
+    });
+}
 
  /* public retraitespece(api : number, token : string, code_validation : number, tel_destinataire : number, montant : string) : Promise<PostCashResponse> {
 

@@ -6,6 +6,7 @@ import { PostCashWebService } from '../webServiceClients/PostCash/postcash.servi
 import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
+import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
 
 
 @Component({
@@ -17,15 +18,33 @@ import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 export class RapidoComponent implements OnInit {
   ngOnInit(){}
   numclient:string;
-  badge:number=1555544;
-  montant:number=56555;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
+  badge:string;
+  montant:string;
+  messagesucce:boolean=false;
+  messageerror:boolean=false;
+  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb ) {
   }
 @ViewChild('modalrapido') public modalrapido:ModalDirective;
 showmodalrapido(){
   this.modalrapido.show();
 }
+hidemodalrapido(){
+   this.modalrapido.hide();
+   this.montant=undefined;
+   this.badge=undefined;
+   this.numclient=undefined;
+}
+validerrapido(){
+  this.FacturierServiceWeb.validerrapido(this.numclient,this.montant,this.badge).then(response =>{
+      console.log(response);
+      this.messagesucce=true;
+      this.modalrapido.hide();
+      this.montant=undefined;
+      this.badge=undefined;
+      this.numclient=undefined;
+  });
 
+}
 
 }
 
