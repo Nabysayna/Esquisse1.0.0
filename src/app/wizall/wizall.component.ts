@@ -75,7 +75,7 @@ export class WizallComponent implements OnInit {
       
     }
 
-    public senelecmodal(){       
+    public senelecmodal(){          
       this.wizallwebservice.intouchRecupereFactureSenelec(this.numpolice.toString()).then( response =>{
        console.log(response.length);
        if(response.length!=0){ 

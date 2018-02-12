@@ -8,7 +8,19 @@ label{
 }
 
 select:focus{
-  border-style: hidden !important;
+  border-radius: 24px !important ;
+  border-color: orange !important;
+}
+
+select:active{
+  border-radius: 24px;
+  border-color: orange;
+}
+
+select{
+  border-radius: 24px;
+  border-color: orange;
+  width: 65rem ;
 }
 
 
@@ -190,6 +202,10 @@ select:focus{
   width: 56rem;
 }
 
+.form-group b{
+  margin-left: 10rem ;
+}
+
 #upperdiv{
 }
 
@@ -245,8 +261,9 @@ select:focus{
 }
 
 #nav button{
-  border: 1px solid orange;
+  border: 1px solid white;
   border-radius: 2rem;
+  margin-right: 1rem ;
 }
 
 
