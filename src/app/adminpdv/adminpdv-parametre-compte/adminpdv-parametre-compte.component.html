@@ -49,7 +49,7 @@
                 <td><button type="button" class="btn btn-outline adminpdvparametrecompteBorder" (click)="modif(item)" data-toggle="modal" data-target="#myModalModifUser">Modifier</button></td>
                 <td>
                   <span *ngIf="!item.isconnect">Est déconnecté</span>
-                  <button type="button" *ngIf="item.isconnect" class="btn btn-outline adminpdvparametrecompteBorder" (click)="deconnexionsession(item,i)">Deconnecter</button>
+                  <button type="button" *ngIf="item.isconnect" class="btn adminpdvparametrecompteBorder" (click)="deconnexionsession(item,i)">Deconnecter</button>
                 </td>
                 <td>
                   <button type="button" *ngIf="item.estautorise==0" class="btn adminpdvparametrecompteBorder" (click)="autoriseravoirdeposir(item, 1)">Autoriser</button>

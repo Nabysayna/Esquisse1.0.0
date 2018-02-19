@@ -109,13 +109,12 @@ export class AuthentificationServiceWeb {
       });
   }
 
-
   public modifierpwdinit(pwdactuel : string, newpwd : string) : Promise<string>{
       var method:string = 'modifpwdinit';
       var parameters:{}[] = [];
       let parame : {}[] = [] ;
       var user = {token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, pwdactuel:pwdactuel, newpwd : newpwd} ;
-      
+
       parame["user"] = user ;
 
       return new Promise( (resolve, reject) => {
@@ -140,9 +139,6 @@ export class AuthentificationServiceWeb {
       });
 
   }
-
-
-
 
   public setParameters( tryLogin: string, tryPwd: string):{}[] {
       var parameters:{}[] = [] ;

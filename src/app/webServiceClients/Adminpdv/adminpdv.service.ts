@@ -88,7 +88,6 @@ export class AdminpdvServiceWeb {
     });
   }
 
-
   public historiquereclamation(type : string): Promise<any>  {
     var method:string = 'historiquereclamation';
     var parameters:{}[] = [];
@@ -107,7 +106,6 @@ export class AdminpdvServiceWeb {
     });
   }
 
-
   public listuserpdv(type : string): Promise<any>  {
     var method:string = 'listuserpdv';
     var parameters:{}[] = [];
@@ -125,7 +123,6 @@ export class AdminpdvServiceWeb {
       });
     });
   }
-
 
   public modifypdv( idpdv: number, modifydata: string): Promise<any>  {
     var method:string = 'modifypdv';
@@ -163,7 +160,6 @@ export class AdminpdvServiceWeb {
       });
     });
   }
-
 
   public nombredereclamationpdvvente(type : string): Promise<any>  {
     var method:string = 'nombredereclamationpdvvente';
@@ -223,8 +219,6 @@ export class AdminpdvServiceWeb {
     });
 
   }
-
-
 
   public notifications(type : string): Promise<any>  {
     var method:string = 'notifications';

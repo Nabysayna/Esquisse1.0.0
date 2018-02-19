@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy ,ViewChild } from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
-import { AdminpdvServiceWeb } from '../../webServiceClients/Adminpdv/adminpdv.service';
-import {UtilService} from "../../services/util.service";
-import {CrmDoorServiceWeb} from "../../webServiceClients/CrmDoor/crmdoor.service";
+import {AdminpdvService} from "../../services/adminpdv.service";
+
+import {UtilsService} from "../../services/utils.service";
+import {CrmService} from "../../services/crm.service";
 import {stringify} from "querystring";
 import {BaseChartDirective} from "ng2-charts";
 
@@ -38,27 +39,23 @@ export class AdminpdvMonitoringComponent implements OnInit {
   @ViewChild('apercuPhotoComModal') public apercuPhotoComModal:ModalDirective;
   @ViewChild('voirplusdedemandeModal') public voirplusdedemandeModal:ModalDirective;
 
-  constructor(private route:ActivatedRoute, private router: Router, private adminpdvServiceWeb: AdminpdvServiceWeb, private _crmdoorServiceWeb: CrmDoorServiceWeb, private _utilService:UtilService) { }
+  constructor(private _adminpdvService:AdminpdvService, private route:ActivatedRoute, private router: Router, private _crmService: CrmService, private _utilsService:UtilsService) { }
 
   ngOnInit() {
+    this.loading = true;
     console.log('monitoring deposit');
-    this.adminpdvServiceWeb.bilandeposit('azrrtt').then(adminpdvServiceWebList => {
-      this.monitoringAdminpdvDeposit = adminpdvServiceWebList.response;
-      this.getEtatDepot();
-    }).then( () => {
-      this.getAlldepotsSup();
-    });
-
-/*    this.killsetinterval = setInterval(() => {
-      this.getEtatDepot();
-*/
-      this.adminpdvServiceWeb.bilandeposit('azrrtt').then(adminpdvServiceWebList => {
-        this.monitoringAdminpdvDeposit = adminpdvServiceWebList.response;
-      });
-/*
-      console.log('step');
-    }, 5000);
-*/
+    this._adminpdvService.bilandeposit({type:"azrrtt"}).subscribe(
+      data => {
+        console.log("Localhost Test");
+        this.monitoringAdminpdvDeposit = data.response;
+        this.getEtatDepot();
+      },
+      error => alert(error),
+      () => {
+        this.getAlldepotsSup();
+        this.loading = false ;
+      }
+    )
 
   }
 
@@ -67,19 +64,20 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
 
   validerdmde(){
-      this.selectdemanretrait = false;
-      if (this.monitoringAdminpdvDeposit.etatdeposit < this.montant){
-        this.ibanExcessif = true ;
-        return 1 ;
-      }
+    this.loading = true ;
+    this.selectdemanretrait = false;
 
-      this.loading = true ;
-      this.adminpdvServiceWeb.demandeRetrait(this.montant.toString()).then(adminpdvserviceList => {
-        this.loading = false ;
-        this.montant = undefined ;
-      });
-
+    if (this.monitoringAdminpdvDeposit.etatdeposit < this.montant){
+      this.ibanExcessif = true ;
+      return 1 ;
     }
+    this._adminpdvService.demandeRetrait({montant:this.montant.toString()}).subscribe(
+      data => this.montant = undefined,
+      error => alert(error),
+      () => this.loading = false
+    )
+
+  }
 
   currencyFormat(somme) : String{
     return Number(somme).toLocaleString() ;
@@ -90,7 +88,7 @@ export class AdminpdvMonitoringComponent implements OnInit {
     }
 
   public getEtatDepot(){
-      this._crmdoorServiceWeb.getEtatDemandeDepot('infosup').then(adminpdvServiceWebList => {
+      /*this._crmdoorServiceWeb.getEtatDemandeDepot('infosup').then(adminpdvServiceWebList => {
         if(adminpdvServiceWebList.errorCode==0){
           let newdepot = false;
           this.listedeposit = adminpdvServiceWebList.response.map(function (opt) {
@@ -114,13 +112,15 @@ export class AdminpdvMonitoringComponent implements OnInit {
           }
 
         }
-      });
+      });*/
     }
 
   public getInitDeposit(){
-    this._utilService.recupererInfosCC()
+    console.log("getInitDeposit")
+    this._utilsService.recupererInfosCC()
       .subscribe(
         data => {
+          console.log(data);
           this.agentcc = data.response;
         },
         error => alert(error),
@@ -130,7 +130,7 @@ export class AdminpdvMonitoringComponent implements OnInit {
       );
   }
   public demndedeposit(data){
-    this._utilService.demandedeposit(data)
+    this._utilsService.demandedeposit(data)
       .subscribe(
         data => {
           console.log('--');
@@ -143,24 +143,31 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
 
   public showdepositeModal():void {
+    console.log('showdepositeModal - 1')
+    console.log('----*********-----')
     this.montantdeposit=undefined;
     this.getInitDeposit();
     this.depositeModal.show();
-    console.log('showdepositeModal')
   }
   public hidedepositeModal():void {
     this.depositeModal.hide();
     console.log('hidedepositeModal')
   }
   public validerdeposite(){
-    this._crmdoorServiceWeb.validerDemandeDepot(this.montantdeposit, JSON.stringify(this.agentcc), 'attente').then(adminpdvServiceWebList => {
-      console.log('---------');
-      if(adminpdvServiceWebList.errorCode == 0){
-        this.demndedeposit({infocc:this.agentcc, infocom:'attente', date:adminpdvServiceWebList.result});
-      }
-    });
-    this.hidedepositeModal();
-    console.log('validerdeposite')
+    console.log('*validerdeposite*')
+    this._adminpdvService.validerDemandeDepot({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: 'attente'})
+      .subscribe(
+        data => {
+          console.log('-validerDemandeDepot-');
+          if(data.errorCode == 0){
+            this.demndedeposit({infocc:this.agentcc, infocom:'attente', date:data.result});
+          }
+
+        },
+        error => alert(error),
+        () => this.hidedepositeModal()
+      );
+
   }
 
   public showdechargeModal():void {
@@ -263,7 +270,7 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
 
   getAlldepotsSup(){
-    this._utilService.getOnePointSuivicc({infoinit:'initmonitoringsup', type:'depots'})
+    this._utilsService.getOnePointSuivicc({infoinit:'initmonitoringsup', type:'depots'})
       .subscribe(
         data => {
           if(data.errorCode){
@@ -280,36 +287,5 @@ export class AdminpdvMonitoringComponent implements OnInit {
         }
       );
   }
-
-/*
-  var apiEndPoint = 'http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/index.php' ;
-
-  fileChange(event) {
-      let fileList: FileList = event.target.files;
-      if(fileList.length > 0) {
-          let file: File = fileList[0];
-          let formData:FormData = new FormData();
-          formData.append('file', file, file.name);
-          let headers = new Headers();
-
-          headers.append('Accept', 'application/json');
-          let options = new RequestOptions({
-                              headers: headers
-                            });
-
-          this.http.post(`${this.apiEndPoint}`, formData, options)
-              .map(res => res.json())
-              .catch(error => Observable.throw(error))
-              .subscribe(
-                  data => { 
-                           let newData = data;
-                           this.uploadFile = newData;
-                           this.newImage = this.uploadFile.generatedName ;
-                        },
-                  error => {}
-              )
-      }
-  }
-*/
 
 }

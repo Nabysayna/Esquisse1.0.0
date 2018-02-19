@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AdminpdvServiceWeb } from '../../webServiceClients/Adminpdv/adminpdv.service';
-import {UtilService} from "../../services/util.service";
+import {UtilsService} from "../../services/utils.service";
+import {AdminpdvService} from "../../services/adminpdv.service";
 import {BaseChartDirective} from "ng2-charts";
 
 @Component({
@@ -13,17 +13,24 @@ export class AdminpdvDashboardComponent implements OnInit {
   adminpdvDashboardNbreReclVente: any;
   loading = false ;
 
-  constructor(private adminpdvServiceWeb: AdminpdvServiceWeb, private _utilService:UtilService) {
+  constructor(private _utilsService:UtilsService, private _adminpdvService:AdminpdvService) {
 
   }
 
   ngOnInit(): void {
-    this.adminpdvServiceWeb.nombredereclamationpdvvente('azrrtt').then(adminpdvServiceWebList => {
-      this.adminpdvDashboardNbreReclVente = adminpdvServiceWebList.response ;
-    }).then( () => {
-      console.log("Here Dashboard Test")
-      this.suivionepointIntervalleDashboard();
-    });
+
+    this._adminpdvService.nombredereclamationpdvvente({type:"azrrtt"}).subscribe(
+      data => {
+        console.log("Localhost Test");
+        console.log(data.response);
+        this.adminpdvDashboardNbreReclVente = data.response ;
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
+        this.suivionepointIntervalleDashboard();
+      }
+    )
 
   }
 
@@ -43,9 +50,11 @@ export class AdminpdvDashboardComponent implements OnInit {
 
   public suivionepointIntervalleDashboard(){
     this.loading = true;
-    this._utilService.getOnePointSuivicc({infoinit:'initdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
+    console.log("suivionepointIntervalleDashboard")
+    this._utilsService.getOnePointSuivicc({infoinit:'initdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
       .subscribe(
         data => {
+          console.log(data)
           this.id_gerant_selectionne = -1;
           if(data.errorCode){
             this.datapointrecup = data.message;
@@ -78,6 +87,45 @@ export class AdminpdvDashboardComponent implements OnInit {
           this.loading = false;
         }
       );
+
+    /*
+
+     this._utilService.getOnePointSuivicc({infoinit:'initdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
+     .subscribe(
+     data => {
+     this.id_gerant_selectionne = -1;
+     if(data.errorCode){
+     this.datapointrecup = data.message;
+     this.suivionepointSelectionintervalledateinit = data.dateinitial;
+     this.suivionepointSelectionintervalledatefinal = data.datefinale;
+     this.touslesgerants = this.datapointrecup.gerants.map(function(type){
+     return {
+     id_gerant: type.id_gerant,
+     nom_gerant: type.nom_gerant,
+     telephone: type.telephone,
+     last_connection: type.last_connection.date.split('.')[0],
+     }
+     });
+     this.touslescommissions = this.datapointrecup.commissions.map(function(type){
+     return {
+     id_gerant: type.idUser,
+     dateop: type.dateoperation.date.split('.')[0],
+     dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+     montant: Number(type.montant),
+     commission: Number(type.commissionpdv),
+     service: type.nomservice.toLowerCase(),
+     produit: type.libelleoperation.toLowerCase(),
+     }
+     });
+     }
+     },
+     error => alert(error),
+     () => {
+     this.suivionepointSelectionGerant(-1);
+     this.loading = false;
+     }
+     );
+     */
   }
 
 
@@ -86,9 +134,10 @@ export class AdminpdvDashboardComponent implements OnInit {
   public suivionepointIntervalle(gerant:any){
     this.touslescommissions = [];
     this.loading = true;
-    this._utilService.getOnePointSuivicc({infoinit:'notinitdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
+    this._utilsService.getOnePointSuivicc({infoinit:'notinitdashboard', type:'intervalle', infotype:this.suivionepointSelectionintervalledateinit+" "+this.suivionepointSelectionintervalledatefinal})
       .subscribe(
         data => {
+          console.log(data);
           this.id_gerant_selectionne = -1;
           if(data.errorCode){
             this.touslescommissions = data.message.map(function(type){

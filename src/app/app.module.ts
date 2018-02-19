@@ -202,13 +202,16 @@ import { FirstlogComponent } from './firstlog/firstlog.component';
 import {FiltreexploitationaveccommissionPipe} from "./pipes/filtreexploitationaveccommission.pipe";
 import {GuideUserCaisseComponent} from "./guideusercaisse/guideusercaisse.component";
 import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersuperviseur.component";
-import { WizallComponent } from './wizall/wizall.component';
+import {WizallComponent } from './wizall/wizall.component';
 import {UtilService} from "./services/util.service";
+import {UtilsService} from "./services/utils.service";
+import {CrmService} from "./services/crm.service";
+import {AdminpdvService} from "./services/adminpdv.service";
 import {RegistrationService} from "./services/registration.service";
 import {CrmDoorServiceWeb} from "./webServiceClients/CrmDoor/crmdoor.service";
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
-import { CommissionnementComponent } from './commissionnement/commissionnement.component';
-import { ChallengeresultsComponent } from './challengeresults/challengeresults.component';
+import {CommissionnementComponent } from './commissionnement/commissionnement.component';
+import {ChallengeresultsComponent } from './challengeresults/challengeresults.component';
 import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi-pdv-creditation-cc/admin-multi-pdv-creditation-cc.component";
 
 import { ZoningComponent } from './zoning/zoning.component';
@@ -384,6 +387,7 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
       CashInService,
       OrangeMoneyService,
       UtilServiceWeb,
+      AdminpdvService,
       SoldeService,
       RetraitEspeceService,
       AchatCreditTelService,
@@ -417,7 +421,9 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
       CrmServiceWeb,
       DemandepretServiceWeb,
       CrmDoorServiceWeb,
-      UtilService,
+    UtilService,
+    UtilsService,
+    CrmService,
       RegistrationService,
       WizallWebService,
       FacturierServiceWeb,
@@ -425,4 +431,3 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 

@@ -5,7 +5,8 @@ import * as sha1 from 'js-sha1';
 import { AuthenticationService } from '../../services/authentification.service';
 
 import { AdminpdvServiceWeb } from '../../webServiceClients/Adminpdv/adminpdv.service';
-import {UtilService} from "../../services/util.service";
+import {AdminpdvService} from "../../services/adminpdv.service";
+import {UtilsService} from "../../services/utils.service";
 
 
 @Component({
@@ -50,20 +51,25 @@ export class AdminpdvparametrecompteComponent implements OnInit {
   public errorConfirm:boolean = false;
   loading = false ;
 
-  constructor(private adminpdvServiceWeb: AdminpdvServiceWeb, private authenticationService: AuthenticationService, private _utilService:UtilService) { }
+  constructor(private _adminpdvService:AdminpdvService, private authenticationService: AuthenticationService, private _utilsService:UtilsService) { }
 
   ngOnInit() {
 
-    this.adminpdvServiceWeb.listuserpdv('azrrtt').then(adminpdvServiceWebList => {
-      this.monitoringAdminpdvUserpdv = adminpdvServiceWebList.response;
-      console.log(this.monitoringAdminpdvUserpdv);
-      this.getRegionNewCaissier();
-    });
+    this._adminpdvService.listuserpdv({type:"azrrtt"}).subscribe(
+      data => {
+        this.monitoringAdminpdvUserpdv = data.response ;
+      },
+      error => alert(error),
+      () => {
+        this.getRegionNewCaissier();
+        this.loading = false ;
+      }
+    );
 
   }
 
   getRegionNewCaissier(){
-    this._utilService.getRegion()
+    this._utilsService.getRegion()
       .subscribe(
         data => {
           this.regions = data;
@@ -78,7 +84,7 @@ export class AdminpdvparametrecompteComponent implements OnInit {
     this.iszones = false;
     this.zone = '--Choix zone--';
     this.souszone = '--Choix sous zone--';
-    this._utilService.getZoneByRegion(this.region)
+    this._utilsService.getZoneByRegion(this.region)
       .subscribe(
         data => {
           this.zones = data;
@@ -89,10 +95,9 @@ export class AdminpdvparametrecompteComponent implements OnInit {
       );
   }
 
-
   selectZoneNewCaissier(){
     this.issouszones = false;
-    this._utilService.getSouszoneByZoneByRegion({region:this.region, zone: this.zone})
+    this._utilsService.getSouszoneByZoneByRegion({region:this.region, zone: this.zone})
       .subscribe(
         data => {
           this.souszones = data;
@@ -125,16 +130,19 @@ export class AdminpdvparametrecompteComponent implements OnInit {
     return JSON.parse(adresse).address+" / "+JSON.parse(adresse).zone ;
   }
 
-
   public modif(item):void {
     this.modifuserpdv = item;
-    console.log(this.modifuserpdv);
   }
 
   public validermodif():void {
     if(this.password == this.confirmPassword) {
-      this.adminpdvServiceWeb.modifypdv(this.modifuserpdv.idpdv, sha1(this.password) ).then(adminpdvServiceWebList => {
-      });
+      this._adminpdvService.modifypdv({idpdv: this.modifuserpdv.idpdv, modifydata: sha1(this.password)}).subscribe(
+        data => {
+          console.log(data);
+        },
+        error => alert(error),
+        () => console.log("Localhost Test")
+      );
 
       this.errorConfirm = false;
       this.password= null;
@@ -144,20 +152,43 @@ export class AdminpdvparametrecompteComponent implements OnInit {
     else{
       this.errorConfirm = true;
     }
-
   }
 
   inscrire(){
-    let paramInscrpt = {'token': JSON.parse(sessionStorage.getItem("currentUser")).baseToken, 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.telephone, 'nometps':this.nometps, 'nomshop':this.nomshop, adresse : JSON.stringify({'region':this.region, 'zone':this.zone, 'souszone':this.souszone, 'address':this.adresse}) } ;
     this.loading = true ;
-    console.log( "Nouvel Inscrit : "+JSON.stringify(paramInscrpt) ) ;
-    this.authenticationService.creerProfilCaissier(paramInscrpt).then( retourserveur => {
-      this.loading = false ;
-      if(retourserveur!="bad"){
-        this.adminpdvServiceWeb.listuserpdv('azrrtt').then(adminpdvServiceWebList => {
-          this.monitoringAdminpdvUserpdv = adminpdvServiceWebList.response;
-        });
+    this._adminpdvService.creerProfilCaissier({
+      prenom:this.prenom,
+      nom:this.nom,
+      email:this.email,
+      telephone:this.telephone,
+      nometps:this.nometps,
+      nomshop:this.nomshop,
+      adresse : JSON.stringify({
+        region:this.region,
+        zone:this.zone,
+        souszone:this.souszone,
+        address:this.adresse
+      })
+    }).subscribe(
+      data => {
+        console.log(data);
+        if(data!="bad"){
+          this._adminpdvService.listuserpdv({type:"azrrtt"}).subscribe(
+            data => {
+              this.monitoringAdminpdvUserpdv = data.response ;
+            },
+            error => alert(error),
+            () => {
+              this.loading = false ;
+            }
+          );
+        }else{
+          this.existLogin = true ;
+        }
 
+      },
+      error => alert(error),
+      () => {
         this.prenom=undefined ;
         this.nom=undefined ;
         this.email=undefined ;
@@ -170,10 +201,10 @@ export class AdminpdvparametrecompteComponent implements OnInit {
         this.adresse=undefined ;
         this.existLogin = false ;
         this.closeModal();
-      }else
-        this.existLogin = true ;
+        this.loading = false ;
+      }
+    );
 
-    }) ;
   }
 
   currencyFormat(somme) : String{
@@ -182,21 +213,42 @@ export class AdminpdvparametrecompteComponent implements OnInit {
 
   public deconnexionsession(pdv,i):void {
     this.loading = true ;
-    this.adminpdvServiceWeb.deconnectpdv(pdv.idpdv).then(reponseServeur => {
-      this.loading = false ;
-      if (reponseServeur.errorCode==1){
-        pdv.isconnect = !pdv.isconnect ;
-      }
-    });
+    this._adminpdvService.deconnectpdv({idpdv: pdv.idpdv}).subscribe(
+      data => {
+        this._adminpdvService.listuserpdv({type:"azrrtt"}).subscribe(
+          data => {
+            this.monitoringAdminpdvUserpdv = data.response ;
+          },
+          error => alert(error),
+          () => {
+            this.loading = false ;
+          }
+        );
+      },
+      error => alert(error),
+      () => console.log("Localhost Test")
+    );
   }
-
 
   public autoriseravoirdeposir(gerant, estautorise:number){
-      this.adminpdvServiceWeb.autoriservoirdepot(gerant.idpdv, estautorise).then(adminpdvServiceWebList => {
-        console.log(adminpdvServiceWebList.response);
-        console.log('--------------');
-      });
+    console.log("Localhost autoriseravoirdeposir")
+    console.log(gerant)
+    this.loading = true ;
+    this._adminpdvService.autoriservoirdepot({idpdv: gerant.idpdv, estautoriser: estautorise}).subscribe(
+      data => {
+        this._adminpdvService.listuserpdv({type:"azrrtt"}).subscribe(
+          data => {
+            this.monitoringAdminpdvUserpdv = data.response ;
+          },
+          error => alert(error),
+          () => {
+            this.loading = false ;
+          }
+        );
+      },
+      error => alert(error),
+      () => console.log("Localhost Test")
+    );
   }
-
 
 }
