@@ -7,7 +7,7 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import * as sha1 from 'js-sha1';
 import * as _ from "lodash";
 
-import { CrmServiceWeb, Portefeuille, Relance, Promotion, Prospection, Suivicommande, Servicepoint } from '../webServiceClients/Crm/crm.service';
+import {CrmService, Portefeuille, Relance, Promotion, Prospection, Suivicommande, Servicepoint} from "../services/crm.service";
 
 
 @Component({
@@ -49,21 +49,34 @@ export class CrmComponent implements OnInit {
   		   private location: Location,
          private route:ActivatedRoute,
          private router: Router,
-         private crmServiceWeb:CrmServiceWeb
+         private _crmService: CrmService
          ) { }
 
 
   ngOnInit() {
     this.loading = true ;
-      this.crmServiceWeb.servicepoint(this.token).then(serviceptserviceList => {
-        this.servicepoint = serviceptserviceList;
-        this.crmServiceWeb.portefeuille(this.token).then(crmserviceList => {
-            this.portefeuille = crmserviceList;
-            this.loading = false ;
-          });
-      });
-  }
 
+    this._crmService.servicepoint().subscribe(
+      data => {
+        console.log(data)
+        this.servicepoint = data ;
+        console.log(this.servicepoint)
+      },
+      error => alert(error),
+      () => {
+        this._crmService.portefeuille().subscribe(
+          data => {
+            this.portefeuille = data ;
+          },
+          error => alert(error),
+          () => {
+            console.log("Here Dashboard Test")
+            this.loading = false ;
+          }
+        )
+      }
+    )
+  }
 
   public menuHeadClick(option: number){
     if(option == 1){
@@ -103,25 +116,35 @@ export class CrmComponent implements OnInit {
     }
   }
 
-
-
   relanceMeth(){
     this.loading = true ;
   	this.checkerRelance = [] ;
-  	this.crmServiceWeb.relance(this.token).then(crmserviceList => {
-        this.relance = crmserviceList;
+    this._crmService.relance().subscribe(
+      data => {
+        this.relance = data ;
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
         this.loading = false ;
-      });
-
+      }
+    )
   }
 
   promotionMeth(){
     this.loading = true ;
-    this.checkerPromo = [] ;
-  	this.crmServiceWeb.promotion(this.token).then(crmserviceList => {
-		        this.promotion = crmserviceList;
-	          this.loading = false ;
-		      });
+    this.checkerPromo = [];
+    this._crmService.promotion().subscribe(
+      data => {
+        this.promotion = data ;
+        console.log(this.promotion)
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
+        this.loading = false ;
+      }
+    )
   }
 
   getNom(infosop : string ){
@@ -139,27 +162,45 @@ export class CrmComponent implements OnInit {
   prospect(){
       this.loading = true ;
 
-       this.crmServiceWeb.prospection(this.token).then(crmserviceList => {
-        this.prospection = crmserviceList;
-          this.loading = false ;
-      });
+    this._crmService.prospection().subscribe(
+      data => {
+        this.prospection = data ;
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
+        this.loading = false ;
+      }
+    )
   }
 
   commandes(){
       this.loading = true ;
-
-    this.crmServiceWeb.suivicommande(this.token).then(crmserviceList => {
-        this.suivicommande = crmserviceList;
-          this.loading = false ;
-      });
+    this._crmService.suivicommande().subscribe(
+      data => {
+        this.suivicommande = data ;
+        console.log(this.suivicommande);
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
+        this.loading = false ;
+      }
+    )
   }
 
   prtflle(){
     this.loading = true ;
-    this.crmServiceWeb.portefeuille(this.token).then(crmserviceList => {
-        this.portefeuille = crmserviceList;
+    this._crmService.portefeuille().subscribe(
+      data => {
+        this.portefeuille = data ;
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
         this.loading = false ;
-      });
+      }
+    )
   }
 
   checkThisForRelance( isChecked:boolean, customer:any, index ){
@@ -186,10 +227,15 @@ export class CrmComponent implements OnInit {
 
    sms(telephone){
     let destinataire = '+221'+telephone ;
-    this.crmServiceWeb.sendSms(this.token, destinataire, this.message).then(crmserviceList => {
-      this.childModal.hide();
-      //console.log("SMS Sent with status "+crmserviceList) ;
-      });
+     this._crmService.sendSms({destinataires:destinataire, messageContain:this.message}).subscribe(
+       data => {
+         this.childModal.hide();
+       },
+       error => alert(error),
+       () => {
+         console.log("Here Dashboard Test")
+       }
+     )
    }
 
    appel(){}
@@ -205,11 +251,15 @@ export class CrmComponent implements OnInit {
       destinataires = destinataires+'#+221'+this.checkerPromo[i].customer.telephone ;
     }
 
-    this.crmServiceWeb.sendSms(this.token, destinataires, this.message).then(crmserviceList => {
-      this.childModal.hide();
-      //console.log("SMS Sent") ;
-      });
-
+    this._crmService.sendSms({destinataires:destinataires, messageContain:this.message}).subscribe(
+      data => {
+        this.childModal.hide();
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
+      }
+    )
   }
 
   envoyersmsRelance(){
@@ -219,10 +269,15 @@ export class CrmComponent implements OnInit {
       destinataires = destinataires+'#+221'+this.checkerRelance[i].customer.telephone ;
     }
 
-    this.crmServiceWeb.sendSms(this.token, destinataires, this.message).then(crmserviceList => {
-      this.childModal.hide();
-      //console.log("SMS Sent WITH STATUS "+crmserviceList) ;
-      });
+    this._crmService.sendSms({destinataires:destinataires, messageContain:this.message}).subscribe(
+      data => {
+        this.childModal.hide();
+      },
+      error => alert(error),
+      () => {
+        console.log("Here Dashboard Test")
+      }
+    )
   }
 
 

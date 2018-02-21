@@ -199,6 +199,8 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
   public lineChartLegend:boolean = true;
 
   public suivrepoint(pdv:any){
+    console.log('------111-------')
+    console.log(pdv)
     this.pointasuivre = null;
     this.point = null;
 
@@ -211,6 +213,8 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
 
     this.adminmultipdvServiceWeb.activiteservices("suivre points init "+pdv.iduser+" "+this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal).then(adminpdvServiceWebList =>{
       this.point = adminpdvServiceWebList.response;
+
+      console.log(adminpdvServiceWebList)
 
       this.superviseurpoint = {
         date_ajout: this.point.superviseur.dateCreation.date.split('.')[0],

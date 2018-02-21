@@ -3,7 +3,7 @@ import {Color, BaseChartDirective} from 'ng2-charts';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
 import { AdminmultipdvNombredeReclamationAgentPdvVente }    from '../../models/adminmultipdv-dashboard-nrpv';
-import { AdminmultipdvServiceWeb } from '../../webServiceClients/Adminmultipdv/adminmultipdv.service';
+import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 @Component({
   selector: 'app-admin-multi-pdv-dashboard',
@@ -42,17 +42,22 @@ export class AdminmultipdvDashboardComponent implements OnInit {
   public performancesadminclasserbylotbydate:any
 
 
-  constructor(private adminmultipdvServiceWeb: AdminmultipdvServiceWeb) {}
+  constructor(private _adminmultipdvService: AdminmultipdvService) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.adminmultipdvServiceWeb.nombredereclamationagentpdvvente('azrrtt').then(adminpdvServiceWebList =>
-      this.AdminmultipdvNombredereclamationagentpdvvente = adminpdvServiceWebList.response
-    ).then(() => {
+    this._adminmultipdvService.nombredereclamationagentpdvvente({type:"azrrtt"}).subscribe(
+      data => {
+        console.log("Localhost Test");
+        console.log(data.response);
+        this.AdminmultipdvNombredereclamationagentpdvvente = data.response ;
         this.suiviserviceInit();
-    }).then(() => {
-      this.estcheckPerformance('journee');
-    });
+      },
+      error => alert(error),
+      () => {
+        this.estcheckPerformance('journee');
+      }
+    )
   }
 
   public colorsEmptyObject: Array<Color> = [{}];
@@ -66,7 +71,6 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     return Number(number).toLocaleString();
   }
 
-
   public chartClicked(e:any):void {
     if (e.active[0]){
       this.estdetailPerformance(e.active[0]._model.label);
@@ -75,23 +79,36 @@ export class AdminmultipdvDashboardComponent implements OnInit {
   }
 
   public performancesadminclasserbydate(type:string):void {
-    this.adminmultipdvServiceWeb.performancesadminclasserbydate(type).then(adminmultipdvServiceWebList => {
-      this.adminmultpdvperformancesservices = adminmultipdvServiceWebList.response ;
-      this.nbreOp = adminmultipdvServiceWebList.nbreop ;
-      this.datasets = [{
-        data: this.adminmultpdvperformancesservices.montanttotal,
-        backgroundColor: ["red", "yellow", "orange", "green"]
-      }];
-    });
+    this._adminmultipdvService.performancesadminclasserbydate({typedate:type}).subscribe(
+      adminmultipdvServiceWebList => {
+        console.log(adminmultipdvServiceWebList.response);
+        this.adminmultpdvperformancesservices = adminmultipdvServiceWebList.response ;
+        this.nbreOp = adminmultipdvServiceWebList.nbreop ;
+        this.datasets = [{
+          data: this.adminmultpdvperformancesservices.montanttotal,
+          backgroundColor: ["red", "yellow", "orange", "green"]
+        }];
+      },
+      error => alert(error),
+      () => {
+        console.log("Localhost Test");
+      }
+    )
   }
 
   public activiteservice(lineTitle):void {
-    this.adminmultipdvServiceWeb.activiteservices(lineTitle).then(adminpdvServiceWebList =>{
-      this.adminmultipdvActiviteservices = adminpdvServiceWebList.response;
-      this.lineChartData = this.adminmultipdvActiviteservices.datas;
-      this.lineChartLabels = this.adminmultipdvActiviteservices.dateactivite;
-      this.lineTilte = this.adminmultipdvActiviteservices.typeactivite;
-    });
+    this._adminmultipdvService.activiteservices({type:lineTitle}).subscribe(
+      adminpdvServiceWebList => {
+        this.adminmultipdvActiviteservices = adminpdvServiceWebList.response;
+        this.lineChartData = this.adminmultipdvActiviteservices.datas;
+        this.lineChartLabels = this.adminmultipdvActiviteservices.dateactivite;
+        this.lineTilte = this.adminmultipdvActiviteservices.typeactivite;
+      },
+      error => alert(error),
+      () => {
+        console.log("Localhost Test");
+      }
+    )
   }
 
   estcheckPerformance(type: string){
@@ -173,16 +190,20 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     }
 
     this.loading = true ;
-    this.adminmultipdvServiceWeb.performancesadminclasserbylotbydate(lot, type).then(adminmultipdvServiceWebList => {
-      if(adminmultipdvServiceWebList.errorCode == 1){
-        this.performancesadminclasserbylotbydate = adminmultipdvServiceWebList.response;
+    this._adminmultipdvService.performancesadminclasserbylotbydate({typelot:lot, typedate:type}).subscribe(
+      adminmultipdvServiceWebList => {
+        if(adminmultipdvServiceWebList.errorCode == 1){
+          this.performancesadminclasserbylotbydate = adminmultipdvServiceWebList.response;
+        }
+        else{
+          this.performancesadminclasserbylotbydate = [];
+        }
+      },
+      error => alert(error),
+      () => {
+        this.loading = false ;
       }
-      else{
-        this.performancesadminclasserbylotbydate = [];
-      }
-      this.loading = false ;
-    });
-
+    )
   }
 
   public detailperformancesadminclasserbydate(adminpdv: any){
@@ -203,24 +224,30 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     if (this.checkPerformance.tous) {
       type = "tous";
     }
-    this.adminmultipdvServiceWeb.detailperformancesadminclasserbydate(adminpdv.idadminpdv, type).then(adminmultipdvServiceWebList => {
-      if(adminmultipdvServiceWebList.errorCode == 1){
-        this.detailperformancepdv = adminmultipdvServiceWebList.response.map(function (op) {
-          return {
-            dateoperation: op.dateoperation.date.split('.')[0],
-            fullname: op.fullname,
-            idadminpdv: op.idadminpdv,
-            montanttotal: op.montanttotal,
-            operateur: op.operateur,
-            telephone: op.telephone,
-            traitement: op.traitement,
-          }
-        });
+    this._adminmultipdvService.detailperformancesadminclasserbydate({idadminpdv:adminpdv.idadminpdv, typedate:type}).subscribe(
+      adminmultipdvServiceWebList => {
+        if(adminmultipdvServiceWebList.errorCode == 1){
+          this.detailperformancepdv = adminmultipdvServiceWebList.response.map(function (op) {
+            return {
+              dateoperation: op.dateoperation.date.split('.')[0],
+              fullname: op.fullname,
+              idadminpdv: op.idadminpdv,
+              montanttotal: op.montanttotal,
+              operateur: op.operateur,
+              telephone: op.telephone,
+              traitement: op.traitement,
+            }
+          });
+        }
+        else{
+          this.detailperformancepdv = null;
+        }
+      },
+      error => alert(error),
+      () => {
+        console.log("Localhost Test");
       }
-      else{
-        this.detailperformancepdv = null;
-      }
-    });
+    )
   }
 
   public activiteserviceparno():void {
@@ -256,28 +283,33 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     let datenow = ((new Date()).toJSON()).split("T",2)[0];
     this.suiviserviceSelectionintervalledateinit = datenow;
     this.suiviserviceSelectionintervalledatefinal = datenow;
-    this.adminmultipdvServiceWeb.activiteservices(this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal).then(adminpdvServiceWebList =>{
-      this.touslescommissions = adminpdvServiceWebList.response;
-      this.touslescommissions = this.touslescommissions.map(function(type){
-        return {
-          id_gerant: type.idUser,
-          dateop: type.dateoperation.date.split('.')[0],
-          dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
-          dateop_heure: type.dateoperation.date.split('.')[0].split(':')[0],
-          montant: Number(type.montant),
-          commission: Number(type.commissionbbs),
-          service: type.nomservice.toLowerCase(),
-          adminpdv: type.adminpdv,
-          pdv: type.pdv,
-          produit: type.libelleoperation.toLowerCase(),
-        }
-      });
-    }).then(()  => {
-      this.suiviSelectionByHeure();
-    }).then(()  => {
-      this.suivipointsdetail();
-      console.log('-------------------------------')
-    });
+
+    this._adminmultipdvService.activiteservices({type:this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal}).subscribe(
+      adminpdvServiceWebList => {
+        this.touslescommissions = adminpdvServiceWebList.response;
+        this.touslescommissions = this.touslescommissions.map(function(type){
+          return {
+            id_gerant: type.idUser,
+            dateop: type.dateoperation.date.split('.')[0],
+            dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+            dateop_heure: type.dateoperation.date.split('.')[0].split(':')[0],
+            montant: Number(type.montant),
+            commission: Number(type.commissionbbs),
+            service: type.nomservice.toLowerCase(),
+            adminpdv: type.adminpdv,
+            pdv: type.pdv,
+            produit: type.libelleoperation.toLowerCase(),
+          }
+        });
+        this.suiviSelectionByHeure();
+      },
+      error => alert(error),
+      () => {
+        this.suivipointsdetail();
+        console.log('-------------------------------')
+      }
+    )
+
   }
 
   public suiviSelectionByHeure(){
@@ -336,33 +368,34 @@ export class AdminmultipdvDashboardComponent implements OnInit {
   public suiviserviceIntervalle(){
     this.loading = true;
     console.log('intervalle');
-    this.adminmultipdvServiceWeb.activiteservices(this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal).then(adminpdvServiceWebList =>{
-      console.log(adminpdvServiceWebList.response);
-      console.log('-----------------------------');
-      this.touslescommissions = adminpdvServiceWebList.response.map(function(type){
-        return {
-          id_gerant: type.idUser,
-          dateop: type.dateoperation.date.split('.')[0],
-          dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
-          dateop_heure: type.dateoperation.date.split('.')[0].split(':')[0],
-          montant: Number(type.montant),
-          commission: Number(type.commissionbbs),
-          service: type.nomservice.toLowerCase(),
-          adminpdv: type.adminpdv,
-          pdv: type.pdv,
-          produit: type.libelleoperation.toLowerCase(),
+    this._adminmultipdvService.activiteservices({type:this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal}).subscribe(
+      adminpdvServiceWebList => {
+        this.touslescommissions = adminpdvServiceWebList.response.map(function(type){
+          return {
+            id_gerant: type.idUser,
+            dateop: type.dateoperation.date.split('.')[0],
+            dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+            dateop_heure: type.dateoperation.date.split('.')[0].split(':')[0],
+            montant: Number(type.montant),
+            commission: Number(type.commissionbbs),
+            service: type.nomservice.toLowerCase(),
+            adminpdv: type.adminpdv,
+            pdv: type.pdv,
+            produit: type.libelleoperation.toLowerCase(),
+          }
+        });
+      },
+      error => alert(error),
+      () => {
+        if(this.suiviserviceSelectionintervalledateinit==this.suiviserviceSelectionintervalledatefinal){
+          this.suiviSelectionByHeure();
         }
-      });
-    }).then(()  => {
-      if(this.suiviserviceSelectionintervalledateinit==this.suiviserviceSelectionintervalledatefinal){
-        this.suiviSelectionByHeure();
+        else{
+          this.suivionepointSelectionGerant();
+        }
+        this.suivipointsdetail();
       }
-      else{
-        this.suivionepointSelectionGerant();
-      }
-    }).then(()  => {
-      this.suivipointsdetail();
-    });
+    )
   }
 
   public suivionepointSelectionGerant(){

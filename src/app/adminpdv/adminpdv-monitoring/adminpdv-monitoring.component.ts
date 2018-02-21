@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy ,ViewChild } from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
+
 import { ModalDirective } from 'ng2-bootstrap/modal';
-
-import {AdminpdvService} from "../../services/adminpdv.service";
-
-import {UtilsService} from "../../services/utils.service";
-import {CrmService} from "../../services/crm.service";
 import {stringify} from "querystring";
 import {BaseChartDirective} from "ng2-charts";
+
+import {AdminpdvService} from "../../services/adminpdv.service";
+import {UtilsService} from "../../services/utils.service";
+import {CrmService} from "../../services/crm.service";
+
 
 
 

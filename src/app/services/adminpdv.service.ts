@@ -44,7 +44,7 @@ export class AdminpdvService {
 
   modifypdv(data:any){
     let url = this.link+"/admindpv-sen/modifypdv";
-    let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv, modifydata: data.modifydatatype});
+    let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv, modifydata: data.modifydata});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
@@ -70,14 +70,6 @@ export class AdminpdvService {
     let url = this.link+"/admindpv-sen/bilandeposit";
     let datas = JSON.stringify({token:this.basetoken, type: data.type});
     let params = 'params='+datas;
-    return this._http.post(url, params, {headers:this.headers})
-      .map(res => res.json());
-  }
-
-  creerProfilCaissier(data:any){
-    let url = this.link+"/admindpv-sen/creerProfilCaissier";
-    let datas = JSON.stringify({token:this.basetoken, prenom:data.prenom, nom:data.nom, email:data.email, telephone:data.telephone, nometps:data.nometps, nomshop:data.nomshop, adresse:data.adresse});
-    let params = 'nvelInscrit='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }

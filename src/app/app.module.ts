@@ -224,6 +224,9 @@ import { SdeComponent } from './sde/sde.component';
 import { WoyofalComponent } from './woyofal/woyofal.component';
 
 import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
+import {AuthService} from "./services/auth.service";
+import {ComptabiliteService} from "./services/comptabilite.service";
+import {AdminmultipdvService} from "./services/adminmultipdv.service";
 
 
 
@@ -260,7 +263,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     ImpressionComponent,
     ImpressionadminpdvComponent,
 
-
     PostcashComponent,
 
     AdminmultipdvDashboardComponent,
@@ -276,7 +278,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     AdminpdvMonitoringComponent,
     AdminpdvStatusReclamationComponent,
     AdminpdvparametrecompteComponent,
-
 
     GeomapComponentComponent,
     LoaderComponent,
@@ -387,7 +388,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
       CashInService,
       OrangeMoneyService,
       UtilServiceWeb,
-      AdminpdvService,
       SoldeService,
       RetraitEspeceService,
       AchatCreditTelService,
@@ -421,12 +421,18 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
       CrmServiceWeb,
       DemandepretServiceWeb,
       CrmDoorServiceWeb,
+    RegistrationService,
+    WizallWebService,
+    FacturierServiceWeb,
+
+    AdminpdvService,
+    AdminmultipdvService,
     UtilService,
     UtilsService,
+    AuthService,
+    ComptabiliteService,
     CrmService,
-      RegistrationService,
-      WizallWebService,
-      FacturierServiceWeb,
+
   ],
   bootstrap: [AppComponent]
 })

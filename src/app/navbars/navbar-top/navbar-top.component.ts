@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthentificationServiceWeb } from '../../webServiceClients/Authentification/authentification.service';
 import { UtilServiceWeb } from '../../webServiceClients/utils/Util.service' ;
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-navbar-top',
@@ -10,16 +10,14 @@ import { UtilServiceWeb } from '../../webServiceClients/utils/Util.service' ;
   styleUrls: ['./navbar-top.component.css']
 })
 export class NavbarTopComponent implements OnInit {
-  authentiService: AuthentificationServiceWeb;
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   message : string  ;
   autorisedUser = 0 ;
   solde : number ;
 
 	currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-  constructor(private router: Router, private utilService : UtilServiceWeb) {
+  constructor(private _authService:AuthService, private router: Router, private utilService : UtilServiceWeb) {
 
-    this.authentiService = new AuthentificationServiceWeb();
     this.utilService.isDepotCheckAuthorized().then( resp => {
       if(JSON.parse(resp._body).estautorise!=undefined)
         this.autorisedUser = JSON.parse(resp._body).estautorise ;
@@ -54,15 +52,19 @@ export class NavbarTopComponent implements OnInit {
   }
 
   deconnexion(){
-  	this.authentiService.deconnecter(this.token).then( response => {
-  	 if (response==1){
-  			sessionStorage.removeItem('currentUser');
-        sessionStorage.clear();
-        this.router.navigate(['']);
-  	 } else
-  	 	console.log("Echec deconnexion!") ;
-
-  	 }) ;
+    console.log("deconnexion ----------")
+    this._authService.deconnexion().subscribe(
+      response => {
+        if (response==1){
+          sessionStorage.removeItem('currentUser');
+          sessionStorage.clear();
+          this.router.navigate(['']);
+        } else
+          console.log("Echec deconnexion!") ;
+      },
+      error => console.log(error),
+      () => console.log("Here Dashboard deconnexion")
+    )
   }
 
 }

@@ -15,8 +15,8 @@ import {RegistrationService} from "../services/registration.service";
 })
 export class AuthComponentComponent implements OnInit {
 
-  userName = ''  ; 
-  userPwd  = '' ; 
+  userName = ''  ;
+  userPwd  = '' ;
   fakevalues : boolean ;
   phase2fakevalues : boolean = true ;
   saisietoken : string ;
@@ -46,20 +46,20 @@ export class AuthComponentComponent implements OnInit {
   adresse : any ;
 
   l1: string ;
-  l2: string ; 
+  l2: string ;
   l3: string ;
   l4: string ;
   c1: string ;
-  c2: string ; 
-  c3: string ; 
-  c4: string ; 
+  c2: string ;
+  c3: string ;
+  c4: string ;
 
   fromSMS : string ;
   backstring : string = "" ;
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService, private _compiler: Compiler, private _utilService:RegistrationService) 
-  { 
+    private authenticationService: AuthenticationService, private _compiler: Compiler, private _utilService:RegistrationService)
+  {
     this._compiler.clearCache();
   	this.fakevalues = true ;
   }
@@ -69,7 +69,7 @@ export class AuthComponentComponent implements OnInit {
     this.authenticationService.logout();
     this.getRegionNewCaissier();
   }
-    
+
   authentificate() {
     this.loading = true ;
     this.authenticationService.login(this.userName, this.userPwd).then(access=>
@@ -79,8 +79,8 @@ export class AuthComponentComponent implements OnInit {
           this.phase1 = false ;
         }else{
           this.fakevalues = false ;
-          this.userName = ''  ; 
-          this.userPwd  = '' ; 
+          this.userName = ''  ;
+          this.userPwd  = '' ;
           this.loading = false ;
         }
       });
@@ -93,42 +93,42 @@ export class AuthComponentComponent implements OnInit {
   authentificateBySMS(){
     this.loading = true ;
     this.authenticationService.loginPhase2(this.fromSMS+"#"+sessionStorage.getItem('headToken') ).then( access=>
-      { 
+      {
         console.log(access) ;
 
        if ( access === 3 ){
-          this.router.navigate(['/accueil']); 
-        }else 
+          this.router.navigate(['/accueil']);
+        }else
           if ( access === 2 ){
             if (JSON.parse(sessionStorage.getItem('currentUser')).firstuse==1)
-              this.router.navigate(['/soppipwdbifi']); 
-            else 
-              this.router.navigate(['/accueiladmpdv']);  
-          }else 
+              this.router.navigate(['/soppipwdbifi']);
+            else
+              this.router.navigate(['/accueiladmpdv']);
+          }else
             if ( access === 1 ){
-              this.router.navigate(['/accueiladmmpdv']);              
-            }else 
+              this.router.navigate(['/accueiladmmpdv']);
+            }else
             if ( access === 5 ){
-              this.router.navigate(['/accueilcoursier']);              
+              this.router.navigate(['/accueilcoursier']);
             }
-            else 
+            else
             if ( access === 4 ){
-              this.router.navigate(['/accueiladmincoursier']);              
+              this.router.navigate(['/accueiladmincoursier']);
             }
-            else 
+            else
             if ( access === 6 ){
-              this.router.navigate(['/accueiladmincommercial']);              
+              this.router.navigate(['/accueiladmincommercial']);
             }
-             else 
+             else
             if ( access === 7 ){
-              this.router.navigate(['/accueilcommercial']);              
+              this.router.navigate(['/accueilcommercial']);
             }
              else{
                   this.phase2fakevalues = false ;
-                  this.fromSMS = ''  ; 
-              }  
+                  this.fromSMS = ''  ;
+              }
 
-        this.loading = false ; 
+        this.loading = false ;
       });
   }
 

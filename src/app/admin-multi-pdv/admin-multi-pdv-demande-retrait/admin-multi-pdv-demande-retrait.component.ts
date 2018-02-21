@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AdminmultipdvDemanderetrait }    from '../../models/adminmultipdv-demanderetrait';
-import { AdminmultipdvServiceWeb } from '../../webServiceClients/Adminmultipdv/adminmultipdv.service';
 import {log} from "util";
+import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
 @Component({
@@ -20,23 +20,29 @@ export class AdminmultipdvDemandeRetraitComponent implements OnInit {
     public adminmultipdvDemanderetrait: AdminmultipdvDemanderetrait[];
     loading = false ;
 
-  constructor(private adminmultipdvServiceWeb: AdminmultipdvServiceWeb) { }
+  constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {
     this.loading = true ;
-    this.adminmultipdvServiceWeb.demanderetraitfond('azrrtt').then(adminmultipdvServiceWebList => {
-      this.adminmultipdvDemanderetrait = adminmultipdvServiceWebList.map(function (elt) {
-        return {
-          adresse:JSON.parse(elt.adresse).address,
-          agent:elt.agent,
-          datedemanderetrait:elt.datedemanderetrait,
-          etatdemande:elt.etatdemande,
-          iddemanderetrait:elt.iddemanderetrait,
-          montantdemande:elt.montantdemande,
-          telephone:elt.telephone,
-        }
-      });
-    });
+    this._adminmultipdvService.demanderetraitfond({type:"azrrtt"}).subscribe(
+      adminmultipdvServiceWebList => {
+        this.adminmultipdvDemanderetrait = adminmultipdvServiceWebList.map(function (elt) {
+          return {
+            adresse:JSON.parse(elt.adresse).address,
+            agent:elt.agent,
+            datedemanderetrait:elt.datedemanderetrait,
+            etatdemande:elt.etatdemande,
+            iddemanderetrait:elt.iddemanderetrait,
+            montantdemande:elt.montantdemande,
+            telephone:elt.telephone,
+          }
+        });
+      },
+      error => alert(error),
+      () => {
+        this.loading = false ;
+      }
+    )
   }
 
   public toInt(num: string) {
@@ -49,23 +55,34 @@ export class AdminmultipdvDemandeRetraitComponent implements OnInit {
 
     validretrait(iddemanderetrait:number){
       this.loading = true ;
-      this.adminmultipdvServiceWeb.validerretrait('azrrtt', iddemanderetrait).then(adminmultipdvServiceWebList => {
-        this.adminmultipdvServiceWeb.demanderetraitfond('azrrtt').then(adminmultipdvServiceWebList => {
-          this.adminmultipdvDemanderetrait = adminmultipdvServiceWebList.map(function (elt) {
-            return {
-              adresse:JSON.parse(elt.adresse).address,
-              agent:elt.agent,
-              datedemanderetrait:elt.datedemanderetrait,
-              etatdemande:elt.etatdemande,
-              iddemanderetrait:elt.iddemanderetrait,
-              montantdemande:elt.montantdemande,
-              telephone:elt.telephone,
+      this._adminmultipdvService.validerretrait({type:"azrrtt", idretrait: iddemanderetrait}).subscribe(
+        adminmultipdvServiceWebList => {
+          this._adminmultipdvService.demanderetraitfond({type:"azrrtt"}).subscribe(
+            adminmultipdvServiceWebList => {
+              this.adminmultipdvDemanderetrait = adminmultipdvServiceWebList.map(function (elt) {
+                return {
+                  adresse:JSON.parse(elt.adresse).address,
+                  agent:elt.agent,
+                  datedemanderetrait:elt.datedemanderetrait,
+                  etatdemande:elt.etatdemande,
+                  iddemanderetrait:elt.iddemanderetrait,
+                  montantdemande:elt.montantdemande,
+                  telephone:elt.telephone,
+                }
+              });
+            },
+            error => alert(error),
+            () => {
+              this.loading = false ;
             }
-          });
-        });
+          )
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
 
-        this.loading = false ;
-      });
     }
 
 }

@@ -2,9 +2,7 @@ import { ViewChild, ElementRef, Component, OnInit } from '@angular/core';
 import * as _ from "lodash";
 import * as sha1 from 'js-sha1';
 
-import { AuthenticationService } from '../../services/authentification.service';
-
-import { AdminpdvServiceWeb } from '../../webServiceClients/Adminpdv/adminpdv.service';
+import { AuthService } from '../../services/auth.service';
 import {AdminpdvService} from "../../services/adminpdv.service";
 import {UtilsService} from "../../services/utils.service";
 
@@ -51,10 +49,10 @@ export class AdminpdvparametrecompteComponent implements OnInit {
   public errorConfirm:boolean = false;
   loading = false ;
 
-  constructor(private _adminpdvService:AdminpdvService, private authenticationService: AuthenticationService, private _utilsService:UtilsService) { }
+  constructor(private _adminpdvService:AdminpdvService, private _authService: AuthService, private _utilsService:UtilsService) { }
 
   ngOnInit() {
-
+    console.log("test");
     this._adminpdvService.listuserpdv({type:"azrrtt"}).subscribe(
       data => {
         this.monitoringAdminpdvUserpdv = data.response ;
@@ -156,7 +154,7 @@ export class AdminpdvparametrecompteComponent implements OnInit {
 
   inscrire(){
     this.loading = true ;
-    this._adminpdvService.creerProfilCaissier({
+    this._authService.creerProfilCaissier({
       prenom:this.prenom,
       nom:this.nom,
       email:this.email,
