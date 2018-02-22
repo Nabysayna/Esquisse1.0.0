@@ -39,13 +39,13 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
             return {
               adminpdv:elt.adminpdv,
               adresse: JSON.parse(elt.adresse).address,
-              cautioninitiale:elt.cautioninitiale,
+              cautioninitiale:Number(elt.cautioninitiale),
               date_last_deposit:elt.date_last_deposit.date.split('.')[0],
               idcaution:elt.idcaution,
               iduser:elt.idUser,
-              montantconsomme:elt.montantconsomme,
+              montantconsomme:Number(elt.montantconsomme),
               telephone:elt.telephone,
-              categorie: (elt.cautioninitiale==0)?'pas':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
+              categorie: (elt.cautioninitiale==0 && elt.montantconsomme==0 )?'pas':(elt.cautioninitiale==0 && elt.montantconsomme!=0 )?'pasdepot_aveccaution':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
             }
           })
           console.log(this.adminmultipdvMajcaution);
@@ -81,17 +81,16 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
   }
 
   public validermaj(item):void {
-    this.loading = true ;
-    this._adminmultipdvService.depositinitialconsommeparservice({type: "azrrtt", idadminpdv: this.majcaution.idcaution, modifycaution: this.inputCaution, categorie:this.categoriepoint}).subscribe(
+    this.loading = true;
+    this._adminmultipdvService.modifymajcaution({type: "azrrtt", idadminpdv: this.majcaution.idcaution, modifycaution: this.inputCaution, categorie:this.categoriepoint}).subscribe(
       adminmultipdvServiceWebList => {
         console.log(adminmultipdvServiceWebList);
         this.closeModal();
-        this.loading = false ;
-        this.listmajcautions();
         this.categoriepoint = '---' ;
       },
       error => alert(error),
       () => {
+        this.listmajcautions();
         this.loading = false ;
       }
     )
@@ -111,6 +110,11 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
     if(categorie=='Pas de depot'){
       this.categorie = 'Pas de depot';
       this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pas');
+    }
+    if(categorie=='Pas de depot Avec caution'){
+      this.categorie = 'Pas de depot Avec caution';
+      console.log(this.listepoints);
+      this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pasdepot_aveccaution');
     }
     if(categorie=='Faible'){
       this.categorie = 'Faible';

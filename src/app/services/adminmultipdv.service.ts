@@ -122,5 +122,23 @@ export class AdminmultipdvService {
       .map(res => res.json());
   }
 
+  listcreditmanager(){
+    let url = this.link+"/adminmultidpv-sen/listcreditmanager";
+    let datas = JSON.stringify({token:this.basetoken, type:'me'});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  valideraacreditmanager(data:any){
+    let url = this.link+"/adminmultidpv-sen/ajoutcreditmanager";
+    let datas = JSON.stringify({token:this.basetoken, data:data});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+
+
 
 }

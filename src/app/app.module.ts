@@ -47,8 +47,6 @@ import { EFinancierService} from './tnt/tntservices';
 
 
 import { PostCashService }    from './services/postCash.service';
-import { AdminpdvDashboardService }    from './services/adminpdv-dashboard.service';
-import { AdminpdvMonitoringService }    from './services/adminpdv-monitoring.service';
 import { AuthentificationServiceWeb } from './webServiceClients/Authentification/authentification.service';
 import { PostCashServiceWeb } from './webServiceClients/PostcashClient/Postcash.service';
 import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
@@ -403,8 +401,6 @@ import {AdminmultipdvService} from "./services/adminmultipdv.service";
       AuthGuardcais,
       AuthGuardsup,
       PostCashService,
-      AdminpdvDashboardService,
-      AdminpdvMonitoringService,
       AuthentificationServiceWeb,
       ExpressoCashWebService,
       TigoCashService,
