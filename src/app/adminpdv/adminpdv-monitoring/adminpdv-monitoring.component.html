@@ -58,7 +58,7 @@
             <h2 class="alert" *ngIf="euppna"> Vous ne pouvez retirer un montant supèrieur à votre déposit</h2>
           </div>
           <div class="tab-pane fade in active text-center" id="depotiban" >
-            <button class="btn btn-success" (click)="showdepositeModal()">Faire un dépot</button>
+            <button class="btn btn-success" (click)="showdepositeModal(); fileinput.value=''">Faire un dépot</button>
             <div class="row"  style="margin-top: 1rem" *ngIf="listedeposit">
               <table class="table table-hover">
                 <thead>
@@ -110,20 +110,25 @@
 
             <div class="form-group">
               <label>Mode de versement</label>
-                    <select class="form-control input-sm" [(ngModel)]="modeversement">
-                      <option>Direct</option>
-                      <option>CPS</option>
-                      <option>CBAO</option>
-                    </select>
-<!-- 
-             <input type="file" (change)="fileChange($event)" placeholder="Uploader Image" accept=".png,.jpg">
- -->
+              <select class="form-control input-sm" [(ngModel)]="modeversement">
+                <option>Direct</option>
+                <option>CPS</option>
+                <option>CBAO</option>
+                <option>WARI</option>
+                <option>Orangemoney</option>
+              </select>
             </div>
-
           </div>
           <div class="col-sm-offset-1 col-xs-3">
             <img style="width:150px;height:150px" src="assets/bbs.png"  class="img-responsive" alt="photo de l'agent" />
           </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-5">
+            <label>Pièce justificative:</label>
+            <input type="file" #fileinput class="form-control-file" accept="image/*" (change)="fileChangeEvent($event)"/>
+          </div>
+          <button type="button" (click)="upload()" class="btn btn-sm btn-primary col-sm-1" [disabled]="existFile==false">Charger</button>
         </div>
         <div>
           Vous voulez faire un dépot de <b>{{ montantdeposit?currencyFormat(montantdeposit):'?' }} FCFA </b>

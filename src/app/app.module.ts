@@ -46,7 +46,6 @@ import { EFinancierService} from './tnt/tntservices';
 
 
 
-import { PostCashService }    from './services/postCash.service';
 import { AuthentificationServiceWeb } from './webServiceClients/Authentification/authentification.service';
 import { PostCashServiceWeb } from './webServiceClients/PostcashClient/Postcash.service';
 import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
@@ -225,6 +224,8 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
 import {AuthService} from "./services/auth.service";
 import {ComptabiliteService} from "./services/comptabilite.service";
 import {AdminmultipdvService} from "./services/adminmultipdv.service";
+import {TntService} from "./services/tnt.service";
+import {PostCashService} from "./services/postcash.service";
 
 
 
@@ -385,7 +386,6 @@ import {AdminmultipdvService} from "./services/adminmultipdv.service";
       CashOutService,
       CashInService,
       OrangeMoneyService,
-      UtilServiceWeb,
       SoldeService,
       RetraitEspeceService,
       AchatCreditTelService,
@@ -400,7 +400,8 @@ import {AdminmultipdvService} from "./services/adminmultipdv.service";
       AuthGuard,
       AuthGuardcais,
       AuthGuardsup,
-      PostCashService,
+
+      UtilServiceWeb,
       AuthentificationServiceWeb,
       ExpressoCashWebService,
       TigoCashService,
@@ -417,14 +418,17 @@ import {AdminmultipdvService} from "./services/adminmultipdv.service";
       CrmServiceWeb,
       DemandepretServiceWeb,
       CrmDoorServiceWeb,
-    RegistrationService,
-    WizallWebService,
-    FacturierServiceWeb,
+      RegistrationService,
+      WizallWebService,
+      FacturierServiceWeb,
 
     AdminpdvService,
     AdminmultipdvService,
     UtilService,
     UtilsService,
+    OrangeMoneyService,
+    TntService,
+    PostCashService,
     AuthService,
     ComptabiliteService,
     CrmService,

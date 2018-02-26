@@ -10,7 +10,7 @@ import {UtilsService} from "../../services/utils.service";
 import {CrmService} from "../../services/crm.service";
 
 
-
+import {Http, Headers, RequestOptions} from "@angular/http";
 
 @Component({
   selector: 'app-adminpdv-monitoring',
@@ -40,14 +40,12 @@ export class AdminpdvMonitoringComponent implements OnInit {
   @ViewChild('apercuPhotoComModal') public apercuPhotoComModal:ModalDirective;
   @ViewChild('voirplusdedemandeModal') public voirplusdedemandeModal:ModalDirective;
 
-  constructor(private _adminpdvService:AdminpdvService, private route:ActivatedRoute, private router: Router, private _crmService: CrmService, private _utilsService:UtilsService) { }
+  constructor(private _http: Http, private _adminpdvService:AdminpdvService, private route:ActivatedRoute, private router: Router, private _crmService: CrmService, private _utilsService:UtilsService) { }
 
   ngOnInit() {
     this.loading = true;
-    console.log('monitoring deposit');
     this._adminpdvService.bilandeposit({type:"azrrtt"}).subscribe(
       data => {
-        console.log("Localhost Test");
         this.monitoringAdminpdvDeposit = data.response;
         this.getEtatDepot();
       },
@@ -65,19 +63,23 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
 
   validerdmde(){
-    this.loading = true ;
-    this.selectdemanretrait = false;
+    if(confirm("Confirmer la demande")){
+      console.log("je confirme")
+      this.loading = true ;
+      this.selectdemanretrait = false;
 
-    if (this.monitoringAdminpdvDeposit.etatdeposit < this.montant){
-      this.ibanExcessif = true ;
-      return 1 ;
+      if (this.monitoringAdminpdvDeposit.etatdeposit < this.montant){
+        this.ibanExcessif = true ;
+        return 1 ;
+      }
+      this._adminpdvService.demandeRetrait({montant:this.montant.toString()}).subscribe(
+        data => this.montant = undefined,
+        error => alert(error),
+        () => this.loading = false
+      )
+    } else{
+      console.log("Je ne confirme pas")
     }
-    this._adminpdvService.demandeRetrait({montant:this.montant.toString()}).subscribe(
-      data => this.montant = undefined,
-      error => alert(error),
-      () => this.loading = false
-    )
-
   }
 
   currencyFormat(somme) : String{
@@ -144,8 +146,6 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
 
   public showdepositeModal():void {
-    console.log('showdepositeModal - 1')
-    console.log('----*********-----')
     this.montantdeposit=undefined;
     this.getInitDeposit();
     this.depositeModal.show();
@@ -155,41 +155,40 @@ export class AdminpdvMonitoringComponent implements OnInit {
     console.log('hidedepositeModal')
   }
   public validerdeposite(){
-    console.log('*validerdeposite*')
-    this._adminpdvService.validerDemandeDepot({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: 'attente'})
-      .subscribe(
-        data => {
-          console.log('-validerDemandeDepot-');
-          if(data.errorCode == 0){
-            this.demndedeposit({infocc:this.agentcc, infocom:'attente', date:data.result});
-          }
+    console.log({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: 'attente'});
+    if(confirm("Confirmer la demande")){
+      console.log("je confirme")
+      this._adminpdvService.validerDemandeDepot({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: 'attente'})
+        .subscribe(
+          data => {
+            if(data.errorCode == 0){
+              this.demndedeposit({infocc:this.agentcc, infocom:'attente', date:data.result});
+            }
 
-        },
-        error => alert(error),
-        () => this.hidedepositeModal()
-      );
+          },
+          error => alert(error),
+          () => this.hidedepositeModal()
+        );
+    } else{
+      console.log("Je ne confirme pas")
+    }
 
   }
 
   public showdechargeModal():void {
     this.dechargeModal.show();
-    console.log('showdechargeModal')
   }
   public hidedechargeModal():void {
     this.dechargeModal.hide();
-    console.log('hidedechargeModal')
   }
 
   public showapercudechargeModal(detail:any):void {
     this.viewonedetaildeposit = detail;
-    console.log('------------');
     this.apercudechargeModal.show();
-    console.log('showapercudechargeModal')
   }
   public hideapercudechargeModal():void {
     this.viewonedetaildeposit = undefined;
     this.apercudechargeModal.hide();
-    console.log('hideapercudechargeModal')
   }
 
   imprimerdecharge(decharge:any){
@@ -201,7 +200,6 @@ export class AdminpdvMonitoringComponent implements OnInit {
         client:decharge,
       },
     };
-    console.log('--------');
     sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
     this.router.navigate(['accueiladmpdv/impressionadminpdv']);
   }
@@ -211,7 +209,6 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
   public hideapercuPhotoComModal():void {
     this.apercuPhotoComModal.hide();
-    console.log('hideapercuPhotoComModal')
   }
 
   public showvoirplusdedemandeModal():void {
@@ -219,7 +216,6 @@ export class AdminpdvMonitoringComponent implements OnInit {
   }
   public hidevoirplusdedemandeModal():void {
     this.voirplusdedemandeModal.hide();
-    console.log('hidevoirplusdedemandeModal')
   }
 
 ///////////////////////// LIST DEPOTS //////////////////////////////////////
@@ -288,5 +284,41 @@ export class AdminpdvMonitoringComponent implements OnInit {
         }
       );
   }
+
+  ////////////////////////////-----FILE-----//////////////////////////////
+
+  filesToUpload: Array<File> = [];
+  existFile: boolean = false;
+  upload() {
+    let formData: any = new FormData();
+    for(let i = 0; i < this.filesToUpload.length; i++) {
+      formData.append("uploads[]", this.filesToUpload[i], this.filesToUpload[i].name);
+    }
+    console.log(formData)
+    let headers = new Headers();
+
+    headers.append('Accept', 'application/json');
+    let options = new RequestOptions({
+      headers: headers
+    });
+    let url = "http://localhost/backup-sb-admin/new-backend-esquise/index.php/uploads-sen/inputfiledemndedeposit";
+    return this._http.post(url, formData, options)
+      .map(res => res.json()).subscribe(
+        data => {
+          console.log(data)
+        },
+        error => alert(error),
+        () => {
+          console.log('est')
+          this.existFile = false;
+        }
+      );
+  }
+
+  fileChangeEvent(fileInput: any){
+    this.existFile = true;
+    this.filesToUpload = <Array<File>> fileInput.target.files;
+  }
+
 
 }
