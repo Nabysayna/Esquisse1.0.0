@@ -1,8 +1,22 @@
 import { Injectable }    from '@angular/core';
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http, Headers} from "@angular/http";
+
+export class Gestionreporting{
+  dateoperation:any;
+  operateur:string;
+  traitement:string;
+  montant:number;
+}
+
+export class Servicepoint{
+  nom:string;
+  designations:string;
+}
+
+
 
 @Injectable()
-export class UtilsService {
+export class GestionreportingService {
 
   //private link = "https://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
@@ -19,67 +33,61 @@ export class UtilsService {
     this.basetoken = JSON.parse(sessionStorage.getItem('currentUser')).baseToken;
   }
 
-  getOnePointSuivicc(data:any){
-    let url = this.link+"/utils-adminpdv/getdetailonepointsuivisentool";
-    let datas = JSON.stringify({token:this.basetoken, data:data});
+  reportingdate(data:any){
+    let url = this.link+"/gestionreporting-sen/reportingdate";
+    let datas = JSON.stringify({token:this.basetoken, idpdv:data.idpdv, type:data.type, infotype:data.infotype});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
 
-  recupererInfosCC(){
-    let url = this.link+"/utils-adminpdv/initajoutdeposit";
+  reimpression(data:any){
+    let url = this.link+"/gestionreporting-sen/reimpression";
+    let datas = JSON.stringify({token:this.basetoken, idpdv:data.idpdv, operation:data.operation, infooperation:data.infooperation});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  gestionreporting(){
+    let url = this.link+"/gestionreporting-sen/gestionreporting";
     let datas = JSON.stringify({token:this.basetoken});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
 
-  demandedeposit(data:any){
-    let url = this.link+"/utils-adminpdv/demndedeposit";
-    let datas = JSON.stringify(data);
+  servicepoint(){
+    let url = this.link+"/gestionreporting-sen/servicepoint";
+    let datas = JSON.stringify({token:this.basetoken});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
 
-  getRegion(){
-    let url = this.link+"/util/region";
-    let datas = JSON.stringify({});
+  ajoutdepense(data:any){
+    let url = this.link+"/gestionreporting-sen/ajoutdepense";
+    let datas = JSON.stringify({token:this.basetoken, libelle:data.libelle, service:data.service, montant:data.montant});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
 
-  getZoneByRegion(region:string){
-    let url = this.link+"/util/zone";
-    let datas = JSON.stringify({region:region});
+  reclamation(data:any){
+    let url = this.link+"/gestionreporting-sen/reclamation";
+    let datas = JSON.stringify({token:this.basetoken, sujet:data.sujet, nomservice:data.nomservice, message:data.message});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
 
-  getSouszoneByZoneByRegion(data:any){
-    let url = this.link+"/util/souszonebyzonebyregion";
-    let datas = JSON.stringify(data);
+  vente(data:any){
+    let url = this.link+"/gestionreporting-sen/vente";
+    let datas = JSON.stringify({token:this.basetoken, servicevente:data.servicevente, designation:data.designation, quantite:data.quantite});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
-
-
-
-  /////////////////////////////////////////////////////////////////
-
-  getDetailOnePointSuivicc(data:any){
-    let url = this.link+"/apiplatform/getdetailonepointsuivicc";
-    let datas = JSON.stringify({token:this.basetoken, data:data});
-    let params = 'params='+datas;
-    return this._http.post(url, params, {headers:this.headers})
-      .map(res => res.json());
-  }
-
-
 
 
 }

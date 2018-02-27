@@ -3,10 +3,6 @@ import { Router } from '@angular/router';
 import {ActivatedRoute, Params} from '@angular/router';
 import { Location }  from '@angular/common';
 
-import * as sha1 from 'js-sha1';
-import * as _ from "lodash";
-
-import { ComptabiliteServiceWeb } from '../webServiceClients/Comptabilite/comptabilite.service';
 import {ComptabiliteService} from "../services/comptabilite.service";
 
 
@@ -144,8 +140,6 @@ export class ComptabiliteComponent implements OnInit {
          private route:ActivatedRoute,
          private router: Router,
          private _comptabiliteService: ComptabiliteService,
-         private comptabiliteServiceWeb: ComptabiliteServiceWeb,
-
   ) { }
 
 

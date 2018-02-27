@@ -10,8 +10,6 @@ import { HttpModule }    from '@angular/http';
 
 import { LoadersCssModule } from 'angular2-loaders-css';
 
-/* import { NgUploaderModule } from 'ngx-uploader'; */
-
 import {DataTableModule} from "angular2-datatable";
 import { AlertModule, TabsModule, CollapseModule, ProgressbarModule, PopoverModule, ModalModule, TypeaheadModule, PaginationModule, AccordionModule} from 'ng2-bootstrap';
 
@@ -47,20 +45,17 @@ import { EFinancierService} from './tnt/tntservices';
 
 
 import { AuthentificationServiceWeb } from './webServiceClients/Authentification/authentification.service';
-import { PostCashServiceWeb } from './webServiceClients/PostcashClient/Postcash.service';
 import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
-//import { PostCashWebService } from './webServiceClients/Postcash/postcash.service';
-import { ExpressoCashWebService } from './webServiceClients/ExpressoCash/expressocash.service';
-import { TigoCashService } from './webServiceClients/Tigocash/tigocash.service';
+import {ExpressoCashWebService} from './webServiceClients/ExpressoCash/expressocash.service';
+import {TigoCashService} from './webServiceClients/Tigocash/tigocash.service';
 
-import { JoniJoniWebService } from './webServiceClients/JoniJoni/jonijoni.service';
-import { TntServiceWeb } from './webServiceClients/Tnt/Tnt.service';
-import { AdminpdvServiceWeb } from './webServiceClients/Adminpdv/adminpdv.service';
-import { AdminmultipdvServiceWeb } from './webServiceClients/Adminmultipdv/adminmultipdv.service';
-import { EcomServiceWeb } from './webServiceClients/ecom/ecom.service';
-import { AuthenticationService }    from './services/authentification.service';
-import { CommercialServiceWeb }    from './webServiceClients/Commercial/commercial.service';
-import { ComptabiliteServiceWeb } from './webServiceClients/Comptabilite/comptabilite.service';
+import {JoniJoniWebService} from './webServiceClients/JoniJoni/jonijoni.service';
+import {TntServiceWeb} from './webServiceClients/Tnt/Tnt.service';
+import {AdminpdvServiceWeb} from './webServiceClients/Adminpdv/adminpdv.service';
+import {AdminmultipdvServiceWeb} from './webServiceClients/Adminmultipdv/adminmultipdv.service';
+import {EcomServiceWeb} from './webServiceClients/ecom/ecom.service';
+import {CommercialServiceWeb}    from './webServiceClients/Commercial/commercial.service';
+import {ComptabiliteServiceWeb} from './webServiceClients/Comptabilite/comptabilite.service';
 import {GestionreportingServiceWeb} from './webServiceClients/Gestionreporting/gestionreporting.service';
 import {DemandepretServiceWeb} from './webServiceClients/Demandepret/demandepret.service';
 import {CrmServiceWeb} from './webServiceClients/Crm/crm.service';
@@ -116,8 +111,6 @@ import { AdmincoursierComponent } from './admincoursier/admincoursier.component'
 import { RapidoComponent} from './rapido/rapido.component';
 import { OrangeMoneyComponentComponent } from './orange-money-component/orange-money-component.component';
 import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-component.component';
-
-// { WesternUnionComponentComponent } from './western-union-component/western-union-component.component';
 
 import { MoneyGramComponentComponent } from './money-gram-component/money-gram-component.component';
 import { CrmComponent } from './crm/crm.component';
@@ -216,7 +209,6 @@ import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
 import {WizallWebService} from "./webServiceClients/Wizall/wizall.service";
 
-//import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
 import { SdeComponent } from './sde/sde.component';
 import { WoyofalComponent } from './woyofal/woyofal.component';
 
@@ -226,6 +218,9 @@ import {ComptabiliteService} from "./services/comptabilite.service";
 import {AdminmultipdvService} from "./services/adminmultipdv.service";
 import {TntService} from "./services/tnt.service";
 import {PostCashService} from "./services/postcash.service";
+import {AuthenticationService} from "./services/authentification.service";
+import {GestionreportingService} from "./services/gestionreporting.service";
+import {DemandepretService} from "./services/demandepret.service";
 
 
 
@@ -357,7 +352,6 @@ import {PostCashService} from "./services/postcash.service";
     BrowserModule,
     FormsModule,
     HttpModule,
-/*    NgUploaderModule, */
     Routing,
     DataTableModule,
     ChartsModule,
@@ -409,18 +403,17 @@ import {PostCashService} from "./services/postcash.service";
       TntServiceWeb,
       EcomServiceWeb,
       AdminpdvServiceWeb,
-      AuthenticationService,
       CommercialServiceWeb,
       AdminmultipdvServiceWeb,
       ComptabiliteServiceWeb,
       GestionreportingServiceWeb,
-      AuthenticationService,
       CrmServiceWeb,
       DemandepretServiceWeb,
       CrmDoorServiceWeb,
       RegistrationService,
       WizallWebService,
       FacturierServiceWeb,
+    AuthenticationService,
 
     AdminpdvService,
     AdminmultipdvService,
@@ -432,7 +425,8 @@ import {PostCashService} from "./services/postcash.service";
     AuthService,
     ComptabiliteService,
     CrmService,
-
+    GestionreportingService,
+    DemandepretService,
   ],
   bootstrap: [AppComponent]
 })

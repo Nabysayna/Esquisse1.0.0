@@ -124,11 +124,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-5">
-            <label>Pièce justificative:</label>
-            <input type="file" #fileinput class="form-control-file" accept="image/*" (change)="fileChangeEvent($event)"/>
-          </div>
-          <button type="button" (click)="upload()" class="btn btn-sm btn-primary col-sm-1" [disabled]="existFile==false">Charger</button>
+          <label class="col-sm-1">Pièce justificative:</label>
+          <input input type="file" class="col-sm-4 form-control-file" #fileinput accept="image/*" (change)="fileChangeEvent($event)"/>
+          <button type="button" (click)="upload()" class="btn btn-sm btn-primary col-sm-1">Charger</button>
         </div>
         <div>
           Vous voulez faire un dépot de <b>{{ montantdeposit?currencyFormat(montantdeposit):'?' }} FCFA </b>

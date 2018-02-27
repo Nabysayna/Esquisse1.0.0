@@ -8,6 +8,7 @@ export class ComptabiliteService {
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
   private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
+  //private link = "http://sentool.bbstvnet.com/sslayer/index.php";
 
 
   private headers = new Headers();
@@ -19,7 +20,7 @@ export class ComptabiliteService {
   }
 
   userexploitation(){
-    let url = this.link+"/comptabilite-adminpdv/userexploitation";
+    let url = this.link+"/comptabilite-sen/userexploitation";
     let datas = JSON.stringify({token:this.basetoken});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -27,7 +28,7 @@ export class ComptabiliteService {
   }
 
   exploitation(data:any){
-    let url = this.link+"/comptabilite-adminpdv/exploitation";
+    let url = this.link+"/comptabilite-sen/exploitation";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv, type: data.type, infotype: data.infotype});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -35,7 +36,7 @@ export class ComptabiliteService {
   }
 
   exploitationaveccommission(data:any){
-    let url = this.link+"/comptabilite-adminpdv/exploitationaveccommission";
+    let url = this.link+"/comptabilite-sen/exploitationaveccommission";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv, type: data.type, infotype: data.infotype});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -43,7 +44,7 @@ export class ComptabiliteService {
   }
 
   listevente(data:any){
-    let url = this.link+"/comptabilite-adminpdv/listevente";
+    let url = this.link+"/comptabilite-sen/listevente";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -51,7 +52,7 @@ export class ComptabiliteService {
   }
 
   listecharge(data:any){
-    let url = this.link+"/comptabilite-adminpdv/listecharge";
+    let url = this.link+"/comptabilite-sen/listecharge";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -59,7 +60,7 @@ export class ComptabiliteService {
   }
 
   ajoutcharge(data:any){
-    let url = this.link+"/comptabilite-adminpdv/ajoutcharge";
+    let url = this.link+"/comptabilite-sen/ajoutcharge";
     let datas = JSON.stringify({token:this.basetoken, libelle: data.libelle, idpdv: data.idpdv, service: data.service, montant: data.montant});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -67,7 +68,7 @@ export class ComptabiliteService {
   }
 
   supprimerservice(data:any){
-    let url = this.link+"/comptabilite-adminpdv/supprimerservice";
+    let url = this.link+"/comptabilite-sen/supprimerservice";
     let datas = JSON.stringify({token:this.basetoken, idsupprimer: data.idsupprimer});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -75,7 +76,7 @@ export class ComptabiliteService {
   }
 
   modifierservice(data:any){
-    let url = this.link+"/comptabilite-adminpdv/modifierservice";
+    let url = this.link+"/comptabilite-sen/modifierservice";
     let datas = JSON.stringify({token:this.basetoken, service: data.service, designations: data.designations, idservice: data.idservice});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -83,7 +84,7 @@ export class ComptabiliteService {
   }
 
   ajoutservice(data:any){
-    let url = this.link+"/comptabilite-adminpdv/ajoutservice";
+    let url = this.link+"/comptabilite-sen/ajoutservice";
     let datas = JSON.stringify({token:this.basetoken, nom: data.nom, idpdv: data.idpdv, designations: data.designations});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -91,7 +92,7 @@ export class ComptabiliteService {
   }
 
   approvisionner(data:any){
-    let url = this.link+"/comptabilite-adminpdv/approvisionner";
+    let url = this.link+"/comptabilite-sen/approvisionner";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv, montant: data.montant});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -99,7 +100,7 @@ export class ComptabiliteService {
   }
 
   listecaisse(){
-    let url = this.link+"/comptabilite-adminpdv/listecaisse";
+    let url = this.link+"/comptabilite-sen/listecaisse";
     let datas = JSON.stringify({token:this.basetoken});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -107,31 +108,15 @@ export class ComptabiliteService {
   }
 
   listeservice(data:any){
-    let url = this.link+"/comptabilite-adminpdv/listeservice";
+    let url = this.link+"/comptabilite-sen/listeservice";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
 
-  etatcaisse(){
-    let url = this.link+"/comptabilite-adminpdv/etatcaisse";
-    let datas = JSON.stringify({token:this.basetoken});
-    let params = 'params='+datas;
-    return this._http.post(url, params, {headers:this.headers})
-      .map(res => res.json());
-  }
-
-  validerapprovisionn(data:any){
-    let url = this.link+"/comptabilite-adminpdv/validerapprovisionn";
-    let datas = JSON.stringify({token:this.basetoken, idcaisse: data.idcaisse});
-    let params = 'params='+datas;
-    return this._http.post(url, params, {headers:this.headers})
-      .map(res => res.json());
-  }
-
   listerevenu(data:any){
-    let url = this.link+"/comptabilite-adminpdv/listerevenu";
+    let url = this.link+"/comptabilite-sen/listerevenu";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -139,8 +124,24 @@ export class ComptabiliteService {
   }
 
   listerevenutransfert(data:any){
-    let url = this.link+"/comptabilite-adminpdv/listerevenutransfert";
+    let url = this.link+"/comptabilite-sen/listerevenutransfert";
     let datas = JSON.stringify({token:this.basetoken, idpdv: data.idpdv});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  etatcaisse(){
+    let url = this.link+"/comptabilite-sen/etatcaisse";
+    let datas = JSON.stringify({token:this.basetoken});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  validerapprovisionn(data:any){
+    let url = this.link+"/comptabilite-sen/validerapprovisionn";
+    let datas = JSON.stringify({token:this.basetoken, idcaisse: data.idcaisse});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());

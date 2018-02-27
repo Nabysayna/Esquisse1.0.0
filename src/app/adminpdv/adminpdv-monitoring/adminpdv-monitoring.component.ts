@@ -147,6 +147,8 @@ export class AdminpdvMonitoringComponent implements OnInit {
 
   public showdepositeModal():void {
     this.montantdeposit=undefined;
+    this.modeversement=undefined;
+    this.namefiledemandedepot=undefined
     this.getInitDeposit();
     this.depositeModal.show();
   }
@@ -155,10 +157,11 @@ export class AdminpdvMonitoringComponent implements OnInit {
     console.log('hidedepositeModal')
   }
   public validerdeposite(){
-    console.log({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: 'attente'});
+    console.log("--------------------------------")
+    console.log({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: this.modeversement+"---"+this.namefiledemandedepot})
     if(confirm("Confirmer la demande")){
       console.log("je confirme")
-      this._adminpdvService.validerDemandeDepot({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: 'attente'})
+      this._adminpdvService.validerDemandeDepot({montant: this.montantdeposit, infocc: JSON.stringify(this.agentcc).toString(), infocom: this.modeversement+"---"+this.namefiledemandedepot})
         .subscribe(
           data => {
             if(data.errorCode == 0){
@@ -287,36 +290,48 @@ export class AdminpdvMonitoringComponent implements OnInit {
 
   ////////////////////////////-----FILE-----//////////////////////////////
 
-  filesToUpload: Array<File> = [];
-  existFile: boolean = false;
-  upload() {
-    let formData: any = new FormData();
-    for(let i = 0; i < this.filesToUpload.length; i++) {
-      formData.append("uploads[]", this.filesToUpload[i], this.filesToUpload[i].name);
-    }
-    console.log(formData)
-    let headers = new Headers();
+  public filesToUpload: Array<File> = [];
+  public namefiledemandedepot:string = "";
+  public nameOriginalfiledemandedepot:string = "";
 
-    headers.append('Accept', 'application/json');
-    let options = new RequestOptions({
-      headers: headers
-    });
-    let url = "http://localhost/backup-sb-admin/new-backend-esquise/index.php/uploads-sen/inputfiledemndedeposit";
-    return this._http.post(url, formData, options)
-      .map(res => res.json()).subscribe(
-        data => {
-          console.log(data)
-        },
-        error => alert(error),
-        () => {
-          console.log('est')
-          this.existFile = false;
-        }
-      );
+  upload() {
+    console.log(this.filesToUpload.length)
+    console.log("--------------------------------")
+    if(this.filesToUpload.length != 0){
+      let formData: any = new FormData();
+      for(let i=0; i<this.filesToUpload.length; i++) {
+        formData.append('uploads[]', this.filesToUpload[i], this.filesToUpload[i].name);
+      }
+      console.log(formData)
+      let headers = new Headers();
+
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({
+        headers: headers
+      });
+
+      let url = "http://sentool.bbstvnet.com/sslayer/index.php/uploads-sen/inputfiledemndedeposit";
+      console.log(url);
+      return this._http.post(url, formData, options)
+        .map(res => res.json()).subscribe(
+          data => {
+            console.log(data)
+
+            if(data.status==true){
+              this.namefiledemandedepot = data.originalName+"---"+data.generatedName;
+              this.nameOriginalfiledemandedepot = data.originalName;
+            }
+
+          },
+          error => alert(error),
+          () => {
+            console.log('est')
+          }
+        );
+    }
   }
 
   fileChangeEvent(fileInput: any){
-    this.existFile = true;
     this.filesToUpload = <Array<File>> fileInput.target.files;
   }
 
