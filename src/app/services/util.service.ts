@@ -105,7 +105,4 @@ export class UtilService {
       .map(res => res.json());
   }
 
-
-
-
 }

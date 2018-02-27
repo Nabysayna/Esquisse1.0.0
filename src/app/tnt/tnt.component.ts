@@ -11,8 +11,9 @@ import {LAbonnementService} from '../tnt/tntservices';
 import {LAbonnement} from '../tnt/tntmodels';
 import {EFinancierService} from '../tnt/tntservices';
 import {EFinancier} from '../tnt/tntmodels';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
-import { UtilServiceWeb } from '../webServiceClients/utils/Util.service' ;
+import {TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
+import {TntService} from "../services/tnt.service";
+import {UtilsService} from "../services/utils.service";
 
 @Pipe({name: 'dataToArray'})
 export class DataToArray implements PipeTransform{
@@ -100,8 +101,9 @@ export class TntComponent implements OnInit {
   	     private lAbonnementService: LAbonnementService,
   	  	 private nAbonnementService: NAbonnementService,
   		   private location: Location,
+         private _tntService:TntService,
+         private _utilsService:UtilsService,
          private route:ActivatedRoute,
-         private utilService : UtilServiceWeb,
   	     private router: Router) { }
 
   ngOnInit():void {
@@ -150,8 +152,8 @@ export class TntComponent implements OnInit {
   }
 
   validnabon(){
-   
-    this.modalabonnement.hide(); 
+
+    this.modalabonnement.hide();
     var typedebouquet : number ;
     if(this.tbouquet == "Maanaa")
       typedebouquet=1;
@@ -165,9 +167,9 @@ export class TntComponent implements OnInit {
     this.singleTntWS.ncarteNewClient = this.ncarteNewClient.toString() ;*/
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
-    this.hidemodaldecodeur(); 
+    this.hidemodaldecodeur();
     this.reinitialiserVariables();
- 
+
   }
 
 
@@ -234,17 +236,21 @@ export class TntComponent implements OnInit {
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tnt vente carte','operateur':4,'operation':3,'prenom':this.prenomNewClient,'tel':this.telNewClient,adresse:this.adresseNewClient, region:this.regionNewClient, cni:this.cniNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'nomclient':this.nomNewClient}));
        this.modalcarte.hide();
        this.reinitialiserVariables() ;
-  
+
   }
 
   retrieveAlerteMessage(){
-    var periodicVerifier = setInterval(()=>{
-    this.utilService.consulterLanceurDalerte().then(rep =>{
-      var donnee=rep._body.trim().toString();
-      if (donnee!='-')
-        this.message=donnee ;
-    });
-    },5000);
+    let periodicVerifier = setInterval(()=>{
+      this._utilsService.consulterLanceurDalerte().subscribe(
+        data => {
+          this.message=data.message;
+        },
+        error => alert(error),
+        () => {
+          console.log(3)
+        }
+      )
+    },10000);
   }
 
 
@@ -283,21 +289,27 @@ export class TntComponent implements OnInit {
     );
     popupWin.document.close();
   }
- public showmodalabonnement(){
+
+  public showmodalabonnement(){
     this.modalabonnement.show();
   }
+
   public hidemodalcodewoyofal(){
     this.modalabonnement.hide();
   }
- public showmodaldecodeur(){
+
+  public showmodaldecodeur(){
     this.modaldecodeur.show();
   }
+
   public hidemodaldecodeur(){
     this.modaldecodeur.hide();
   }
- public showmodalcarte(){
+
+  public showmodalcarte(){
     this.modalcarte.show();
   }
+
   public hidemodalcarte(){
     this.modalcarte.hide();
   }

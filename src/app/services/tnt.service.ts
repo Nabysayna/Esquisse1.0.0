@@ -5,13 +5,11 @@ import 'rxjs/add/operator/map';
 
 
 export class TntResponse{
-  id_abonnement: number ;
   prenom: string ;
   nom: string ;
   tel: string ;
   adresse: string ;
   region: string ;
-  city: string ;
   cni: string ;
   n_chip : string ;
   n_carte : string ;
@@ -19,12 +17,7 @@ export class TntResponse{
   duree : string ;
   id_typeabonnement : string ;
   montant : number ;
-  id_operateur : number;
   etat : number ;
-  id_activateur: number ;
-  date_activation: string;
-  etat_reclamation : string;
-  datefinactivation : string ;
 }
 
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UtilServiceWeb } from '../../webServiceClients/utils/Util.service' ;
 import {AuthService} from "../../services/auth.service";
+import {UtilsService} from "../../services/utils.service";
 
 @Component({
   selector: 'app-navbar-top',
@@ -10,45 +10,53 @@ import {AuthService} from "../../services/auth.service";
   styleUrls: ['./navbar-top.component.css']
 })
 export class NavbarTopComponent implements OnInit {
-  token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   message : string  ;
   autorisedUser = 0 ;
   solde : number ;
 
-	currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-  constructor(private _authService:AuthService, private router: Router, private utilService : UtilServiceWeb) {
-
-    this.utilService.isDepotCheckAuthorized().then( resp => {
-      if(JSON.parse(resp._body).estautorise!=undefined)
-        this.autorisedUser = JSON.parse(resp._body).estautorise ;
-        this.updateCaution() ;
-    }) ;
-
-  }
+  constructor(private _authService:AuthService, private router: Router, private _utilsService:UtilsService){ }
 
   ngOnInit() {
-    this.retrieveAlerteMessage() ;
+    this._utilsService.isDepotCheckAuthorized().subscribe(
+      data => {
+        data = JSON.parse(data)
+        if(data.estautorise==1) this.autorisedUser = data.estautorise ;
+        this.retrieveAlerteMessage() ;
+      },
+      error => alert(error),
+      () => {
+        this.updateCaution() ;
+      }
+    )
   }
 
   retrieveAlerteMessage(){
     var periodicVerifier = setInterval(()=>{
-
-    this.utilService.consulterLanceurDalerte().then(rep =>{
-      var donnee=rep._body.trim().toString();
-      if (donnee!='-')
-        this.message=donnee ;
-    });
-
+      this._utilsService.consulterLanceurDalerte().subscribe(
+        data => {
+          this.message=data.message;
+        },
+        error => alert(error),
+        () => {
+          console.log(3)
+        }
+      )
     },60000);
   }
 
   updateCaution(){
-    console.log("updateCaution");
+    console.log("updateCaution 1");
     if ( this.autorisedUser == 1)
-      this.utilService.checkCaution().then( resp => {
-        this.solde = resp._body ;
-        console.log("Le solde vaut "+resp) ;
-      }) ;
+      this._utilsService.checkCaution().subscribe(
+        data => {
+          this.solde = data ;
+          console.log("Le solde vaut "+data) ;
+        },
+        error => alert(error),
+        () => {
+          console.log(3)
+        }
+      )
   }
 
   deconnexion(){

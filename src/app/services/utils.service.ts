@@ -20,7 +20,7 @@ export class UtilsService {
   }
 
   getOnePointSuivicc(data:any){
-    let url = this.link+"/utils-adminpdv/getdetailonepointsuivisentool";
+    let url = this.link+"/utils-sen/getdetailonepointsuivisentool";
     let datas = JSON.stringify({token:this.basetoken, data:data});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -28,7 +28,7 @@ export class UtilsService {
   }
 
   recupererInfosCC(){
-    let url = this.link+"/utils-adminpdv/initajoutdeposit";
+    let url = this.link+"/utils-sen/initajoutdeposit";
     let datas = JSON.stringify({token:this.basetoken});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -36,7 +36,7 @@ export class UtilsService {
   }
 
   demandedeposit(data:any){
-    let url = this.link+"/utils-adminpdv/demndedeposit";
+    let url = this.link+"/utils-sen/demndedeposit";
     let datas = JSON.stringify(data);
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -44,7 +44,7 @@ export class UtilsService {
   }
 
   getRegion(){
-    let url = this.link+"/util/region";
+    let url = this.link+"/utils-crm/region";
     let datas = JSON.stringify({});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -52,7 +52,7 @@ export class UtilsService {
   }
 
   getZoneByRegion(region:string){
-    let url = this.link+"/util/zone";
+    let url = this.link+"/utils-crm/zone";
     let datas = JSON.stringify({region:region});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
@@ -60,9 +60,33 @@ export class UtilsService {
   }
 
   getSouszoneByZoneByRegion(data:any){
-    let url = this.link+"/util/souszonebyzonebyregion";
+    let url = this.link+"/utils-crm/souszonebyzonebyregion";
     let datas = JSON.stringify(data);
     let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  consulterLanceurDalerte(){
+    let url = this.link+"/utils-sen/consulterLanceurDalerte";
+    let datas = JSON.stringify({});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  isDepotCheckAuthorized(){
+    let url = this.link+"/utils-sen/isDepotCheckAuthorized";
+    let datas = JSON.stringify({token:this.basetoken});
+    let params = 'requestParam='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
+  checkCaution(){
+    let url = this.link+"/utils-sen/checkCaution";
+    let datas = JSON.stringify({token:this.basetoken});
+    let params = 'requestParam='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
@@ -78,8 +102,6 @@ export class UtilsService {
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
   }
-
-
 
 
 }
