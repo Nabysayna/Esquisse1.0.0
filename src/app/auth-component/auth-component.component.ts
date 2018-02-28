@@ -19,7 +19,6 @@ export class AuthComponentComponent implements OnInit {
   userPwd  = '' ;
   fakevalues : boolean ;
   phase2fakevalues : boolean = true ;
-  saisietoken : string ;
   loading = false ;
   phase1 = true ;
 
@@ -35,7 +34,6 @@ export class AuthComponentComponent implements OnInit {
   region : any ;
   zone : any ;
   souszone : any ;
-  chaine : string ;
 
   prenom : any ;
   nom :any ;
@@ -44,18 +42,9 @@ export class AuthComponentComponent implements OnInit {
   nometps : any ;
   nomshop : any ;
   adresse : any ;
-
-  l1: string ;
-  l2: string ;
-  l3: string ;
-  l4: string ;
-  c1: string ;
-  c2: string ;
-  c3: string ;
-  c4: string ;
-
   fromSMS : string ;
-  backstring : string = "" ;
+
+
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService, private _compiler: Compiler, private _utilService:RegistrationService)
@@ -92,46 +81,27 @@ export class AuthComponentComponent implements OnInit {
 
   authentificateBySMS(){
     this.loading = true ;
-    this.authenticationService.loginPhase2(this.fromSMS+"#"+sessionStorage.getItem('headToken') ).then( access=>
-      {
-        console.log(access) ;
+    this.authenticationService.loginPhase2(this.fromSMS+"#"+sessionStorage.getItem('headToken') ).then( access=> {
+      console.log(access) ;
+      if ( access === 3 ){
+        this.router.navigate(['/accueil']);
+      }else if ( access === 2 ){
+        if (JSON.parse(sessionStorage.getItem('currentUser')).firstuse==1){
+          this.router.navigate(['/soppipwdbifi']);
+        }
+        else {
+          this.router.navigate(['/accueiladmpdv']);
+        }
+      }else if ( access === 1 ){
+        this.router.navigate(['/accueiladmmpdv']);
+      }else {
+        this.phase2fakevalues = false ;
+        this.fromSMS = ''  ;
+      }
 
-       if ( access === 3 ){
-          this.router.navigate(['/accueil']);
-        }else
-          if ( access === 2 ){
-            if (JSON.parse(sessionStorage.getItem('currentUser')).firstuse==1)
-              this.router.navigate(['/soppipwdbifi']);
-            else
-              this.router.navigate(['/accueiladmpdv']);
-          }else
-            if ( access === 1 ){
-              this.router.navigate(['/accueiladmmpdv']);
-            }else
-            if ( access === 5 ){
-              this.router.navigate(['/accueilcoursier']);
-            }
-            else
-            if ( access === 4 ){
-              this.router.navigate(['/accueiladmincoursier']);
-            }
-            else
-            if ( access === 6 ){
-              this.router.navigate(['/accueiladmincommercial']);
-            }
-             else
-            if ( access === 7 ){
-              this.router.navigate(['/accueilcommercial']);
-            }
-             else{
-                  this.phase2fakevalues = false ;
-                  this.fromSMS = ''  ;
-              }
-
-        this.loading = false ;
-      });
+      this.loading = false ;
+    });
   }
-
 
   getRegionNewCaissier(){
     this._utilService.getRegion()
@@ -145,6 +115,7 @@ export class AuthComponentComponent implements OnInit {
         }
       );
   }
+
   selectRegionNewCaissier(){
     this.iszones = false;
     this.zone = '--Choix zone--';
@@ -159,7 +130,6 @@ export class AuthComponentComponent implements OnInit {
         () => console.log('getZoneByRegion')
       );
   }
-
 
   selectZoneNewCaissier(){
     this.issouszones = false;
@@ -178,7 +148,6 @@ export class AuthComponentComponent implements OnInit {
     if (this.souszone!='Choisir sous zone')
       this.isadresse = true;
   }
-
 
   @ViewChild('viewMore') public endRegisterdModal:ModalDirective;
 
@@ -218,7 +187,5 @@ export class AuthComponentComponent implements OnInit {
       }
     }) ;
   }
-
-
 
 }

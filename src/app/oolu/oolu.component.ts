@@ -1,5 +1,4 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
 
@@ -8,7 +7,7 @@ import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.serv
   selector: 'app-oolu',
   templateUrl: './oolu.component.html',
   styleUrls: ['./oolu.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  providers: [WizallWebService]
 })
 export class OoluComponent implements OnInit {
   telephone:string;

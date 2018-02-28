@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EcomServiceWeb } from '../webServiceClients/ecom/ecom.service';
-
+import {EcomService} from "../services/ecom.service";
 
 @Component({
   selector: 'app-soapserver',
@@ -11,19 +10,16 @@ import { EcomServiceWeb } from '../webServiceClients/ecom/ecom.service';
 export class SoapserverComponent implements OnInit {
 
   public resp : string  ;
-  public ecomCaller: EcomServiceWeb;
   public retourWS: {}[] ;
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
 
-  constructor() {
-        this.ecomCaller = new EcomServiceWeb();
-   }
+  constructor(private _ecomService:EcomService) {}
 
    ngOnInit() {
-      this.ecomCaller.listeArticles(this.token, 'catalogue').then( response =>
+      this._ecomService.listeArticles(this.token, 'catalogue').then( response =>
         {
         this.retourWS = response ;
-        console.log("Designation premier article "+this.retourWS)  }); 
+        console.log("Designation premier article "+this.retourWS)  });
    }
 
 }

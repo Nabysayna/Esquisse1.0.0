@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {TntService} from "../services/tnt.service";
+import {PostCashService} from "../services/postcash.service";
 
 
 class Article {
@@ -20,7 +20,7 @@ class Article {
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  providers: [WizallWebService]
 })
 export class AccueilComponent implements OnInit {
   articles=[];
@@ -34,7 +34,7 @@ export class AccueilComponent implements OnInit {
   dataImpression:any;
 
 
-  constructor(private _tntService:TntService, private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService) {
 
   }
 
@@ -628,7 +628,7 @@ export class AccueilComponent implements OnInit {
 
 
   validrechargementespece(objet:any){
-    this.postcashwebservice.rechargementespece('00221'+objet.data.telephone+'',''+objet.data.montant).then(postcashwebserviceList => {
+    this._postCashService.rechargementespece('00221'+objet.data.telephone+'',''+objet.data.montant).then(postcashwebserviceList => {
 
       if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
             objet.etats.etat=true;
@@ -661,7 +661,7 @@ export class AccueilComponent implements OnInit {
 
 
   validateachatjula(objet:any){
-     this.postcashwebservice.achatjula(objet.data.montant+'',objet.data.nbcarte+'').then(postcashwebserviceList => {
+     this._postCashService.achatjula(objet.data.montant+'',objet.data.nbcarte+'').then(postcashwebserviceList => {
         if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
         let montant = objet.data.nbcarte * objet.data.montant ;
          objet.dataI = {
@@ -727,7 +727,7 @@ export class AccueilComponent implements OnInit {
 
   validateachatcodewoyofal(objet:any){
 
-      this.postcashwebservice.achatcodewoyofal(objet.data.montant+'',objet.data.compteur+'').then(postcashwebserviceList => {
+      this._postCashService.achatcodewoyofal(objet.data.montant+'',objet.data.compteur+'').then(postcashwebserviceList => {
         if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
         objet.dataI = {
             apiservice:'postecash',

@@ -49,9 +49,6 @@ import {ExpressoCashWebService} from './webServiceClients/ExpressoCash/expressoc
 import {TigoCashService} from './webServiceClients/Tigocash/tigocash.service';
 
 import {JoniJoniWebService} from './webServiceClients/JoniJoni/jonijoni.service';
-import {EcomServiceWeb} from './webServiceClients/ecom/ecom.service';
-import {CommercialServiceWeb}    from './webServiceClients/Commercial/commercial.service';
-
 import {OrangeMoneyService} from './webServiceClients/Orangemoney/orangemoney.service';
 
 
@@ -77,11 +74,6 @@ import { AuthComponentComponent } from './auth-component/auth-component.componen
 import { AccueilComponent } from './accueil/accueil.component';
 import { AccueiladminpdvComponent } from './accueiladminpdv/accueiladminpdv.component';
 import { AccueilAdminMultiPdvComponent } from './accueil-admin-multi-pdv/accueil-admin-multi-pdv.component';
-import { AccueilcoursierComponent } from './accueilcoursier/accueilcoursier.component';
-import { AccueiladmincoursierComponent } from './accueiladmincoursier/accueiladmincoursier.component';
-import { AdmincommercialComponent } from './admincommercial/admincommercial.component';
-import { AccueiladmincommercialComponent } from './accueiladmincommercial/accueiladmincommercial.component';
-import { AccueilcommercialComponent } from './accueilcommercial/accueilcommercial.component';
 
 import { NavbarTopComponent } from './navbars/navbar-top/navbar-top.component';
 
@@ -98,12 +90,10 @@ import { AdminmultipdvStatusPdvComponent } from './admin-multi-pdv/admin-multi-p
 import { AdminmultipdvStatusReclamationComponent } from './admin-multi-pdv/admin-multi-pdv-status-reclamation/admin-multi-pdv-status-reclamation.component';
 import { AdminmultipdvUpdateCautionComponent } from './admin-multi-pdv/admin-multi-pdv-update-caution/admin-multi-pdv-update-caution.component';
 
-import { AdmincoursierComponent } from './admincoursier/admincoursier.component';
 import { RapidoComponent} from './rapido/rapido.component';
 import { OrangeMoneyComponentComponent } from './orange-money-component/orange-money-component.component';
 import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-component.component';
 
-import { MoneyGramComponentComponent } from './money-gram-component/money-gram-component.component';
 import { CrmComponent } from './crm/crm.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
@@ -119,11 +109,6 @@ import { TntComponent, DataToArray } from './tnt/tnt.component';
 import { SoapserverComponent } from './soapserver/soapserver.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { EspacePersoComponent } from './espace-perso/espace-perso.component';
-import { CommercialComponent } from './commercial/commercial.component';
-import { AgentComponent } from './agent/agent.component';
-import { RecouvreurComponent } from './recouvreur/recouvreur.component';
-import { CoursierComponent } from './coursier/coursier.component';
-import { ManagerComponent } from './manager/manager.component';
 import { ComptabiliteComponent } from './comptabilite/comptabilite.component';
 import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { panierComponent } from './panier/panier.component';
@@ -210,6 +195,7 @@ import {PostCashService} from "./services/postcash.service";
 import {AuthenticationService} from "./services/authentification.service";
 import {GestionreportingService} from "./services/gestionreporting.service";
 import {DemandepretService} from "./services/demandepret.service";
+import {EcomService} from "./services/ecom.service";
 
 
 
@@ -226,7 +212,6 @@ import {DemandepretService} from "./services/demandepret.service";
     AccueilComponent,
     OrangeMoneyComponentComponent,
     TigoCashComponentComponent,
-    MoneyGramComponentComponent,
     CrmComponent,
     DashboardComponent,
     ECommerceComponent,
@@ -271,11 +256,6 @@ import {DemandepretService} from "./services/demandepret.service";
     CatalogueComponent,
     EspacePersoComponent,
     LoaderComponent,
-    CommercialComponent,
-    AgentComponent,
-    RecouvreurComponent,
-    CoursierComponent,
-    ManagerComponent,
     ComptabiliteComponent,
     DatafilterPipe,
     DecodatafilterPipe,
@@ -283,7 +263,6 @@ import {DemandepretService} from "./services/demandepret.service";
     FiltrerecouvrementPipe,
     FiltrerecommandearecupPipe,
     FiltrerecommandealivrerPipe,
-    AdmincoursierComponent,
     PipeCommandePipe,
     FiltreoperateursPipe,
     FiltrervoperateursPipe,
@@ -301,11 +280,6 @@ import {DemandepretService} from "./services/demandepret.service";
     AdminpdvStatusReclamationPipe,
     AdminpdvgestionnaireservicePipe,
 
-    AccueilcoursierComponent,
-    AccueiladmincoursierComponent,
-    AdmincommercialComponent,
-    AccueiladmincommercialComponent,
-    AccueilcommercialComponent,
     FiltrefichierPipe,
     FiltrervPipe,
     FiltrechargesPipe,
@@ -387,8 +361,6 @@ import {DemandepretService} from "./services/demandepret.service";
       ExpressoCashWebService,
       TigoCashService,
       JoniJoniWebService,
-      EcomServiceWeb,
-      CommercialServiceWeb,
       RegistrationService,
       WizallWebService,
       FacturierServiceWeb,
@@ -404,6 +376,7 @@ import {DemandepretService} from "./services/demandepret.service";
     ComptabiliteService,
     CrmService,
     GestionreportingService,
+    EcomService,
     DemandepretService,
   ],
   bootstrap: [AppComponent]

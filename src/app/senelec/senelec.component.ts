@@ -2,7 +2,6 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -21,7 +20,7 @@ class Article {
   selector: 'app-senelec',
   templateUrl: './senelec.component.html',
   styleUrls: ['./senelec.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  providers: [WizallWebService]
 })
 export class SenelecComponent implements OnInit {
    etat1:boolean=false;
@@ -39,7 +38,7 @@ export class SenelecComponent implements OnInit {
    police:string;
    num_facture:string;
    dataImpression:any;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) { }
+  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) { }
 
 /******************************************************************************************************/
 
@@ -48,16 +47,7 @@ export class SenelecComponent implements OnInit {
 
 
   }
-  validatedetailfacturesenelec(){
-     // this.detailfacturepostcash = null;
-     // console.log('Police et Numero Facture : '+this.police+'-'+this.num_facture);
-      //this.loading = true ;
-      this.postcashwebservice.detailfacturesenelec(this.police,this.num_facture.toString()).then(postcashwebserviceList => {
-        //this.loading = false ;
-       /* this.detailfacturepostcash = postcashwebserviceList;
-        console.log(postcashwebserviceList);*/
-      });
-    }
+
 @ViewChild('modalsenelec') public modalsenelec:ModalDirective;
 /******************************************************************************************************/
    showmodalsenelec(){

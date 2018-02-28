@@ -2,7 +2,6 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -13,7 +12,7 @@ import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.serv
   selector: 'app-woyofal',
   templateUrl: './woyofal.component.html',
   styleUrls: ['./woyofal.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  providers: [WizallWebService]
 })
 export class WoyofalComponent implements OnInit {
    etat:boolean=true;
@@ -21,7 +20,7 @@ export class WoyofalComponent implements OnInit {
    compteur:string;
    montant:number;
    dataImpression:any;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) {
+  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) {
 
   }
 
@@ -36,9 +35,6 @@ export class WoyofalComponent implements OnInit {
   showmodalwoyofal(){
    this.modalwoyofal.show();
   }
-  /*validerachatwoyofal(){
-    this.modalwoyofal.hide();
-  }*/
 
   hidemodalwoyofal(){
    this.modalwoyofal.hide();

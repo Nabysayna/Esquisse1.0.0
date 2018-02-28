@@ -3,8 +3,8 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import { Http, RequestOptions, RequestMethod, Headers  } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 
-import { EcomServiceWeb, Commande } from '../webServiceClients/ecom/ecom.service';
-import * as sha1 from 'js-sha1';
+import {EcomService, Commande} from "../services/ecom.service";
+
 import * as _ from "lodash";
 
 class Article {
@@ -40,28 +40,24 @@ export class newCommande{
 
 @Component({
   selector: 'app-espace-perso',
-  templateUrl: './espace-perso.component.html', 
+  templateUrl: './espace-perso.component.html',
   styleUrls: ['./espace-perso.component.css']
 })
 export class EspacePersoComponent implements OnInit {
 
   articles:Article[][];
-  ecomCaller: EcomServiceWeb;
-  loading = false ;
-  coderecept : string ;
-  listeVentes : any[] ;
-  listeCommande : Commande[] ;
-  listarticles : Article[] ;
+  loading = false;
+  coderecept : string;
+  listeVentes : any[];
+  listeCommande : Commande[];
+  listarticles : Article[];
   newImage = "imagevide.jpg" ;
 
-  shownPrice : number ;
-  partenairesParts : number ;
   customerReduct : number = 0 ;
   addtype = '' ;
   id : any ;
 
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
-  nomImage : string ;
   categoriea : string ;
   designationa: string;
   descriptiona: string ;
@@ -80,20 +76,20 @@ export class EspacePersoComponent implements OnInit {
   orderedArticles : string ;
   nbrePieds : number ;
   smart : string ;
-  descriptions=[{'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
-                {'description':'Vêtements','value':['origine','matière','taille','sexe/genre','tendances','couleur']},
-                {'description':'Chaussures','value':['tendances', 'genre/sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
-                {'description':'Sac',value:['matière', 'couleur', 'origine', 'genre', 'tendances']},
-                {'description':'Electronique','value':['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-                {'description':'Accessoires',value:['origine', 'matière', 'genre/sexe', 'qualité', 'poids']},
-                {'description':'Outils de bureau',value:['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-                {'description':'Electroménager',value:['modèle','origine','marque', 'capacité','utilisation']},
-                {'description':'Articles de maison',value:['origine','marque','utilisation','fonctions','modèle']},
-                {'description':'Autre',value:['autre description']}
-                ];
+  descriptions=[
+    {'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
+    {'description':'Vêtements','value':['origine','matière','taille','sexe/genre','tendances','couleur']},
+    {'description':'Chaussures','value':['tendances', 'genre/sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
+    {'description':'Sac',value:['matière', 'couleur', 'origine', 'genre', 'tendances']},
+    {'description':'Electronique','value':['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
+    {'description':'Accessoires',value:['origine', 'matière', 'genre/sexe', 'qualité', 'poids']},
+    {'description':'Outils de bureau',value:['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
+    {'description':'Electroménager',value:['modèle','origine','marque', 'capacité','utilisation']},
+    {'description':'Articles de maison',value:['origine','marque','utilisation','fonctions','modèle']},
+    {'description':'Autre',value:['autre description']}
+  ];
   descriptionsvalues=[];
 
-  uploadProgress: number;
   zone: NgZone;
 
   receivedArticles = "" ;
@@ -102,83 +98,80 @@ export class EspacePersoComponent implements OnInit {
   designation = "designation" ;
   asc = "asc" ;
 
-  constructor(private http: Http) {
-      this.ecomCaller = new EcomServiceWeb();
+  constructor(private http: Http, private _ecomService:EcomService) { }
+
+  ngOnInit() {
+    this.loading = true ;
+    this._ecomService.listerCategorie(this.token).then( response => {
+      console.log("z  listerCategorie  z")
+      console.log(response)
+      this.categories = response;
+      this._ecomService.listeArticles(this.token, 'perso').then( response => {
+        console.log("e    listeArticles      e")
+        console.log(response)
+        this.articles = _.chunk(response, 5) ;
+        this.listarticles = response;
+        this.loading = false ;
+      });
+    });
   }
 
-  ngOnInit() { 
-
-      this.loading = true ;
-      this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
-        {
-          this.articles = _.chunk(response, 5) ;
-          this.listarticles = response;
-          this.loading = false ;
-        });  
-
-      this.ecomCaller.listerCategorie(this.token).then( response =>
-        {
-          this.categories = response;
-        });  
-  }
-
- deleteArticle(article:Article) {      
-      for(var j=0; j<this.articles.length; j++){
-      	var ligne=this.articles[j];
-      		for (var i=0; i<ligne.length; i++)
-      			if (ligne[i].nomImg==article.nomImg)
-      			{
-              this.loading = true ;
-              let artcle = JSON.stringify(ligne[i]) ;
-              let params = { article: artcle ,token: this.token } ;
-              this.ecomCaller.supprimerArticle(params).then( response =>
-                {
-                  ligne.splice(i,1);
-                  this.loading = false ;
-                });              
-                break;
-      			}
-      }
-  }
- 
- filtre : string = "" ;
-
- filtrerCatalogue() : Article[][] {
-
-     let catalogueApresFiltre : Article[][] = [] ;
-      if (this.filtre=="" || this.filtre==null)
-          return this.articles ;
-      else
-        for(var j=0; j<this.articles.length; j++){
-          var ligne=this.articles[j] ;
-          let ligneCopy : Article[] = [] ;
-          let k : number = 0 ;
-          for (var i=0; i<ligne.length; i++)
-            if (this.repondAuFiltre(ligne[i]))
-            {
-              ligneCopy[k]=ligne[i];
-              k=k+1 ;
-            }
-          catalogueApresFiltre.push(ligneCopy) ;
+  deleteArticle(article:Article) {
+    for(let j=0; j<this.articles.length; j++){
+      let ligne=this.articles[j];
+      for (let i=0; i<ligne.length; i++)
+        if (ligne[i].nomImg==article.nomImg) {
+          this.loading = true ;
+          let artcle = JSON.stringify(ligne[i]) ;
+          let params = { article: artcle ,token: this.token } ;
+          this._ecomService.supprimerArticle(params).then( response => {
+            ligne.splice(i,1);
+            this.loading = false ;
+          });
+          break;
         }
-        return catalogueApresFiltre ;
+    }
+  }
+
+  filtre : string = "" ;
+
+  filtrerCatalogue(): Article[][] {
+    console.log(this.articles);
+    let catalogueApresFiltre : Article[][] = [] ;
+    if (this.filtre=="" || this.filtre==null){
+      return this.articles
+    }
+    else{
+      for(var j=0; j<this.articles.length; j++){
+        var ligne=this.articles[j] ;
+        let ligneCopy : Article[] = [] ;
+        let k : number = 0 ;
+        for (var i=0; i<ligne.length; i++)
+          if (this.repondAuFiltre(ligne[i]))
+          {
+            ligneCopy[k]=ligne[i];
+            k=k+1 ;
+          }
+        catalogueApresFiltre.push(ligneCopy) ;
+      }
+      return catalogueApresFiltre ;
+    }
  }
 
- repondAuFiltre(article : Article) : boolean {
+  repondAuFiltre(article : Article) : boolean {
       if (this.filtre=="" || this.filtre==null)
         return true ;
       else
-        if ( (article.nomImg.toLowerCase().match( this.filtre.toLowerCase() )!=null) || (article.designation.toLowerCase().match( this.filtre.toLowerCase() )!=null) ) 
+        if ( (article.nomImg.toLowerCase().match( this.filtre.toLowerCase() )!=null) || (article.designation.toLowerCase().match( this.filtre.toLowerCase() )!=null) )
             return true ;
        else
-            return false ;    
+            return false ;
   }
 
-
-  ajouter(){ 
+  ajouter(){
     this.loading = true ;
       let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) }
-      this.ecomCaller.ajouterArticle(params).then( response =>
+      this._ecomService.ajouterArticle(params).then( response =>
         {
           this.loading = false ;
           this.designationa=undefined;
@@ -190,14 +183,14 @@ export class EspacePersoComponent implements OnInit {
           this.newImage = "imagevide.jpg" ;
           this.prixa = undefined ;
           this.categoriea = "--- Catégorie ---" ;
-        }); 
+        });
   }
 
-  ajouterpta(){ 
+  ajouterpta(){
     this.loading = true ;
 
       let params = { token: this.token , designation: this.designationpta, description:this.descriptionpta, prix: this.prixpta, stock:this.stockpta, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriepta, type:'petiteannonce'}) }
-      this.ecomCaller.ajouterArticle(params).then( response =>
+      this._ecomService.ajouterArticle(params).then( response =>
         {
           this.designationpta=undefined;
           this.descriptionpta=undefined;
@@ -209,58 +202,62 @@ export class EspacePersoComponent implements OnInit {
           this.prixpta = undefined ;
           this.loading = false ;
           this.categoriepta = "--- Catégorie ---" ;
-        }); 
+        });
   }
-
 
   chargerCommandes(typeListe : string){
     this.loading = true ;
-    this.ecomCaller.listerCommandes(this.token, typeListe).then( response =>
+    this._ecomService.listerCommandes(this.token, typeListe).then( response =>
       {
         this.listeCommande = null ;
         if(typeListe=='toDeliver'){
-          this.smart =  JSON.parse(response).borom ;
-          this.listeCommande = JSON.parse(response).order ;        
+          this.smart =  response.borom ;
+          this.listeCommande = response;
         }
         else
-          this.listeCommande =  JSON.parse(response) ;
+          this.listeCommande =  response ;
         this.loading = false ;
-      });    
+      });
   }
 
   chargerVentes(){
     this.loading = true ;
-    this.ecomCaller.listerVentes(this.token).then( response =>
-      {
-        this.listeVentes = [] ;
-        this.listeVentes =  response ;
-        this.loading = false ;
-      });    
+    console.log("aazzzzzzz  receptionnerCommandes  zzzzzzzzzzzzzzze")
+    this._ecomService.listerVentes(this.token).then( response => {
+      console.log(response)
+      console.log("receptionnerCommandes  zzzzzzzzzzzzzzze")
+      this.listeVentes = [] ;
+      this.listeVentes =  response ;
+      this.loading = false ;
+    });
   }
 
-
   receptionner(idCommande : number){
+    console.log("aazzzzzzz  receptionnerCommandes  zzzzzzzzzzzzzzze")
     let params = {token: this.token, idCommande: idCommande};
     this.loading = true ;
-    this.ecomCaller.receptionnerCommandes(params).then( response =>
-      {
+    this._ecomService.receptionnerCommandes(params).then( response => {
+        console.log(response)
+        console.log("aazzzzzzzzzreceptionnerCommandeszzzzzzzzzzzzze")
         if(response=="ok")
           this.receivedArticles = this.receivedArticles + "-"+idCommande.toString()+"-" ;
           this.loading = false ;
-      });  
+      });
    }
 
   fournir(idCommande : number){
     let params = {token: this.token, idCommande: idCommande};
     this.loading = true ;
-    this.ecomCaller.fournirCommandes(params).then( response =>
+    this._ecomService.fournirCommandes(params).then( response =>
       {
+        console.log("aazzzzzzz  fournir  zzzzzzzzzzzzzzze")
+        console.log(response)
+        console.log("aazzzzzzzzzzzzzzzzzzzzzze")
         if(response=="ok")
           this.articlesFournis = this.articlesFournis + "-"+idCommande.toString()+"-" ;
           this.loading = false ;
-      });  
+      });
    }
-
 
   receivedCmd(idCommande : number){
     return ( this.receivedArticles.indexOf("-"+idCommande.toString()+"-")>-1 ) ;
@@ -270,9 +267,8 @@ export class EspacePersoComponent implements OnInit {
     return ( this.articlesFournis.indexOf("-"+idCommande.toString()+"-")>-1 ) ;
   }
 
-
  modifArticle(article:Article){
-    this.modif=article.nomImg; 
+    this.modif=article.nomImg;
     this.modifart="record"+article.nomImg;
  }
 
@@ -282,7 +278,7 @@ export class EspacePersoComponent implements OnInit {
 
     this.loading = true ;
 
-   for(var j=0; j<this.articles.length; j++){ 
+   for(var j=0; j<this.articles.length; j++){
     var ligne=this.articles[j];
       for (var i=0; i<ligne.length; i++)
         if (ligne[i].nomImg==article.nomImg)
@@ -292,10 +288,10 @@ export class EspacePersoComponent implements OnInit {
           }
         let artcle = JSON.stringify(ligne[i]) ;
         let params = { article: artcle ,token: this.token } ;
-        this.ecomCaller.modifierArticle(params).then( response =>
+        this._ecomService.modifierArticle(params).then( response =>
           {
             this.loading = false ;
-          });              
+          });
           break;
         }
     }
@@ -303,15 +299,15 @@ export class EspacePersoComponent implements OnInit {
 
   annulArticle(){
     this.loading = true ;
-    this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
+    this._ecomService.listeArticles(this.token, 'perso').then( response =>
       {
         this.articles = _.chunk(response, 5) ;
         this.listarticles = response;
         this.loading = false ;
-      });  
-    this.modif=""; 
+      });
+    this.modif="";
     this.modifart="";
- 
+
   }
 
   detailsCurrentCommande() : newCommande[]{
@@ -326,9 +322,8 @@ export class EspacePersoComponent implements OnInit {
 
  uploadFile: any;
 
-
   @ViewChild('childModal') public childModal:ModalDirective;
- 
+
   public showChildModal(ordereddArticles):void {
     this.orderedArticles = ordereddArticles ;
     if(JSON.parse(this.orderedArticles).length%3 == 0)
@@ -337,7 +332,7 @@ export class EspacePersoComponent implements OnInit {
       this.nbrePieds = JSON.parse(this.orderedArticles).length/3 + 1;
     this.childModal.show();
   }
- 
+
   public hideChildModal():void {
     this.childModal.hide();
   }
@@ -345,12 +340,12 @@ export class EspacePersoComponent implements OnInit {
   /*-----------------------------------------------------------*/
 
   @ViewChild('addChildModal') public addChildModal:ModalDirective;
- 
+
   public showAddChildModal():void {
     this.descriptionsvalues=[];
     this.addChildModal.show();
   }
- 
+
   public hideAddChildModal():void {
     this.addChildModal.hide();
     this.categoriea = "--- Catégorie ---" ;
@@ -365,7 +360,7 @@ export class EspacePersoComponent implements OnInit {
     this.categoriea = "--- Catégorie ---" ;
   }
 
-  apiEndPoint = 'http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/index.php' ;
+  apiEndPoint = 'http://localhost/backup-sb-admin/new-backend-esquise/server-backend-upload/index.php' ;
 
   fileChange(event) {
       let fileList: FileList = event.target.files;
@@ -375,21 +370,14 @@ export class EspacePersoComponent implements OnInit {
           formData.append('file', file, file.name);
           let headers = new Headers();
 
-          /** No need to include Content-Type in Angular 4 */
-          //Applying content-type in the current case leads to an impossible upload
-
-          // headers.append('Content-Type', 'multipart/form-data'); 
-
           headers.append('Accept', 'application/json');
-          let options = new RequestOptions({
-                              headers: headers
-                            });
+          let options = new RequestOptions({headers: headers});
 
           this.http.post(`${this.apiEndPoint}`, formData, options)
               .map(res => res.json())
               .catch(error => Observable.throw(error))
               .subscribe(
-                  data => { 
+                  data => {
                            let newData = data;
                            this.uploadFile = newData;
                            this.newImage = this.uploadFile.generatedName ;
@@ -457,6 +445,7 @@ export class EspacePersoComponent implements OnInit {
   roundedValueOf(decimal){
     return Math.round(decimal) ;
   }
+
   descriptionarticle(categorie:string){
    if(categorie=="--- Catégorie ---"){
       this.descriptionsvalues=[];
@@ -466,9 +455,9 @@ export class EspacePersoComponent implements OnInit {
          this.descriptionsvalues=this.descriptions[i].value;
          break;
       }
-      
+
    }
-    
+
   }
 
 }

@@ -6,8 +6,12 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PostCashService {
 
+  //private link = "https://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
+  //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
+  //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
+  private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
+  //private link = "http://sentool.bbstvnet.com/sslayer/index.php";
 
-  private lien="http://127.0.0.1/backendProductiveEsquisse/index.php";
   private headers=new Headers();
   private token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   public datas:any;
@@ -20,7 +24,7 @@ export class PostCashService {
   public rechargementespece(tel_destinataire : string, montant : string): Promise<any>  {
     var reEspParams = {token:this.token, tel_destinataire: tel_destinataire, montant: montant} ;
     let params="params="+JSON.stringify(reEspParams);
-    let link=this.lien+"/postcash/rechargementespece";
+    let link=this.link+"/postcash-sen/rechargementespece";
     return new Promise( (resolve, reject) => {
        this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
            resolve(data);
@@ -31,7 +35,7 @@ export class PostCashService {
   public achatcodewoyofal(montant : string, compteur : string):Promise<any>{
     var reEspParams = {token:this.token, montant: montant, compteur: compteur} ;
     let params="params="+JSON.stringify(reEspParams);
-    let link=this.lien+"/postcash/achatcodewoyofal";
+    let link=this.link+"/postcash-sen/achatcodewoyofal";
     return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res=>res.json()).subscribe(data=>{
              resolve(data);
@@ -43,7 +47,7 @@ export class PostCashService {
 
   public reglementsenelec(police : string, num_facture : string, montant : any): Promise<any>  {
     var reEspParams = {token:this.token, police: police, num_facture: num_facture,  montant : montant} ;
-    let link=this.lien+"/postcash/reglementsenelec";
+    let link=this.link+"/postcash-sen/reglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
@@ -54,7 +58,7 @@ export class PostCashService {
 
   public detailfacturesenelec(police : string, num_facture : string): Promise<any>  {
     var reEspParams = {token:this.token, police: police, num_facture: num_facture} ;
-    let link=this.lien+"/postcash/detailfacturesenelec";
+    let link=this.link+"/postcash-sen/detailfacturesenelec";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).map(res=>res.json()).subscribe(data =>{
@@ -66,7 +70,7 @@ export class PostCashService {
 
   public achatjula(mt_carte : string, nb_carte : string): Promise<any>  {
     var reEspParams = {token:this.token, mt_carte: mt_carte, nb_carte: nb_carte} ;
-    let link=this.lien+"/postcash/achatjula";
+    let link=this.link+"/postcash-sen/achatjula";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
@@ -79,7 +83,7 @@ export class PostCashService {
   public payeroolusolar(tel_destinataire : string, numcompte : string, montant : string): Promise<any>  {
     var reEspParams = {token:this.token, tel: tel_destinataire, numcompte: numcompte, mtt: montant} ;
      let params="params="+JSON.stringify(reEspParams);
-     let link=this.lien+"/postcash/oolusolar";
+     let link=this.link+"/postcash-sen/oolusolar";
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
              resolve(data);

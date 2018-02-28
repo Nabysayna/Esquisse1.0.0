@@ -7,15 +7,15 @@
 
 		<div class="col-sm-3" style="width: 14%">
 			<a href="#waitingCmd" (click)="chargerCommandes('toReceive')" class="btn"  type="button" data-toggle="tab">Commandes Attendues</a>
-		</div>	
+		</div>
 
 		<div class="col-sm-3"  style="width: 12%">
 			<a href="#cmdToDeliver" (click)="chargerCommandes('toDeliver')" class="btn"  type="button" data-toggle="tab">Commandes à Livrer</a>
-		</div>	
+		</div>
 
 		<div class="col-sm-2" style="width: 12%">
 			<a href="#articles" class="btn " type="button" data-toggle="tab">Mes Articles</a>
-		</div>	
+		</div>
 
 		<div class="col-sm-2" style="width: 12%">
 			<a href="#ventes" class="btn " (click)="chargerVentes()" type="button" data-toggle="tab">Mes Ventes</a>
@@ -26,7 +26,7 @@
 	<div class="tab-content">
 
 		<div class="row tab-pane fade in active" id="articles">
-		<input type="search" class="form-control input-sm" 
+		<input type="search" class="form-control input-sm"
 	  	   [(ngModel)]="this.filtre"
 	       [typeahead]="this.listarticles"
 	       typeaheadOptionField="designation"
@@ -58,13 +58,13 @@
 				</td>
 
 		    </tr>
-		    </tbody>                          
+		    </tbody>
 	    </div>
 
 			<div class="row tab-pane col-sm-12 col-xs-12 fade" id="waitingCmd">
                  <table width="100%" class="table table-responsive table-bordered table-striped" [mfData]="listeCommande | pipeCommande : filtre" #listCmdswtg="mfDataTable" [mfRowsOnPage]="10" [(mfSortBy)]="designation" [(mfSortOrder)]="asc" style="width: 100%;">
                                 <thead>
- 
+
                                     <tr>
                                         <th colspan="3" style="padding-right: 3rem ;">
                                             Rechercher :
@@ -80,7 +80,7 @@
                                         <th><mfDefaultSorter by="tel">Téléphone Client</mfDefaultSorter></th>
                                         <th>Réception</th>
                                    </tr>
-                            
+
                                 </thead>
                                 <tbody *ngIf="this.listeCommande" >
 	                                <tr *ngFor="let commande of listCmdswtg.data ; let i = index; ">
@@ -103,13 +103,13 @@
                                     </tr>
                                 </tfoot>
 
-                            </table>         
+                            </table>
 		    </div>
 
 			<div class="row tab-pane col-sm-12 col-xs-12 fade" id="cmdToDeliver">
                  <table width="100%" class="table table-responsive table-bordered table-striped" [mfData]="listeCommande | pipeCommande : filtre | suppliedarticles : smart" #listCmdsincoming="mfDataTable"  [(mfSortBy)]="designation" [(mfSortOrder)]="asc" style="width: 100%;">
                                 <thead>
- 
+
                                     <tr>
                                         <th colspan="3" style="padding-right: 3rem ;">
                                             Rechercher :
@@ -125,13 +125,13 @@
                                         <th><mfDefaultSorter by="tel">Téléphone Client</mfDefaultSorter></th>
                                         <th>Réception</th>
                                    </tr>
-                            
+
                                 </thead>
                                 <tbody *ngIf="this.listeCommande" >
 	                                <tr *ngFor="let commande of listCmdsincoming.data ; let i = index; ">
 	                                    <td>{{i+1}}</td>
 	                                    <td>{{commande.montant}}</td>
-	                                    <td>{{commande.dateCommande.date.substring(0,19)}}</td>
+	                                    <td>{{commande.dateCommande.date}}</td>
 	                                    <td>{{commande.prenomclient + " "+ commande.nomclient}}</td>
 	                                    <td>{{commande.telephoneclient}}</td>
 	                                    <td>
@@ -151,7 +151,7 @@
                                     </tr>
                                 </tfoot>
 
-                            </table>         
+                            </table>
 		    </div>
 
 
@@ -160,7 +160,7 @@
 
                  <table width="100%" class="table table-responsive table-bordered table-striped" [mfData]="listeVentes" #listVentes="mfDataTable" [mfRowsOnPage]="10" [(mfSortBy)]="id" [(mfSortOrder)]="asc" style="width: 100%;">
                                 <thead>
- 
+
                                     <tr>
                                         <th colspan="3" style="padding-right: 3rem ;">
                                             Rechercher :
@@ -176,7 +176,7 @@
                                         <th><mfDefaultSorter by="fullName">Client</mfDefaultSorter></th>
                                         <th><mfDefaultSorter by="tel">Téléphone Client</mfDefaultSorter></th>
                                     </tr>
-                            
+
                                 </thead>
                                 <tbody *ngIf="this.listVentes" >
 	                                <tr *ngFor="let vente of listVentes.data">
@@ -196,10 +196,10 @@
                                     </tr>
                                 </tfoot>
 
-                            </table>         
-    
+                            </table>
+
 	        </div>
-               
+
 	    </div>
 
 	<div bsModal #childModal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -226,13 +226,13 @@
 						  </div>
 						</div>
 				    </div>
-			    </div>                          
+			    </div>
 
-     		
+
 	     	  </div>
-			</div>			
-		</div>			
-	</div>			
+			</div>
+		</div>
+	</div>
 
 	<div bsModal #codevalModal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="laebcodevalid" aria-hidden="true">
 		 <div class="modal-dialog modal-lg">
@@ -246,9 +246,9 @@
 		      <div class="modal-body">
 				<input type="number" [(ngModel)]="coderecept"   name="coderecept" id="coderecept" class="form-control" placeholder="code de suivi du client" required>
 	     	  </div>
-			</div>			
-		</div>			
-	</div>			
+			</div>
+		</div>
+	</div>
 
 
 	<div bsModal #addChildModal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -262,40 +262,40 @@
 		      </div>
 		      <div class="modal-body" style="height : 37rem">
 
-				<div  class="col-sm-12 col-xs-12" style="margin-bottom:1rem" *ngIf="addtype==''">		
+				<div  class="col-sm-12 col-xs-12" style="margin-bottom:1rem" *ngIf="addtype==''">
 					 <a class="btn btn-success" type="button" (click)="addtype='venteecom'">Article E-commerce</a>
 					  <a type="reset" class="btn btn-success"  (click)="addtype='ptiteannonce'">Petite Annonce</a>
      		    </div>
 
-		      	<div  *ngIf="addtype=='venteecom'">		      		
-					<div  class="col-sm-12 col-xs-12 badge" *ngIf="prixa&&prixa!=0" style="margin-bottom:1rem">		
-						<div  class="col-sm-3 col-xs-12">		
+		      	<div  *ngIf="addtype=='venteecom'">
+					<div  class="col-sm-12 col-xs-12 badge" *ngIf="prixa&&prixa!=0" style="margin-bottom:1rem">
+						<div  class="col-sm-3 col-xs-12">
 						Prix de base : {{prixa}}
-						</div>		
-						<div  class="col-sm-3 col-xs-12">		
+						</div>
+						<div  class="col-sm-3 col-xs-12">
 						Prix affiché : {{prixa - customerReduct}}
-						</div>		
-						<div  class="col-sm-3 col-xs-12">		
+						</div>
+						<div  class="col-sm-3 col-xs-12">
 						Part  partenaires : {{ roundedValueOf(prixa*tauxreduc(prixa)*0.5) }}
-						</div>		
-						<div  class="col-sm-3 col-xs-12">		
+						</div>
+						<div  class="col-sm-3 col-xs-12">
 						Réduction client :  {{customerReduct}}
-						</div>		
-					</div>		
+						</div>
+					</div>
 
 					<div class="col-sm-4 col-xs-12">
  					   <img class="card-img-top" src="http://localhost/server-backend-upload/uploads/{{newImage}}"  alt="Card image cap" width="200" height="200">
 					   <input type="file" (change)="fileChange($event)" placeholder="Uploader Image" accept=".png,.jpg">
 
 
- 					</div>			
+ 					</div>
 
 					<div class="col-sm-6 col-xs-12">
 		                <select *ngIf="categoriea!='Autre'" (change)="descriptionarticle(categoriea)" class="form-control input-sm" style="margin-left: 1rem ;" [(ngModel)]="categoriea" >
 		                    <option >--- Catégorie ---</option>
 		                    <option *ngFor="let categorie of categories">{{categorie}}</option>
 		                    <option >Autre</option>
-		                </select>		
+		                </select>
 						<input type="text" *ngIf="categoriea=='Autre'" class="form-control input-sm" placeholder="Entrez la catégorie de l'article" required>
 
 						<input type="text" [(ngModel)]="this.designationa"   name="designationa" id="designationa" class="form-control" placeholder="designation de l'article" required>
@@ -306,13 +306,13 @@
                         </div>
 			            <input type="number" style="display : initial; max-width: 19rem; pull-left" [(ngModel)]="this.prixa"   name="prixa" id="prixa" class="form-control" placeholder="prix de l'article" required><!--<button (click)="reduirePrix(prixa)" class="btn btn-success">Appliquer tarif réductionnel</button>-->
 
-			            <input type="number" [(ngModel)]="this.stocka"   name="stocka" id="stocka" class="form-control" placeholder="Quantité en stock" required>	            
+			            <input type="number" [(ngModel)]="this.stocka"   name="stocka" id="stocka" class="form-control" placeholder="Quantité en stock" required>
 
 						 <a class="btn btn-success" type="button" (click)="ajouter()">Ajouter</a>
 
 						 <a type="reset" class="btn btn-danger"  (click)="annuler()">Annuler</a>
-					</div>		
-				</div>		
+					</div>
+				</div>
 				 <div  *ngIf="addtype=='ptiteannonce'">
 
 					<div class="col-sm-4 col-xs-12">
@@ -320,7 +320,7 @@
 					   <input type="file" (change)="fileChange($event)" placeholder="Uploader Image" accept=".png,.jpg">
 
 
- 					</div>			
+ 					</div>
 
 					<div class="col-sm-6 col-xs-12" >
 
@@ -330,7 +330,7 @@
 		                    <option>Location voitures</option>
 		                    <option>Immobilier</option>
 		                    <option>Autre</option>
-		                </select>		
+		                </select>
 						<input type="text" *ngIf="categoriepta=='Autre'" class="form-control input-sm" placeholder="Entrez la catégorie de l'annonce" required>
 
 						<input type="text" [(ngModel)]="this.designationpta"   name="designationa" id="designationa" class="form-control" placeholder="designation de l'annonce" required>
@@ -339,30 +339,30 @@
 
 			            <input type="number" style="display : initial; max-width: 15rem;" [(ngModel)]="this.prixpta"   name="prixa" id="prixa" class="form-control" placeholder="prix de l'article" required>  <input type="number" style="display : initial; max-width: 19rem;" [(ngModel)]="this.telpta"   name="prixa" id="tela" class="form-control" placeholder="Téléphone Annonceur" required>
 
-			            <input type="number" [(ngModel)]="this.stockpta"   name="stocka" id="stocka" class="form-control" placeholder="Quantité en stock" required>	            
+			            <input type="number" [(ngModel)]="this.stockpta"   name="stocka" id="stocka" class="form-control" placeholder="Quantité en stock" required>
 
 						 <a class="btn btn-success" type="button" (click)="ajouterpta()">Ajouter</a>
 
 						  <a type="reset" class="btn btn-danger"  (click)="annuler()">Annuler</a>
-					</div>		
-				</div>	
+					</div>
+				</div>
 
 	     	  </div>
 
-			  </div>			
-		   </div>			
+			  </div>
+		   </div>
 		<div *ngIf="this.loading">
-		    <app-loader></app-loader>    
+		    <app-loader></app-loader>
 		</div>
 
-	</div>			
+	</div>
 
 
-</div>			
+</div>
 
 
 <div *ngIf="this.loading">
-    <app-loader></app-loader>    
+    <app-loader></app-loader>
 </div>
 
 <!--GNING bamba-->

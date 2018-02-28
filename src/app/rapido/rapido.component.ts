@@ -2,7 +2,6 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -12,7 +11,7 @@ import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.serv
   selector: 'app-rapido',
   templateUrl: './rapido.component.html',
   styleUrls: ['./rapido.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  providers: [WizallWebService]
 })
 export class RapidoComponent implements OnInit {
   ngOnInit(){}
@@ -20,8 +19,8 @@ export class RapidoComponent implements OnInit {
   badge:string;
   montant:string;
   messagesucce:boolean=false;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb ) {
-  }
+  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb ) { }
+
 @ViewChild('modalrapido') public modalrapido:ModalDirective;
 showmodalrapido(){
   this.modalrapido.show();

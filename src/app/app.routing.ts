@@ -1,5 +1,3 @@
-import { NgModule }  from '@angular/core' ;
-
 import  { RouterModule, Routes} from '@angular/router' ;
 
 import { AuthGuard } from './_guards/auth.guard';
@@ -22,25 +20,16 @@ import { CommissionnementComponent } from './commissionnement/commissionnement.c
 
 import { ZoningComponent } from './zoning/zoning.component';
 
-import { ManagerComponent } from './manager/manager.component';
 import { AuthComponentComponent } from './auth-component/auth-component.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { AccueiladminpdvComponent } from './accueiladminpdv/accueiladminpdv.component';
-import { AccueilcoursierComponent } from './accueilcoursier/accueilcoursier.component';
-import { AccueilcommercialComponent } from './accueilcommercial/accueilcommercial.component';
-import { AccueiladmincommercialComponent } from './accueiladmincommercial/accueiladmincommercial.component';
-import { AccueiladmincoursierComponent } from './accueiladmincoursier/accueiladmincoursier.component';
-import { AdmincommercialComponent } from './admincommercial/admincommercial.component';
 import { AccueilAdminMultiPdvComponent } from './accueil-admin-multi-pdv/accueil-admin-multi-pdv.component';
-import { MoneyGramComponentComponent } from './money-gram-component/money-gram-component.component';
 import { OrangeMoneyComponentComponent } from './orange-money-component/orange-money-component.component';
 import { PostcashComponent } from './postcash/postcash.component';
 import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-component.component';
 import { WizallComponent } from './wizall/wizall.component';
 import { panierComponent } from './panier/panier.component';
 import { RapidoComponent} from './rapido/rapido.component';
-
-//import { WesternUnionComponentComponent } from './western-union-component/western-union-component.component';
 
 import { CrmComponent } from './crm/crm.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -52,11 +41,6 @@ import { SoldecompteComponent } from './soldecompte/soldecompte.component';
 import { ExpressoComponent } from './expresso/expresso.component';
 import { TntComponent } from './tnt/tnt.component';
 import { SoapserverComponent } from './soapserver/soapserver.component';
-import { CatalogueComponent } from './catalogue/catalogue.component';
-import { EspacePersoComponent } from './espace-perso/espace-perso.component';
-import { CoursierComponent } from './coursier/coursier.component';
-import { AdmincoursierComponent } from './admincoursier/admincoursier.component';
-import { CommercialComponent } from './commercial/commercial.component';
 import { ComptabiliteComponent } from './comptabilite/comptabilite.component';
 import { ConsulterpretComponent } from './consulterpret/consulterpret.component';
 import { FirstlogComponent } from './firstlog/firstlog.component';
@@ -94,7 +78,6 @@ const appRoutes: Routes = [
                 {path: 'POSTECASH', component: PostcashComponent},
                 {path: 'TIGOCASH', component: TigoCashComponentComponent},
                 {path: 'WIZALL', component: WizallComponent},
-                {path: 'ADMINCOURSIER', component: AdmincoursierComponent},
                 {path: 'CRM', component: CrmComponent},
                 {path: 'DASHBOARD', component: DashboardComponent},
                 {path: 'E-COMMERCE', component: ECommerceComponent},
@@ -130,66 +113,6 @@ const appRoutes: Routes = [
             { path: 'zoning', component: ZoningComponent }
         ]
     },
-    { path: 'accueilcoursier', component: AccueilcoursierComponent, canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                children: [
-                    {path: 'COURSIER', component: CoursierComponent},
-                    {path: 'E-COMMERCE', component: ECommerceComponent},
-                    {path: 'DEMANDEPRET', component: DemandepretComponent},
-                    {path: 'GESTIONREPORTING', component: GestionreportingComponent},
-                    { path: '', component: CoursierComponent }
-
-                ]
-            }
-        ]
-    },
-     { path: 'accueiladmincoursier', component: AccueiladmincoursierComponent, canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                children: [
-                    {path: '', component: AdmincoursierComponent},
-                    {path: 'E-COMMERCE', component: ECommerceComponent},
-                    {path: 'DEMANDEPRET', component: DemandepretComponent},
-                    {path: 'GESTIONREPORTING', component: GestionreportingComponent},
-                    { path: '', component: AdmincoursierComponent }
-
-                ]
-            }
-        ]
-    },
-    { path: 'accueiladmincommercial', component: AccueiladmincommercialComponent, canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                children: [
-                    {path: 'ADMIN COMMERCIAL', component: AdmincommercialComponent},
-                    {path: 'E-COMMERCE', component: ECommerceComponent},
-                    {path: 'DEMANDEPRET', component: DemandepretComponent},
-                    {path: 'GESTIONREPORTING', component: GestionreportingComponent},
-                    { path: '', component: AdmincommercialComponent }
-
-                ]
-            }
-        ]
-    },
-    { path: 'accueilcommercial', component: AccueilcommercialComponent, canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                children: [
-                    {path: 'COMMERCIAL', component: CommercialComponent},
-                    {path: 'E-COMMERCE', component: ECommerceComponent},
-                    {path: 'DEMANDEPRET', component: DemandepretComponent},
-                    {path: 'GESTIONREPORTING', component: GestionreportingComponent},
-                    { path: '', component: CommercialComponent }
-                ]
-            }
-        ]
-    },
-    { path: 'manager', component: ManagerComponent, canActivate: [AuthGuard]   },
     { path: 'accueiladmpdv', component: AccueiladminpdvComponent, canActivate: [AuthGuardsup],
         children: [
             {
