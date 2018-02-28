@@ -3,7 +3,6 @@ import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
 import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -35,7 +34,7 @@ export class SdeComponent implements OnInit {
 
   ngOnInit() {
 
-   
+
   }
   //{'STATUS':'FAILED', 'code': '400', 'error': 'BILL_ALREADY_PAID​'}
   /*
@@ -50,7 +49,7 @@ export class SdeComponent implements OnInit {
   detailfactursde(){
     this.FacturierServiceWeb.detailreglementsde(this.refclientsde).then(response =>{
       if(response.response==null){
-         this.message=true; 
+         this.message=true;
 
       }else{
          this.etat=true;
@@ -62,7 +61,7 @@ export class SdeComponent implements OnInit {
       }
 
         console.log(response);
-        
+
     });
     /*this.wizallwebservice.intouchRecupereFactureSde(this.refclientsde).then(response =>{
        console.log(response);
@@ -71,7 +70,7 @@ export class SdeComponent implements OnInit {
   showmodalsde(){
     this.modalsde.show();
     this.detailfactursde();
-   
+
   }
   paimantsde(){
     this.FacturierServiceWeb.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
@@ -105,7 +104,7 @@ export class SdeComponent implements OnInit {
 /******************************************************************************************************/
 
 
-  
+
 
 }
 

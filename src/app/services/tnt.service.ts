@@ -5,11 +5,13 @@ import 'rxjs/add/operator/map';
 
 
 export class TntResponse{
+  id_abonnement: number ;
   prenom: string ;
   nom: string ;
   tel: string ;
   adresse: string ;
   region: string ;
+  city: string ;
   cni: string ;
   n_chip : string ;
   n_carte : string ;
@@ -17,14 +19,27 @@ export class TntResponse{
   duree : string ;
   id_typeabonnement : string ;
   montant : number ;
+  id_operateur : number;
   etat : number ;
+  id_activateur: number ;
+  date_activation: string;
+  etat_reclamation : string;
+  datefinactivation : string ;
 }
+
+
 
 
 @Injectable()
 export class TntService {
 
-  private lien="http://127.0.0.1/backendProductiveEsquisse/index.php";
+  //private link = "https://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
+  //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
+  //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
+  private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
+  //private link = "http://sentool.bbstvnet.com/sslayer/index.php";
+
+
   private headers = new Headers();
   public responseJso : any ;
   public resp : string ;
@@ -37,7 +52,8 @@ export class TntService {
 
   public listAbonnement(token : string) : Promise<TntResponse[]> {
       let reEspParams = {token:token} ;
-      let link=this.lien+"/webservice/listabonnement";
+      let link=this.link+"/apitnt/listabonnement";
+      console.log(link);
       let params="params="+JSON.stringify(reEspParams);
       return new Promise( (resolve, reject) => {
          this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
@@ -49,22 +65,24 @@ export class TntService {
 
   public listeVenteDecods(token : string) : Promise<{}[]> {
       let reEspParams = {token:token} ;
-      let link=this.lien+"/webservice/listeventedecodeur";
+      let link=this.link+"/apitnt/listeventedecodeur";
+      console.log(link);
       let params="params="+JSON.stringify(reEspParams);
       return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
          resolve(JSON.parse(data));
-         console.log(data);
         });
       });
   }
 
   public listerVenteCartes(token : string) : Promise<{}[]> {
       let reEspParams = {token:token} ;
-      let link=this.lien+"/webservice/listeventecarte";
+      let link=this.link+"/apitnt/listeventecarte";
+      console.log(link);
       let params="params="+JSON.stringify(reEspParams);
       return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
+          console.log(JSON.parse(data))
           resolve(JSON.parse(data));
         });
       });
@@ -72,7 +90,8 @@ export class TntService {
 
   public checkNumber(token : string, chipOrCardNum: string) : Promise<TntResponse> {
     let params="params="+JSON.stringify({token:token,numeroCarteChip:chipOrCardNum});
-    let link=this.lien+"/webservice/checkNumber";
+    let link=this.link+"/apitnt/checkNumber";
+    console.log(link);
     return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
             resolve(JSON.parse(data));
@@ -88,7 +107,8 @@ export class TntService {
       montant = duree*montant ;
 
       let reEspParams = {token:token, prenom:prenom, nom:nom, tel:tel, adresse:'', region:'', city:'', cni:cni, numerochip:numerochip, numerocarte:numerocarte, duree:duree, typedebouquet:typedebouquet, montant:montant} ;
-      let link=this.lien+"/webservice/abonner";
+      let link=this.link+"/apitnt/abonner";
+      console.log(link);
       let params="params="+JSON.stringify(reEspParams);
       return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
@@ -99,7 +119,8 @@ export class TntService {
 
   public vendreDecodeur(token, prenomNewClient, nomNewClient, telNewClient, adresseNewClient, regionNewClient, cniNewClient, nchipNewClient, ncarteNewClient, nbmNewClient, typedebouquet, prix) : Promise<string> {
       let reEspParams = {token:token, prenom:prenomNewClient, nom:nomNewClient, tel:telNewClient, adresse:adresseNewClient, region:regionNewClient, cni:cniNewClient, numerochip:nchipNewClient, numerocarte:ncarteNewClient, typedebouquet:typedebouquet, prix:prix} ;
-      let link=this.lien+"/webservice/ventedecodeur";
+      let link=this.link+"/apitnt/ventedecodeur";
+      console.log(link);
       let params="params="+JSON.stringify(reEspParams);
       return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res => res.json()).subscribe(data =>{

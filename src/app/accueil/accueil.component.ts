@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
 import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
+import {TntService} from "../services/tnt.service";
 
 
 class Article {
@@ -30,12 +30,11 @@ export class AccueilComponent implements OnInit {
 
   authorisedToUseCRM = false ;
   load="loader";
-  private tntCaller: TntServiceWeb ;
   actif = -1 ;
   dataImpression:any;
 
 
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
+  constructor(private _tntService:TntService, private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
 
   }
 
@@ -52,7 +51,6 @@ export class AccueilComponent implements OnInit {
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
     this.processus();
-    this.tntCaller = new TntServiceWeb();
   }
 
 /******************************************************************************************************/
@@ -791,7 +789,7 @@ export class AccueilComponent implements OnInit {
 
   validnabon(objet:any){
 
-    this.tntCaller.abonner(objet.data.token, objet.data.prenom,objet.data.nomclient, objet.data.tel,objet.data.cni, objet.data.chip, objet.data.carte, objet.data.duree, objet.data.typedebouquet).then( response =>
+    this._tntService.abonner(objet.data.token, objet.data.prenom,objet.data.nomclient, objet.data.tel,objet.data.cni, objet.data.chip, objet.data.carte, objet.data.duree, objet.data.typedebouquet).then( response =>
       {
 
         let typedebouquet = "" ;
@@ -850,7 +848,7 @@ export class AccueilComponent implements OnInit {
 
    vendreDecodeur(objet:any){
 
-    this.tntCaller.vendreDecodeur(objet.data.token, objet.data.prenom,objet.data.nomclient,objet.data.tel, objet.data.adresse, objet.data.region, objet.data.cni,objet.data.chip,objet.data.carte, objet.data.duree, objet.data.typedebouquet, objet.data.montant).then( response =>
+    this._tntService.vendreDecodeur(objet.data.token, objet.data.prenom,objet.data.nomclient,objet.data.tel, objet.data.adresse, objet.data.region, objet.data.cni,objet.data.chip,objet.data.carte, objet.data.duree, objet.data.typedebouquet, objet.data.montant).then( response =>
       {
         if(response=="ok"){
 
@@ -891,7 +889,7 @@ export class AccueilComponent implements OnInit {
 
 
    vendreCarte(objet:any){
-    this.tntCaller.vendreCarte('55555', objet.data.prenom, objet.data.nomclient,objet.data.tel,objet.data.tel, objet.data.region,objet.data.cni,objet.data.carte, 5000).then( response =>{
+    this._tntService.vendreCarte('55555', objet.data.prenom, objet.data.nomclient,objet.data.tel,objet.data.tel, objet.data.region,objet.data.cni,objet.data.carte, 5000).then( response =>{
         if(response=="ok"){
           objet.dataI = {
             apiservice:'tnt',

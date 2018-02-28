@@ -44,24 +44,15 @@ import { EFinancierService} from './tnt/tntservices';
 
 
 
-import { AuthentificationServiceWeb } from './webServiceClients/Authentification/authentification.service';
 import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
 import {ExpressoCashWebService} from './webServiceClients/ExpressoCash/expressocash.service';
 import {TigoCashService} from './webServiceClients/Tigocash/tigocash.service';
 
 import {JoniJoniWebService} from './webServiceClients/JoniJoni/jonijoni.service';
-import {TntServiceWeb} from './webServiceClients/Tnt/Tnt.service';
-import {AdminpdvServiceWeb} from './webServiceClients/Adminpdv/adminpdv.service';
-import {AdminmultipdvServiceWeb} from './webServiceClients/Adminmultipdv/adminmultipdv.service';
 import {EcomServiceWeb} from './webServiceClients/ecom/ecom.service';
 import {CommercialServiceWeb}    from './webServiceClients/Commercial/commercial.service';
-import {ComptabiliteServiceWeb} from './webServiceClients/Comptabilite/comptabilite.service';
-import {GestionreportingServiceWeb} from './webServiceClients/Gestionreporting/gestionreporting.service';
-import {DemandepretServiceWeb} from './webServiceClients/Demandepret/demandepret.service';
-import {CrmServiceWeb} from './webServiceClients/Crm/crm.service';
 
 import {OrangeMoneyService} from './webServiceClients/Orangemoney/orangemoney.service';
-import {UtilServiceWeb} from './webServiceClients/utils/Util.service';
 
 
 
@@ -193,12 +184,10 @@ import {FiltreexploitationaveccommissionPipe} from "./pipes/filtreexploitationav
 import {GuideUserCaisseComponent} from "./guideusercaisse/guideusercaisse.component";
 import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersuperviseur.component";
 import {WizallComponent } from './wizall/wizall.component';
-import {UtilService} from "./services/util.service";
 import {UtilsService} from "./services/utils.service";
 import {CrmService} from "./services/crm.service";
 import {AdminpdvService} from "./services/adminpdv.service";
 import {RegistrationService} from "./services/registration.service";
-import {CrmDoorServiceWeb} from "./webServiceClients/CrmDoor/crmdoor.service";
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
 import {CommissionnementComponent } from './commissionnement/commissionnement.component';
 import {ChallengeresultsComponent } from './challengeresults/challengeresults.component';
@@ -395,29 +384,18 @@ import {DemandepretService} from "./services/demandepret.service";
       AuthGuardcais,
       AuthGuardsup,
 
-      UtilServiceWeb,
-      AuthentificationServiceWeb,
       ExpressoCashWebService,
       TigoCashService,
       JoniJoniWebService,
-      TntServiceWeb,
       EcomServiceWeb,
-      AdminpdvServiceWeb,
       CommercialServiceWeb,
-      AdminmultipdvServiceWeb,
-      ComptabiliteServiceWeb,
-      GestionreportingServiceWeb,
-      CrmServiceWeb,
-      DemandepretServiceWeb,
-      CrmDoorServiceWeb,
       RegistrationService,
       WizallWebService,
       FacturierServiceWeb,
-    AuthenticationService,
 
+    AuthenticationService,
     AdminpdvService,
     AdminmultipdvService,
-    UtilService,
     UtilsService,
     OrangeMoneyService,
     TntService,

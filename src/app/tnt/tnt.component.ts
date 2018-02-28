@@ -11,8 +11,7 @@ import {LAbonnementService} from '../tnt/tntservices';
 import {LAbonnement} from '../tnt/tntmodels';
 import {EFinancierService} from '../tnt/tntservices';
 import {EFinancier} from '../tnt/tntmodels';
-import {TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
-import {TntService} from "../services/tnt.service";
+import {TntService, TntResponse} from "../services/tnt.service";
 import {UtilsService} from "../services/utils.service";
 
 @Pipe({name: 'dataToArray'})
@@ -62,7 +61,6 @@ export class TntComponent implements OnInit {
 	nAbonnement:NAbonnement;
 	lAbonnement:LAbonnement;
 	eFinancier:EFinancier;
-  private tntCaller: TntServiceWeb ;
   public retourTntWS: {}[] ;
   private singleTntWS: TntResponse ;
 
@@ -107,28 +105,23 @@ export class TntComponent implements OnInit {
   	     private router: Router) { }
 
   ngOnInit():void {
-
     this.retrieveAlerteMessage() ;
-
-    this.tntCaller = new TntServiceWeb();
     this.route.params.subscribe( (params : Params) => {
       this.nAbonnement = this.nAbonnementService.getNAbonnement(5);
     });
-      this.route.params.subscribe( (params : Params) => {
-      this.lAbonnement = this.lAbonnementService.getLAbonnement(5);
+    this.route.params.subscribe( (params : Params) => {
+        this.lAbonnement = this.lAbonnementService.getLAbonnement(5);
     });
-      this.route.params.subscribe( (params : Params) => {
+    this.route.params.subscribe( (params : Params) => {
       this.eFinancier = this.eFinancierService.getEFinancier(5);
     });
-
   }
 
   validVerifierNum(){
     this.loading = true ;
     this.erreur = false ;
-    this.tntCaller.checkNumber(this.token, this.verifierNumInput.toString()).then( response => {
+    this._tntService.checkNumber(this.token, this.verifierNumInput.toString()).then( response => {
         this.singleTntWS = response ;
-        console.log(this.singleTntWS);
         this.noma = this.singleTntWS.nom ;
         this.prenoma = this.singleTntWS.prenom ;
         this.telNewClient = Number(this.singleTntWS.tel);
@@ -152,64 +145,46 @@ export class TntComponent implements OnInit {
   }
 
   validnabon(){
+      this.modalabonnement.hide();
+      let typedebouquet : number ;
+      if(this.tbouquet == "Maanaa") typedebouquet=1;
+      if(this.tbouquet == "Boul khool") typedebouquet=2;
+      if(this.tbouquet == "Maanaa + Boul khool") typedebouquet=3;
 
-    this.modalabonnement.hide();
-    var typedebouquet : number ;
-    if(this.tbouquet == "Maanaa")
-      typedebouquet=1;
-    if(this.tbouquet == "Boul khool")
-      typedebouquet=2;
-    if(this.tbouquet == "Maanaa + Boul khool")
-      typedebouquet=3;
-
-    /*this.singleTntWS.tel = this.telNewClient.toString() ;
-    this.singleTntWS.nchipNewClient = this.nchipNewClient.toString();
-    this.singleTntWS.ncarteNewClient = this.ncarteNewClient.toString() ;*/
-
-    sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
-    this.hidemodaldecodeur();
-    this.reinitialiserVariables();
-
+      sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
+      this.hidemodaldecodeur();
+      this.reinitialiserVariables();
   }
-
 
   listerAbonnements(){
       this.loading = true ;
       this.erreur = false ;
 
-      this.tntCaller.listAbonnement(this.token).then( response =>
-        {
-          this.retourTntWS = response ;
-          this.loading = false ;
-          //console.log("response "+this.retourTntWS) ;
-        }) ;
+      this._tntService.listAbonnement(this.token).then( response => {
+        this.retourTntWS = response ;
+        this.loading = false ;
+      });
   }
 
   listerVenteDeco(){
       this.loading = true ;
       this.erreur = false ;
 
-      this.tntCaller.listeVenteDecods(this.token).then( response =>
-        {
-          this.retourTntWS = response.reverse() ;
-          this.loading = false ;
-          //console.log("response "+this.retourTntWS) ;
-        }) ;
+      this._tntService.listeVenteDecods(this.token).then( response => {
+        this.retourTntWS = response.reverse() ;
+        this.loading = false ;
+      });
   }
 
   listerVenteCarte(){
       this.loading = true ;
       this.erreur = false ;
-
-      this.tntCaller.listerVenteCartes(this.token).then( response =>
-        {
-          this.retourTntWS = response.reverse() ;
-          this.loading = false ;
-          //console.log("response "+this.retourTntWS) ;
-        }) ;
+      console.log("*****************listerVenteCarte************")
+      this._tntService.listerVenteCartes(this.token).then( response => {
+        this.retourTntWS = response.reverse() ;
+        this.loading = false ;
+      });
   }
-
-
 
   vendreDecodeur(){
      var typedebouquet : number ;
@@ -252,8 +227,6 @@ export class TntComponent implements OnInit {
       )
     },10000);
   }
-
-
 
   reinitialiserVariables(){
       this.erreur = false ;

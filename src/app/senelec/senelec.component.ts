@@ -3,7 +3,6 @@ import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
 import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -40,16 +39,14 @@ export class SenelecComponent implements OnInit {
    police:string;
    num_facture:string;
    dataImpression:any;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) {
-
-  }
+  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) { }
 
 /******************************************************************************************************/
 
 
   ngOnInit() {
 
-   
+
   }
   validatedetailfacturesenelec(){
      // this.detailfacturepostcash = null;
@@ -78,7 +75,7 @@ export class SenelecComponent implements OnInit {
           this.detailfacturesenelec.nomclient=response.nom_client;
           this.detailfacturesenelec.montant=response.montant;
           this.detailfacturesenelec.dateEcheance=response.dateEcheance;
-           
+
           this.modalsenelec.show();
         }else{
           console.log(response);
@@ -86,7 +83,7 @@ export class SenelecComponent implements OnInit {
           this.detailfacturesenelec.errorCode=response.errorCode;
           this.modalsenelec.show();
         }
-        
+
      });
    }
    validerpaimentsenelec(){
@@ -115,11 +112,11 @@ export class SenelecComponent implements OnInit {
         console.log(response);
         this.modalsenelec.hide();
       }
-      
+
    });
 
    }
-  
+
 
 }
 

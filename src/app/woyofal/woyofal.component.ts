@@ -3,7 +3,6 @@ import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
 import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -31,7 +30,7 @@ export class WoyofalComponent implements OnInit {
 
   ngOnInit() {
 
-   
+
   }
   @ViewChild('modalwoyofal') public modalwoyofal:ModalDirective;
   showmodalwoyofal(){
@@ -40,7 +39,7 @@ export class WoyofalComponent implements OnInit {
   /*validerachatwoyofal(){
     this.modalwoyofal.hide();
   }*/
-    
+
   hidemodalwoyofal(){
    this.modalwoyofal.hide();
   }
@@ -70,7 +69,7 @@ export class WoyofalComponent implements OnInit {
 /******************************************************************************************************/
 
 
-  
+
 
 }
 

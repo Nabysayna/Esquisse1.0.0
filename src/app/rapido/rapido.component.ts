@@ -3,7 +3,6 @@ import { Router, CanActivate } from '@angular/router';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
 import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
 import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
 import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
@@ -21,7 +20,6 @@ export class RapidoComponent implements OnInit {
   badge:string;
   montant:string;
   messagesucce:boolean=false;
-  messageerror:boolean=false;
   constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb ) {
   }
 @ViewChild('modalrapido') public modalrapido:ModalDirective;
