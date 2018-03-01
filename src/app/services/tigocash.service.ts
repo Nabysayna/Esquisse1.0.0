@@ -3,7 +3,7 @@ import {Http, Headers} from "@angular/http";
 
 
 @Injectable()
-export class OrangemoneyService {
+export class TigocashService {
 
   //private link = "https://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
@@ -20,29 +20,22 @@ export class OrangemoneyService {
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
-  public requerirControllerOM(requete:any): Promise<any>{
+  public requerirControllerTC(requete:any): Promise<any>{
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
-    let link=this.link+"/om-sen/requerirControllerOM";
+    let link=this.link+"/tc-sen/requerirControllerTC";
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
   }
 
-  public verifierReponseOM(requete:any): Promise<any>{
+  public verifierReponseTC(requete:any): Promise<any>{
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
-    let link=this.link+"/om-sen/verifierReponseOM";
+    let link=this.link+"/tc-sen/verifierReponseTC";
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
   }
 
-  public demanderAnnulationOM(requete:any): Promise<any>{
+  public demanderAnnulationTC(requete:any): Promise<any>{
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
-    let link=this.link+"/om-sen/demanderAnnulationOM";
+    let link=this.link+"/tc-sen/demanderAnnulationTC";
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
   }
-
-  public isDepotCheckAuthorized(): Promise<any>{
-    let params="requestParam="+JSON.stringify({token : this.token});
-    let link=this.link+"/om-sen/isDepotCheckAuthorized";
-    return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
-  }
-
 
 }

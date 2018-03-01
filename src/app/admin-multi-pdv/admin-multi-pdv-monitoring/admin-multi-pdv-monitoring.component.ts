@@ -1,7 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 
-import { AdminmultipdvDeposit }    from '../../models/adminmultipdv-monitoring';
-import { AdminmultipdvDepositInitialConsommeParService }    from '../../models/adminmultipdv-monitoring-dicps';
 import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
@@ -13,8 +11,8 @@ import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 })
 export class AdminmultipdvMonitoringComponent implements OnInit {
 
-  public monitoringAdminmultipdvDeposit: AdminmultipdvDeposit;
-  public monitoringAdminmultipdvDepositParService: AdminmultipdvDepositInitialConsommeParService;
+  public monitoringAdminmultipdvDeposit: any;
+  public monitoringAdminmultipdvDepositParService: any;
   loading = false ;
 
   // For progreesbar

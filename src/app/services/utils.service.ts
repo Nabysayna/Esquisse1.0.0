@@ -12,16 +12,14 @@ export class UtilsService {
 
 
   private headers = new Headers();
-  private basetoken:any;
 
   constructor(private _http: Http){
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this.basetoken = JSON.parse(sessionStorage.getItem('currentUser')).baseToken;
   }
 
   getOnePointSuivicc(data:any){
     let url = this.link+"/utils-sen/getdetailonepointsuivisentool";
-    let datas = JSON.stringify({token:this.basetoken, data:data});
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, data:data});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
@@ -29,7 +27,7 @@ export class UtilsService {
 
   recupererInfosCC(){
     let url = this.link+"/utils-sen/initajoutdeposit";
-    let datas = JSON.stringify({token:this.basetoken});
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
@@ -77,7 +75,7 @@ export class UtilsService {
 
   isDepotCheckAuthorized(){
     let url = this.link+"/utils-sen/isDepotCheckAuthorized";
-    let datas = JSON.stringify({token:this.basetoken});
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken});
     let params = 'requestParam='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
@@ -85,7 +83,7 @@ export class UtilsService {
 
   checkCaution(){
     let url = this.link+"/utils-sen/checkCaution";
-    let datas = JSON.stringify({token:this.basetoken});
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken});
     let params = 'requestParam='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());
@@ -97,7 +95,7 @@ export class UtilsService {
 
   getDetailOnePointSuivicc(data:any){
     let url = this.link+"/apiplatform/getdetailonepointsuivicc";
-    let datas = JSON.stringify({token:this.basetoken, data:data});
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, data:data});
     let params = 'params='+datas;
     return this._http.post(url, params, {headers:this.headers})
       .map(res => res.json());

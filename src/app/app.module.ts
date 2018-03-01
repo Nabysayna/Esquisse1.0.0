@@ -23,13 +23,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
 /*      Services   */
 /*-----------------*/
 
-import { SoapService } from './soap.service';
-import { EnvoicashService, PaiecashService } from './joni-joni-component/joniservices';
 import { AchatJulaService} from './postcash/postservices';
 import { ReglSenelecService} from './postcash/postservices';
 import { AchatCodeWoyofalService} from './postcash/postservices';
-import { RechargeVitfeService} from './joni-joni-component/joniservices';
-import { RechargeCarteService} from './joni-joni-component/joniservices';
 import { RechargeEspeceService} from './postcash/postservices';
 import { AchatCreditTelService} from './postcash/postservices';
 import { RetraitEspeceService} from './postcash/postservices';
@@ -42,14 +38,7 @@ import { NAbonnementService} from './tnt/tntservices';
 import { LAbonnementService} from './tnt/tntservices';
 import { EFinancierService} from './tnt/tntservices';
 
-
-
-import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
-import {ExpressoCashWebService} from './webServiceClients/ExpressoCash/expressocash.service';
-import {TigoCashService} from './webServiceClients/Tigocash/tigocash.service';
-
-import {JoniJoniWebService} from './webServiceClients/JoniJoni/jonijoni.service';
-import {OrangeMoneyService} from './webServiceClients/Orangemoney/orangemoney.service';
+import {TigocashService} from './services/tigocash.service';
 
 
 
@@ -97,7 +86,6 @@ import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-comp
 import { CrmComponent } from './crm/crm.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
-import { JoniJoniComponentComponent } from './joni-joni-component/joni-joni-component.component';
 import { DemandepretComponent } from './demandepret/demandepret.component';
 import { GestionreportingComponent } from './gestionreporting/gestionreporting.component';
 import { SoldecompteComponent } from './soldecompte/soldecompte.component';
@@ -106,7 +94,6 @@ import { PostcashComponent } from './postcash/postcash.component';
 import { LoaderComponent } from './loader/loader.component';
 import { ExpressoComponent } from './expresso/expresso.component';
 import { TntComponent, DataToArray } from './tnt/tnt.component';
-import { SoapserverComponent } from './soapserver/soapserver.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { EspacePersoComponent } from './espace-perso/espace-perso.component';
 import { ComptabiliteComponent } from './comptabilite/comptabilite.component';
@@ -172,7 +159,6 @@ import {WizallComponent } from './wizall/wizall.component';
 import {UtilsService} from "./services/utils.service";
 import {CrmService} from "./services/crm.service";
 import {AdminpdvService} from "./services/adminpdv.service";
-import {RegistrationService} from "./services/registration.service";
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
 import {CommissionnementComponent } from './commissionnement/commissionnement.component';
 import {ChallengeresultsComponent } from './challengeresults/challengeresults.component';
@@ -181,7 +167,6 @@ import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi
 import { ZoningComponent } from './zoning/zoning.component';
 import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
-import {WizallWebService} from "./webServiceClients/Wizall/wizall.service";
 
 import { SdeComponent } from './sde/sde.component';
 import { WoyofalComponent } from './woyofal/woyofal.component';
@@ -196,6 +181,11 @@ import {AuthenticationService} from "./services/authentification.service";
 import {GestionreportingService} from "./services/gestionreporting.service";
 import {DemandepretService} from "./services/demandepret.service";
 import {EcomService} from "./services/ecom.service";
+import {WizallService} from "./services/wizall.service";
+import {FacturierService} from "./services/facturier.service";
+import {OrangemoneyService} from "./services/orangemoney.service";
+import {ExpressocashService} from "./services/expressocash.service";
+import {MapsService} from "./services/maps.service";
 
 
 
@@ -215,7 +205,6 @@ import {EcomService} from "./services/ecom.service";
     CrmComponent,
     DashboardComponent,
     ECommerceComponent,
-    JoniJoniComponentComponent,
     AccueiladminpdvComponent,
     AccueilAdminMultiPdvComponent,
     DemandepretComponent,
@@ -252,7 +241,6 @@ import {EcomService} from "./services/ecom.service";
     NavbarTopComponent,
     ExpressoComponent,
     TntComponent,
-    SoapserverComponent,
     CatalogueComponent,
     EspacePersoComponent,
     LoaderComponent,
@@ -334,7 +322,6 @@ import {EcomService} from "./services/ecom.service";
     NgxPaginationModule
   ],
   providers: [
-      SoapService,
       EFinancierService,
       LAbonnementService,
       NAbonnementService,
@@ -342,34 +329,21 @@ import {EcomService} from "./services/ecom.service";
       AgentTopUpService,
       CashOutService,
       CashInService,
-      OrangeMoneyService,
       SoldeService,
       RetraitEspeceService,
       AchatCreditTelService,
-      RechargeCarteService,
       RechargeEspeceService,
-      RechargeVitfeService,
       AchatCodeWoyofalService,
       ReglSenelecService,
       AchatJulaService,
-      EnvoicashService,
-      PaiecashService,
       AuthGuard,
       AuthGuardcais,
       AuthGuardsup,
-
-      ExpressoCashWebService,
-      TigoCashService,
-      JoniJoniWebService,
-      RegistrationService,
-      WizallWebService,
-      FacturierServiceWeb,
 
     AuthenticationService,
     AdminpdvService,
     AdminmultipdvService,
     UtilsService,
-    OrangeMoneyService,
     TntService,
     PostCashService,
     AuthService,
@@ -378,6 +352,12 @@ import {EcomService} from "./services/ecom.service";
     GestionreportingService,
     EcomService,
     DemandepretService,
+    WizallService,
+    FacturierService,
+    OrangemoneyService,
+    TigocashService,
+    ExpressocashService,
+    MapsService,
   ],
   bootstrap: [AppComponent]
 })

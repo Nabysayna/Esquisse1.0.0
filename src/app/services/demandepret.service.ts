@@ -30,6 +30,14 @@ export class DemandepretService {
       .map(res => res.json());
   }
 
+  consulterpret(){
+    let url = this.link+"/demandepret-sen/consulterpret";
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken});
+    let params = 'params='+datas;
+    return this._http.post(url, params, {headers:this.headers})
+      .map(res => res.json());
+  }
+
   envoyerDemandeDepretCofina(data:any){
     let url = this.link+"/demandepret-sen/envoyerDemandeDepretCofina";
     let datas = JSON.stringify({requestParam : data, tokenParam : JSON.parse(sessionStorage.getItem('currentUser')).baseToken});

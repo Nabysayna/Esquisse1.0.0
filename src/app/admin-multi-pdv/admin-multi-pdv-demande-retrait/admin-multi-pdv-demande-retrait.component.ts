@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AdminmultipdvDemanderetrait }    from '../../models/adminmultipdv-demanderetrait';
-import {log} from "util";
 import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
@@ -17,7 +15,7 @@ export class AdminmultipdvDemandeRetraitComponent implements OnInit {
     public sortBy = "datedemanderetrait";
     public sortOrder = "desc";
 
-    public adminmultipdvDemanderetrait: AdminmultipdvDemanderetrait[];
+    public adminmultipdvDemanderetrait: any[];
     loading = false ;
 
   constructor(private _adminmultipdvService: AdminmultipdvService) { }

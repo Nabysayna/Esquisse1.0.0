@@ -4,7 +4,7 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentification.service';
-import {RegistrationService} from "../services/registration.service";
+import {UtilsService} from "../services/utils.service";
 
 
 @Component({
@@ -47,10 +47,11 @@ export class AuthComponentComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService, private _compiler: Compiler, private _utilService:RegistrationService)
-  {
-    this._compiler.clearCache();
-  	this.fakevalues = true ;
+    private authenticationService: AuthenticationService,
+    private _compiler: Compiler,
+    private _utilsService:UtilsService) {
+      this._compiler.clearCache();
+      this.fakevalues = true ;
   }
 
   ngOnInit() {
@@ -104,7 +105,7 @@ export class AuthComponentComponent implements OnInit {
   }
 
   getRegionNewCaissier(){
-    this._utilService.getRegion()
+    this._utilsService.getRegion()
       .subscribe(
         data => {
           this.regions = data;
@@ -120,7 +121,7 @@ export class AuthComponentComponent implements OnInit {
     this.iszones = false;
     this.zone = '--Choix zone--';
     this.souszone = '--Choix sous zone--';
-    this._utilService.getZoneByRegion(this.region)
+    this._utilsService.getZoneByRegion(this.region)
       .subscribe(
         data => {
           this.zones = data;
@@ -133,7 +134,7 @@ export class AuthComponentComponent implements OnInit {
 
   selectZoneNewCaissier(){
     this.issouszones = false;
-    this._utilService.getSouszoneByZoneByRegion({region:this.region, zone: this.zone})
+    this._utilsService.getSouszoneByZoneByRegion({region:this.region, zone: this.zone})
       .subscribe(
         data => {
           this.souszones = data;
@@ -163,7 +164,7 @@ export class AuthComponentComponent implements OnInit {
     let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.telephone, 'nometps':this.nometps, 'nomshop':this.nomshop, adresse : JSON.stringify({'region':this.region, 'zone':this.zone, 'souszone':this.souszone, 'address':this.adresse}), 'idcommercial':3 } ;
     this.loading = true ;
     console.log( "Nouvel Inscrit : "+JSON.stringify(paramInscrpt) ) ;
-    this._utilService.inscrire(paramInscrpt).then( retourserveur => {
+    this.authenticationService.inscrire(paramInscrpt).then( retourserveur => {
       this.loading = false ;
       console.log(retourserveur);
 
@@ -172,7 +173,6 @@ export class AuthComponentComponent implements OnInit {
       }
       if(retourserveur=="ok"){
         this.endRegisterdModal.show() ;
-//        console.log("Utilisateur créé") ;
         this.usedLogin=false ;
         this.prenom=undefined ;
         this.nom=undefined ;

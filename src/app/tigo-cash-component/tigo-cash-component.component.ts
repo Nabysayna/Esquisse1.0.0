@@ -1,12 +1,12 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
+import { TigocashService } from '../services/tigocash.service';
 
 @Component({
   selector: 'app-tigo-cash-component',
   templateUrl: './tigo-cash-component.component.html',
   styleUrls: ['./tigo-cash-component.component.css'],
-  providers: [TigoCashService]
+  providers: [TigocashService]
 })
 export class TigoCashComponentComponent implements OnInit {
 
@@ -26,15 +26,15 @@ export class TigoCashComponentComponent implements OnInit {
    donneepayertransfert:boolean=false;
    donneetransfert:string;
    reference:number;
-   
+
    @ViewChild('modaldepot') modaldepot: ModalDirective;
    @ViewChild('modalretrait') modalretrait: ModalDirective;
    @ViewChild('modalpaiment') modalpaiment: ModalDirective;
    @ViewChild('modalenvoi') modalenvoi: ModalDirective;
    @ViewChild('modalvendreizi') modalvendreizi: ModalDirective;
    @ViewChild('modalinscription') modalinscription: ModalDirective;
-   
-   constructor(private tcservice:TigoCashService,) { }
+
+   constructor(private tcservice:TigocashService,) { }
 
   ngOnInit() {
   }
@@ -104,7 +104,7 @@ export class TigoCashComponentComponent implements OnInit {
   /*******verif numero reference*****/
      verifnumeroreference(){
         let requet="3/"+this.reference;
-        this.tcservice.requerirControllerTC(requet).then(rep=>{ 
+        this.tcservice.requerirControllerTC(requet).then(rep=>{
       if(rep.statut==200){
 			   if(rep.body.trim()!=""){
 			   this.donneepayertransfert=true;
@@ -117,7 +117,7 @@ export class TigoCashComponentComponent implements OnInit {
 			   this.messagepayertransfert=true;
 			   this.hidemodalpaiment();
 			   this.donneetransfert="";
-			   
+
 			}
 	    }
 	    else{

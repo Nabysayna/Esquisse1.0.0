@@ -4,8 +4,8 @@ import { Http, RequestOptions, RequestMethod, Headers  } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 
 import {EcomService, Commande} from "../services/ecom.service";
-
 import * as _ from "lodash";
+
 
 class Article {
   public id:number;
@@ -46,48 +46,64 @@ export class newCommande{
 export class EspacePersoComponent implements OnInit {
 
   articles:Article[][];
-  loading = false;
-  coderecept : string;
-  listeVentes : any[];
-  listeCommande : Commande[];
-  listarticles : Article[];
+  loading = false ;
+  coderecept : string ;
+  listeVentes : any[] ;
+  listeCommande : Commande[] ;
+  listarticles : Article[] ;
   newImage = "imagevide.jpg" ;
+  articlemodif:any={};
 
+  shownPrice : number ;
+  partenairesParts : number ;
   customerReduct : number = 0 ;
   addtype = '' ;
   id : any ;
 
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
+  nomImage : string ;
   categoriea : string ;
   designationa: string;
   descriptiona: string ;
   prixa:number;
   stocka:number;
-
+  Bcosmetique:boolean=false;
+  Bvetement:boolean=false;
+  Bchaussure:boolean=false;
+  Belectronique:boolean=false;
+  Bbureau:boolean=false;
+  Belectromenager:boolean=false;
+  Baccessoire:boolean=false;
+  Bmaison:boolean=false;
+  Bsac:boolean=false;
+  Bautre:boolean=false;
   categoriepta : string ;
   designationpta: string;
   descriptionpta: string ;
   prixpta:number;
   stockpta:number;
-
+  provenance:string;
+  marque:string;
+  couleur:string;
+  origine:string;
+  tendence:string;
+  sexe:string;
+  mode:string;
+  utilisation:string;
+  fonctions:string;
+  modele:string;
+  capacite:string;
+  matiere:string;
+  tendances:string;
+  categorie:string;
+  infosup:string;
+  prix:string;
 
   modif:string="-";
   modifart:string;
   orderedArticles : string ;
   nbrePieds : number ;
   smart : string ;
-  descriptions=[
-    {'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
-    {'description':'Vêtements','value':['origine','matière','taille','sexe/genre','tendances','couleur']},
-    {'description':'Chaussures','value':['tendances', 'genre/sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
-    {'description':'Sac',value:['matière', 'couleur', 'origine', 'genre', 'tendances']},
-    {'description':'Electronique','value':['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-    {'description':'Accessoires',value:['origine', 'matière', 'genre/sexe', 'qualité', 'poids']},
-    {'description':'Outils de bureau',value:['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-    {'description':'Electroménager',value:['modèle','origine','marque', 'capacité','utilisation']},
-    {'description':'Articles de maison',value:['origine','marque','utilisation','fonctions','modèle']},
-    {'description':'Autre',value:['autre description']}
-  ];
   descriptionsvalues=[];
 
   zone: NgZone;
@@ -98,33 +114,34 @@ export class EspacePersoComponent implements OnInit {
   designation = "designation" ;
   asc = "asc" ;
 
-  constructor(private http: Http, private _ecomService:EcomService) { }
+  constructor(private http: Http,private ecomCaller:EcomService) { }
 
   ngOnInit() {
+
     this.loading = true ;
-    this._ecomService.listerCategorie(this.token).then( response => {
-      console.log("z  listerCategorie  z")
-      console.log(response)
+    this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
+    {
+      this.articles = _.chunk(response, 3) ;
+      this.listarticles = response;
+      this.loading = false ;
+    });
+
+    this.ecomCaller.listerCategorie(this.token).then( response =>
+    {
       this.categories = response;
-      this._ecomService.listeArticles(this.token, 'perso').then( response => {
-        console.log("e    listeArticles      e")
-        console.log(response)
-        this.articles = _.chunk(response, 5) ;
-        this.listarticles = response;
-        this.loading = false ;
-      });
     });
   }
-
   deleteArticle(article:Article) {
-    for(let j=0; j<this.articles.length; j++){
-      let ligne=this.articles[j];
-      for (let i=0; i<ligne.length; i++)
-        if (ligne[i].nomImg==article.nomImg) {
+    for(var j=0; j<this.articles.length; j++){
+      var ligne=this.articles[j];
+      for (var i=0; i<ligne.length; i++)
+        if (ligne[i].nomImg==article.nomImg)
+        {
           this.loading = true ;
           let artcle = JSON.stringify(ligne[i]) ;
           let params = { article: artcle ,token: this.token } ;
-          this._ecomService.supprimerArticle(params).then( response => {
+          this.ecomCaller.supprimerArticle(params).then( response =>
+          {
             ligne.splice(i,1);
             this.loading = false ;
           });
@@ -135,13 +152,12 @@ export class EspacePersoComponent implements OnInit {
 
   filtre : string = "" ;
 
-  filtrerCatalogue(): Article[][] {
-    console.log(this.articles);
+  filtrerCatalogue() : Article[][] {
+
     let catalogueApresFiltre : Article[][] = [] ;
-    if (this.filtre=="" || this.filtre==null){
-      return this.articles
-    }
-    else{
+    if (this.filtre=="" || this.filtre==null)
+      return this.articles ;
+    else
       for(var j=0; j<this.articles.length; j++){
         var ligne=this.articles[j] ;
         let ligneCopy : Article[] = [] ;
@@ -154,78 +170,85 @@ export class EspacePersoComponent implements OnInit {
           }
         catalogueApresFiltre.push(ligneCopy) ;
       }
-      return catalogueApresFiltre ;
-    }
- }
+    return catalogueApresFiltre ;
+  }
 
   repondAuFiltre(article : Article) : boolean {
-      if (this.filtre=="" || this.filtre==null)
-        return true ;
-      else
-        if ( (article.nomImg.toLowerCase().match( this.filtre.toLowerCase() )!=null) || (article.designation.toLowerCase().match( this.filtre.toLowerCase() )!=null) )
-            return true ;
-       else
-            return false ;
+    if (this.filtre=="" || this.filtre==null)
+      return true ;
+    else
+    if ( (article.nomImg.toLowerCase().match( this.filtre.toLowerCase() )!=null) || (article.designation.toLowerCase().match( this.filtre.toLowerCase() )!=null) )
+      return true ;
+    else
+      return false ;
   }
+
 
   ajouter(){
     this.loading = true ;
-      let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) }
-      this._ecomService.ajouterArticle(params).then( response =>
-        {
-          this.loading = false ;
-          this.designationa=undefined;
-          this.descriptiona=undefined;
-          this.prixa=undefined ;
-          this.stocka=undefined;
-          this.uploadFile.generatedName = null ;
-          this.uploadFile.originalName = null ;
-          this.newImage = "imagevide.jpg" ;
-          this.prixa = undefined ;
-          this.categoriea = "--- Catégorie ---" ;
-        });
+    var data=(JSON.stringify({categorie:this.categorie,provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,model:this.modele,capacite:this.capacite,fonctions:this.fonctions,matiere:this.matiere,tendance:this.tendances,mode:this.mode,sexe:this.sexe,infosup:this.infosup})).toString();
+    //let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
+    let params = { token: this.token , designation: this.designationa, description:data, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
+    console.log(params);
+    this.ecomCaller.ajouterArticle(params).then( response =>
+    {
+      console.log('fi la yamme');
+      this.loading = false ;
+      this.designationa=undefined;
+      this.descriptiona=undefined;
+      this.prixa=undefined ;
+      this.stocka=undefined;
+      this.uploadFile.generatedName = null ;
+      this.uploadFile.originalName = null ;
+      this.newImage = "imagevide.jpg" ;
+      this.prixa = undefined ;
+      this.categoriea = "--- Catégorie ---" ;
+      this.hideAddChildModal();
+    });
   }
 
   ajouterpta(){
     this.loading = true ;
 
-      let params = { token: this.token , designation: this.designationpta, description:this.descriptionpta, prix: this.prixpta, stock:this.stockpta, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriepta, type:'petiteannonce'}) }
-      this._ecomService.ajouterArticle(params).then( response =>
-        {
-          this.designationpta=undefined;
-          this.descriptionpta=undefined;
-          this.prixpta=undefined ;
-          this.stockpta=undefined;
-          this.uploadFile.generatedName = null ;
-          this.uploadFile.originalName = null ;
-          this.newImage = "imagevide.jpg" ;
-          this.prixpta = undefined ;
-          this.loading = false ;
-          this.categoriepta = "--- Catégorie ---" ;
-        });
+    let params = { token: this.token , designation: this.designationpta, description:this.descriptionpta, prix: this.prixpta, stock:this.stockpta, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriepta, type:'petiteannonce'}) }
+    this.ecomCaller.ajouterArticle(params).then( response =>
+    {
+      this.designationpta=undefined;
+      this.descriptionpta=undefined;
+      this.prixpta=undefined ;
+      this.stockpta=undefined;
+      this.uploadFile.generatedName = null ;
+      this.uploadFile.originalName = null ;
+      this.newImage = "imagevide.jpg" ;
+      this.prixpta = undefined ;
+      this.loading = false ;
+      this.categoriepta = "--- Catégorie ---" ;
+    });
   }
 
+
   chargerCommandes(typeListe : string){
+    console.log('azertrytuyiuokyjtrgez chargerCommandes azertrytuyiuokyjtrgez')
     this.loading = true ;
-    this._ecomService.listerCommandes(this.token, typeListe).then( response =>
-      {
-        this.listeCommande = null ;
-        if(typeListe=='toDeliver'){
-          this.smart =  response.borom ;
-          this.listeCommande = response;
-        }
-        else
-          this.listeCommande =  response ;
-        this.loading = false ;
-      });
+    this.ecomCaller.listerCommandes(this.token, typeListe).then( response =>
+    {
+      console.log('azertrytuyiuokyjtrgez')
+      console.log(response)
+      this.listeCommande = null ;
+      if(typeListe=='toDeliver'){
+        this.smart =  response.borom;
+        this.listeCommande = response.order;
+      }
+      else
+        this.listeCommande =  response;
+      this.loading = false ;
+    });
   }
 
   chargerVentes(){
     this.loading = true ;
-    console.log("aazzzzzzz  receptionnerCommandes  zzzzzzzzzzzzzzze")
-    this._ecomService.listerVentes(this.token).then( response => {
-      console.log(response)
-      console.log("receptionnerCommandes  zzzzzzzzzzzzzzze")
+    this.ecomCaller.listerVentes(this.token).then( response =>
+    {
       this.listeVentes = [] ;
       this.listeVentes =  response ;
       this.loading = false ;
@@ -233,31 +256,26 @@ export class EspacePersoComponent implements OnInit {
   }
 
   receptionner(idCommande : number){
-    console.log("aazzzzzzz  receptionnerCommandes  zzzzzzzzzzzzzzze")
     let params = {token: this.token, idCommande: idCommande};
     this.loading = true ;
-    this._ecomService.receptionnerCommandes(params).then( response => {
-        console.log(response)
-        console.log("aazzzzzzzzzreceptionnerCommandeszzzzzzzzzzzzze")
-        if(response=="ok")
-          this.receivedArticles = this.receivedArticles + "-"+idCommande.toString()+"-" ;
-          this.loading = false ;
-      });
-   }
+    this.ecomCaller.receptionnerCommandes(params).then( response =>
+    {
+      if(response=="ok")
+        this.receivedArticles = this.receivedArticles + "-"+idCommande.toString()+"-" ;
+      this.loading = false ;
+    });
+  }
 
   fournir(idCommande : number){
     let params = {token: this.token, idCommande: idCommande};
     this.loading = true ;
-    this._ecomService.fournirCommandes(params).then( response =>
-      {
-        console.log("aazzzzzzz  fournir  zzzzzzzzzzzzzzze")
-        console.log(response)
-        console.log("aazzzzzzzzzzzzzzzzzzzzzze")
-        if(response=="ok")
-          this.articlesFournis = this.articlesFournis + "-"+idCommande.toString()+"-" ;
-          this.loading = false ;
-      });
-   }
+    this.ecomCaller.fournirCommandes(params).then( response =>
+    {
+      if(response=="ok")
+        this.articlesFournis = this.articlesFournis + "-"+idCommande.toString()+"-" ;
+      this.loading = false ;
+    });
+  }
 
   receivedCmd(idCommande : number){
     return ( this.receivedArticles.indexOf("-"+idCommande.toString()+"-")>-1 ) ;
@@ -267,28 +285,28 @@ export class EspacePersoComponent implements OnInit {
     return ( this.articlesFournis.indexOf("-"+idCommande.toString()+"-")>-1 ) ;
   }
 
- modifArticle(article:Article){
+  modifArticle(article:Article){
     this.modif=article.nomImg;
     this.modifart="record"+article.nomImg;
- }
+  }
 
   enregArticle(article: Article){
-   this.modif="";
-   this.modifart="";
+    this.modif="";
+    this.modifart="";
 
     this.loading = true ;
 
-   for(var j=0; j<this.articles.length; j++){
-    var ligne=this.articles[j];
+    for(var j=0; j<this.articles.length; j++){
+      var ligne=this.articles[j];
       for (var i=0; i<ligne.length; i++)
         if (ligne[i].nomImg==article.nomImg)
         {
           if(!(this.uploadFile === undefined)){
             ligne[i].nomImg = this.uploadFile.generatedName ;
           }
-        let artcle = JSON.stringify(ligne[i]) ;
-        let params = { article: artcle ,token: this.token } ;
-        this._ecomService.modifierArticle(params).then( response =>
+          let artcle = JSON.stringify(ligne[i]) ;
+          let params = { article: artcle ,token: this.token } ;
+          this.ecomCaller.modifierArticle(params).then( response =>
           {
             this.loading = false ;
           });
@@ -299,19 +317,35 @@ export class EspacePersoComponent implements OnInit {
 
   annulArticle(){
     this.loading = true ;
-    this._ecomService.listeArticles(this.token, 'perso').then( response =>
-      {
-        this.articles = _.chunk(response, 5) ;
-        this.listarticles = response;
-        this.loading = false ;
-      });
+    this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
+    {
+      this.articles = _.chunk(response, 5) ;
+      this.listarticles = response;
+      this.loading = false ;
+    });
     this.modif="";
     this.modifart="";
 
   }
 
-  detailsCurrentCommande() : newCommande[]{
+  reinitialiser(){
+    this.provenance=undefined;
+    this.marque=undefined;
+    this.couleur=undefined;
+    this.origine=undefined;
+    this.tendence=undefined;
+    this.sexe=undefined;
+    this.mode=undefined;
+    this.utilisation=undefined;
+    this.fonctions=undefined;
+    this.modele=undefined;
+    this.capacite=undefined;
+    this.matiere=undefined;
+    this.tendances=undefined;
 
+  }
+
+  detailsCurrentCommande() : newCommande[]{
     if(this.orderedArticles){
       let tabOrder : newCommande[] = JSON.parse(this.orderedArticles) ;
       return tabOrder ;
@@ -319,8 +353,7 @@ export class EspacePersoComponent implements OnInit {
     return [] ;
   }
 
-
- uploadFile: any;
+  uploadFile: any;
 
   @ViewChild('childModal') public childModal:ModalDirective;
 
@@ -340,6 +373,31 @@ export class EspacePersoComponent implements OnInit {
   /*-----------------------------------------------------------*/
 
   @ViewChild('addChildModal') public addChildModal:ModalDirective;
+  @ViewChild('modalmodif') public modalmodif:ModalDirective;
+  public showmodaldif(article){
+    this.articlemodif=article;
+    console.log(this.articlemodif);
+    this.modalmodif.show();
+    //modifArticle(article)
+  }
+  hidemodalmodif(){
+    this.modalmodif.hide();
+  }
+
+  validermodif(article){
+    // modifArticle(article);
+    let data=(JSON.stringify({provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,tendance:this.tendances,mode:this.mode,sexe:this.sexe})).toString();
+    let params=JSON.stringify({'article':{description:data,prix:this.prix,designation:this.designation,id:article.id,nomImg:article.nomImg,token:this.token}});
+    console.log(params);
+    this.ecomCaller.modifierArticle(params).then( response =>
+    {
+      console.log(response);
+      // this.loading = false ;
+      this.hidemodalmodif();
+      this.reinitialiser();
+    });
+
+  }
 
   public showAddChildModal():void {
     this.descriptionsvalues=[];
@@ -363,28 +421,35 @@ export class EspacePersoComponent implements OnInit {
   apiEndPoint = 'http://localhost/backup-sb-admin/new-backend-esquise/server-backend-upload/index.php' ;
 
   fileChange(event) {
-      let fileList: FileList = event.target.files;
-      if(fileList.length > 0) {
-          let file: File = fileList[0];
-          let formData:FormData = new FormData();
-          formData.append('file', file, file.name);
-          let headers = new Headers();
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData:FormData = new FormData();
+      formData.append('file', file, file.name);
+      let headers = new Headers();
 
-          headers.append('Accept', 'application/json');
-          let options = new RequestOptions({headers: headers});
+      /** No need to include Content-Type in Angular 4 */
+      //Applying content-type in the current case leads to an impossible upload
 
-          this.http.post(`${this.apiEndPoint}`, formData, options)
-              .map(res => res.json())
-              .catch(error => Observable.throw(error))
-              .subscribe(
-                  data => {
-                           let newData = data;
-                           this.uploadFile = newData;
-                           this.newImage = this.uploadFile.generatedName ;
-                        },
-                  error => {}
-              )
-      }
+      // headers.append('Content-Type', 'multipart/form-data');
+
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({
+        headers: headers
+      });
+
+      this.http.post(`${this.apiEndPoint}`, formData, options)
+        .map(res => res.json())
+        .catch(error => Observable.throw(error))
+        .subscribe(
+          data => {
+            let newData = data;
+            this.uploadFile = newData;
+            this.newImage = this.uploadFile.generatedName ;
+          },
+          error => {}
+        )
+    }
   }
 
   tauxreduc(basicPrice){
@@ -447,16 +512,119 @@ export class EspacePersoComponent implements OnInit {
   }
 
   descriptionarticle(categorie:string){
-   if(categorie=="--- Catégorie ---"){
+    if(categorie=="--- Catégorie ---"){
       this.descriptionsvalues=[];
-   }
-   for(let i=0;i<this.descriptions.length;i++){
-      if(this.descriptions[i].description==categorie){
-         this.descriptionsvalues=this.descriptions[i].value;
-         break;
+    }
+    //for(let i=0;i<this.descriptions.length;i++){
+    //if(this.descriptions[i].description==categorie){
+    // this.descriptionsvalues=this.descriptions[i].value;
+    switch(categorie){
+      case 'Cosmetiques':{
+        this.categorie='cosmetiques';
+        this.reinitialiser();
+        this.Bcosmetique=true;
+        this.Bvetement=false;
+        this.Bchaussure=false;
+        this.Belectronique=false;
+        this.Bbureau=false;
+        this.Belectromenager=false;
+        this.Baccessoire=false;
+        this.Bsac=false;
+        break;
       }
-
-   }
+      case 'Accessoires':{
+        this.categorie='accessoires';
+        this.reinitialiser();
+        this.Bcosmetique=false;
+        this.Bvetement=false;
+        this.Bchaussure=false;
+        this.Belectronique=false;
+        this.Bbureau=false;
+        this.Belectromenager=false;
+        this.Bsac=false;
+        this.Baccessoire=true;
+        break;
+      }
+      case 'Vêtements':{
+        this.categorie='vetements';
+        this.reinitialiser();
+        this.Bvetement=true;
+        this.Bcosmetique=false;
+        this.Belectronique=false;
+        this.Bchaussure=false;
+        this.Baccessoire=false;
+        this.Bbureau=false;
+        this.Belectromenager=false;
+        this.Bsac=false;
+        break;
+      }
+      case 'Chaussures':{
+        this.categorie='chaussures';
+        this.reinitialiser();
+        this.Bvetement=false;
+        this.Bcosmetique=false;
+        this.Belectronique=false;
+        this.Bchaussure=true;
+        this.Baccessoire=false;
+        this.Bbureau=false;
+        this.Belectromenager=false;
+        this.Bsac=false;
+        break;
+      }
+      case 'Electronique':{
+        this.categorie='electronique';
+        this.reinitialiser();
+        this.Bvetement=false;
+        this.Bcosmetique=false;
+        this.Bchaussure=false;
+        this.Baccessoire=false;
+        this.Belectronique=false;
+        this.Bbureau=false;
+        this.Belectromenager=false;
+        this.Bsac=false;
+        break;
+      }
+      case 'Outils de bureau':{
+        this.categorie='bureau';
+        this.reinitialiser();
+        this.Bvetement=false;
+        this.Bcosmetique=false;
+        this.Bchaussure=false;
+        this.Belectronique=false;
+        this.Baccessoire=false;
+        this.Bbureau=true;
+        this.Belectromenager=false;
+        this.Bsac=false;
+        break;
+      }
+      case 'Electromenager':{
+        this.categorie='electromenager';
+        this.reinitialiser();
+        this.Bvetement=false;
+        this.Bcosmetique=false;
+        this.Bchaussure=false;
+        this.Belectronique=false;
+        this.Bbureau=false;
+        this.Belectromenager=true;
+        this.Baccessoire=false;
+        this.Bsac=false;
+        break;
+      }
+      case 'Sacs':{
+        this.categorie='sacs';
+        this.reinitialiser();
+        this.Bvetement=false;
+        this.Bcosmetique=false;
+        this.Bchaussure=false;
+        this.Belectronique=false;
+        this.Bbureau=false;
+        this.Belectromenager=false;
+        this.Baccessoire=false;
+        this.Bsac=true;
+        break;
+      }
+      default:break;
+    }
 
   }
 

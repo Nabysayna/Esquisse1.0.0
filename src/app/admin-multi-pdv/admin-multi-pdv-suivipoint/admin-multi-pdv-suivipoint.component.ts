@@ -1,6 +1,5 @@
 import { ViewChild, ElementRef, Component, OnInit } from '@angular/core';
 
-import { AdminmultipdvMajcaution }    from '../../models/adminmultipdv-majcaution';
 import {ModalDirective} from "ng2-bootstrap";
 import {BaseChartDirective} from "ng2-charts";
 import {AdminmultipdvService} from "../../services/adminmultipdv.service";
@@ -19,12 +18,9 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "adminpdv";
     public sortOrder = "desc";
-    public categoriepoint='---' ;
-    public adminmultipdvMajcaution: AdminmultipdvMajcaution[];
+    public adminmultipdvMajcaution: any[];
     loading = false ;
 
-    inputCaution: number;
-    majcaution:AdminmultipdvMajcaution;
   constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {
@@ -386,11 +382,6 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
 
   public hideChildModalSuivipoint():void {
     this.childModalSuivipoint.hide();
-  }
-
-  public showModalVoirDetailtouslescommissionsbyGerant(indice:number) {
-    this.touslescommissionsbyGerantbyservice = this.bilantouslescommissionsbyGerant[indice].liste;
-    console.log(this.touslescommissionsbyGerantbyservice);
   }
 
   tocurrency(number){

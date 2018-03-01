@@ -2,7 +2,6 @@ import { ViewChild, ElementRef, Component, OnInit} from '@angular/core';
 import {Color, BaseChartDirective} from 'ng2-charts';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
-import { AdminmultipdvNombredeReclamationAgentPdvVente }    from '../../models/adminmultipdv-dashboard-nrpv';
 import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 @Component({
@@ -16,7 +15,7 @@ export class AdminmultipdvDashboardComponent implements OnInit {
   loading = false ;
   nbreOp : number = undefined;
   adminmultipdvActiviteservices: any;
-  AdminmultipdvNombredereclamationagentpdvvente: AdminmultipdvNombredeReclamationAgentPdvVente;
+  AdminmultipdvNombredereclamationagentpdvvente: any;
   detailAdminPerformance:any;
 
   public checkPerformance:any = {journee: true, semaine: false, mois: false, annee: false, tous: false};

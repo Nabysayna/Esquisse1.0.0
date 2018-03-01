@@ -1,17 +1,13 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
-import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
-import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
-import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
+import {FacturierService} from "../services/facturier.service";
 
 
 @Component({
   selector: 'app-sde',
   templateUrl: './sde.component.html',
-  styleUrls: ['./sde.component.css'],
-  providers: [WizallWebService]
+  styleUrls: ['./sde.component.css']
 })
 export class SdeComponent implements OnInit {
    etat:boolean=false;
@@ -24,7 +20,7 @@ export class SdeComponent implements OnInit {
    statuspayment:boolean;
    dataImpression:any;
 
-   constructor(private FacturierServiceWeb:FacturierServiceWeb,private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService) {
+   constructor(private _facturierService : FacturierService,private router: Router) {
 
   }
 
@@ -36,7 +32,7 @@ export class SdeComponent implements OnInit {
   @ViewChild('modalsde') public modalsde:ModalDirective;
 
   detailfactursde(){
-    this.FacturierServiceWeb.detailreglementsde(this.refclientsde).then(response =>{
+    this._facturierService.detailreglementsde(this.refclientsde).then(response =>{
       if(response.response==null){
          this.message=true;
 
@@ -57,7 +53,7 @@ export class SdeComponent implements OnInit {
 
   }
   paimantsde(){
-    this.FacturierServiceWeb.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
+    this._facturierService.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
        this.hidemodalsde();
         this.dataImpression = {
           apiservice:'postecash',

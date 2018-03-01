@@ -1,10 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
-import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
-import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
-import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
+import {FacturierService} from "../services/facturier.service";
 
 
 class Article {
@@ -19,8 +16,7 @@ class Article {
 @Component({
   selector: 'app-senelec',
   templateUrl: './senelec.component.html',
-  styleUrls: ['./senelec.component.css'],
-  providers: [WizallWebService]
+  styleUrls: ['./senelec.component.css']
 })
 export class SenelecComponent implements OnInit {
    etat1:boolean=false;
@@ -38,7 +34,7 @@ export class SenelecComponent implements OnInit {
    police:string;
    num_facture:string;
    dataImpression:any;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) { }
+  constructor(private router: Router, private _facturierService : FacturierService) { }
 
 /******************************************************************************************************/
 
@@ -57,7 +53,7 @@ export class SenelecComponent implements OnInit {
      this.modalsenelec.hide();
    }
    detailfactsenelec(){
-     this.FacturierServiceWeb.detailfacturesenelec(this.police,this.num_facture).then(response =>{
+     this._facturierService.detailfacturesenelec(this.police,this.num_facture).then(response =>{
         if(response.errorCode==0){
           this.etat2=true;
           this.detailfacturesenelec.police=response.police;
@@ -77,7 +73,7 @@ export class SenelecComponent implements OnInit {
      });
    }
    validerpaimentsenelec(){
-    this.FacturierServiceWeb.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
+    this._facturierService.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
       if(response.errorCode==0){
          this.modalsenelec.hide();
          this.dataImpression = {

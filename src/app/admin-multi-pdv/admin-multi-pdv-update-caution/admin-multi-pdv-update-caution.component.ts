@@ -1,6 +1,5 @@
 import { ViewChild, ElementRef, Component, OnInit } from '@angular/core';
 
-import { AdminmultipdvMajcaution }    from '../../models/adminmultipdv-majcaution';
 import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
@@ -18,11 +17,11 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
     public sortBy = "adminpdv";
     public sortOrder = "desc";
     public categoriepoint='---' ;
-    public adminmultipdvMajcaution: AdminmultipdvMajcaution[];
+    public adminmultipdvMajcaution: any[];
     loading = false ;
 
     inputCaution: number;
-    majcaution:AdminmultipdvMajcaution;
+    majcaution:any;
   constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {

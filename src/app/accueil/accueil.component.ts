@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
-import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
+import {WizallService} from "../services/wizall.service";
+import {OrangemoneyService} from "../services/orangemoney.service";
+import {TigocashService} from "../services/tigocash.service";
 
 
 class Article {
@@ -19,8 +19,7 @@ class Article {
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
-  styleUrls: ['./accueil.component.css'],
-  providers: [WizallWebService]
+  styleUrls: ['./accueil.component.css']
 })
 export class AccueilComponent implements OnInit {
   articles=[];
@@ -34,9 +33,7 @@ export class AccueilComponent implements OnInit {
   dataImpression:any;
 
 
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private wizallwebservice: WizallWebService) {
-
-  }
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService){}
 
 /******************************************************************************************************/
 
@@ -238,7 +235,7 @@ export class AccueilComponent implements OnInit {
     }
 
 
-    this.omService.requerirControllerOM(requete).then( resp => {
+    this._omService.requerirControllerOM(requete).then( resp => {
       if (resp.status==200){
            console.log("For this 'depot', we just say : "+resp._body) ;
             if(resp._body.trim()=='0'){
@@ -256,7 +253,7 @@ export class AccueilComponent implements OnInit {
             else
 
            setTimeout(()=>{
-              this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+              this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier depot : "+donnee) ;
                 if(donnee=='1'){
@@ -273,7 +270,7 @@ export class AccueilComponent implements OnInit {
                    }else{
                         var periodicVerifier = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                        this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+                        this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                           var donnee=rep._body.trim().toString();
                           console.log("Inside verifier depot : "+donnee) ;
                           if(donnee=='1'){
@@ -291,7 +288,7 @@ export class AccueilComponent implements OnInit {
                              clearInterval(periodicVerifier) ;
                             }
                             if(donnee=='-1' && objet.etats.nbtour>=45){
-                              this.omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
+                              this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
                                    objet.etats.etat=true;
@@ -333,7 +330,7 @@ export class AccueilComponent implements OnInit {
       return 0 ;
     }
 
-    this.omService.requerirControllerOM(requete).then( resp => {
+    this._omService.requerirControllerOM(requete).then( resp => {
       if (resp.status==200){
 
         console.log("For this 'retrait', we just say : "+resp._body) ;
@@ -354,7 +351,7 @@ export class AccueilComponent implements OnInit {
 
            setTimeout(()=>{
 
-              this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+              this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
                 if(donnee=='1'){
@@ -373,7 +370,7 @@ export class AccueilComponent implements OnInit {
                   }else{
                       var periodicVerifier = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                      this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+                      this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                         var donnee=rep._body.trim().toString();
                         console.log("Inside verifier retrait: "+donnee) ;
                         if(donnee=='1'){
@@ -391,7 +388,7 @@ export class AccueilComponent implements OnInit {
                            clearInterval(periodicVerifier) ;
                           }
                             if(donnee=='-1' && objet.etats.nbtour>=10){
-                              this.omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
+                              this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
                                    objet.etats.etat=true;
@@ -428,7 +425,7 @@ export class AccueilComponent implements OnInit {
     if (this.repeatedInLastFifteen('om-retraitcode', requete)==1)
            requete = requete+'R' ;
 
-    this.omService.requerirControllerOM(requete).then( resp => {
+    this._omService.requerirControllerOM(requete).then( resp => {
       if (resp.status==200){
           console.log("For this 'retrait-code', we just say : "+resp._body) ;
 
@@ -448,7 +445,7 @@ export class AccueilComponent implements OnInit {
 
            setTimeout(()=>{
 
-              this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+              this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
                 if(donnee=='1'){
@@ -467,7 +464,7 @@ export class AccueilComponent implements OnInit {
                   }else
                 var periodicVerifier = setInterval(()=>{
                 objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+                this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                   var donnee=rep._body.trim().toString();
                   console.log("Inside verifier retrait: "+donnee) ;
                   if(donnee=='1'){
@@ -484,7 +481,7 @@ export class AccueilComponent implements OnInit {
                        clearInterval(periodicVerifier) ;
                     }
                     if(donnee=='-1' && objet.etats.nbtour>=10){
-                      this.omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
+                      this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                         var donnee=rep._body.trim().toString();
                          if(donnee=="c"){
                            objet.etats.etat=true;
@@ -518,7 +515,7 @@ export class AccueilComponent implements OnInit {
     if (this.repeatedInLastFifteen('om-retraitcptercpt', requete)==1)
            requete = requete+'R' ;
 
-    this.omService.requerirControllerOM(requete).then( resp => {
+    this._omService.requerirControllerOM(requete).then( resp => {
       if (resp.status==200){
         if (resp._body.trim().toString()=='1'){
           objet.etats.etat=true;
@@ -543,7 +540,7 @@ export class AccueilComponent implements OnInit {
     if (this.repeatedInLastFifteen('om-vente-credit', requete)==1)
            requete = requete+'R' ;
 
-    this.omService.requerirControllerOM(requete).then( resp => {
+    this._omService.requerirControllerOM(requete).then( resp => {
       if (resp.status==200){
 
             if(resp._body.trim()=='0'){
@@ -560,7 +557,7 @@ export class AccueilComponent implements OnInit {
             }
             else
            setTimeout(()=>{
-              this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+              this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier depot : "+donnee) ;
                 if(donnee=='1'){
@@ -577,7 +574,7 @@ export class AccueilComponent implements OnInit {
                    }else{
                         var periodicVerifier = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                        this.omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+                        this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                           var donnee=rep._body.trim().toString();
                           console.log("Inside verifier depot : "+donnee) ;
                           if(donnee=='1'){
@@ -595,7 +592,7 @@ export class AccueilComponent implements OnInit {
                              clearInterval(periodicVerifier) ;
                             }
                             if(donnee=='-1' && objet.etats.nbtour>=10){
-                              this.omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
+                              this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
                                    objet.etats.etat=true;
@@ -924,7 +921,7 @@ export class AccueilComponent implements OnInit {
 
     cashInWizall(objet : any){
       console.log('cashInWizall');
-      this.wizallwebservice.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
+      this._wizallService.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
               console.log(response)
               if(response.commission!=undefined){
                 objet.dataI = {
@@ -951,7 +948,7 @@ export class AccueilComponent implements OnInit {
 
     cashOutWizall(objet : any){
       console.log('cashOutWizall');
-      this.wizallwebservice.intouchCashout("test 1", objet.data.num, objet.data.montant).then( response =>{
+      this._wizallService.intouchCashout("test 1", objet.data.num, objet.data.montant).then( response =>{
               console.log(response) ;
               if(response.status=="PENDING"){
                 objet.dataI = {
@@ -978,7 +975,7 @@ export class AccueilComponent implements OnInit {
 
     payerSDEWizall(objet : any){
       console.log('payerSDEWizall');
-      this.wizallwebservice.intouchPayerFactureSde(objet.data.montant, objet.data.refclient, objet.data.refFacture).then( response =>{
+      this._wizallService.intouchPayerFactureSde(objet.data.montant, objet.data.refclient, objet.data.refFacture).then( response =>{
         if(response=="ok"){
           objet.dataI = {
             apiservice:'wizall',
@@ -1004,7 +1001,7 @@ export class AccueilComponent implements OnInit {
 
     payerSenelecWizall(objet : any){
       console.log('payerSenelecWizall');
-      this.wizallwebservice.intouchPayerFactureSenelec(objet.data.montant, objet.data.police, objet.data.numfacture).then( response =>{
+      this._wizallService.intouchPayerFactureSenelec(objet.data.montant, objet.data.police, objet.data.numfacture).then( response =>{
         if(response=="ok"){
           objet.dataI = {
             apiservice:'wizall',
@@ -1188,7 +1185,7 @@ export class AccueilComponent implements OnInit {
     }
 
 
-    this.tcService.requerirControllerTC(requete).then( resp => {
+    this._tcService.requerirControllerTC(requete).then( resp => {
       if (resp.status==200){
            console.log("For this 'depot', we just say : "+resp._body) ;
             if(resp._body.trim()=='0'){
@@ -1206,7 +1203,7 @@ export class AccueilComponent implements OnInit {
             else
 
            setTimeout(()=>{
-              this.tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+              this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier depot : "+donnee) ;
                 if(donnee=='1'){
@@ -1223,7 +1220,7 @@ export class AccueilComponent implements OnInit {
                    }else{
                         var periodicVerifier = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                        this.tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+                        this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                           var donnee=rep._body.trim().toString();
                           console.log("Inside verifier depot : "+donnee) ;
                           if(donnee=='1'){
@@ -1241,7 +1238,7 @@ export class AccueilComponent implements OnInit {
                              clearInterval(periodicVerifier) ;
                             }
                             if(donnee=='-1' && objet.etats.nbtour>=10){
-                              this.tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
+                              this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
                                    objet.etats.etat=true;
@@ -1283,7 +1280,7 @@ export class AccueilComponent implements OnInit {
       return 0 ;
     }
 
-    this.tcService.requerirControllerTC(requete).then( resp => {
+    this._tcService.requerirControllerTC(requete).then( resp => {
       if (resp.status==200){
 
         console.log("For this 'retrait', we just say : "+resp._body) ;
@@ -1304,7 +1301,7 @@ export class AccueilComponent implements OnInit {
 
            setTimeout(()=>{
 
-              this.tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+              this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
                 if(donnee=='1'){
@@ -1322,7 +1319,7 @@ export class AccueilComponent implements OnInit {
                    clearInterval(periodicVerifier) ;
                   }else{
                       var periodicVerifier = setInterval(()=>{
-                      this.tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+                      this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                         var donnee=rep._body.trim().toString();
                         console.log("Inside verifier retrait: "+donnee) ;
                         if(donnee=='1'){

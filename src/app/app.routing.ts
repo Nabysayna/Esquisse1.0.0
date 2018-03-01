@@ -34,13 +34,11 @@ import { RapidoComponent} from './rapido/rapido.component';
 import { CrmComponent } from './crm/crm.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
-import { JoniJoniComponentComponent } from './joni-joni-component/joni-joni-component.component';
 import { DemandepretComponent } from './demandepret/demandepret.component';
 import { GestionreportingComponent } from './gestionreporting/gestionreporting.component';
 import { SoldecompteComponent } from './soldecompte/soldecompte.component';
 import { ExpressoComponent } from './expresso/expresso.component';
 import { TntComponent } from './tnt/tnt.component';
-import { SoapserverComponent } from './soapserver/soapserver.component';
 import { ComptabiliteComponent } from './comptabilite/comptabilite.component';
 import { ConsulterpretComponent } from './consulterpret/consulterpret.component';
 import { FirstlogComponent } from './firstlog/firstlog.component';
@@ -63,8 +61,6 @@ import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi
 import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
 
 
-  //
-
 const appRoutes: Routes = [
     { path: '', component: AuthComponentComponent },
     { path: 'soppipwdbifi', component: FirstlogComponent, canActivate: [AuthGuardsup] },
@@ -73,15 +69,13 @@ const appRoutes: Routes = [
                 {path: '', component: ECommerceComponent},
                 {path: 'commissionnement', component: CommissionnementComponent},
                 {path: 'challenge', component: ChallengeresultsComponent },
-                {path: 'MONEYGRAM', component: SoapserverComponent},
-    			{path: 'ORANGEMONEY', component: OrangeMoneyComponentComponent},
+    			      {path: 'ORANGEMONEY', component: OrangeMoneyComponentComponent},
                 {path: 'POSTECASH', component: PostcashComponent},
                 {path: 'TIGOCASH', component: TigoCashComponentComponent},
                 {path: 'WIZALL', component: WizallComponent},
                 {path: 'CRM', component: CrmComponent},
                 {path: 'DASHBOARD', component: DashboardComponent},
                 {path: 'E-COMMERCE', component: ECommerceComponent},
-                {path: 'JONI JONI', component: JoniJoniComponentComponent},
                 {path: 'DEMANDEPRET', component: DemandepretComponent},
                 {path: 'GESTIONREPORTING', component: GestionreportingComponent},
                 {path: 'EXPRESSO', component: ExpressoComponent},

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AdminmultipdvReclamation }    from '../../models/adminmultipdv-reclamation';
 import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
@@ -16,7 +15,7 @@ export class AdminmultipdvStatusReclamationComponent implements OnInit {
   public sortBy = "datereclamation";
   public sortOrder = "asc";
 
-  public adminmultipdvReclamation: AdminmultipdvReclamation[];
+  public adminmultipdvReclamation: any[];
   loading = false ;
 
   constructor(private _adminmultipdvService: AdminmultipdvService) { }

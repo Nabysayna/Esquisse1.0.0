@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
+import {WizallService} from "../services/wizall.service";
+
 
 @Component({
   selector: 'app-wizall',
@@ -23,7 +24,7 @@ export class WizallComponent implements OnInit {
    statuspayment : boolean ;
    etat=false;
 
-  constructor(private wizallwebservice: WizallWebService) {}
+  constructor(private _wizallService : WizallService) {}
 
   ngOnInit() {}
 
@@ -55,7 +56,7 @@ export class WizallComponent implements OnInit {
     }
 
     public sdemodal(){
-      this.wizallwebservice.intouchRecupereFactureSde( Number(this.refclientsde) ).then( response =>{
+      this._wizallService.intouchRecupereFactureSde( Number(this.refclientsde) ).then( response =>{
         console.log(response._);
        if(response._.nil!="true"){
 		   this.mntSDE = response[0].montant ;
@@ -72,13 +73,13 @@ export class WizallComponent implements OnInit {
            this.modalsde.show();
        }
       });
-      
+
     }
 
-    public senelecmodal(){          
-      this.wizallwebservice.intouchRecupereFactureSenelec(this.numpolice.toString()).then( response =>{
+    public senelecmodal(){
+      this._wizallService.intouchRecupereFactureSenelec(this.numpolice.toString()).then( response =>{
        console.log(response.length);
-       if(response.length!=0){ 
+       if(response.length!=0){
 		   this.mntSENELEC = response[0].montant ;
 		   this.refclient = response[0].client;
 		   this.echeance = response[0].dateecheance ;
