@@ -23,6 +23,9 @@ export class OoluComponent implements OnInit {
   payeroolusolar(){
     this._facturierService.payeroolusolar("00221"+this.telephone.toString(),this.compte,this.montant).then(response =>{
       console.log(response);
+      this.montant=undefined;
+      this.compte=undefined;
+      this.telephone=undefined;
     });
   }
 
