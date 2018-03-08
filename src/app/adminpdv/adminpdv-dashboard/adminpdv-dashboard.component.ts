@@ -201,18 +201,23 @@ export class AdminpdvDashboardComponent implements OnInit {
     let nbrebyjourtnt:number[] = [];
     let nbrebyjourpost:number[] = [];
     let nbrebyjourwizall:number[] = [];
+    let nbrebyjouremoney:number[] = [];
     let nbrebyjourtigocash:number[] = [];
     tabjours.forEach(type => {
       let nbrebyjouromSom:number = 0;
       let nbrebyjourtntSom:number = 0;
       let nbrebyjourpostSom:number = 0;
       let nbrebyjourwizallSom:number = 0;
+      let nbrebyjouremoneySom:number = 0;
       let nbrebyjourtigocashSom:number = 0;
+
+      console.log("**************************************************************")
 
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='orangemoney'){ nbrebyjouromSom += Number(opt.montant); } }); nbrebyjourom.push( nbrebyjouromSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='tnt'){ nbrebyjourtntSom += Number(opt.montant); } }); nbrebyjourtnt.push( nbrebyjourtntSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='postcash'){ nbrebyjourpostSom += Number(opt.montant); } }); nbrebyjourpost.push( nbrebyjourpostSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='wizall'){ nbrebyjourwizallSom += Number(opt.montant); } }); nbrebyjourwizall.push( nbrebyjourwizallSom );
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='emoney'){ nbrebyjouremoneySom += Number(opt.montant); } }); nbrebyjouremoney.push( nbrebyjouremoneySom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='tigocash'){ nbrebyjourtigocashSom += Number(opt.montant); } }); nbrebyjourtigocash.push( nbrebyjourtigocashSom );
     });
 
@@ -221,9 +226,13 @@ export class AdminpdvDashboardComponent implements OnInit {
       {data: nbrebyjourtnt, label: 'TNT'},
       {data: nbrebyjourpost, label: 'POSTECASH'},
       {data: nbrebyjourwizall, label: 'WIZALL'},
+      {data: nbrebyjouremoney, label: 'E-MONEY'},
       {data: nbrebyjourtigocash, label: 'TIGOCASH'},
     ];
+    console.log("**************************************************************")
   }
+
+
 
   public lineChartData:Array<any> = [];
   public lineChartLabels:Array<any> = [];

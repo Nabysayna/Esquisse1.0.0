@@ -78,7 +78,7 @@ const appRoutes: Routes = [
                 {path: 'E-COMMERCE', component: ECommerceComponent},
                 {path: 'DEMANDEPRET', component: DemandepretComponent},
                 {path: 'GESTIONREPORTING', component: GestionreportingComponent},
-                {path: 'EXPRESSO', component: ExpressoComponent},
+                {path: 'E-MONEY', component: ExpressoComponent},
                 {path: 'TNT BY EXCAF', component: TntComponent},
                 {path: 'SOLDE DU COMPTE', component: SoldecompteComponent},
                 {path: 'impression', component: ImpressionComponent},

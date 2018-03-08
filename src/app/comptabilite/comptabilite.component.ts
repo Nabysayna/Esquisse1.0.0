@@ -319,13 +319,7 @@ export class ComptabiliteComponent implements OnInit {
   exploitation:Exploitation[];
   exploitationaveccommission:Exploitationaveccommission[];
   exploitationbilan:any[]=[];
-  bilanexploitationaveccommission = [
-    {service:'tnt', cashin:0, cashout:0, commission:0},
-    {service:'postcash', cashin:0, cashout:0, commission:0},
-    {service:'wizall', cashin:0, cashout:0, commission:0},
-    {service:'orangemoney', cashin:0, cashout:0, commission:0},
-    {service:'tigocash', cashin:0, cashout:0, commission:0},
-  ]
+  bilanexploitationaveccommission:any[] = [];
 
   listeruserexploitation(){
     this.loading = true ;
@@ -397,53 +391,7 @@ export class ComptabiliteComponent implements OnInit {
         },
         error => alert(error),
         () => {
-          this.bilanexploitationaveccommission = [
-            {service:'tnt', cashin:0, cashout:0, commission:0},
-            {service:'postcash', cashin:0, cashout:0, commission:0},
-            {service:'wizall', cashin:0, cashout:0, commission:0},
-            {service:'orangemoney', cashin:0, cashout:0, commission:0},
-            {service:'tigocash', cashin:0, cashout:0, commission:0},
-            {service:'Total', cashin:0, cashout:0, commission:0},
-          ];
-          this.exploitationbilan = this.exploitationaveccommission;
-          this.exploitationbilan.forEach(type => {
-            this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[5].commission+=type.commission;
-            if(type.service == 'tnt'){
-              this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[0].commission+=type.commission;
-            }
-            if(type.service == 'postcash'){
-              this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[1].commission+=type.commission;
-            }
-            if(type.service == 'wizall'){
-              this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[2].commission+=type.commission;
-            }
-            if(type.service == 'orangemoney'){
-              if(type.designation == 'depot'){
-                this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-              }
-              else{
-                this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-              }
-              this.bilanexploitationaveccommission[3].commission+=type.commission;
-            }
-            if(type.service == 'tigocash'){
-              if(type.designation == 'depot'){
-                this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-              }
-              else{
-                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-              }
-              this.bilanexploitationaveccommission[4].commission+=type.commission;
-            }
-          });
+          this.calculbilanexploitationaveccommission();
           this.loading = false ;
         }
       )
@@ -470,53 +418,7 @@ export class ComptabiliteComponent implements OnInit {
           },
           error => alert(error),
           () => {
-            this.bilanexploitationaveccommission = [
-              {service:'tnt', cashin:0, cashout:0, commission:0},
-              {service:'postcash', cashin:0, cashout:0, commission:0},
-              {service:'wizall', cashin:0, cashout:0, commission:0},
-              {service:'orangemoney', cashin:0, cashout:0, commission:0},
-              {service:'tigocash', cashin:0, cashout:0, commission:0},
-              {service:'Total', cashin:0, cashout:0, commission:0},
-            ];
-            this.exploitationbilan = this.exploitationaveccommission;
-            this.exploitationbilan.forEach(type => {
-              this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[5].commission+=type.commission;
-              if(type.service == 'tnt'){
-                this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[0].commission+=type.commission;
-              }
-              if(type.service == 'postcash'){
-                this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[1].commission+=type.commission;
-              }
-              if(type.service == 'wizall'){
-                this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[2].commission+=type.commission;
-              }
-              if(type.service == 'orangemoney'){
-                if(type.designation == 'depot'){
-                  this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-                }
-                else{
-                  this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                }
-                this.bilanexploitationaveccommission[3].commission+=type.commission;
-              }
-              if(type.service == 'tigocash'){
-                if(type.designation == 'depot'){
-                  this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-                }
-                else{
-                  this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                }
-                this.bilanexploitationaveccommission[4].commission+=type.commission;
-              }
-            });
+            this.calculbilanexploitationaveccommission();
             this.loading = false ;
           }
         )
@@ -566,53 +468,7 @@ export class ComptabiliteComponent implements OnInit {
           },
           error => alert(error),
           () => {
-            this.bilanexploitationaveccommission = [
-              {service:'tnt', cashin:0, cashout:0, commission:0},
-              {service:'postcash', cashin:0, cashout:0, commission:0},
-              {service:'wizall', cashin:0, cashout:0, commission:0},
-              {service:'orangemoney', cashin:0, cashout:0, commission:0},
-              {service:'tigocash', cashin:0, cashout:0, commission:0},
-              {service:'Total', cashin:0, cashout:0, commission:0},
-            ];
-            this.exploitationbilan = this.exploitationaveccommission;
-            this.exploitationbilan.forEach(type => {
-              this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[5].commission+=type.commission;
-              if(type.service == 'tnt'){
-                this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[0].commission+=type.commission;
-              }
-              if(type.service == 'postcash'){
-                this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[1].commission+=type.commission;
-              }
-              if(type.service == 'wizall'){
-                this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[2].commission+=type.commission;
-              }
-              if(type.service == 'orangemoney'){
-                if(type.designation == 'depot'){
-                  this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-                }
-                else{
-                  this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                }
-                this.bilanexploitationaveccommission[3].commission+=type.commission;
-              }
-              if(type.service == 'tigocash'){
-                if(type.designation == 'depot'){
-                  this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-                }
-                else{
-                  this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                }
-                this.bilanexploitationaveccommission[4].commission+=type.commission;
-              }
-            });
+            this.calculbilanexploitationaveccommission();
             this.loading = false ;
           }
         )
@@ -664,53 +520,7 @@ export class ComptabiliteComponent implements OnInit {
             },
             error => alert(error),
             () => {
-              this.bilanexploitationaveccommission = [
-                {service:'tnt', cashin:0, cashout:0, commission:0},
-                {service:'postcash', cashin:0, cashout:0, commission:0},
-                {service:'wizall', cashin:0, cashout:0, commission:0},
-                {service:'orangemoney', cashin:0, cashout:0, commission:0},
-                {service:'tigocash', cashin:0, cashout:0, commission:0},
-                {service:'Total', cashin:0, cashout:0, commission:0},
-              ];
-              this.exploitationbilan = this.exploitationaveccommission;
-              this.exploitationbilan.forEach(type => {
-                this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[5].commission+=type.commission;
-                if(type.service == 'tnt'){
-                  this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-                  this.bilanexploitationaveccommission[0].commission+=type.commission;
-                }
-                if(type.service == 'postcash'){
-                  this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-                  this.bilanexploitationaveccommission[1].commission+=type.commission;
-                }
-                if(type.service == 'wizall'){
-                  this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-                  this.bilanexploitationaveccommission[2].commission+=type.commission;
-                }
-                if(type.service == 'orangemoney'){
-                  if(type.designation == 'depot'){
-                    this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-                  }
-                  else{
-                    this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                  }
-                  this.bilanexploitationaveccommission[3].commission+=type.commission;
-                }
-                if(type.service == 'tigocash'){
-                  if(type.designation == 'depot'){
-                    this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-                  }
-                  else{
-                    this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                  }
-                  this.bilanexploitationaveccommission[4].commission+=type.commission;
-                }
-              });
+              this.calculbilanexploitationaveccommission();
               this.loading = false ;
             }
           )
@@ -760,53 +570,7 @@ export class ComptabiliteComponent implements OnInit {
           },
           error => alert(error),
           () => {
-            this.bilanexploitationaveccommission = [
-              {service:'tnt', cashin:0, cashout:0, commission:0},
-              {service:'postcash', cashin:0, cashout:0, commission:0},
-              {service:'wizall', cashin:0, cashout:0, commission:0},
-              {service:'orangemoney', cashin:0, cashout:0, commission:0},
-              {service:'tigocash', cashin:0, cashout:0, commission:0},
-              {service:'Total', cashin:0, cashout:0, commission:0},
-            ];
-            this.exploitationbilan = this.exploitationaveccommission;
-            this.exploitationbilan.forEach(type => {
-              this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[5].commission+=type.commission;
-              if(type.service == 'tnt'){
-                this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[0].commission+=type.commission;
-              }
-              if(type.service == 'postcash'){
-                this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[1].commission+=type.commission;
-              }
-              if(type.service == 'wizall'){
-                this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[2].commission+=type.commission;
-              }
-              if(type.service == 'orangemoney'){
-                if(type.designation == 'depot'){
-                  this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-                }
-                else{
-                  this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                }
-                this.bilanexploitationaveccommission[3].commission+=type.commission;
-              }
-              if(type.service == 'tigocash'){
-                if(type.designation == 'depot'){
-                  this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-                }
-                else{
-                  this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                  this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                }
-                this.bilanexploitationaveccommission[4].commission+=type.commission;
-              }
-            });
+            this.calculbilanexploitationaveccommission();
             this.loading = false ;
           }
         )
@@ -856,53 +620,7 @@ export class ComptabiliteComponent implements OnInit {
             },
             error => alert(error),
             () => {
-              this.bilanexploitationaveccommission = [
-                {service:'tnt', cashin:0, cashout:0, commission:0},
-                {service:'postcash', cashin:0, cashout:0, commission:0},
-                {service:'wizall', cashin:0, cashout:0, commission:0},
-                {service:'orangemoney', cashin:0, cashout:0, commission:0},
-                {service:'tigocash', cashin:0, cashout:0, commission:0},
-                {service:'Total', cashin:0, cashout:0, commission:0},
-              ];
-              this.exploitationbilan = this.exploitationaveccommission;
-              this.exploitationbilan.forEach(type => {
-                this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-                this.bilanexploitationaveccommission[5].commission+=type.commission;
-                if(type.service == 'tnt'){
-                  this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-                  this.bilanexploitationaveccommission[0].commission+=type.commission;
-                }
-                if(type.service == 'postcash'){
-                  this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-                  this.bilanexploitationaveccommission[1].commission+=type.commission;
-                }
-                if(type.service == 'wizall'){
-                  this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-                  this.bilanexploitationaveccommission[2].commission+=type.commission;
-                }
-                if(type.service == 'orangemoney'){
-                  if(type.designation == 'depot'){
-                    this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-                  }
-                  else{
-                    this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                  }
-                  this.bilanexploitationaveccommission[3].commission+=type.commission;
-                }
-                if(type.service == 'tigocash'){
-                  if(type.designation == 'depot'){
-                    this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-                  }
-                  else{
-                    this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                    this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-                  }
-                  this.bilanexploitationaveccommission[4].commission+=type.commission;
-                }
-              });
+              this.calculbilanexploitationaveccommission();
               this.loading = false ;
             }
           )
@@ -929,6 +647,69 @@ export class ComptabiliteComponent implements OnInit {
           )
       }
     }
+  }
+
+  calculbilanexploitationaveccommission(){
+    this.bilanexploitationaveccommission = [
+      {service:'tnt', cashin:0, cashout:0, commission:0},
+      {service:'postcash', cashin:0, cashout:0, commission:0},
+      {service:'wizall', cashin:0, cashout:0, commission:0},
+      {service:'emoney', cashin:0, cashout:0, commission:0},
+      {service:'orangemoney', cashin:0, cashout:0, commission:0},
+      {service:'tigocash', cashin:0, cashout:0, commission:0},
+      {service:'Total', cashin:0, cashout:0, commission:0},
+    ];
+    this.exploitationbilan = this.exploitationaveccommission;
+    this.exploitationbilan.forEach(type => {
+      this.bilanexploitationaveccommission[6].cashin+=type.mnt;
+      this.bilanexploitationaveccommission[6].commission+=type.commission;
+      if(type.service == 'tnt'){
+        this.bilanexploitationaveccommission[0].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[0].commission+=type.commission;
+      }
+      if(type.service == 'postcash'){
+        this.bilanexploitationaveccommission[1].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[1].commission+=type.commission;
+      }
+      if(type.service == 'wizall'){
+        this.bilanexploitationaveccommission[2].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[2].commission+=type.commission;
+      }
+      if(type.service == 'emoney'){
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[3].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[3].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
+        this.bilanexploitationaveccommission[3].commission+=type.commission;
+      }
+      if(type.service == 'orangemoney'){
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
+        this.bilanexploitationaveccommission[4].commission+=type.commission;
+      }
+      if(type.service == 'tigocash'){
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
+        this.bilanexploitationaveccommission[5].commission+=type.commission;
+      }
+    });
+
   }
 
 

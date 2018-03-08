@@ -338,26 +338,30 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     let nbrebyjourtnt:number[] = [];
     let nbrebyjourpost:number[] = [];
     let nbrebyjourwizall:number[] = [];
+    let nbrebyjouremoney:number[] = [];
     let nbrebyjourtigocash:number[] = [];
     tabjours.forEach(type => {
       let nbrebyjouromSom:number = 0;
       let nbrebyjourtntSom:number = 0;
       let nbrebyjourpostSom:number = 0;
       let nbrebyjourwizallSom:number = 0;
+      let nbrebyjouremoneySom:number = 0;
       let nbrebyjourtigocashSom:number = 0;
 
       this.touslescommissions.forEach( opt => { if(opt.dateop_heure==type && opt.service=='orangemoney'){ nbrebyjouromSom += Number(opt.montant); } }); nbrebyjourom.push( nbrebyjouromSom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_heure==type && opt.service=='tnt'){ nbrebyjourtntSom += Number(opt.montant); } }); nbrebyjourtnt.push( nbrebyjourtntSom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_heure==type && opt.service=='postcash'){ nbrebyjourpostSom += Number(opt.montant); } }); nbrebyjourpost.push( nbrebyjourpostSom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_heure==type && opt.service=='wizall'){ nbrebyjourwizallSom += Number(opt.montant); } }); nbrebyjourwizall.push( nbrebyjourwizallSom );
+      this.touslescommissions.forEach( opt => { if(opt.dateop_heure==type && opt.service=='emoney'){ nbrebyjouremoneySom += Number(opt.montant); } }); nbrebyjouremoney.push( nbrebyjouremoneySom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_heure==type && opt.service=='tigocash'){ nbrebyjourtigocashSom += Number(opt.montant); } }); nbrebyjourtigocash.push( nbrebyjourtigocashSom );
     });
-
+    console.log("______________________________________________________________")
     this.lineChartData = [
       {data: nbrebyjourom, label: 'OM'},
       {data: nbrebyjourtnt, label: 'TNT'},
       {data: nbrebyjourpost, label: 'POSTECASH'},
       {data: nbrebyjourwizall, label: 'WIZALL'},
+      {data: nbrebyjouremoney, label: 'E-MONEY'},
       {data: nbrebyjourtigocash, label: 'TIGOCASH'},
     ];
 
@@ -400,6 +404,7 @@ export class AdminmultipdvDashboardComponent implements OnInit {
   public suivionepointSelectionGerant(){
     this.lineChartData = [];
     this.lineChartLabels = [];
+    console.log("*********************************************************")
 
     this.touslesjours = this.touslescommissions.map( type => type.dateop_jour);
     this.touslesjours.sort();
@@ -423,27 +428,34 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     let nbrebyjourtnt:number[] = [];
     let nbrebyjourpost:number[] = [];
     let nbrebyjourwizall:number[] = [];
+    let nbrebyjouremoney:number[] = [];
     let nbrebyjourtigocash:number[] = [];
     tabjours.forEach(type => {
       let nbrebyjouromSom:number = 0;
       let nbrebyjourtntSom:number = 0;
       let nbrebyjourpostSom:number = 0;
       let nbrebyjourwizallSom:number = 0;
+      let nbrebyjouremoneySom:number = 0;
       let nbrebyjourtigocashSom:number = 0;
+      console.log("*********************************************************")
 
       this.touslescommissions.forEach( opt => { if(opt.dateop_jour==type && opt.service.toLowerCase()=='orangemoney'){ nbrebyjouromSom += Number(opt.montant); } }); nbrebyjourom.push( nbrebyjouromSom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_jour==type && opt.service.toLowerCase()=='tnt'){ nbrebyjourtntSom += Number(opt.montant); } }); nbrebyjourtnt.push( nbrebyjourtntSom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_jour==type && opt.service.toLowerCase()=='postcash'){ nbrebyjourpostSom += Number(opt.montant); } }); nbrebyjourpost.push( nbrebyjourpostSom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_jour==type && opt.service.toLowerCase()=='wizall'){ nbrebyjourwizallSom += Number(opt.montant); } }); nbrebyjourwizall.push( nbrebyjourwizallSom );
+      this.touslescommissions.forEach( opt => { if(opt.dateop_jour==type && opt.service.toLowerCase()=='emoney'){ nbrebyjouremoneySom += Number(opt.montant); } }); nbrebyjouremoney.push( nbrebyjouremoneySom );
       this.touslescommissions.forEach( opt => { if(opt.dateop_jour==type && opt.service.toLowerCase()=='tigocash'){ nbrebyjourtigocashSom += Number(opt.montant); } }); nbrebyjourtigocash.push( nbrebyjourtigocashSom );
     });
+    console.log("*********************************************************")
     this.lineChartData = [
       {data: nbrebyjourom, label: 'OM'},
       {data: nbrebyjourtnt, label: 'TNT'},
       {data: nbrebyjourpost, label: 'POSTECASH'},
       {data: nbrebyjourwizall, label: 'WIZALL'},
+      {data: nbrebyjouremoney, label: 'E-MONEY'},
       {data: nbrebyjourtigocash, label: 'TIGOCASH'},
     ];
+    console.log("*********************************************************")
     this.loading = false;
   }
 
@@ -452,32 +464,33 @@ export class AdminmultipdvDashboardComponent implements OnInit {
       {service:'tnt', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'postcash', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'wizall', cashin:0, cashout:0, commission:0, liste:[]},
+      {service:'emoney', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'orangemoney', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'tigocash', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'Total', cashin:0, cashout:0, commission:0, liste:[]},
     ];
 
     this.touslescommissions.forEach(type => {
-      this.bilantouslescommissions[5].liste.push(type);
-      this.bilantouslescommissions[5].commission+=type.commission;
+      this.bilantouslescommissions[6].liste.push(type);
+      this.bilantouslescommissions[6].commission+=type.commission;
 
       if(type.service == 'tnt'){
         this.bilantouslescommissions[0].liste.push(type);
         this.bilantouslescommissions[0].cashout+=type.montant;
         this.bilantouslescommissions[0].commission+=type.commission;
 
-        this.bilantouslescommissions[5].cashout+=type.montant;
+        this.bilantouslescommissions[6].cashout+=type.montant;
       }
       if(type.service == 'postcash'){
         if( (type.produit == 'ACHAT DE CODE WOYOFAL'.toLowerCase()) || (type.produit == 'REGLEMENT FACTURE SENELEC'.toLowerCase())){
           this.bilantouslescommissions[1].cashin+=type.montant;
 
-          this.bilantouslescommissions[5].cashin+=type.montant;
+          this.bilantouslescommissions[6].cashin+=type.montant;
         }
         else{
           this.bilantouslescommissions[1].cashout+=type.montant;
 
-          this.bilantouslescommissions[5].cashout+=type.montant;
+          this.bilantouslescommissions[6].cashout+=type.montant;
         }
         this.bilantouslescommissions[1].liste.push(type);
         this.bilantouslescommissions[1].commission+=type.commission;
@@ -489,30 +502,42 @@ export class AdminmultipdvDashboardComponent implements OnInit {
         this.bilantouslescommissions[2].cashout+=type.montant;
         this.bilantouslescommissions[2].commission+=type.commission;
 
-        this.bilantouslescommissions[5].cashout+=type.montant;
+        this.bilantouslescommissions[6].cashout+=type.montant;
       }
       if(type.service == 'tigocash'){
-        this.bilantouslescommissions[4].liste.push(type);
-        this.bilantouslescommissions[4].cashout+=type.montant;
-        this.bilantouslescommissions[4].commission+=type.commission;
-
+        this.bilantouslescommissions[5].liste.push(type);
         this.bilantouslescommissions[5].cashout+=type.montant;
+        this.bilantouslescommissions[5].commission+=type.commission;
+
+        this.bilantouslescommissions[6].cashout+=type.montant;
       }
-      if(type.service == 'orangemoney'){
-        if(type.produit == 'retrait'){
+      if(type.service == 'emoney'){
+        if(type.produit.match('retrait')){
           this.bilantouslescommissions[3].cashin+=type.montant;
 
-          this.bilantouslescommissions[5].cashin+=type.montant;
+          this.bilantouslescommissions[6].cashin+=type.montant;
         }
         else{
           this.bilantouslescommissions[3].cashout+=type.montant;
 
-          this.bilantouslescommissions[5].cashout+=type.montant;
+          this.bilantouslescommissions[6].cashout+=type.montant;
         }
         this.bilantouslescommissions[3].liste.push(type);
         this.bilantouslescommissions[3].commission+=type.commission;
+      }
+      if(type.service == 'orangemoney'){
+        if(type.produit.match('retrait')){
+          this.bilantouslescommissions[4].cashin+=type.montant;
 
+          this.bilantouslescommissions[6].cashin+=type.montant;
+        }
+        else{
+          this.bilantouslescommissions[4].cashout+=type.montant;
 
+          this.bilantouslescommissions[6].cashout+=type.montant;
+        }
+        this.bilantouslescommissions[4].liste.push(type);
+        this.bilantouslescommissions[4].commission+=type.commission;
       }
     });
   }

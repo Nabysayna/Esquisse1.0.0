@@ -418,7 +418,7 @@ export class EspacePersoComponent implements OnInit {
     this.categoriea = "--- Catégorie ---" ;
   }
 
-  apiEndPoint = 'http://localhost/backup-sb-admin/new-backend-esquise/server-backend-upload/index.php' ;
+  apiEndPoint = 'https://sentool.bbstvnet.com/sslayer/server-backend-upload/index.php' ;
 
   fileChange(event) {
     let fileList: FileList = event.target.files;

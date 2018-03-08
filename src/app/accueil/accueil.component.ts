@@ -25,7 +25,7 @@ export class AccueilComponent implements OnInit {
   articles=[];
   process=[];
    quinzeMinutes = 900000;
-  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'TIGOCASH', 'WIZALL'] ;
+  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
 
   authorisedToUseCRM = false ;
   load="loader";
