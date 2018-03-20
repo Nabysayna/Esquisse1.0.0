@@ -12,3 +12,36 @@
 	padding-top: 8px ;
 	padding-bottom: 3px !important;
 }
+.btn-primary{
+    background-color:#36A9E0 !important;
+}
+.btn-primary:hover{
+    background-color:white !important;
+    color:blue !important;
+}
+.border{
+    border:2px solid #36A9E0;
+    font-weight:bold;
+    
+ }
+ /*bord:sous menu espace-perso
+  * 
+  * */
+.bord{
+    padding:0px;
+    border:2px solid #F39200;
+    border-radius:10px 0px 10px 10px;
+    height:30px !important;
+    min-height:40px !important;
+    
+}
+.bord:hover,.bord a:hover{
+    background-color:#F39200 !important;
+    color:white !important;
+    text-decoration:none;
+}
+
+tr,tr td,tr th{
+    border-top:2px solid #F39200;
+    border-bottom:2px solid #F39200;
+}

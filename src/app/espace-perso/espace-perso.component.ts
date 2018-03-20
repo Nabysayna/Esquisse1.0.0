@@ -46,13 +46,14 @@ export class newCommande{
 export class EspacePersoComponent implements OnInit {
 
   articles:Article[][];
-  ecomCaller: EcomServiceWeb;
+  //ecomCaller: EcomServiceWeb;
   loading = false ;
   coderecept : string ;
   listeVentes : any[] ;
   listeCommande : Commande[] ;
   listarticles : Article[] ;
   newImage = "imagevide.jpg" ;
+  articlemodif:any={};
 
   shownPrice : number ;
   partenairesParts : number ;
@@ -67,30 +68,55 @@ export class EspacePersoComponent implements OnInit {
   descriptiona: string ;
   prixa:number;
   stocka:number;
-
+  Bcosmetique:boolean=false;
+  Bvetement:boolean=false;
+  Bchaussure:boolean=false;
+  Belectronique:boolean=false;
+  Bbureau:boolean=false;
+  Belectromenager:boolean=false;
+  Baccessoire:boolean=false;
+  Bmaison:boolean=false;
+  Bsac:boolean=false;
+  Bautre:boolean=false;
   categoriepta : string ;
   designationpta: string;
   descriptionpta: string ;
   prixpta:number;
   stockpta:number;
-
-
+  provenance:string;
+  marque:string;
+  couleur:string;
+  origine:string;
+  tendence:string;
+  sexe:string;
+  mode:string;
+  utilisation:string;
+  fonctions:string;
+  modele:string;
+  capacite:string;
+  matiere:string;
+  tendances:string;
+  categorie:string;
+  infosup:string;
+  prix:string;
+  
   modif:string="-";
   modifart:string;
   orderedArticles : string ;
   nbrePieds : number ;
   smart : string ;
-  descriptions=[{'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
-                {'description':'Vêtements','value':['origine','matière','taille','sexe/genre','tendances','couleur']},
-                {'description':'Chaussures','value':['tendances', 'genre/sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
+ /* descriptions=[{'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
+                {'description':'Vêtements','value':['origine','matière','taille','sexe','tendances','couleur']},
+                {'description':'Chaussures','value':['tendances', 'sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
                 {'description':'Sac',value:['matière', 'couleur', 'origine', 'genre', 'tendances']},
                 {'description':'Electronique','value':['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-                {'description':'Accessoires',value:['origine', 'matière', 'genre/sexe', 'qualité', 'poids']},
+                {'description':'Accessoires',value:['origine', 'matière', 'sexe', 'qualité', 'poids']},
                 {'description':'Outils de bureau',value:['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
                 {'description':'Electroménager',value:['modèle','origine','marque', 'capacité','utilisation']},
                 {'description':'Articles de maison',value:['origine','marque','utilisation','fonctions','modèle']},
                 {'description':'Autre',value:['autre description']}
-                ];
+                ];*/
+  descriptions=[{'description':'Cosmetiques'},{'description':'Vêtements'},{'description':'Chaussures'},{'description':'Sacs'},{'description':'Electronique'},{'description':'Accessoires'},{'description':'Outils de bureau'},{'description':'Electroménager'},{'description':'Articles de maison'},{'description':'Autre'}];
   descriptionsvalues=[];
 
   uploadProgress: number;
@@ -102,8 +128,8 @@ export class EspacePersoComponent implements OnInit {
   designation = "designation" ;
   asc = "asc" ;
 
-  constructor(private http: Http) {
-      this.ecomCaller = new EcomServiceWeb();
+  constructor(private http: Http,private ecomCaller:EcomServiceWeb) {
+      //this.ecomCaller = new EcomServiceWeb();
   }
 
   ngOnInit() { 
@@ -111,7 +137,7 @@ export class EspacePersoComponent implements OnInit {
       this.loading = true ;
       this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
         {
-          this.articles = _.chunk(response, 5) ;
+          this.articles = _.chunk(response, 3) ;
           this.listarticles = response;
           this.loading = false ;
         });  
@@ -121,7 +147,6 @@ export class EspacePersoComponent implements OnInit {
           this.categories = response;
         });  
   }
-
  deleteArticle(article:Article) {      
       for(var j=0; j<this.articles.length; j++){
       	var ligne=this.articles[j];
@@ -177,9 +202,13 @@ export class EspacePersoComponent implements OnInit {
 
   ajouter(){ 
     this.loading = true ;
-      let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) }
+    var data=(JSON.stringify({categorie:this.categorie,provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,model:this.modele,capacite:this.capacite,fonctions:this.fonctions,matiere:this.matiere,tendance:this.tendances,mode:this.mode,sexe:this.sexe,infosup:this.infosup})).toString();
+      //let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
+      let params = { token: this.token , designation: this.designationa, description:data, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
+     console.log(params);
       this.ecomCaller.ajouterArticle(params).then( response =>
         {
+          console.log('fi la yamme');
           this.loading = false ;
           this.designationa=undefined;
           this.descriptiona=undefined;
@@ -190,9 +219,10 @@ export class EspacePersoComponent implements OnInit {
           this.newImage = "imagevide.jpg" ;
           this.prixa = undefined ;
           this.categoriea = "--- Catégorie ---" ;
+          this.hideAddChildModal();
         }); 
   }
-
+//771765822 10000
   ajouterpta(){ 
     this.loading = true ;
 
@@ -292,10 +322,10 @@ export class EspacePersoComponent implements OnInit {
           }
         let artcle = JSON.stringify(ligne[i]) ;
         let params = { article: artcle ,token: this.token } ;
-        this.ecomCaller.modifierArticle(params).then( response =>
+       /* this.ecomCaller.modifierArticle(params).then( response =>
           {
             this.loading = false ;
-          });              
+          }); */            
           break;
         }
     }
@@ -312,6 +342,22 @@ export class EspacePersoComponent implements OnInit {
     this.modif=""; 
     this.modifart="";
  
+  }
+  reinitialiser(){
+     this.provenance=undefined;
+     this.marque=undefined;
+     this.couleur=undefined;
+     this.origine=undefined;
+     this.tendence=undefined;
+     this.sexe=undefined;
+     this.mode=undefined;
+     this.utilisation=undefined;
+     this.fonctions=undefined;
+     this.modele=undefined;
+     this.capacite=undefined;
+     this.matiere=undefined;
+     this.tendances=undefined;
+  
   }
 
   detailsCurrentCommande() : newCommande[]{
@@ -341,11 +387,35 @@ export class EspacePersoComponent implements OnInit {
   public hideChildModal():void {
     this.childModal.hide();
   }
-
+//773396188 
   /*-----------------------------------------------------------*/
 
   @ViewChild('addChildModal') public addChildModal:ModalDirective;
- 
+  @ViewChild('modalmodif') public modalmodif:ModalDirective;
+  public showmodaldif(article){
+    this.articlemodif=article;
+    this.articlemodif.description=JSON.parse(article.description);
+    console.log(this.articlemodif);
+    this.modalmodif.show();
+    //modifArticle(article)
+  }
+  hidemodalmodif(){
+    this.modalmodif.hide();
+  }
+  validermodif(article){
+   // modifArticle(article);
+   let data=(JSON.stringify({provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,tendance:this.tendances,mode:this.mode,sexe:this.sexe})).toString();
+   let params={'article':JSON.stringify({description:data,prix:this.prix,designation:this.designation,id:article.id,nomImg:article.nomImg}),'token':this.token};
+   console.log(params);
+    this.ecomCaller.modifierArticle(params).then( response =>
+          {
+           console.log(response);
+           // this.loading = false ;
+           this.hidemodalmodif();
+           this.reinitialiser();
+          });
+   
+  }
   public showAddChildModal():void {
     this.descriptionsvalues=[];
     this.addChildModal.show();
@@ -461,13 +531,120 @@ export class EspacePersoComponent implements OnInit {
    if(categorie=="--- Catégorie ---"){
       this.descriptionsvalues=[];
    }
-   for(let i=0;i<this.descriptions.length;i++){
-      if(this.descriptions[i].description==categorie){
-         this.descriptionsvalues=this.descriptions[i].value;
-         break;
-      }
+      //for(let i=0;i<this.descriptions.length;i++){
+      //if(this.descriptions[i].description==categorie){
+        // this.descriptionsvalues=this.descriptions[i].value;
+         switch(categorie){
+          case 'Cosmetiques':{
+             this.categorie='cosmetiques';
+             this.reinitialiser();
+             this.Bcosmetique=true;
+             this.Bvetement=false;
+             this.Bchaussure=false;
+             this.Belectronique=false;
+             this.Bbureau=false;
+             this.Belectromenager=false;
+             this.Baccessoire=false;
+             this.Bsac=false;
+             break;
+             }
+          case 'Accessoires':{
+             this.categorie='accessoires';
+             this.reinitialiser();
+             this.Bcosmetique=false;
+             this.Bvetement=false;
+             this.Bchaussure=false;
+             this.Belectronique=false;
+             this.Bbureau=false;
+             this.Belectromenager=false;
+             this.Bsac=false;
+             this.Baccessoire=true;
+             break;
+             }
+          case 'Vêtements':{
+            this.categorie='vetements';
+            this.reinitialiser();
+            this.Bvetement=true;
+            this.Bcosmetique=false;
+            this.Belectronique=false;
+            this.Bchaussure=false;
+            this.Baccessoire=false;
+            this.Bbureau=false;
+            this.Belectromenager=false;
+            this.Bsac=false;
+            break;
+            }
+          case 'Chaussures':{
+            this.categorie='chaussures';
+            this.reinitialiser();
+            this.Bvetement=false;
+            this.Bcosmetique=false;
+            this.Belectronique=false;
+            this.Bchaussure=true;
+            this.Baccessoire=false;
+            this.Bbureau=false;
+            this.Belectromenager=false;
+            this.Bsac=false;
+            break;
+            }
+          case 'Electronique':{
+            this.categorie='electronique';
+            this.reinitialiser();
+            this.Bvetement=false;
+            this.Bcosmetique=false;
+            this.Bchaussure=false;
+            this.Baccessoire=false;
+            this.Belectronique=false;
+            this.Bbureau=false;
+            this.Belectromenager=false;
+            this.Bsac=false;
+            break;
+            }
+          case 'Outils de bureau':{
+            this.categorie='bureau';
+            this.reinitialiser();
+            this.Bvetement=false;
+            this.Bcosmetique=false;
+            this.Bchaussure=false;
+            this.Belectronique=false;
+            this.Baccessoire=false;
+            this.Bbureau=true;
+            this.Belectromenager=false;
+            this.Bsac=false;
+            break;
+          }
+          case 'Electromenager':{
+            this.categorie='electromenager';
+            this.reinitialiser();
+            this.Bvetement=false;
+            this.Bcosmetique=false;
+            this.Bchaussure=false;
+            this.Belectronique=false;
+            this.Bbureau=false;
+            this.Belectromenager=true;
+            this.Baccessoire=false;
+            this.Bsac=false;
+            break;
+          }
+          case 'Sacs':{
+            this.categorie='sacs';
+            this.reinitialiser();
+            this.Bvetement=false;
+            this.Bcosmetique=false;
+            this.Bchaussure=false;
+            this.Belectronique=false;
+            this.Bbureau=false;
+            this.Belectromenager=false;
+            this.Baccessoire=false;
+            this.Bsac=true;
+            break;
+          }
+           default:break;
+         }
+       
+     // }
       
-   }
+   //}
     
   }
 

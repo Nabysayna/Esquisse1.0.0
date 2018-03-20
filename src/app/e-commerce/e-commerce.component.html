@@ -40,8 +40,8 @@
 
 
     <div class="row tab-content">
-
-    	<div class="row tab-pane fade col-sm-12 col-xs-12 in active" id="ecomcatalogue">
+      
+    	<div class="tab-pane fade col-sm-12 col-xs-12 in active" id="ecomcatalogue">
         	<app-catalogue></app-catalogue>
     	</div>
 
@@ -49,17 +49,17 @@
         	<app-espace-perso></app-espace-perso>
 	    </div>
 
-      <div class="row tab-pane fade col-sm-offset-1 col-sm-10 col-xs-12" style="margin-top: 3rem ; background-color:#f8f8f8;" id="prisecom">
+      <div class="row tab-pane fade col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-8 col-md-8 col-sm-8 col-xs-8" style="margin-top: 3rem ; background-color:#f8f8f8;" id="prisecom">
 
           <div class="row" *ngIf="!inforecvd&&!postcmd">
-            <div class="col-sm-3 col-xs-12" style="text-align: right; padding-top : 1.5rem ;">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 " style="text-align: right; padding-top : 1.5rem ;">
                       <label class=" control-label">Code du client </label>
             </div>
 
-            <div class="col-sm-6 col-xs-12" style="text-align: center;">
-                  <input type="text" [(ngModel)]="codecmd"   name="codecmd" id="codecmd" class="form-control" placeholder="Code passé au client après commande." required>
+            <div class="col-sm-5 col-lg-5 col-md-5 col-xs-5" style="text-align: center;">
+                  <input type="text" style="border:2px solid #36A9E0;border-radius:20px 0px 20px 20px" [(ngModel)]="codecmd"   name="codecmd" id="codecmd" class="form-control" placeholder="Code passé au client après commande." required>
             </div>
-            <div class="col-sm-3 col-xs-12" style="text-align: left; padding-top : 1rem ;">
+            <div class="col-sm-2 col-lg-2 col-md-2 col-xs-2" style="text-align: left; padding-top : 1rem ;">
                   <button class="btn btn-success" (click)="recupInfosCmd()"  >
                   Valider</button>
             </div>

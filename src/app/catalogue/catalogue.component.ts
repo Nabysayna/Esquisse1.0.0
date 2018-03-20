@@ -18,7 +18,7 @@ class OrderedArticle{
   public description:string;
   public nomImg:string;
 } 
-
+//773977988 10000
 class Article {
   public id:number;
   public nomImg:string;
@@ -56,11 +56,14 @@ export class CatalogueComponent implements OnInit {
   orderedarticles:OrderedArticle [] = [];
   montant:number = 0;
   alert: boolean = false;
+  description:any=JSON.stringify({categorie:'',provenance:'',marque:'',couleur:'',origine:'',model:'',capacite:'',fonctions:'',matiere:'',tendance:'',mode:'',sexe:'',infosup:''});
+  desk:boolean;
 
-  @ViewChild('viewMore') public addChildModal:ModalDirective;
+  
 
 
   constructor(public ecomCaller: EcomServiceWeb) { 
+   
     this.dataSource = Observable
       .create((observer: any) => {
         observer.next(this.asyncSelected);
@@ -69,10 +72,12 @@ export class CatalogueComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.loading = true ;
     this.ecomCaller.listeArticles(this.token, 'catalogue').then( response => {
+      console.log(response);
       this.listarticles = response.reverse();
-      console.log(this.listarticles) ;
+      //console.log(this.listarticles) ;
       this.loading = false ;
     }); 
   }
@@ -154,7 +159,8 @@ export class CatalogueComponent implements OnInit {
   }
   
 
-  @ViewChild('childModalCommand') public childModalCommand:ModalDirective;
+   @ViewChild('childModalCommand') public childModalCommand:ModalDirective;
+   @ViewChild('addChildModal') public addChildModal:ModalDirective;
 
   public showChildModalCommand():void { 
     this.childModalCommand.show();
@@ -204,7 +210,22 @@ export class CatalogueComponent implements OnInit {
  
   public showAddChildModal(article):void {
     this.currentArticle=article ;
-    this.addChildModal.show();
+    let data=undefined;
+    try{
+       data=JSON.parse(article.description);
+    }catch(e){
+       console.log(this.description); 
+        
+    }
+    if(data==undefined){
+       this.desk=false;
+       
+     }
+    else{
+       this.description=data;
+       this.desk=true;
+    }
+     this.addChildModal.show();
   }
  
   public hideAddChildModal():void {
@@ -212,13 +233,17 @@ export class CatalogueComponent implements OnInit {
   }
   
   public ajouter_au_panier(article){
+  console.log(article);
     let articl=new Article();
     articl.prix=article.prix;
     articl.designation=article.designation;
     articl.description=article.description;
     articl.nomImg=article.nomImg;
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Mon Panier','operateur':5,'prix':articl.prix,'quantite':1,'nomImg':articl.nomImg,'designation':articl.designation,'description':articl.description}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Mon Panier','operateur':5,'prix':articl.prix,'quantite':1,'nomImg':articl.nomImg,'designation':articl.designation,'description':articl.description,'infosup':article.infosup,'pourvoyeur':article.pourvoyeur}));
     this.addChildModal.hide();
+  }
+  validercommande(){
+    
   }
 
 

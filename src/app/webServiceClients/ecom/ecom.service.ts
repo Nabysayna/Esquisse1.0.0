@@ -69,18 +69,19 @@ export class EcomServiceWeb {
   }
 
 
-  public ajouterArticle(requestedValue:{}) : Promise<string> {
+  public ajouterArticle(requestedValue:any) : Promise<string> {
 
       var method:string = 'ajoutarticle';
       var parameters:{}[] = [];
       var reEspParams = requestedValue ;
       var params:{}[] = [] ;
       params["params"] = reEspParams ;
-
+      console.log(params["params"]);
       return new Promise( (resolve, reject) => {
         parameters['ajoutarticle xmlns="urn:ecommercewsdl#"'] = params ;
-
+        console.log('avant appel soap');
         this.soapService.post(method, parameters, 'ajoutarticleResponse').then(response=>{
+          console.log('avant resolve soap');
           let wSresponse = response['ajoutarticleResponse'].return.$ ;
           resolve(wSresponse) ;
         });
