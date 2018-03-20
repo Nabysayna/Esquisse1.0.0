@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
-import { EcomServiceWeb, Commande } from '../webServiceClients/ecom/ecom.service';
-import * as sha1 from 'js-sha1';
-import * as _ from "lodash";
+import {EcomService} from "../services/ecom.service";
 
 
 @Component({
@@ -15,7 +13,6 @@ export class ECommerceComponent implements OnInit {
   codecmd = "" ;
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   loading = false ;
-  ecomCaller = new EcomServiceWeb();
   infosCommande : any ;
   inforecvd = false ;
   postcmd = false ;
@@ -25,12 +22,11 @@ export class ECommerceComponent implements OnInit {
   qte : number ;
   montant : number ;
 
-  constructor() { }
+  constructor(private _ecomService:EcomService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  initialize(){    
+  initialize(){
     this.codecmd = "" ;
     this.loading = false ;
     this.inforecvd = false ;
@@ -42,22 +38,18 @@ export class ECommerceComponent implements OnInit {
     this.loading = true ;
     let requiredInfo = "infocmd#"+this.codecmd ;
     let paramObj={token : this.token, article : requiredInfo} ;
-    this.ecomCaller.prendreCommande(paramObj).then( response =>
+    this._ecomService.prendreCommande(paramObj).then( response =>
       {
-
-
-        console.log("######################################################") ;
-
 
        this.infosCommande = JSON.parse(response)[0] ;
         this.prenom = this.infosCommande.prenomclient ;
         this.nom  = this.infosCommande.nomclient ;
         this.orderedArticles = this.infosCommande.orderedArticles ;
-        this.montant = this.infosCommande.montant ;  
+        this.montant = this.infosCommande.montant ;
 
         this.loading = false ;
         this.inforecvd = true ;
-      }); 
+      });
   }
 
   prendreCommande(){
@@ -65,21 +57,21 @@ export class ECommerceComponent implements OnInit {
     this.loading = true ;
     let requiredInfo = "takecmd#"+this.codecmd ;
     let paramObj={token : this.token, article : requiredInfo} ;
-    this.ecomCaller.prendreCommande(paramObj).then( response =>
-      { 
+    this._ecomService.prendreCommande(paramObj).then( response =>
+      {
         console.log("Reponse serveur :::: "+response) ;
         this.codecmd = "";
         this.loading = false ;
         this.postcmd = true ;
-      }); 
+      });
   }
 
   @ViewChild('childModal') public childModal:ModalDirective;
- 
+
   public showChildModal():void {
     this.childModal.show();
   }
- 
+
   public hideChildModal():void {
     this.childModal.hide();
   }

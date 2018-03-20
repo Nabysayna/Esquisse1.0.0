@@ -1,6 +1,6 @@
 import { ViewChild, ElementRef, Component, OnInit } from '@angular/core';
-import {UtilService} from "../../services/util.service";
 import {ModalDirective} from "ng2-bootstrap";
+import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
 @Component({
@@ -21,7 +21,7 @@ export class AdminmultipdvCreditationCCComponent implements OnInit {
   @ViewChild('crediterModal') public crediterModal:ModalDirective;
 
 
-  constructor(private _utilService:UtilService) { }
+  constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {
     console.log('Hi i am bot')
@@ -47,7 +47,7 @@ export class AdminmultipdvCreditationCCComponent implements OnInit {
   }
 
   listcreditmanager(){
-    this._utilService.listcreditmanager()
+    this._adminmultipdvService.listcreditmanager()
       .subscribe(
         data => {
           if(data.errorCode){
@@ -65,7 +65,7 @@ export class AdminmultipdvCreditationCCComponent implements OnInit {
         },
         error => alert(error),
         () => {
-          console.log('est testé init listcreditmanager')
+          console.log('_adminmultipdvService testé init listcreditmanager')
         }
       );
   }
@@ -78,13 +78,14 @@ export class AdminmultipdvCreditationCCComponent implements OnInit {
         montantcredit:this.montantcredit,
         isexiste:item.detailcredit.length==0?false:true,
       }
-      this._utilService.valideraacreditmanager(data)
+      this._adminmultipdvService.valideraacreditmanager(data)
         .subscribe(
           data => {
             console.log(data);
           },
           error => alert(error),
           () => {
+            this.listcreditmanager();
             console.log('est testé init valideraacreditmanager')
           }
         );

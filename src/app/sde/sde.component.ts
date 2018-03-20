@@ -1,19 +1,13 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
-import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
-import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
-import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
+import {FacturierService} from "../services/facturier.service";
 
 
 @Component({
   selector: 'app-sde',
   templateUrl: './sde.component.html',
-  styleUrls: ['./sde.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  styleUrls: ['./sde.component.css']
 })
 export class SdeComponent implements OnInit {
    etat:boolean=false;
@@ -26,31 +20,21 @@ export class SdeComponent implements OnInit {
    statuspayment:boolean;
    dataImpression:any;
 
-   constructor(private FacturierServiceWeb:FacturierServiceWeb,private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService) {
+   constructor(private _facturierService : FacturierService,private router: Router) {
 
   }
 
 /******************************************************************************************************/
 
 
-  ngOnInit() {
+  ngOnInit() {  }
 
-   
-  }
-  //{'STATUS':'FAILED', 'code': '400', 'error': 'BILL_ALREADY_PAID​'}
-  /*
-   {'PAYMENT_TRANSACTION_NUMBER':'003001080000303010617012017092816
-4414', 'reference_client': '108000030321', 'reference_facture':
-'00300108000030301061701', 'nom': 'MAKTAR', 'prenom':
-'DIAVERGERANIASSANEBAMBYLOR', 'montant': '10983',
-'date_echeance': '10/07/2017', 'statuspayment': true }
-  */
   @ViewChild('modalsde') public modalsde:ModalDirective;
 
   detailfactursde(){
-    this.FacturierServiceWeb.detailreglementsde(this.refclientsde).then(response =>{
+    this._facturierService.detailreglementsde(this.refclientsde).then(response =>{
       if(response.response==null){
-         this.message=true; 
+         this.message=true;
 
       }else{
          this.etat=true;
@@ -60,21 +44,16 @@ export class SdeComponent implements OnInit {
          this.statuspayment=response.response.statuspayment;
          this.mntsde=response.response.montant;
       }
-
-        console.log(response);
-        
+      console.log(response);
     });
-    /*this.wizallwebservice.intouchRecupereFactureSde(this.refclientsde).then(response =>{
-       console.log(response);
-    });*/
   }
   showmodalsde(){
     this.modalsde.show();
     this.detailfactursde();
-   
+
   }
   paimantsde(){
-    this.FacturierServiceWeb.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
+    this._facturierService.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
        this.hidemodalsde();
         this.dataImpression = {
           apiservice:'postecash',
@@ -97,15 +76,6 @@ export class SdeComponent implements OnInit {
   hidemodalsde(){
    this.modalsde.hide();
   }
-  /*payerfacturesde(){
-    this.modalsde.hide() ;
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall SDE','operateur':6,'operation':3,'montant':this.mntsde,'refclient':this.refclientsde,'refFacture':this.refFactureSDE}));
-  }*/
-
-/******************************************************************************************************/
-
-
-  
 
 }
 

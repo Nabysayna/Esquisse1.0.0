@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AdminmultipdvReclamation }    from '../../models/adminmultipdv-reclamation';
-import { AdminmultipdvServiceWeb } from '../../webServiceClients/Adminmultipdv/adminmultipdv.service';
+import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
 @Component({
@@ -16,27 +15,33 @@ export class AdminmultipdvStatusReclamationComponent implements OnInit {
   public sortBy = "datereclamation";
   public sortOrder = "asc";
 
-  public adminmultipdvReclamation: AdminmultipdvReclamation[];
+  public adminmultipdvReclamation: any[];
   loading = false ;
 
-  constructor(private adminmultipdvServiceWeb: AdminmultipdvServiceWeb) { }
+  constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {
     this.loading = true ;
-    this.adminmultipdvServiceWeb.historiquereclamation('azrrtt').then(adminmultipdvServiceWebList => {
-      this.adminmultipdvReclamation = adminmultipdvServiceWebList.response.map(function (elt) {
-        return {
-          adminpdv:elt.adminpdv,
-          adresse: JSON.parse(elt.adresse).address,
-          datereclamation:elt.datereclamation.date.split('.')[0],
-          etatreclamation:elt.etatreclamation,
-          reclamation:elt.reclamation,
-          pdv:elt.pdv,
-          telephone:elt.telephone,
-          typeservice:elt.typeservice,
-        }
-      })
-    });
+    this._adminmultipdvService.historiquereclamation({type:"azrrtt"}).subscribe(
+      adminmultipdvServiceWebList => {
+        this.adminmultipdvReclamation = adminmultipdvServiceWebList.response.map(function (elt) {
+          return {
+            adminpdv:elt.adminpdv,
+            adresse: JSON.parse(elt.adresse).address,
+            datereclamation:elt.datereclamation.date.split('.')[0],
+            etatreclamation:elt.etatreclamation,
+            reclamation:elt.reclamation,
+            pdv:elt.pdv,
+            telephone:elt.telephone,
+            typeservice:elt.typeservice,
+          }
+        })
+      },
+      error => alert(error),
+      () => {
+        this.loading = false ;
+      }
+    )
 
   }
 

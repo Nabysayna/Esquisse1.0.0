@@ -3,10 +3,7 @@ import { Router } from '@angular/router';
 import {ActivatedRoute, Params} from '@angular/router';
 import { Location }  from '@angular/common';
 
-import * as sha1 from 'js-sha1';
-import * as _ from "lodash";
-
-import { ComptabiliteServiceWeb } from '../webServiceClients/Comptabilite/comptabilite.service';
+import {ComptabiliteService} from "../services/comptabilite.service";
 
 
 class UserExploitation{
@@ -142,17 +139,23 @@ export class ComptabiliteComponent implements OnInit {
          private location: Location,
          private route:ActivatedRoute,
          private router: Router,
-         private comptabiliteServiceWeb: ComptabiliteServiceWeb,
-
+         private _comptabiliteService: ComptabiliteService,
   ) { }
 
 
   ngOnInit() {
-  this.loading = true ;
-    this.comptabiliteServiceWeb.listecaisse().then(adminmultipdvServiceWeb => {
-      this.pdvCaisses = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+    this.loading = true ;
+    this._comptabiliteService.listecaisse()
+      .subscribe(
+      data => {
+        console.log("Localhost Test");
+        this.pdvCaisses = data.response ;
+      },
+      error => alert(error),
+      () => {
+        this.loading = false ;
+      }
+    )
   }
 
   estcheckModel(type: string){
@@ -218,13 +221,17 @@ export class ComptabiliteComponent implements OnInit {
   approvisionnercaisse(idpdv: number, i:number){
     this.approvisionnement="" ;
     this.loading = true ;
-    this.comptabiliteServiceWeb.approvisionner(idpdv, this.montantajoutecaisse).then(adminmultipdvServiceWeb => {
-      // console.log(adminmultipdvServiceWeb);
-      this.pdvCaisses[i].caisse = Number(this.pdvCaisses[i].caisse) + Number(this.montantajoutecaisse);
-      this.loading = false ;
-    });
+    this._comptabiliteService.approvisionner({idpdv: idpdv, montant: this.montantajoutecaisse})
+      .subscribe(
+        data => {
+          this.pdvCaisses[i].caisse = Number(this.pdvCaisses[i].caisse) + Number(this.montantajoutecaisse);
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
-
 
 
   /************************************************************************************
@@ -234,32 +241,51 @@ export class ComptabiliteComponent implements OnInit {
   listercharges(i){
     this.estselectionne = i ;
     this.loading = true ;
-    this.comptabiliteServiceWeb.listecharge(this.pdvCaisses[i].idpdv).then(adminmultipdvServiceWeb => {
-      console.log("Charges "+this.charges) ;
-      this.charges = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.listecharge({idpdv: this.pdvCaisses[i].idpdv})
+      .subscribe(
+        data => {
+          this.charges = data.response;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
 
   listerrevenus(i){
     this.estselectionr = i;
     this.estselectionne = i ;
     this.loading = true ;
-    this.comptabiliteServiceWeb.listerevenu(this.pdvCaisses[i].idpdv).then(adminmultipdvServiceWeb => {
-      console.log(adminmultipdvServiceWeb);
-      this.revenus = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.listerevenu({idpdv: this.pdvCaisses[i].idpdv})
+      .subscribe(
+        data => {
+          this.revenus = data.response;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
 
   listerrevenustransfert(i){
     this.estselectionr = i;
     this.estselectionne = i ;
     this.loading = true ;
-    this.comptabiliteServiceWeb.listerevenutransfert(this.pdvCaisses[i].idpdv).then(adminmultipdvServiceWeb => {
-      this.revenustransfert = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.listerevenutransfert({idpdv: this.pdvCaisses[i].idpdv})
+      .subscribe(
+        data => {
+          this.revenustransfert = data.response;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
 
   ajoutercharges(i){
@@ -269,12 +295,21 @@ export class ComptabiliteComponent implements OnInit {
 
   validerajoutercharges(pdv){
     this.loading = true ;
-    this.comptabiliteServiceWeb.ajoutcharge(this.libelleCharge, pdv.idpdv, this.service, this.montantCharge).then(adminmultipdvServiceWeb => {
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.ajoutcharge({libelle: this.libelleCharge, idpdv: pdv.idpdv, service: this.service, montant: this.montantCharge})
+      .subscribe(
+        data => {
+          console.log(data.response);
+          this.libelleCharge = null;
+          this.montantCharge = null;
+          this.service = null;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
-
-
 
 
   /************************************************************************************
@@ -284,21 +319,21 @@ export class ComptabiliteComponent implements OnInit {
   exploitation:Exploitation[];
   exploitationaveccommission:Exploitationaveccommission[];
   exploitationbilan:any[]=[];
-  bilanexploitationaveccommission = [
-    {service:'tnt', cashin:0, cashout:0, commission:0},
-    {service:'postcash', cashin:0, cashout:0, commission:0},
-    {service:'wizall', cashin:0, cashout:0, commission:0},
-    {service:'orangemoney', cashin:0, cashout:0, commission:0},
-    {service:'tigocash', cashin:0, cashout:0, commission:0},
-  ]
+  bilanexploitationaveccommission:any[] = [];
 
   listeruserexploitation(){
     this.loading = true ;
-    this.comptabiliteServiceWeb.userexploitation().then(adminmultipdvServiceWeb => {
-      console.log(adminmultipdvServiceWeb.response);
-      this.usersExploitation = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.userexploitation()
+      .subscribe(
+        data => {
+          this.usersExploitation = data.response;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
 
   listerexploitation(i:number, isouvesrt:number, isferme:number ){
@@ -310,21 +345,25 @@ export class ComptabiliteComponent implements OnInit {
     let datenow = ((new Date()).toJSON()).split("T",2)[0];
 
     this.loading = true ;
-    this.comptabiliteServiceWeb.exploitation(this.usersExploitation[i].idpdv, "jour", datenow).then(adminmultipdvServiceWeb => {
-      console.log("-----2---------");
-      console.log(adminmultipdvServiceWeb.response);
-      this.exploitation = adminmultipdvServiceWeb.response.map(function (type) {
-        return {
-          dateajout: type.dateajout.date.split(".")[0],
-          designation: type.designation,
-          stocki: type.stocki,
-          vente: type.vente,
-          stockf: type.stockf,
-          mnt: Number(type.mnt),
+    this._comptabiliteService.exploitation({idpdv: this.usersExploitation[i].idpdv, type: "jour", infotype: datenow})
+      .subscribe(
+        data => {
+          this.exploitation = data.response.map(function (type) {
+            return {
+              dateajout: type.dateajout.date.split(".")[0],
+              designation: type.designation,
+              stocki: type.stocki,
+              vente: type.vente,
+              stockf: type.stockf,
+              mnt: Number(type.mnt),
+            }
+          });
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
         }
-      });
-      this.loading = false ;
-    });
+      )
   }
 
   listerexploitationaveccommission(i:number, isouvesrt:number, isferme:number ){
@@ -336,68 +375,26 @@ export class ComptabiliteComponent implements OnInit {
     let datenow = ((new Date()).toJSON()).split("T",2)[0];
 
     this.loading = true ;
-    this.comptabiliteServiceWeb.exploitationaveccommission(this.usersExploitation[i].idpdv, "jour", datenow).then(adminmultipdvServiceWeb => {
-      console.log(adminmultipdvServiceWeb.response);
-      this.exploitationaveccommission = adminmultipdvServiceWeb.response.map(function (type) {
-        return {
-          dateajout: type.dateajout.date.split(".")[0],
-          designation: type.designation,
-          mnt: Number(type.mnt),
-          frais: Number(type.frais),
-          commission: Number(type.commission),
-          service: type.service.toLowerCase(),
+    this._comptabiliteService.exploitationaveccommission({idpdv: this.usersExploitation[i].idpdv, type: "jour", infotype: datenow})
+      .subscribe(
+        data => {
+          this.exploitationaveccommission = data.response.map(function (type) {
+            return {
+              dateajout: type.dateajout.date.split(".")[0],
+              designation: type.designation,
+              mnt: Number(type.mnt),
+              frais: Number(type.frais),
+              commission: Number(type.commission),
+              service: type.service.toLowerCase(),
+            }
+          });
+        },
+        error => alert(error),
+        () => {
+          this.calculbilanexploitationaveccommission();
+          this.loading = false ;
         }
-      });
-      this.loading = false ;
-    }).then( type => {
-      this.bilanexploitationaveccommission = [
-        {service:'tnt', cashin:0, cashout:0, commission:0},
-        {service:'postcash', cashin:0, cashout:0, commission:0},
-        {service:'wizall', cashin:0, cashout:0, commission:0},
-        {service:'orangemoney', cashin:0, cashout:0, commission:0},
-        {service:'tigocash', cashin:0, cashout:0, commission:0},
-        {service:'Total', cashin:0, cashout:0, commission:0},
-      ];
-      this.exploitationbilan = this.exploitationaveccommission;
-      this.exploitationbilan.forEach(type => {
-        this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-        this.bilanexploitationaveccommission[5].commission+=type.commission;
-        if(type.service == 'tnt'){
-          this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[0].commission+=type.commission;
-        }
-        if(type.service == 'postcash'){
-          this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[1].commission+=type.commission;
-        }
-        if(type.service == 'wizall'){
-          this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[2].commission+=type.commission;
-        }
-        if(type.service == 'orangemoney'){
-          if(type.designation == 'depot'){
-            this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-          }
-          else{
-            this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-            this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-            this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-          }
-          this.bilanexploitationaveccommission[3].commission+=type.commission;
-        }
-        if(type.service == 'tigocash'){
-          if(type.designation == 'depot'){
-            this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-          }
-          else{
-            this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-            this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-            this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-          }
-          this.bilanexploitationaveccommission[4].commission+=type.commission;
-        }
-      });
-    });
+      )
   }
 
   listerexploitationrecherche(idpdv, iscommission){
@@ -405,86 +402,47 @@ export class ComptabiliteComponent implements OnInit {
     let datenow = ((new Date()).toJSON()).split("T",2)[0];
     this.loading = true ;
     if(iscommission == 0){
-      this.comptabiliteServiceWeb.exploitationaveccommission(idpdv, "jour", datenow).then(adminmultipdvServiceWeb => {
-        console.log("-----4---------");
-        console.log(adminmultipdvServiceWeb.response);
-        this.exploitationaveccommission = adminmultipdvServiceWeb.response.map(function (type) {
-          return {
-            dateajout: type.dateajout.date.split(".")[0],
-            designation: type.designation,
-            mnt: Number(type.mnt),
-            frais: Number(type.frais),
-            commission: Number(type.commission),
-            service: type.service.toLowerCase(),
+      this._comptabiliteService.exploitationaveccommission({idpdv: idpdv, type: "jour", infotype: datenow})
+        .subscribe(
+          data => {
+            this.exploitationaveccommission = data.response.map(function (type) {
+              return {
+                dateajout: type.dateajout.date.split(".")[0],
+                designation: type.designation,
+                mnt: Number(type.mnt),
+                frais: Number(type.frais),
+                commission: Number(type.commission),
+                service: type.service.toLowerCase(),
+              }
+            });
+          },
+          error => alert(error),
+          () => {
+            this.calculbilanexploitationaveccommission();
+            this.loading = false ;
           }
-        });
-        this.loading = false ;
-      }).then( type => {
-        this.bilanexploitationaveccommission = [
-          {service:'tnt', cashin:0, cashout:0, commission:0},
-          {service:'postcash', cashin:0, cashout:0, commission:0},
-          {service:'wizall', cashin:0, cashout:0, commission:0},
-          {service:'orangemoney', cashin:0, cashout:0, commission:0},
-          {service:'tigocash', cashin:0, cashout:0, commission:0},
-          {service:'Total', cashin:0, cashout:0, commission:0},
-        ];
-        this.exploitationbilan = this.exploitationaveccommission;
-        this.exploitationbilan.forEach(type => {
-          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[5].commission+=type.commission;
-          if(type.service == 'tnt'){
-            this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[0].commission+=type.commission;
-          }
-          if(type.service == 'postcash'){
-            this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[1].commission+=type.commission;
-          }
-          if(type.service == 'wizall'){
-            this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[2].commission+=type.commission;
-          }
-          if(type.service == 'orangemoney'){
-            if(type.designation == 'depot'){
-              this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-            }
-            else{
-              this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-            }
-            this.bilanexploitationaveccommission[3].commission+=type.commission;
-          }
-          if(type.service == 'tigocash'){
-            if(type.designation == 'depot'){
-              this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-            }
-            else{
-              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-            }
-            this.bilanexploitationaveccommission[4].commission+=type.commission;
-          }
-        });
-      });
+        )
     }
     else {
-      this.comptabiliteServiceWeb.exploitation(idpdv, "jour", datenow).then(adminmultipdvServiceWeb => {
-        console.log("-----5---------");
-        console.log(adminmultipdvServiceWeb.response);
-        this.exploitation = adminmultipdvServiceWeb.response.map(function (type) {
-          return {
-            dateajout: type.dateajout.date.split(".")[0],
-            designation: type.designation,
-            stocki: type.stocki,
-            vente: type.vente,
-            stockf: type.stockf,
-            mnt: type.mnt,
+      this._comptabiliteService.exploitation({idpdv: idpdv, type: "jour", infotype: datenow})
+        .subscribe(
+          data => {
+            this.exploitation = data.response.map(function (type) {
+              return {
+                dateajout: type.dateajout.date.split(".")[0],
+                designation: type.designation,
+                stocki: type.stocki,
+                vente: type.vente,
+                stockf: type.stockf,
+                mnt: type.mnt,
+              }
+            });
+          },
+          error => alert(error),
+          () => {
+            this.loading = false ;
           }
-        });
-        this.loading = false ;
-      });
+        )
     }
 
   }
@@ -493,86 +451,49 @@ export class ComptabiliteComponent implements OnInit {
     console.log(iscommission);
     this.loading = true ;
     if(iscommission == 0){
-      this.comptabiliteServiceWeb.exploitationaveccommission(idpdv, "annee", this.selectionannee).then(adminmultipdvServiceWeb => {
-        console.log("-----6---------");
-        console.log(adminmultipdvServiceWeb.response);
-        this.exploitationaveccommission = adminmultipdvServiceWeb.response.map(function (type) {
-          return {
-            dateajout: type.dateajout.date.split(".")[0],
-            designation: type.designation,
-            mnt: Number(type.mnt),
-            frais: Number(type.frais),
-            commission: Number(type.commission),
-            service: type.service.toLowerCase(),
+
+      this._comptabiliteService.exploitationaveccommission({idpdv: idpdv, type: "annee", infotype: this.selectionannee})
+        .subscribe(
+          data => {
+            this.exploitationaveccommission = data.response.map(function (type) {
+              return {
+                dateajout: type.dateajout.date.split(".")[0],
+                designation: type.designation,
+                mnt: Number(type.mnt),
+                frais: Number(type.frais),
+                commission: Number(type.commission),
+                service: type.service.toLowerCase(),
+              }
+            });
+          },
+          error => alert(error),
+          () => {
+            this.calculbilanexploitationaveccommission();
+            this.loading = false ;
           }
-        });
-        this.loading = false ;
-      }).then( type => {
-        this.bilanexploitationaveccommission = [
-          {service:'tnt', cashin:0, cashout:0, commission:0},
-          {service:'postcash', cashin:0, cashout:0, commission:0},
-          {service:'wizall', cashin:0, cashout:0, commission:0},
-          {service:'orangemoney', cashin:0, cashout:0, commission:0},
-          {service:'tigocash', cashin:0, cashout:0, commission:0},
-          {service:'Total', cashin:0, cashout:0, commission:0},
-        ];
-        this.exploitationbilan = this.exploitationaveccommission;
-        this.exploitationbilan.forEach(type => {
-          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[5].commission+=type.commission;
-          if(type.service == 'tnt'){
-            this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[0].commission+=type.commission;
-          }
-          if(type.service == 'postcash'){
-            this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[1].commission+=type.commission;
-          }
-          if(type.service == 'wizall'){
-            this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[2].commission+=type.commission;
-          }
-          if(type.service == 'orangemoney'){
-            if(type.designation == 'depot'){
-              this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-            }
-            else{
-              this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-            }
-            this.bilanexploitationaveccommission[3].commission+=type.commission;
-          }
-          if(type.service == 'tigocash'){
-            if(type.designation == 'depot'){
-              this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-            }
-            else{
-              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-            }
-            this.bilanexploitationaveccommission[4].commission+=type.commission;
-          }
-        });
-      });
+        )
     }
     else {
-      this.comptabiliteServiceWeb.exploitation(idpdv, "annee", this.selectionannee).then(adminmultipdvServiceWeb => {
-        console.log("-----7---------");
-        console.log(adminmultipdvServiceWeb.response);
-        this.exploitation = adminmultipdvServiceWeb.response.map(function (type) {
-          return {
-            dateajout: type.dateajout.date.split(".")[0],
-            designation: type.designation,
-            stocki: type.stocki,
-            vente: type.vente,
-            stockf: type.stockf,
-            mnt: type.mnt,
+
+      this._comptabiliteService.exploitation({idpdv: idpdv, type: "annee", infotype: this.selectionannee})
+        .subscribe(
+          data => {
+            this.exploitation = data.response.map(function (type) {
+              return {
+                dateajout: type.dateajout.date.split(".")[0],
+                designation: type.designation,
+                stocki: type.stocki,
+                vente: type.vente,
+                stockf: type.stockf,
+                mnt: type.mnt,
+              }
+            });
+          },
+          error => alert(error),
+          () => {
+            this.loading = false ;
           }
-        });
-        this.loading = false ;
-      });
+        )
     }
 
   }
@@ -582,86 +503,48 @@ export class ComptabiliteComponent implements OnInit {
     if(this.selectionjour != ""){
       this.loading = true ;
       if(iscommission == 0){
-        this.comptabiliteServiceWeb.exploitationaveccommission(idpdv, "jour", this.selectionjour).then(adminmultipdvServiceWeb => {
-          console.log("-----8---------");
-          console.log(adminmultipdvServiceWeb.response);
-          this.exploitationaveccommission = adminmultipdvServiceWeb.response.map(function (type) {
-            return {
-              dateajout: type.dateajout.date.split(".")[0],
-              designation: type.designation,
-              mnt: Number(type.mnt),
-              frais: Number(type.frais),
-              commission: Number(type.commission),
-              service: type.service.toLowerCase(),
+
+        this._comptabiliteService.exploitationaveccommission({idpdv: idpdv, type: "jour", infotype: this.selectionjour})
+          .subscribe(
+            data => {
+              this.exploitationaveccommission = data.response.map(function (type) {
+                return {
+                  dateajout: type.dateajout.date.split(".")[0],
+                  designation: type.designation,
+                  mnt: Number(type.mnt),
+                  frais: Number(type.frais),
+                  commission: Number(type.commission),
+                  service: type.service.toLowerCase(),
+                }
+              });
+            },
+            error => alert(error),
+            () => {
+              this.calculbilanexploitationaveccommission();
+              this.loading = false ;
             }
-          });
-          this.loading = false ;
-        }).then( type => {
-          this.bilanexploitationaveccommission = [
-            {service:'tnt', cashin:0, cashout:0, commission:0},
-            {service:'postcash', cashin:0, cashout:0, commission:0},
-            {service:'wizall', cashin:0, cashout:0, commission:0},
-            {service:'orangemoney', cashin:0, cashout:0, commission:0},
-            {service:'tigocash', cashin:0, cashout:0, commission:0},
-            {service:'Total', cashin:0, cashout:0, commission:0},
-          ];
-          this.exploitationbilan = this.exploitationaveccommission;
-          this.exploitationbilan.forEach(type => {
-            this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[5].commission+=type.commission;
-            if(type.service == 'tnt'){
-              this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[0].commission+=type.commission;
-            }
-            if(type.service == 'postcash'){
-              this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[1].commission+=type.commission;
-            }
-            if(type.service == 'wizall'){
-              this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[2].commission+=type.commission;
-            }
-            if(type.service == 'orangemoney'){
-              if(type.designation == 'depot'){
-                this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-              }
-              else{
-                this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-              }
-              this.bilanexploitationaveccommission[3].commission+=type.commission;
-            }
-            if(type.service == 'tigocash'){
-              if(type.designation == 'depot'){
-                this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-              }
-              else{
-                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-              }
-              this.bilanexploitationaveccommission[4].commission+=type.commission;
-            }
-          });
-        });
+          )
       }
       else {
-        this.comptabiliteServiceWeb.exploitation(idpdv, "jour", this.selectionjour).then(adminmultipdvServiceWeb => {
-          console.log("-----9---------");
-          console.log(adminmultipdvServiceWeb.response);
-          this.exploitation = adminmultipdvServiceWeb.response.map(function (type) {
-            return {
-              dateajout: type.dateajout.date.split(".")[0],
-              designation: type.designation,
-              stocki: type.stocki,
-              vente: type.vente,
-              stockf: type.stockf,
-              mnt: type.mnt,
+        this._comptabiliteService.exploitation({idpdv: idpdv, type: "jour", infotype: this.selectionjour})
+          .subscribe(
+            data => {
+              this.exploitation = data.response.map(function (type) {
+                return {
+                  dateajout: type.dateajout.date.split(".")[0],
+                  designation: type.designation,
+                  stocki: type.stocki,
+                  vente: type.vente,
+                  stockf: type.stockf,
+                  mnt: type.mnt,
+                }
+              });
+            },
+            error => alert(error),
+            () => {
+              this.loading = false ;
             }
-          });
-          this.loading = false ;
-        });
+          )
       }
     }
   }
@@ -670,86 +553,48 @@ export class ComptabiliteComponent implements OnInit {
     console.log(iscommission);
     this.loading = true ;
     if(iscommission == 0){
-      this.comptabiliteServiceWeb.exploitationaveccommission(idpdv, "annee", this.selectionannee).then(adminmultipdvServiceWeb => {
-        console.log("-----10---------");
-        console.log(adminmultipdvServiceWeb.response);
-        this.exploitationaveccommission = adminmultipdvServiceWeb.response.map(function (type) {
-          return {
-            dateajout: type.dateajout.date.split(".")[0],
-            designation: type.designation,
-            mnt: Number(type.mnt),
-            frais: Number(type.frais),
-            commission: Number(type.commission),
-            service: type.service.toLowerCase(),
+
+      this._comptabiliteService.exploitationaveccommission({idpdv: idpdv, type: "annee", infotype: this.selectionannee})
+        .subscribe(
+          data => {
+            this.exploitationaveccommission = data.response.map(function (type) {
+              return {
+                dateajout: type.dateajout.date.split(".")[0],
+                designation: type.designation,
+                mnt: Number(type.mnt),
+                frais: Number(type.frais),
+                commission: Number(type.commission),
+                service: type.service.toLowerCase(),
+              }
+            });
+          },
+          error => alert(error),
+          () => {
+            this.calculbilanexploitationaveccommission();
+            this.loading = false ;
           }
-        });
-        this.loading = false ;
-      }).then( type => {
-        this.bilanexploitationaveccommission = [
-          {service:'tnt', cashin:0, cashout:0, commission:0},
-          {service:'postcash', cashin:0, cashout:0, commission:0},
-          {service:'wizall', cashin:0, cashout:0, commission:0},
-          {service:'orangemoney', cashin:0, cashout:0, commission:0},
-          {service:'tigocash', cashin:0, cashout:0, commission:0},
-          {service:'Total', cashin:0, cashout:0, commission:0},
-        ];
-        this.exploitationbilan = this.exploitationaveccommission;
-        this.exploitationbilan.forEach(type => {
-          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-          this.bilanexploitationaveccommission[5].commission+=type.commission;
-          if(type.service == 'tnt'){
-            this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[0].commission+=type.commission;
-          }
-          if(type.service == 'postcash'){
-            this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[1].commission+=type.commission;
-          }
-          if(type.service == 'wizall'){
-            this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[2].commission+=type.commission;
-          }
-          if(type.service == 'orangemoney'){
-            if(type.designation == 'depot'){
-              this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-            }
-            else{
-              this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-            }
-            this.bilanexploitationaveccommission[3].commission+=type.commission;
-          }
-          if(type.service == 'tigocash'){
-            if(type.designation == 'depot'){
-              this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-            }
-            else{
-              this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-              this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-            }
-            this.bilanexploitationaveccommission[4].commission+=type.commission;
-          }
-        });
-      });
+        )
     }
     else {
-      this.comptabiliteServiceWeb.exploitation(idpdv, "annee", this.selectionannee).then(adminmultipdvServiceWeb => {
-        console.log("-----11---------");
-        console.log(adminmultipdvServiceWeb.response);
-        this.exploitation = adminmultipdvServiceWeb.response.map(function (type) {
-          return {
-            dateajout: type.dateajout.date.split(".")[0],
-            designation: type.designation,
-            stocki: type.stocki,
-            vente: type.vente,
-            stockf: type.stockf,
-            mnt: type.mnt,
+      this._comptabiliteService.exploitation({idpdv: idpdv, type: "annee", infotype: this.selectionannee})
+        .subscribe(
+          data => {
+            this.exploitation = data.response.map(function (type) {
+              return {
+                dateajout: type.dateajout.date.split(".")[0],
+                designation: type.designation,
+                stocki: type.stocki,
+                vente: type.vente,
+                stockf: type.stockf,
+                mnt: type.mnt,
+              }
+            });
+          },
+          error => alert(error),
+          () => {
+            this.loading = false ;
           }
-        });
-        this.loading = false ;
-      });
+        )
     }
   }
 
@@ -759,88 +604,112 @@ export class ComptabiliteComponent implements OnInit {
       this.loading = true ;
       this.selectionintervalle = this.selectionintervalledateinit+" "+this.selectionintervalleddatefinal;
       if(iscommission == 0){
-        this.comptabiliteServiceWeb.exploitationaveccommission(idpdv, "intervalle", this.selectionintervalle).then(adminmultipdvServiceWeb => {
-          console.log("-----12---------");
-          console.log(adminmultipdvServiceWeb.response);
-          this.exploitationaveccommission = adminmultipdvServiceWeb.response.map(function (type) {
-            return {
-              dateajout: type.dateajout.date.split(".")[0],
-              designation: type.designation,
-              mnt: Number(type.mnt),
-              frais: Number(type.frais),
-              commission: Number(type.commission),
-              service: type.service.toLowerCase(),
+        this._comptabiliteService.exploitationaveccommission({idpdv: idpdv, type: "intervalle", infotype: this.selectionintervalle})
+          .subscribe(
+            data => {
+              this.exploitationaveccommission = data.response.map(function (type) {
+                return {
+                  dateajout: type.dateajout.date.split(".")[0],
+                  designation: type.designation,
+                  mnt: Number(type.mnt),
+                  frais: Number(type.frais),
+                  commission: Number(type.commission),
+                  service: type.service.toLowerCase(),
+                }
+              });
+            },
+            error => alert(error),
+            () => {
+              this.calculbilanexploitationaveccommission();
+              this.loading = false ;
             }
-          });
-          this.loading = false ;
-        }).then( type => {
-          this.bilanexploitationaveccommission = [
-            {service:'tnt', cashin:0, cashout:0, commission:0},
-            {service:'postcash', cashin:0, cashout:0, commission:0},
-            {service:'wizall', cashin:0, cashout:0, commission:0},
-            {service:'orangemoney', cashin:0, cashout:0, commission:0},
-            {service:'tigocash', cashin:0, cashout:0, commission:0},
-            {service:'Total', cashin:0, cashout:0, commission:0},
-          ];
-          this.exploitationbilan = this.exploitationaveccommission;
-          this.exploitationbilan.forEach(type => {
-            this.bilanexploitationaveccommission[5].cashin+=type.mnt;
-            this.bilanexploitationaveccommission[5].commission+=type.commission;
-            if(type.service == 'tnt'){
-              this.bilanexploitationaveccommission[0].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[0].commission+=type.commission;
-            }
-            if(type.service == 'postcash'){
-              this.bilanexploitationaveccommission[1].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[1].commission+=type.commission;
-            }
-            if(type.service == 'wizall'){
-              this.bilanexploitationaveccommission[2].cashin+=type.mnt;
-              this.bilanexploitationaveccommission[2].commission+=type.commission;
-            }
-            if(type.service == 'orangemoney'){
-              if(type.designation == 'depot'){
-                this.bilanexploitationaveccommission[3].cashin+=type.mnt;
-              }
-              else{
-                this.bilanexploitationaveccommission[3].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-              }
-              this.bilanexploitationaveccommission[3].commission+=type.commission;
-            }
-            if(type.service == 'tigocash'){
-              if(type.designation == 'depot'){
-                this.bilanexploitationaveccommission[4].cashin+=type.mnt;
-              }
-              else{
-                this.bilanexploitationaveccommission[4].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashout+=type.mnt;
-                this.bilanexploitationaveccommission[5].cashin-=type.mnt;
-              }
-              this.bilanexploitationaveccommission[4].commission+=type.commission;
-            }
-          });
-        });
+          )
       }
       else {
-        this.comptabiliteServiceWeb.exploitation(idpdv, "intervalle", this.selectionintervalle).then(adminmultipdvServiceWeb => {
-          console.log("-----13---------");
-          console.log(adminmultipdvServiceWeb.response);
-          this.exploitation = adminmultipdvServiceWeb.response.map(function (type) {
-            return {
-              dateajout: type.dateajout.date.split(".")[0],
-              designation: type.designation,
-              stocki: type.stocki,
-              vente: type.vente,
-              stockf: type.stockf,
-              mnt: type.mnt,
+        this._comptabiliteService.exploitation({idpdv: idpdv, type: "intervalle", infotype: this.selectionintervalle})
+          .subscribe(
+            data => {
+              this.exploitation = data.response.map(function (type) {
+                return {
+                  dateajout: type.dateajout.date.split(".")[0],
+                  designation: type.designation,
+                  stocki: type.stocki,
+                  vente: type.vente,
+                  stockf: type.stockf,
+                  mnt: type.mnt,
+                }
+              });
+            },
+            error => alert(error),
+            () => {
+              this.loading = false ;
             }
-          });
-          this.loading = false ;
-        });
+          )
       }
     }
+  }
+
+  calculbilanexploitationaveccommission(){
+    this.bilanexploitationaveccommission = [
+      {service:'tnt', cashin:0, cashout:0, commission:0},
+      {service:'postcash', cashin:0, cashout:0, commission:0},
+      {service:'wizall', cashin:0, cashout:0, commission:0},
+      {service:'emoney', cashin:0, cashout:0, commission:0},
+      {service:'orangemoney', cashin:0, cashout:0, commission:0},
+      {service:'tigocash', cashin:0, cashout:0, commission:0},
+      {service:'Total', cashin:0, cashout:0, commission:0},
+    ];
+    this.exploitationbilan = this.exploitationaveccommission;
+    this.exploitationbilan.forEach(type => {
+      this.bilanexploitationaveccommission[6].cashin+=type.mnt;
+      this.bilanexploitationaveccommission[6].commission+=type.commission;
+      if(type.service == 'tnt'){
+        this.bilanexploitationaveccommission[0].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[0].commission+=type.commission;
+      }
+      if(type.service == 'postcash'){
+        this.bilanexploitationaveccommission[1].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[1].commission+=type.commission;
+      }
+      if(type.service == 'wizall'){
+        this.bilanexploitationaveccommission[2].cashin+=type.mnt;
+        this.bilanexploitationaveccommission[2].commission+=type.commission;
+      }
+      if(type.service == 'emoney'){
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[3].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[3].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
+        this.bilanexploitationaveccommission[3].commission+=type.commission;
+      }
+      if(type.service == 'orangemoney'){
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[4].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[4].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
+        this.bilanexploitationaveccommission[4].commission+=type.commission;
+      }
+      if(type.service == 'tigocash'){
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[5].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[5].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
+        this.bilanexploitationaveccommission[5].commission+=type.commission;
+      }
+    });
+
   }
 
 
@@ -872,10 +741,17 @@ export class ComptabiliteComponent implements OnInit {
     this.estselectionne = i ;
     this.estselectionms = i;
     this.loading = true ;
-    this.comptabiliteServiceWeb.listeservice(this.pdvCaisses[i].idpdv).then(adminmultipdvServiceWeb => {
-      this.supservice = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.listeservice({idpdv: this.pdvCaisses[i].idpdv})
+      .subscribe(
+        data => {
+          this.supservice = data.response;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
 
   supprimerservice(i){
@@ -883,10 +759,17 @@ export class ComptabiliteComponent implements OnInit {
     this.service = null;
     this.designationsService = [];
     this.loading = true ;
-    this.comptabiliteServiceWeb.listeservice(this.pdvCaisses[i].id).then(adminmultipdvServiceWeb => {
-      this.supservice = adminmultipdvServiceWeb.response;
-      this.loading = false ;
-    });
+
+    this._comptabiliteService.listeservice({idpdv: this.pdvCaisses[i].idpdv})
+      .subscribe(
+        data => {
+          this.supservice = data.response;
+        },
+        error => alert(error),
+        () => {
+          this.loading = false ;
+        }
+      )
   }
 
   effacerunedesignation(i){
@@ -895,35 +778,77 @@ export class ComptabiliteComponent implements OnInit {
 
   validerajouterservice(pdv:any){
     this.loading = true ;
-    this.comptabiliteServiceWeb.ajoutservice(this.service, pdv.idpdv, ""+JSON.stringify(this.designationsService)).then(adminmultipdvServiceWeb => {
-      this.comptabiliteServiceWeb.listeservice(pdv.idpdv).then(adminmultipdvServiceWeb => {
-        this.supservice = adminmultipdvServiceWeb.response;
-        this.loading = false ;
-      });
-    });
-
+    this._comptabiliteService.ajoutservice({nom: this.service, idpdv: pdv.idpdv, designations: ""+JSON.stringify(this.designationsService)})
+      .subscribe(
+        data => {
+          console.log(data.response);
+        },
+        error => alert(error),
+        () => {
+          this._comptabiliteService.listeservice({idpdv: pdv.idpdv})
+            .subscribe(
+              data => {
+                this.supservice = data.response;
+              },
+              error => alert(error),
+              () => {
+                this.loading = false ;
+              }
+            )
+          this.loading = false ;
+        }
+      )
 
   }
 
   validermodifierservice(pdv:any){
     this.loading = true ;
-    this.comptabiliteServiceWeb.modifierservice(this.service, ""+JSON.stringify(this.designationsService), this.serviceamodifier().idservice).then(adminmultipdvServiceWeb => {
-      this.comptabiliteServiceWeb.listeservice(pdv.idpdv).then(adminmultipdvServiceWeb => {
-        this.supservice = adminmultipdvServiceWeb.response;
-        this.estselectionmods = -1 ;
-        this.loading = false ;
-      });
-    });
+    this._comptabiliteService.modifierservice({service: this.service, designations: ""+JSON.stringify(this.designationsService), idservice: this.serviceamodifier().idservice})
+      .subscribe(
+        data => {
+          console.log(data.response);
+        },
+        error => alert(error),
+        () => {
+          this._comptabiliteService.listeservice({idpdv: pdv.idpdv})
+            .subscribe(
+              data => {
+                this.supservice = data.response;
+                this.estselectionmods = -1 ;
+              },
+              error => alert(error),
+              () => {
+                this.loading = false ;
+              }
+            )
+          this.loading = false ;
+        }
+      )
   }
 
   deleteservice(supservice:Supservice, pdv) {
     this.loading = true ;
-    this.comptabiliteServiceWeb.supprimerservice(supservice.idservice).then(adminmultipdvServiceWeb => {
-      this.comptabiliteServiceWeb.listeservice(pdv.idpdv).then(adminmultipdvServiceWeb => {
-        this.supservice = adminmultipdvServiceWeb.response;
-        this.loading = false ;
-      });
-    });
+
+    this._comptabiliteService.supprimerservice({idsupprimer: supservice.idservice})
+      .subscribe(
+        data => {
+          console.log(data.response);
+        },
+        error => alert(error),
+        () => {
+          this._comptabiliteService.listeservice({idpdv: pdv.idpdv})
+            .subscribe(
+              data => {
+                this.supservice = data.response;
+              },
+              error => alert(error),
+              () => {
+                this.loading = false ;
+              }
+            )
+          this.loading = false ;
+        }
+      )
   }
 
   serviceamodifier(){

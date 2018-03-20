@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthentificationServiceWeb, AuthResponse } from '../webServiceClients/Authentification/authentification.service';
 import * as sha1 from 'js-sha1';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-firstlog',
@@ -17,11 +17,8 @@ export class FirstlogComponent implements OnInit {
   confirmpdw : string ;
 
   loading = false ;
-  authentiService : AuthentificationServiceWeb ;
 
-  constructor(private router: Router) { 
-        this.authentiService = new AuthentificationServiceWeb();
-  }
+  constructor(private router: Router, private _authService:AuthService){ }
 
   ngOnInit() {
   }
@@ -29,11 +26,10 @@ export class FirstlogComponent implements OnInit {
   modifierPwd(){
   	if (this.confirmpdw==this.newpwd){
     	this.loading = true ;
-      this.authentiService.modifierpwdinit( sha1(this.pwdactuel), sha1(this.newpwd) ).then( resp=>
-        {
-          this.loading = false ;
+      this._authService.modifpwdinit({pwdactuel:sha1(this.pwdactuel), newpwd:sha1(this.newpwd)}).subscribe(
+        resp => {
           if(resp!='badpwd'){
-            this.router.navigate(['']); 
+            this.router.navigate(['']);
           }else{
             this.notMatching=false ;
             this.wrongCurrrentPwd=true ;
@@ -41,7 +37,13 @@ export class FirstlogComponent implements OnInit {
             this.newpwd = undefined ;
             this.confirmpdw = undefined ;
           }
-        }); 
+        },
+        error => console.log(error),
+        () => {
+          this.loading = false ;
+          console.log("Here Dashboard Test")
+        }
+      );
     }else{
       this.wrongCurrrentPwd=false ;
       this.notMatching=true ;

@@ -20,7 +20,7 @@ class Article {
   selector: 'app-panier',
   templateUrl: './panier.component.html',
   styleUrls: ['./panier.component.css'],
-  
+
 })
 export class panierComponent implements OnInit {
   articles:any=[];
@@ -31,12 +31,9 @@ export class panierComponent implements OnInit {
   
    quinzeMinutes = 900000; 
 //  quinzeMinutes = 15000;	
+
   registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'TIGOCASH', 'TNT BY EXCAF'] ;
-  //registredAPIs : string [] = ['POSTECASH', 'TNT BY EXCAF'] ;
-  authorisedToUseCRM = false ;
   load="loader";
-  private tntCaller: TntServiceWeb ;
-  actif = -1 ;
   dataImpression:any;
   clients=[{'prenom':'magor','nom':'sy','telephone':779013878,'adress':'Mbour'}];
   prenom:string="";
@@ -45,6 +42,7 @@ export class panierComponent implements OnInit {
   telephone:number=undefined;
   estclient:boolean=false;
   constructor(private router: Router,private omService : OrangeMoneyService,private postcashwebservice: PostCashWebService,public ecomCaller: EcomServiceWeb) {}
+
 
 /******************************************************************************************************/
 
@@ -102,7 +100,7 @@ export class panierComponent implements OnInit {
      this.modalcommande.hide();
   }
   chercherclient(tel:number){
-   
+
       for(let i=0;i<this.clients.length;i++){
          if(this.clients[i].telephone==tel){
             this.prenom=this.clients[i].prenom;
@@ -167,4 +165,4 @@ export class panierComponent implements OnInit {
     sessionStorage.removeItem('panier');
   }
 }
-  
+

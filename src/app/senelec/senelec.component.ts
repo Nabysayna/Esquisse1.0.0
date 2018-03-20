@@ -1,12 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
-import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
-import {WizallWebService} from "../webServiceClients/Wizall/wizall.service";
-import {FacturierServiceWeb} from "../webServiceClients/facturier/Facturier.service";
+import {FacturierService} from "../services/facturier.service";
 
 
 class Article {
@@ -21,8 +16,7 @@ class Article {
 @Component({
   selector: 'app-senelec',
   templateUrl: './senelec.component.html',
-  styleUrls: ['./senelec.component.css'],
-  providers: [PostCashWebService, WizallWebService]
+  styleUrls: ['./senelec.component.css']
 })
 export class SenelecComponent implements OnInit {
    etat1:boolean=false;
@@ -40,27 +34,16 @@ export class SenelecComponent implements OnInit {
    police:string;
    num_facture:string;
    dataImpression:any;
-  constructor(private router: Router,private omService : OrangeMoneyService,private tcService : TigoCashService,private postcashwebservice: PostCashWebService,private wizallwebservice: WizallWebService,private FacturierServiceWeb:FacturierServiceWeb) {
-
-  }
+  constructor(private router: Router, private _facturierService : FacturierService) { }
 
 /******************************************************************************************************/
 
 
   ngOnInit() {
 
-   
+
   }
-  validatedetailfacturesenelec(){
-     // this.detailfacturepostcash = null;
-     // console.log('Police et Numero Facture : '+this.police+'-'+this.num_facture);
-      //this.loading = true ;
-      this.postcashwebservice.detailfacturesenelec(this.police,this.num_facture.toString()).then(postcashwebserviceList => {
-        //this.loading = false ;
-       /* this.detailfacturepostcash = postcashwebserviceList;
-        console.log(postcashwebserviceList);*/
-      });
-    }
+
 @ViewChild('modalsenelec') public modalsenelec:ModalDirective;
 /******************************************************************************************************/
    showmodalsenelec(){
@@ -70,7 +53,7 @@ export class SenelecComponent implements OnInit {
      this.modalsenelec.hide();
    }
    detailfactsenelec(){
-     this.FacturierServiceWeb.detailfacturesenelec(this.police,this.num_facture).then(response =>{
+     this._facturierService.detailfacturesenelec(this.police,this.num_facture).then(response =>{
         if(response.errorCode==0){
           this.etat2=true;
           this.detailfacturesenelec.police=response.police;
@@ -78,7 +61,7 @@ export class SenelecComponent implements OnInit {
           this.detailfacturesenelec.nomclient=response.nom_client;
           this.detailfacturesenelec.montant=response.montant;
           this.detailfacturesenelec.dateEcheance=response.dateEcheance;
-           
+
           this.modalsenelec.show();
         }else{
           console.log(response);
@@ -86,11 +69,11 @@ export class SenelecComponent implements OnInit {
           this.detailfacturesenelec.errorCode=response.errorCode;
           this.modalsenelec.show();
         }
-        
+
      });
    }
    validerpaimentsenelec(){
-    this.FacturierServiceWeb.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
+    this._facturierService.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
       if(response.errorCode==0){
          this.modalsenelec.hide();
          this.dataImpression = {
@@ -115,11 +98,11 @@ export class SenelecComponent implements OnInit {
         console.log(response);
         this.modalsenelec.hide();
       }
-      
+
    });
 
    }
-  
+
 
 }
 

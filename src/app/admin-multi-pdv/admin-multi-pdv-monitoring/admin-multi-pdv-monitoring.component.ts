@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 
-import { AdminmultipdvDeposit }    from '../../models/adminmultipdv-monitoring';
-import { AdminmultipdvDepositInitialConsommeParService }    from '../../models/adminmultipdv-monitoring-dicps';
-import { AdminmultipdvServiceWeb } from '../../webServiceClients/Adminmultipdv/adminmultipdv.service';
+import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
 
@@ -13,8 +11,8 @@ import { AdminmultipdvServiceWeb } from '../../webServiceClients/Adminmultipdv/a
 })
 export class AdminmultipdvMonitoringComponent implements OnInit {
 
-  public monitoringAdminmultipdvDeposit: AdminmultipdvDeposit;
-  public monitoringAdminmultipdvDepositParService: AdminmultipdvDepositInitialConsommeParService;
+  public monitoringAdminmultipdvDeposit: any;
+  public monitoringAdminmultipdvDepositParService: any;
   loading = false ;
 
   // For progreesbar
@@ -38,32 +36,40 @@ export class AdminmultipdvMonitoringComponent implements OnInit {
 
 
 
-  constructor(private adminmultipdvServiceWeb: AdminmultipdvServiceWeb) { }
+  constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {
     this.loading = true ;
-    this.adminmultipdvServiceWeb.bilandeposit('azrrtt').then(adminmultipdvServiceWebList => {
-      console.log(adminmultipdvServiceWebList.response);
-      this.monitoringAdminmultipdvDeposit = adminmultipdvServiceWebList.response;
-      this.max = this.monitoringAdminmultipdvDeposit.depositInitial;
-      this.dynamic = this.monitoringAdminmultipdvDeposit.depositConsomme;
-      if ( this.dynamic <= (this.max*0.3) ){ this.type = 'danger'; }
-      else if ( (this.dynamic > (this.max*0.3)) && (this.dynamic <= (this.max*0.5)) ){ this.type = 'warning'; }
-      else if ( (this.dynamic > (this.max*0.5)) && (this.dynamic <= (this.max*1)) ){ this.type = 'info'; }
-      else if ( this.dynamic > (this.max*1) ){ this.type = 'success'; }
-      this.loading = false ;
-    });
 
-    this.adminmultipdvServiceWeb.depositinitialconsommeparservice('azrrtt').then(adminmultipdvServiceWebList => {
-      this.monitoringAdminmultipdvDepositParService = adminmultipdvServiceWebList.response;
-      this.barChartLabels = this.monitoringAdminmultipdvDepositParService.services;
-      this.barChartData = [
-      {data: this.monitoringAdminmultipdvDepositParService.depositinitial, label: 'Déposit initial'},
-      {data: this.monitoringAdminmultipdvDepositParService.depositconsomme, label: 'Etat Déposit'}
-      ]
-    });
-
-
+    this._adminmultipdvService.bilandeposit({type:"azrrtt"}).subscribe(
+      adminmultipdvServiceWebList => {
+        console.log(adminmultipdvServiceWebList.response);
+        this.monitoringAdminmultipdvDeposit = adminmultipdvServiceWebList.response;
+        this.max = this.monitoringAdminmultipdvDeposit.depositInitial;
+        this.dynamic = this.monitoringAdminmultipdvDeposit.depositConsomme;
+        if ( this.dynamic <= (this.max*0.3) ){ this.type = 'danger'; }
+        else if ( (this.dynamic > (this.max*0.3)) && (this.dynamic <= (this.max*0.5)) ){ this.type = 'warning'; }
+        else if ( (this.dynamic > (this.max*0.5)) && (this.dynamic <= (this.max*1)) ){ this.type = 'info'; }
+        else if ( this.dynamic > (this.max*1) ){ this.type = 'success'; }
+      },
+      error => alert(error),
+      () => {
+        this._adminmultipdvService.depositinitialconsommeparservice({type:"azrrtt"}).subscribe(
+          adminmultipdvServiceWebList => {
+            this.monitoringAdminmultipdvDepositParService = adminmultipdvServiceWebList.response;
+            this.barChartLabels = this.monitoringAdminmultipdvDepositParService.services;
+            this.barChartData = [
+              {data: this.monitoringAdminmultipdvDepositParService.depositinitial, label: 'Déposit initial'},
+              {data: this.monitoringAdminmultipdvDepositParService.depositconsomme, label: 'Etat Déposit'}
+            ]
+          },
+          error => alert(error),
+          () => {
+            this.loading = false ;
+          }
+        )
+      }
+    )
 
   }
 

@@ -1,9 +1,8 @@
 import { ViewChild, ElementRef, Component, OnInit } from '@angular/core';
 
-import { AdminmultipdvMajcaution }    from '../../models/adminmultipdv-majcaution';
-import { AdminmultipdvServiceWeb } from '../../webServiceClients/Adminmultipdv/adminmultipdv.service';
 import {ModalDirective} from "ng2-bootstrap";
 import {BaseChartDirective} from "ng2-charts";
+import {AdminmultipdvService} from "../../services/adminmultipdv.service";
 
 
 @Component({
@@ -19,13 +18,10 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     public rowsOnPage = 10;
     public sortBy = "adminpdv";
     public sortOrder = "desc";
-    public categoriepoint='---' ;
-    public adminmultipdvMajcaution: AdminmultipdvMajcaution[];
+    public adminmultipdvMajcaution: any[];
     loading = false ;
 
-    inputCaution: number;
-    majcaution:AdminmultipdvMajcaution;
-  constructor(private adminmultipdvServiceWeb: AdminmultipdvServiceWeb) { }
+  constructor(private _adminmultipdvService: AdminmultipdvService) { }
 
   ngOnInit() {
     this.loading = true ;
@@ -33,31 +29,35 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
   }
 
   listmajcautions(){
-    this.adminmultipdvServiceWeb.listmajcautions('azrrtt').then(adminmultipdvServiceWebList => {
-      if(adminmultipdvServiceWebList.errorCode == 1){
-        this.adminmultipdvMajcaution = adminmultipdvServiceWebList.response.map(function (elt) {
-          return {
-            adminpdv:elt.adminpdv,
-            adresse: JSON.parse(elt.adresse).address,
-            cautioninitiale:elt.cautioninitiale,
-            date_last_deposit:elt.date_last_deposit.date.split('.')[0],
-            idcaution:elt.idcaution,
-            iduser:elt.idUser,
-            montantconsomme:elt.montantconsomme,
-            telephone:elt.telephone,
-            categorie: (elt.cautioninitiale==0)?'pas':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
-          }
-        })
-        console.log(this.adminmultipdvMajcaution);
+
+    this._adminmultipdvService.listmajcautions({type:"azrrtt"}).subscribe(
+      adminmultipdvServiceWebList => {
+        if(adminmultipdvServiceWebList.errorCode == 1){
+          this.adminmultipdvMajcaution = adminmultipdvServiceWebList.response.map(function (elt) {
+            return {
+              adminpdv:elt.adminpdv,
+              adresse: JSON.parse(elt.adresse).address,
+              cautioninitiale:Number(elt.cautioninitiale),
+              date_last_deposit:elt.date_last_deposit.date.split('.')[0],
+              idcaution:elt.idcaution,
+              iduser:elt.idUser,
+              montantconsomme:Number(elt.montantconsomme),
+              telephone:elt.telephone,
+              categorie: (elt.cautioninitiale==0 && elt.montantconsomme==0 )?'pas':(elt.cautioninitiale==0 && elt.montantconsomme!=0 )?'pasdepot_aveccaution':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
+            }
+          })
+          console.log(this.adminmultipdvMajcaution);
+        }
+        else{
+          this.adminmultipdvMajcaution = [];
+        }
+      },
+      error => alert(error),
+      () => {
+        this.getCategorie('Tous');
+        this.loading = false ;
       }
-      else{
-        this.loading = false;
-        this.adminmultipdvMajcaution = [];
-      }
-    }).then( () => {
-      this.getCategorie('Tous');
-      this.loading = false;
-    });
+    )
   }
 
   private closeModal(): void {
@@ -70,22 +70,6 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
 
   public sortByWordLength = (a: any) => {
     return a.adminpdv.length;
-  }
-
-  public maj(item):void {
-    this.inputCaution = null;
-    this.majcaution = item;
-  }
-
-  public validermaj(item):void {
-    this.loading = true ;
-    this.adminmultipdvServiceWeb.modifymajcaution('azrrtt', this.majcaution.idcaution, this.inputCaution, this.categoriepoint).then(adminmultipdvServiceWebList => {
-      console.log(adminmultipdvServiceWebList);
-      this.closeModal();
-      this.loading = false ;
-      this.listmajcautions();
-      this.categoriepoint = '---' ;
-    });
   }
 
   // -------------- Categorisations
@@ -102,6 +86,11 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     if(categorie=='Pas de depot'){
       this.categorie = 'Pas de depot';
       this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pas');
+    }
+    if(categorie=='Pas de depot Avec caution'){
+      this.categorie = 'Pas de depot Avec caution';
+      console.log(this.listepoints);
+      this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pasdepot_aveccaution');
     }
     if(categorie=='Faible'){
       this.categorie = 'Faible';
@@ -194,6 +183,8 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
   public lineChartLegend:boolean = true;
 
   public suivrepoint(pdv:any){
+    console.log('------111-------')
+    console.log(pdv)
     this.pointasuivre = null;
     this.point = null;
 
@@ -204,46 +195,48 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     this.suiviserviceSelectionintervalledatefinal = datenow;
     this.pointasuivre = pdv;
 
-    this.adminmultipdvServiceWeb.activiteservices("suivre points init "+pdv.iduser+" "+this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal).then(adminpdvServiceWebList =>{
-      this.point = adminpdvServiceWebList.response;
+    this._adminmultipdvService.activiteservices({type:'suivre points init '+pdv.iduser+' '+this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal}).subscribe(
+      adminpdvServiceWebList => {
+        this.point = adminpdvServiceWebList.response;
+        this.superviseurpoint = {
+          date_ajout: this.point.superviseur.dateCreation.date.split('.')[0],
+          date_last_connection: this.point.superviseur.last_connection.date.split('.')[0],
+          info_point: JSON.parse(this.point.superviseur.infosup),
+          fullname: this.point.superviseur.nom_gerant,
+          tel: this.point.superviseur.telephone,
+          email: this.point.superviseur.login,
+          adressecomplet: JSON.parse(this.point.superviseur.adresse),
+        };
 
-      this.superviseurpoint = {
-        date_ajout: this.point.superviseur.dateCreation.date.split('.')[0],
-        date_last_connection: this.point.superviseur.last_connection.date.split('.')[0],
-        info_point: JSON.parse(this.point.superviseur.infosup),
-        fullname: this.point.superviseur.nom_gerant,
-        tel: this.point.superviseur.telephone,
-        email: this.point.superviseur.login,
-        adressecomplet: JSON.parse(this.point.superviseur.adresse),
-      };
+        this.point.depots.forEach(type => { this.montanttotaldepot += Number(JSON.parse(type.infosup).montant); });
+        this.suivionepointSelectionDepot();
 
-      this.point.depots.forEach(type => { this.montanttotaldepot += Number(JSON.parse(type.infosup).montant); });
-      this.suivionepointSelectionDepot();
-
-      this.touslesgerants = this.point.gerants.map(function(type){
-        return {
-          id_gerant: type.id_gerant,
-          nom_gerant: type.nom_gerant,
-          telephone: type.telephone,
-          last_connection: type.last_connection.date.split('.')[0],
-        }
-      });
-      this.touslescommissions = this.point.commissions.map(function(type){
-        return {
-          id_gerant: type.idUser,
-          dateop: type.dateoperation.date.split('.')[0],
-          dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
-          montant: type.montant,
-          commission: type.commissionpdv,
-          service: type.nomservice.toLowerCase(),
-          produit: type.libelleoperation.toLowerCase(),
-        }
-      });
-
-      this.loading = false;
-    }).then(() => {
-      this.suivionepointSelectionGerant(-1);
-    });
+        this.touslesgerants = this.point.gerants.map(function(type){
+          return {
+            id_gerant: type.id_gerant,
+            nom_gerant: type.nom_gerant,
+            telephone: type.telephone,
+            last_connection: type.last_connection.date.split('.')[0],
+          }
+        });
+        this.touslescommissions = this.point.commissions.map(function(type){
+          return {
+            id_gerant: type.idUser,
+            dateop: type.dateoperation.date.split('.')[0],
+            dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+            montant: type.montant,
+            commission: type.commissionpdv,
+            service: type.nomservice.toLowerCase(),
+            produit: type.libelleoperation.toLowerCase(),
+          }
+        });
+      },
+      error => alert(error),
+      () => {
+        this.suivionepointSelectionGerant(-1);
+        this.loading = false;
+      }
+    )
   }
 
   public suivionepointSelectionGerant(indice: number){
@@ -263,24 +256,28 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     this.touslescommissions = [];
     console.log("--------------------------------------------------")
     console.log(this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal)
-    this.adminmultipdvServiceWeb.activiteservices("suivre points intervalle "+this.pointasuivre.iduser+" "+this.suiviserviceSelectionintervalledateinit+" "+this.suiviserviceSelectionintervalledatefinal).then(adminpdvServiceWebList => {
-      this.id_gerant_selectionne = -1;
-      this.touslescommissions = adminpdvServiceWebList.response.map(function(type){
-        return {
-          id_gerant: type.idUser,
-          dateop: type.dateoperation.date.split('.')[0],
-          dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
-          montant: type.montant,
-          commission: type.commissionpdv,
-          service: type.nomservice,
-          produit: type.libelleoperation,
-        }
-      });
-      console.log(this.touslescommissions);
-      console.log("--------------------------------------------------");
-    }).then( () => {
-      this.suivionepointSelectionGerant(-1);
-    });
+    this._adminmultipdvService.activiteservices({type:'suivre points intervalle '+this.pointasuivre.iduser+' '+this.suiviserviceSelectionintervalledateinit+' '+this.suiviserviceSelectionintervalledatefinal}).subscribe(
+      adminpdvServiceWebList => {
+        this.id_gerant_selectionne = -1;
+        this.touslescommissions = adminpdvServiceWebList.response.map(function(type){
+          return {
+            id_gerant: type.idUser,
+            dateop: type.dateoperation.date.split('.')[0],
+            dateop_jour: type.dateoperation.date.split('.')[0].split(' ')[0],
+            montant: type.montant,
+            commission: type.commissionpdv,
+            service: type.nomservice,
+            produit: type.libelleoperation,
+          }
+        });
+
+      },
+      error => alert(error),
+      () => {
+        this.suivionepointSelectionGerant(-1);
+        this.loading = false;
+      }
+    )
   }
 
   public suivionepointgraphe(){
@@ -307,26 +304,30 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
     let nbrebyjourpost:number[] = [];
     let nbrebyjourtigocash:number[] = [];
     let nbrebyjourwizall:number[] = [];
+    let nbrebyjouremoney:number[] = [];
     tabjours.forEach(type => {
       let nbrebyjouromSom:number = 0;
       let nbrebyjourtntSom:number = 0;
       let nbrebyjourpostSom:number = 0;
       let nbrebyjourtigocashSom:number = 0;
       let nbrebyjourwizallSom:number = 0;
+      let nbrebyjouremoneySom:number = 0;
 
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='orangemoney'){ nbrebyjouromSom += Number(opt.montant); } }); nbrebyjourom.push( nbrebyjouromSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='tnt'){ nbrebyjourtntSom += Number(opt.montant); } }); nbrebyjourtnt.push( nbrebyjourtntSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='postcash'){ nbrebyjourpostSom += Number(opt.montant); } }); nbrebyjourpost.push( nbrebyjourpostSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='tigocash'){ nbrebyjourtigocashSom += Number(opt.montant); } }); nbrebyjourtigocash.push( nbrebyjourtigocashSom );
       this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='wizall'){ nbrebyjourwizallSom += Number(opt.montant); } }); nbrebyjourwizall.push( nbrebyjourwizallSom );
+      this.touslescommissionsbyGerant.forEach( opt => { if(opt.dateop_jour==type && opt.service=='emoney'){ nbrebyjouremoneySom += Number(opt.montant); } }); nbrebyjouremoney.push( nbrebyjouremoneySom );
     });
 
 
     this.lineChartData = [
       {data: nbrebyjourom, label: 'OM'},
+      {data: nbrebyjourwizall, label: 'TIGOCASH'},
+      {data: nbrebyjouremoney, label: 'E-MONEY'},
       {data: nbrebyjourtnt, label: 'TNT'},
       {data: nbrebyjourpost, label: 'POSTECASH'},
-      {data: nbrebyjourwizall, label: 'TIGOCASH'},
       {data: nbrebyjourwizall, label: 'WIZALL'},
     ];
   }
@@ -336,60 +337,69 @@ export class AdminmultipdvSuivipointComponent implements OnInit {
       {service:'tnt', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'postcash', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'wizall', cashin:0, cashout:0, commission:0, liste:[]},
+      {service:'emoney', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'orangemoney', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'tigocash', cashin:0, cashout:0, commission:0, liste:[]},
       {service:'Total', cashin:0, cashout:0, commission:0, liste:[]},
     ];
     this.touslescommissionsbyGerant.forEach(type => {
-      this.bilantouslescommissionsbyGerant[5].liste.push(type);
-      this.bilantouslescommissionsbyGerant[5].commission+=type.commission;
+      this.bilantouslescommissionsbyGerant[6].liste.push(type);
+      this.bilantouslescommissionsbyGerant[6].commission+=type.commission;
       if(type.service == 'tnt'){
         this.bilantouslescommissionsbyGerant[0].liste.push(type);
         this.bilantouslescommissionsbyGerant[0].cashin+=Number(type.montant);
         this.bilantouslescommissionsbyGerant[0].commission+=type.commission;
-        this.bilantouslescommissionsbyGerant[5].cashin+=Number(type.montant);
+        this.bilantouslescommissionsbyGerant[6].cashin+=Number(type.montant);
       }
       if(type.service == 'postcash'){
         this.bilantouslescommissionsbyGerant[1].liste.push(type);
         this.bilantouslescommissionsbyGerant[1].cashin+=Number(type.montant);
         this.bilantouslescommissionsbyGerant[1].commission+=type.commission;
-        this.bilantouslescommissionsbyGerant[5].cashin+=Number(type.montant);
+        this.bilantouslescommissionsbyGerant[6].cashin+=Number(type.montant);
       }
       if(type.service == 'wizall'){
         this.bilantouslescommissionsbyGerant[2].liste.push(type);
         this.bilantouslescommissionsbyGerant[2].cashin+=Number(type.montant);
         this.bilantouslescommissionsbyGerant[2].commission+=type.commission;
-        this.bilantouslescommissionsbyGerant[5].cashin+=Number(type.montant);
+        this.bilantouslescommissionsbyGerant[6].cashin+=Number(type.montant);
       }
       if(type.service == 'tigocash'){
-        this.bilantouslescommissionsbyGerant[4].liste.push(type);
-        this.bilantouslescommissionsbyGerant[4].cashin+=Number(type.montant);
-        this.bilantouslescommissionsbyGerant[4].commission+=type.commission;
+        this.bilantouslescommissionsbyGerant[5].liste.push(type);
         this.bilantouslescommissionsbyGerant[5].cashin+=Number(type.montant);
+        this.bilantouslescommissionsbyGerant[5].commission+=type.commission;
+        this.bilantouslescommissionsbyGerant[6].cashin+=Number(type.montant);
       }
-      if(type.service == 'orangemoney'){
+      if(type.service == 'emoney'){
         if(type.produit == 'depot'){
           this.bilantouslescommissionsbyGerant[3].cashin+=Number(type.montant);
-          this.bilantouslescommissionsbyGerant[5].cashin+=Number(type.montant);
+          this.bilantouslescommissionsbyGerant[6].cashin+=Number(type.montant);
         }
         else{
           this.bilantouslescommissionsbyGerant[3].cashout+=Number(type.montant);
-          this.bilantouslescommissionsbyGerant[5].cashout+=Number(type.montant);
+          this.bilantouslescommissionsbyGerant[6].cashout+=Number(type.montant);
         }
         this.bilantouslescommissionsbyGerant[3].liste.push(type);
         this.bilantouslescommissionsbyGerant[3].commission+=type.commission;
       }
+      if(type.service == 'orangemoney'){
+        if(type.produit == 'depot'){
+          this.bilantouslescommissionsbyGerant[4].cashin+=Number(type.montant);
+          this.bilantouslescommissionsbyGerant[6].cashin+=Number(type.montant);
+        }
+        else{
+          this.bilantouslescommissionsbyGerant[4].cashout+=Number(type.montant);
+          this.bilantouslescommissionsbyGerant[6].cashout+=Number(type.montant);
+        }
+        this.bilantouslescommissionsbyGerant[4].liste.push(type);
+        this.bilantouslescommissionsbyGerant[4].commission+=type.commission;
+      }
     });
-    console.log(this.bilantouslescommissionsbyGerant);
+    console.log("-------------------------------------------------------------");
   }
+
 
   public hideChildModalSuivipoint():void {
     this.childModalSuivipoint.hide();
-  }
-
-  public showModalVoirDetailtouslescommissionsbyGerant(indice:number) {
-    this.touslescommissionsbyGerantbyservice = this.bilantouslescommissionsbyGerant[indice].liste;
-    console.log(this.touslescommissionsbyGerantbyservice);
   }
 
   tocurrency(number){

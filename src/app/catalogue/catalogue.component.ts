@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { TypeaheadMatch } from 'ng2-bootstrap/typeahead';
 
-import { EcomServiceWeb } from '../webServiceClients/ecom/ecom.service';
-import * as _ from "lodash";
+import {EcomService} from "../services/ecom.service";
 
 
 class OrderedArticle{
@@ -17,8 +16,9 @@ class OrderedArticle{
   public designation:string;
   public description:string;
   public nomImg:string;
+
 } 
-//773977988 10000
+
 class Article {
   public id:number;
   public nomImg:string;
@@ -34,7 +34,7 @@ class Article {
   styleUrls: ['./catalogue.component.css']
 })
 export class CatalogueComponent implements OnInit {
-  
+
 
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   loading = false ;
@@ -42,7 +42,7 @@ export class CatalogueComponent implements OnInit {
   p : any ;
   listarticles : any[] ;
   panier:Article[];
-  
+
   public asyncSelected: string;
   public typeaheadLoading: boolean;
   public typeaheadNoResults: boolean;
@@ -60,10 +60,7 @@ export class CatalogueComponent implements OnInit {
   desk:boolean;
 
   
-
-
-  constructor(public ecomCaller: EcomServiceWeb) { 
-   
+  constructor(private _ecomService:EcomService) {
     this.dataSource = Observable
       .create((observer: any) => {
         observer.next(this.asyncSelected);
@@ -78,29 +75,28 @@ export class CatalogueComponent implements OnInit {
       console.log(response);
       this.listarticles = response.reverse();
       //console.log(this.listarticles) ;
-      this.loading = false ;
-    }); 
-  }
+    });
+  
 
   public getStatesAsObservable(token: string): Observable<any> {
     let query = new RegExp(token, 'ig');
- 
+
     return Observable.of(
       this.listarticles.filter((state: any) => {
         return query.test(state.designation);
       })
     );
   }
- 
+
   public changeTypeaheadLoading(e: boolean): void {
     this.filterQuery = this.asyncSelected;
     this.typeaheadLoading = e;
   }
- 
+
   public changeTypeaheadNoResults(e: boolean): void {
     this.typeaheadNoResults = e;
   }
- 
+
   public typeaheadOnSelect(e: TypeaheadMatch): void {
     this.filterQuery = e.value;
   }
@@ -136,7 +132,7 @@ export class CatalogueComponent implements OnInit {
   }
   augmenterqte(i){
     if(this.orderedarticles[i].qte) {
-      this.orderedarticles[i].qte++;  
+      this.orderedarticles[i].qte++;
       this.recalculmontant();
     }
     else {
@@ -157,16 +153,16 @@ export class CatalogueComponent implements OnInit {
       this.montant += this.orderedarticles[i].montant;
     }
   }
-  
+
 
    @ViewChild('childModalCommand') public childModalCommand:ModalDirective;
    @ViewChild('addChildModal') public addChildModal:ModalDirective;
 
-  public showChildModalCommand():void { 
+  public showChildModalCommand():void {
     this.childModalCommand.show();
   }
 
-  public hideChildModalCommand():void {  this.childModalCommand.hide(); 
+  public hideChildModalCommand():void {  this.childModalCommand.hide();
     this.nom = null;
     this.prenom = null;
     this.telephone = null;
@@ -174,19 +170,19 @@ export class CatalogueComponent implements OnInit {
   }
 
   public commander():void {
-    let params = { 
-      token: this.token , 
-      orderedarticles:""+JSON.stringify(this.orderedarticles), 
-      montant: this.montant, 
-      prenomclient: this.prenom, 
-      nomclient: this.nom, 
-      telephoneclient: this.telephone, 
-      emailclient: this.email 
+    let params = {
+      token: this.token ,
+      orderedarticles:""+JSON.stringify(this.orderedarticles),
+      montant: this.montant,
+      prenomclient: this.prenom,
+      nomclient: this.nom,
+      telephoneclient: this.telephone,
+      emailclient: this.email
     };
     this.loading = true ;
-    this.ecomCaller.commander(params).then( response => {
+    this._ecomService.commander(params).then( response => {
       this.loading = false ;
-    });  
+    });
     this.hideChildModalCommand();
     this.orderedarticles = [];
   }
@@ -207,7 +203,7 @@ export class CatalogueComponent implements OnInit {
     return designation ;
   }
 
- 
+
   public showAddChildModal(article):void {
     this.currentArticle=article ;
     let data=undefined;
@@ -227,11 +223,11 @@ export class CatalogueComponent implements OnInit {
     }
      this.addChildModal.show();
   }
- 
+
   public hideAddChildModal():void {
     this.addChildModal.hide();
   }
-  
+
   public ajouter_au_panier(article){
   console.log(article);
     let articl=new Article();

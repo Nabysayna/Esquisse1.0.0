@@ -10,8 +10,6 @@ import { HttpModule }    from '@angular/http';
 
 import { LoadersCssModule } from 'angular2-loaders-css';
 
-/* import { NgUploaderModule } from 'ngx-uploader'; */
-
 import {DataTableModule} from "angular2-datatable";
 import { AlertModule, TabsModule, CollapseModule, ProgressbarModule, PopoverModule, ModalModule, TypeaheadModule, PaginationModule, AccordionModule} from 'ng2-bootstrap';
 
@@ -25,13 +23,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
 /*      Services   */
 /*-----------------*/
 
-import { SoapService } from './soap.service';
-import { EnvoicashService, PaiecashService } from './joni-joni-component/joniservices';
 import { AchatJulaService} from './postcash/postservices';
 import { ReglSenelecService} from './postcash/postservices';
 import { AchatCodeWoyofalService} from './postcash/postservices';
-import { RechargeVitfeService} from './joni-joni-component/joniservices';
-import { RechargeCarteService} from './joni-joni-component/joniservices';
 import { RechargeEspeceService} from './postcash/postservices';
 import { AchatCreditTelService} from './postcash/postservices';
 import { RetraitEspeceService} from './postcash/postservices';
@@ -44,32 +38,7 @@ import { NAbonnementService} from './tnt/tntservices';
 import { LAbonnementService} from './tnt/tntservices';
 import { EFinancierService} from './tnt/tntservices';
 
-
-
-import { PostCashService }    from './services/postCash.service';
-import { AdminpdvDashboardService }    from './services/adminpdv-dashboard.service';
-import { AdminpdvMonitoringService }    from './services/adminpdv-monitoring.service';
-import { AuthentificationServiceWeb } from './webServiceClients/Authentification/authentification.service';
-import { PostCashServiceWeb } from './webServiceClients/PostcashClient/Postcash.service';
-import { FacturierServiceWeb } from './webServiceClients/facturier/Facturier.service';
-//import { PostCashWebService } from './webServiceClients/Postcash/postcash.service';
-import { ExpressoCashWebService } from './webServiceClients/ExpressoCash/expressocash.service';
-import { TigoCashService } from './webServiceClients/Tigocash/tigocash.service';
-
-import { JoniJoniWebService } from './webServiceClients/JoniJoni/jonijoni.service';
-import { TntServiceWeb } from './webServiceClients/Tnt/Tnt.service';
-import { AdminpdvServiceWeb } from './webServiceClients/Adminpdv/adminpdv.service';
-import { AdminmultipdvServiceWeb } from './webServiceClients/Adminmultipdv/adminmultipdv.service';
-import { EcomServiceWeb } from './webServiceClients/ecom/ecom.service';
-import { AuthenticationService }    from './services/authentification.service';
-import { CommercialServiceWeb }    from './webServiceClients/Commercial/commercial.service';
-import { ComptabiliteServiceWeb } from './webServiceClients/Comptabilite/comptabilite.service';
-import {GestionreportingServiceWeb} from './webServiceClients/Gestionreporting/gestionreporting.service';
-import {DemandepretServiceWeb} from './webServiceClients/Demandepret/demandepret.service';
-import {CrmServiceWeb} from './webServiceClients/Crm/crm.service';
-
-import {OrangeMoneyService} from './webServiceClients/Orangemoney/orangemoney.service';
-import {UtilServiceWeb} from './webServiceClients/utils/Util.service';
+import {TigocashService} from './services/tigocash.service';
 
 
 
@@ -94,11 +63,6 @@ import { AuthComponentComponent } from './auth-component/auth-component.componen
 import { AccueilComponent } from './accueil/accueil.component';
 import { AccueiladminpdvComponent } from './accueiladminpdv/accueiladminpdv.component';
 import { AccueilAdminMultiPdvComponent } from './accueil-admin-multi-pdv/accueil-admin-multi-pdv.component';
-import { AccueilcoursierComponent } from './accueilcoursier/accueilcoursier.component';
-import { AccueiladmincoursierComponent } from './accueiladmincoursier/accueiladmincoursier.component';
-import { AdmincommercialComponent } from './admincommercial/admincommercial.component';
-import { AccueiladmincommercialComponent } from './accueiladmincommercial/accueiladmincommercial.component';
-import { AccueilcommercialComponent } from './accueilcommercial/accueilcommercial.component';
 
 import { NavbarTopComponent } from './navbars/navbar-top/navbar-top.component';
 
@@ -115,18 +79,13 @@ import { AdminmultipdvStatusPdvComponent } from './admin-multi-pdv/admin-multi-p
 import { AdminmultipdvStatusReclamationComponent } from './admin-multi-pdv/admin-multi-pdv-status-reclamation/admin-multi-pdv-status-reclamation.component';
 import { AdminmultipdvUpdateCautionComponent } from './admin-multi-pdv/admin-multi-pdv-update-caution/admin-multi-pdv-update-caution.component';
 
-import { AdmincoursierComponent } from './admincoursier/admincoursier.component';
 import { RapidoComponent} from './rapido/rapido.component';
 import { OrangeMoneyComponentComponent } from './orange-money-component/orange-money-component.component';
 import { TigoCashComponentComponent } from './tigo-cash-component/tigo-cash-component.component';
 
-// { WesternUnionComponentComponent } from './western-union-component/western-union-component.component';
-
-import { MoneyGramComponentComponent } from './money-gram-component/money-gram-component.component';
 import { CrmComponent } from './crm/crm.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
-import { JoniJoniComponentComponent } from './joni-joni-component/joni-joni-component.component';
 import { DemandepretComponent } from './demandepret/demandepret.component';
 import { GestionreportingComponent } from './gestionreporting/gestionreporting.component';
 import { SoldecompteComponent } from './soldecompte/soldecompte.component';
@@ -135,14 +94,8 @@ import { PostcashComponent } from './postcash/postcash.component';
 import { LoaderComponent } from './loader/loader.component';
 import { ExpressoComponent } from './expresso/expresso.component';
 import { TntComponent, DataToArray } from './tnt/tnt.component';
-import { SoapserverComponent } from './soapserver/soapserver.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { EspacePersoComponent } from './espace-perso/espace-perso.component';
-import { CommercialComponent } from './commercial/commercial.component';
-import { AgentComponent } from './agent/agent.component';
-import { RecouvreurComponent } from './recouvreur/recouvreur.component';
-import { CoursierComponent } from './coursier/coursier.component';
-import { ManagerComponent } from './manager/manager.component';
 import { ComptabiliteComponent } from './comptabilite/comptabilite.component';
 import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { panierComponent } from './panier/panier.component';
@@ -202,25 +155,37 @@ import { FirstlogComponent } from './firstlog/firstlog.component';
 import {FiltreexploitationaveccommissionPipe} from "./pipes/filtreexploitationaveccommission.pipe";
 import {GuideUserCaisseComponent} from "./guideusercaisse/guideusercaisse.component";
 import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersuperviseur.component";
-import { WizallComponent } from './wizall/wizall.component';
-import {UtilService} from "./services/util.service";
-import {RegistrationService} from "./services/registration.service";
-import {CrmDoorServiceWeb} from "./webServiceClients/CrmDoor/crmdoor.service";
+import {WizallComponent } from './wizall/wizall.component';
+import {UtilsService} from "./services/utils.service";
+import {CrmService} from "./services/crm.service";
+import {AdminpdvService} from "./services/adminpdv.service";
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
-import { CommissionnementComponent } from './commissionnement/commissionnement.component';
-import { ChallengeresultsComponent } from './challengeresults/challengeresults.component';
+import {CommissionnementComponent } from './commissionnement/commissionnement.component';
+import {ChallengeresultsComponent } from './challengeresults/challengeresults.component';
 import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi-pdv-creditation-cc/admin-multi-pdv-creditation-cc.component";
 
 import { ZoningComponent } from './zoning/zoning.component';
 import { AnnoncesComponent } from './annonces/annonces.component';
 import { AnnoncesuperviseurComponent } from './annoncesuperviseur/annoncesuperviseur.component';
-import {WizallWebService} from "./webServiceClients/Wizall/wizall.service";
 
-//import {AdminpdvDashboardTestComponent} from "./adminpdv/adminpdv-dashboardTest/adminpdv-dashboard-test.component";
 import { SdeComponent } from './sde/sde.component';
 import { WoyofalComponent } from './woyofal/woyofal.component';
 
 import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
+import {AuthService} from "./services/auth.service";
+import {ComptabiliteService} from "./services/comptabilite.service";
+import {AdminmultipdvService} from "./services/adminmultipdv.service";
+import {TntService} from "./services/tnt.service";
+import {PostCashService} from "./services/postcash.service";
+import {AuthenticationService} from "./services/authentification.service";
+import {GestionreportingService} from "./services/gestionreporting.service";
+import {DemandepretService} from "./services/demandepret.service";
+import {EcomService} from "./services/ecom.service";
+import {WizallService} from "./services/wizall.service";
+import {FacturierService} from "./services/facturier.service";
+import {OrangemoneyService} from "./services/orangemoney.service";
+import {ExpressocashService} from "./services/expressocash.service";
+import {MapsService} from "./services/maps.service";
 
 
 
@@ -237,11 +202,9 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     AccueilComponent,
     OrangeMoneyComponentComponent,
     TigoCashComponentComponent,
-    MoneyGramComponentComponent,
     CrmComponent,
     DashboardComponent,
     ECommerceComponent,
-    JoniJoniComponentComponent,
     AccueiladminpdvComponent,
     AccueilAdminMultiPdvComponent,
     DemandepretComponent,
@@ -256,7 +219,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
 
     ImpressionComponent,
     ImpressionadminpdvComponent,
-
 
     PostcashComponent,
 
@@ -274,21 +236,14 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     AdminpdvStatusReclamationComponent,
     AdminpdvparametrecompteComponent,
 
-
     GeomapComponentComponent,
     LoaderComponent,
     NavbarTopComponent,
     ExpressoComponent,
     TntComponent,
-    SoapserverComponent,
     CatalogueComponent,
     EspacePersoComponent,
     LoaderComponent,
-    CommercialComponent,
-    AgentComponent,
-    RecouvreurComponent,
-    CoursierComponent,
-    ManagerComponent,
     ComptabiliteComponent,
     DatafilterPipe,
     DecodatafilterPipe,
@@ -296,7 +251,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     FiltrerecouvrementPipe,
     FiltrerecommandearecupPipe,
     FiltrerecommandealivrerPipe,
-    AdmincoursierComponent,
     PipeCommandePipe,
     FiltreoperateursPipe,
     FiltrervoperateursPipe,
@@ -314,11 +268,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     AdminpdvStatusReclamationPipe,
     AdminpdvgestionnaireservicePipe,
 
-    AccueilcoursierComponent,
-    AccueiladmincoursierComponent,
-    AdmincommercialComponent,
-    AccueiladmincommercialComponent,
-    AccueilcommercialComponent,
     FiltrefichierPipe,
     FiltrervPipe,
     FiltrechargesPipe,
@@ -354,7 +303,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     BrowserModule,
     FormsModule,
     HttpModule,
-/*    NgUploaderModule, */
     Routing,
     DataTableModule,
     ChartsModule,
@@ -374,7 +322,6 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
     NgxPaginationModule
   ],
   providers: [
-      SoapService,
       EFinancierService,
       LAbonnementService,
       NAbonnementService,
@@ -382,47 +329,36 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
       AgentTopUpService,
       CashOutService,
       CashInService,
-      OrangeMoneyService,
-      UtilServiceWeb,
       SoldeService,
       RetraitEspeceService,
       AchatCreditTelService,
-      RechargeCarteService,
       RechargeEspeceService,
-      RechargeVitfeService,
       AchatCodeWoyofalService,
       ReglSenelecService,
       AchatJulaService,
-      EnvoicashService,
-      PaiecashService,
       AuthGuard,
       AuthGuardcais,
       AuthGuardsup,
-      PostCashService,
-      AdminpdvDashboardService,
-      AdminpdvMonitoringService,
-      AuthentificationServiceWeb,
-      ExpressoCashWebService,
-      TigoCashService,
-      JoniJoniWebService,
-      TntServiceWeb,
-      EcomServiceWeb,
-      AdminpdvServiceWeb,
-      AuthenticationService,
-      CommercialServiceWeb,
-      AdminmultipdvServiceWeb,
-      ComptabiliteServiceWeb,
-      GestionreportingServiceWeb,
-      AuthenticationService,
-      CrmServiceWeb,
-      DemandepretServiceWeb,
-      CrmDoorServiceWeb,
-      UtilService,
-      RegistrationService,
-      WizallWebService,
-      FacturierServiceWeb,
+
+    AuthenticationService,
+    AdminpdvService,
+    AdminmultipdvService,
+    UtilsService,
+    TntService,
+    PostCashService,
+    AuthService,
+    ComptabiliteService,
+    CrmService,
+    GestionreportingService,
+    EcomService,
+    DemandepretService,
+    WizallService,
+    FacturierService,
+    OrangemoneyService,
+    TigocashService,
+    ExpressocashService,
+    MapsService,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
- 

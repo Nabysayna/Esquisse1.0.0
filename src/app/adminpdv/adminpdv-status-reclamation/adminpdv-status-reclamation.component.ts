@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AdminpdvServiceWeb } from '../../webServiceClients/Adminpdv/adminpdv.service';
+import {AdminpdvService} from "../../services/adminpdv.service";
 
 @Component({
   selector: 'app-adminpdv-status-reclamation',
@@ -17,15 +17,21 @@ export class AdminpdvStatusReclamationComponent implements OnInit {
   public adminmultipdvReclamation: any;
   loading = false ;
 
-  constructor(private adminpdvServiceWeb: AdminpdvServiceWeb) { }
+  constructor(private _adminpdvService:AdminpdvService) { }
 
   ngOnInit() {
     this.loading = true ;
-    this.adminpdvServiceWeb.historiquereclamation('azrrtt').then(adminmultipdvServiceWebList => {
-      console.log(adminmultipdvServiceWebList.response);
-      this.adminmultipdvReclamation = adminmultipdvServiceWebList.response;
-      this.loading = false ;
-    });
+    this._adminpdvService.historiquereclamation({type:"azrrtt"}).subscribe(
+      data => {
+        console.log("Localhost Test");
+        console.log(data.response);
+        this.adminmultipdvReclamation = data.response ;
+      },
+      error => alert(error),
+      () => {
+        this.loading = false ;
+      }
+    )
   }
 
   public toInt(num: string) {
