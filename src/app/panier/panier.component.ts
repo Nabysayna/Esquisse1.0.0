@@ -1,11 +1,8 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { ModalDirective } from 'ng2-bootstrap/modal';
-import { OrangeMoneyService } from '../webServiceClients/Orangemoney/orangemoney.service' ;
-import { PostCashWebService } from '../webServiceClients/PostCash/postcash.service';
-import { TntServiceWeb, TntResponse } from '../webServiceClients/Tnt/Tnt.service';
-import { TigoCashService } from '../webServiceClients/Tigocash/tigocash.service';
-import { EcomServiceWeb } from '../webServiceClients/ecom/ecom.service';
+import { EcomService} from '../services/ecom.service';
+
 
 class Article {
   public id:number;
@@ -41,7 +38,7 @@ export class panierComponent implements OnInit {
   adress:string="";
   telephone:number=undefined;
   estclient:boolean=false;
-  constructor(private router: Router,private omService : OrangeMoneyService,private postcashwebservice: PostCashWebService,public ecomCaller: EcomServiceWeb) {}
+  constructor(private router: Router,private ecomCaller:EcomService) {}
 
 
 /******************************************************************************************************/

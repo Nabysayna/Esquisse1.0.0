@@ -23,8 +23,26 @@ export class WizallComponent implements OnInit {
    nomclient : string ;
    statuspayment : boolean ;
    etat=false;
-
-  constructor(private _wizallService : WizallService) {}
+   validerfirst:boolean;
+   validersecond:boolean;
+   bon:string;
+   prenomE:string;
+   nomE:string;
+   telE:string;
+   prenomB:string;
+   nomB:string;
+   telB:string;
+   montant:string;
+   client:any;
+   num_card:string;
+   nationalite:string;
+   secondcode:string;
+   donneeretraitbon:any;
+   type_piece:string;
+   typebon=[{type:'pharmacie',prix:[10,2000,5000]},{type:'essence',prix:[1000,2000,5000]},{type:'x',prix:[10,2000,5000]},{type:'y',prix:[20000,50000,5000]}];
+  constructor(private _wizallService : WizallService) {
+  // this.donneeretraitbon={"status": "valid", "customer": {"phone_number": "778150416", "first_name": "Yapele Sosthene", "last_name": "KA Assane"}, "business_type": 0, "value": "100.000000", "model_voucher": {"is_cash": true, "product": "Bon Cash", "sub_product": "NA", "step_value": "1.000", "is_generic": true, "id": 3333, "is_secured": true, "minimum_value": "2000.000", "name": "Bon Cash ", "maximum_value": "3000.000", "network": "Transfert XOF", "currency_code": 952}, "recipient": {"phone_number": "775054827", "is_valid": false, "first_name": "KA Assane", "last_name": "KA Assane", "needed_kyc_infos": ["identityIsNeeded"]}, "id": 135137};
+  }
 
   ngOnInit() {}
 
@@ -32,13 +50,62 @@ export class WizallComponent implements OnInit {
    this.mnt=undefined;
    this.numclient=undefined;
   }
-
-
-
+  recuperePrix(){
+    
+  }
+  
+ // this.client=JSON.parse(this.donneeretraitbon.customer);
+  //console.log(this.donneeretraitbon);
+  
   @ViewChild('modaldepot') public modaldepot:ModalDirective;
   @ViewChild('modalretrait') public modalretrait:ModalDirective;
   @ViewChild('modalsde') public modalsde:ModalDirective;
   @ViewChild('modalsenelec') public modalsenelec:ModalDirective;
+  @ViewChild('modalretraitbon') public modalretraitbon:ModalDirective;
+  @ViewChild('modalretraitbonachat') public modalretraitbonachat:ModalDirective;
+  @ViewChild('modalenvoiboncash') public modalenvoiboncash:ModalDirective;
+  
+  
+  public showmodalenvoiboncash(){
+      this.modalenvoiboncash.show();
+  }
+  public hidemodalenvoiboncash(){
+      this.modalenvoiboncash.hide();
+  }
+  
+   public showmodalretraitbonachat(){
+      console.log(this.donneeretraitbon);
+      
+      this.modalretraitbonachat.show();
+   }
+   public hidemodalretraitbonachat(){
+      this.modalretraitbonachat.hide();
+   }
+   
+   public validerenvoibon(){
+       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall envoi de bon','operateur':6,'operation':6}));
+       this.hidemodalenvoiboncash();
+   }
+  
+   public showmodalretraitbon(){
+      this._wizallService.verifier_code_retraitbon().then(response => {
+          this.donneeretraitbon=response;
+          console.log(this.donneeretraitbon);
+		  this.prenomE=this.donneeretraitbon.customer.first_name;
+		  this.nomE=this.donneeretraitbon.customer.last_name;
+		  this.telE=this.donneeretraitbon.customer.phone_number;
+		  this.prenomB=this.donneeretraitbon.recipient.first_name;
+		  this.nomB=this.donneeretraitbon.recipient.last_name;
+		  this.telB=this.donneeretraitbon.recipient.phone_number;
+		  this.montant=this.donneeretraitbon.value;
+		  this.validerfirst=true;
+		  this.validersecond=false;
+		  this.modalretraitbon.show();
+      }); 
+   }
+   public hidemodalretraitbon(){
+      this.modalretraitbon.hide();
+   }
 
     public depotmodal(){
        this.modaldepot.show();
@@ -52,7 +119,29 @@ export class WizallComponent implements OnInit {
     }
 
     fermermodalretrait(){
+      this.validerfirst=false;
+      this.validersecond=false;
       this.modalretrait.hide();
+      
+    }
+    /*
+        $data = array("secure_id"=>"925938","used_value"=>"1789","agent_msisdn"=>"707511503",
+            "agent_pin"=>"1001","debtor_pos_id"=>"P1","debtor_employee_id"=>"V1","recipient_nationality"=>"SN",
+            "recipient_identity_type"=>"idcard","recipient_identity_number"=>"1392199000128"
+      );
+       
+    
+    */
+    valider_code(){
+       this.validerfirst=false;
+       this.validersecond=true; 
+    }
+    validationretraitbon(){
+       console.log(this.nationalite);
+       console.log(this.num_card);
+       console.log(this.secondcode);
+       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall retrait de bon','operateur':6,'operation':5,'secure_id':925938,'used_value':1789,'agent_msisdn':707511503,'agent_pin':1001,'debtor_pos_id':'P1','debtor_employee_id':'V1','recipient_nationality':this.nationalite,'recipient_identity_type':'idcard','recipient_identity_number':this.num_card}));
+       this.hidemodalretraitbon();
     }
 
     public sdemodal(){

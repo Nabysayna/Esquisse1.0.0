@@ -70,13 +70,13 @@ export class CatalogueComponent implements OnInit {
 
   ngOnInit() {
     
-    this.loading = true ;
+   /* this.loading = true ;
     this.ecomCaller.listeArticles(this.token, 'catalogue').then( response => {
       console.log(response);
       this.listarticles = response.reverse();
       //console.log(this.listarticles) ;
-    });
-  
+    });*/
+  }
 
   public getStatesAsObservable(token: string): Observable<any> {
     let query = new RegExp(token, 'ig');

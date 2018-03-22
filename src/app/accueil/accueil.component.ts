@@ -199,6 +199,17 @@ export class AccueilComponent implements OnInit {
                   this.payerSenelecWizall(sesion);
                   break;
               }
+              case 5:{
+                 // this.payerSenelecWizall(sesion);
+                  break;
+              }
+              case 6:{
+                 // this.payerSenelecWizall(sesion);
+                 this._wizallService.validerenvoibon().then(response =>{
+                      console.log(response);
+                 });
+                  break;
+              }
               default : break;
              }
        }

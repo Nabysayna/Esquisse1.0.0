@@ -98,5 +98,11 @@ label{
 #paiefact select{
 	margin-left: 1rem ;
 }
+.menu:hover,a:hover{
+    color:white;
+    background-color:orange;
+    text-decoration:none;
+    cursor:pointer;
+}
 
 

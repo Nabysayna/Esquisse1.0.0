@@ -9,7 +9,6 @@
 }
 
 .badge{
-<<<<<<< HEAD
 	padding-top: 8px ;
 	padding-bottom: 3px !important;
 }
@@ -45,7 +44,6 @@
 tr,tr td,tr th{
     border-top:2px solid #F39200;
     border-bottom:2px solid #F39200;
-=======
   padding-top: 8px ;
   padding-bottom: 3px !important;
 }
@@ -81,5 +79,4 @@ tr,tr td,tr th{
 tr,tr td,tr th{
   border-top:2px solid #F39200;
   border-bottom:2px solid #F39200;
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
 }

@@ -86,6 +86,27 @@ export class WizallService {
       });
     });
   }
+  
+  public verifier_code_retraitbon():Promise<any>{
+    return new Promise((resolve,reject) =>{
+       let data={"status": "valid", "customer": {"phone_number": "778150416", "first_name": "Yapele Sosthene", "last_name": "KA Assane"}, "business_type": 0, "value": "100.000000", "model_voucher": {"is_cash": true, "product": "Bon Cash", "sub_product": "NA", "step_value": "1.000", "is_generic": true, "id": 3333, "is_secured": true, "minimum_value": "2000.000", "name": "Bon Cash ", "maximum_value": "3000.000", "network": "Transfert XOF", "currency_code": 952}, "recipient": {"phone_number": "775054827", "is_valid": false, "first_name": "KA Assane", "last_name": "KA Assane", "needed_kyc_infos": ["identityIsNeeded"]}, "id": 135137};
+       resolve(data);
+       /*this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
+          resolve(data);
+       });*/
+    });
+   }
+  public validerenvoibon():Promise<any>{
+    return new Promise((resolve,reject) =>{
+      // let data=JSON.stringify({errorCod:0,message:'operation reussie'});
+       let data={errorCod:0,message:'operation reussie'};
+       resolve(data);
+       /*this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
+          resolve(data);
+       });*/
+    });
+    
+  }
 
 
 }

@@ -46,10 +46,7 @@ export class newCommande{
 export class EspacePersoComponent implements OnInit {
 
   articles:Article[][];
-<<<<<<< HEAD
-  //ecomCaller: EcomServiceWeb;
-=======
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
+
   loading = false ;
   coderecept : string ;
   listeVentes : any[] ;
@@ -102,17 +99,13 @@ export class EspacePersoComponent implements OnInit {
   categorie:string;
   infosup:string;
   prix:string;
-<<<<<<< HEAD
-  
-=======
+  filtre : string = "" ;
 
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
   modif:string="-";
   modifart:string;
   orderedArticles : string ;
   nbrePieds : number ;
   smart : string ;
-<<<<<<< HEAD
  /* descriptions=[{'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
                 {'description':'Vêtements','value':['origine','matière','taille','sexe','tendances','couleur']},
                 {'description':'Chaussures','value':['tendances', 'sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
@@ -125,8 +118,6 @@ export class EspacePersoComponent implements OnInit {
                 {'description':'Autre',value:['autre description']}
                 ];*/
   descriptions=[{'description':'Cosmetiques'},{'description':'Vêtements'},{'description':'Chaussures'},{'description':'Sacs'},{'description':'Electronique'},{'description':'Accessoires'},{'description':'Outils de bureau'},{'description':'Electroménager'},{'description':'Articles de maison'},{'description':'Autre'}];
-=======
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
   descriptionsvalues=[];
 
   zone: NgZone;
@@ -137,27 +128,11 @@ export class EspacePersoComponent implements OnInit {
   designation = "designation" ;
   asc = "asc" ;
 
-<<<<<<< HEAD
-  constructor(private http: Http,private ecomCaller:EcomServiceWeb) {
-      //this.ecomCaller = new EcomServiceWeb();
-  }
-=======
+  
   constructor(private http: Http,private ecomCaller:EcomService) { }
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
 
   ngOnInit() {
 
-<<<<<<< HEAD
-      this.loading = true ;
-      this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
-        {
-          this.articles = _.chunk(response, 3) ;
-          this.listarticles = response;
-          this.loading = false ;
-        });  
-
-      this.ecomCaller.listerCategorie(this.token).then( response =>
-=======
     this.loading = true ;
     this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
     {
@@ -176,7 +151,6 @@ export class EspacePersoComponent implements OnInit {
       var ligne=this.articles[j];
       for (var i=0; i<ligne.length; i++)
         if (ligne[i].nomImg==article.nomImg)
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
         {
           this.loading = true ;
           let artcle = JSON.stringify(ligne[i]) ;
@@ -190,19 +164,16 @@ export class EspacePersoComponent implements OnInit {
         }
     }
   }
-<<<<<<< HEAD
- deleteArticle(article:Article) {      
-=======
 
-  filtre : string = "" ;
-
+/* deleteArticle(article:Article) {      
+ // filtre : string = "" ;
+}*/
   filtrerCatalogue() : Article[][] {
 
     let catalogueApresFiltre : Article[][] = [] ;
     if (this.filtre=="" || this.filtre==null)
       return this.articles ;
     else
->>>>>>> 4d3d69834918c89e597c9f626f6ead3dc17c98c1
       for(var j=0; j<this.articles.length; j++){
         var ligne=this.articles[j] ;
         let ligneCopy : Article[] = [] ;
@@ -399,23 +370,7 @@ export class EspacePersoComponent implements OnInit {
     this.modifart="";
 
   }
-  reinitialiser(){
-     this.provenance=undefined;
-     this.marque=undefined;
-     this.couleur=undefined;
-     this.origine=undefined;
-     this.tendence=undefined;
-     this.sexe=undefined;
-     this.mode=undefined;
-     this.utilisation=undefined;
-     this.fonctions=undefined;
-     this.modele=undefined;
-     this.capacite=undefined;
-     this.matiere=undefined;
-     this.tendances=undefined;
   
-  }
-
   reinitialiser(){
     this.provenance=undefined;
     this.marque=undefined;
@@ -737,5 +692,3 @@ export class EspacePersoComponent implements OnInit {
     }
     
   }
-
-}
