@@ -39,12 +39,24 @@ export class WizallComponent implements OnInit {
    secondcode:string;
    donneeretraitbon:any;
    type_piece:string;
+   Typebon:string;
+   montantbon:string;
+   codebon:string;
+   messageretraitcash:boolean=false;
+   errorverifcode:boolean=false;
+   messageretraitcasherror:boolean=false;
+   messagesecondcode:boolean=false;
    typebon=[{type:'pharmacie',prix:[10,2000,5000]},{type:'essence',prix:[1000,2000,5000]},{type:'x',prix:[10,2000,5000]},{type:'y',prix:[20000,50000,5000]}];
   constructor(private _wizallService : WizallService) {
   // this.donneeretraitbon={"status": "valid", "customer": {"phone_number": "778150416", "first_name": "Yapele Sosthene", "last_name": "KA Assane"}, "business_type": 0, "value": "100.000000", "model_voucher": {"is_cash": true, "product": "Bon Cash", "sub_product": "NA", "step_value": "1.000", "is_generic": true, "id": 3333, "is_secured": true, "minimum_value": "2000.000", "name": "Bon Cash ", "maximum_value": "3000.000", "network": "Transfert XOF", "currency_code": 952}, "recipient": {"phone_number": "775054827", "is_valid": false, "first_name": "KA Assane", "last_name": "KA Assane", "needed_kyc_infos": ["identityIsNeeded"]}, "id": 135137};
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+     this.messageretraitcash=false;
+     this.messageretraitcasherror=false;
+     this.errorverifcode=false;
+     this.messagesecondcode=false;
+  }
 
   reinitialise(){
    this.mnt=undefined;
@@ -64,8 +76,14 @@ export class WizallComponent implements OnInit {
   @ViewChild('modalretraitbon') public modalretraitbon:ModalDirective;
   @ViewChild('modalretraitbonachat') public modalretraitbonachat:ModalDirective;
   @ViewChild('modalenvoiboncash') public modalenvoiboncash:ModalDirective;
+  @ViewChild('modalenvoibonachat') public modalenvoibonachat:ModalDirective;
   
-  
+   public showmodalenvoibonachat(){
+      this.modalenvoibonachat.show();
+   }
+   public hidemodalenvoibonachat(){
+      this.modalenvoibonachat.hide();
+   }
   public showmodalenvoiboncash(){
       this.modalenvoiboncash.show();
   }
@@ -81,16 +99,53 @@ export class WizallComponent implements OnInit {
    public hidemodalretraitbonachat(){
       this.modalretraitbonachat.hide();
    }
+   reinitialiser(){
+       this.prenomE=undefined;
+	   this.nomE=undefined;
+	   this.telE=undefined;
+	   this.prenomB=undefined;
+	   this.nomB=undefined;
+	   this.telB=undefined;
+	   this.montant=undefined;
+	   this.client=undefined;
+	   this.num_card=undefined;
+	   this.nationalite=undefined;
+	   this.secondcode=undefined;
+	   this.donneeretraitbon=undefined;
+	   this.messageretraitcash=false;
+	   this.messageretraitcasherror=false;
+	   this.errorverifcode=false;
+	   this.messagesecondcode=false;
+   }
    
    public validerenvoibon(){
-       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall envoi de bon','operateur':6,'operation':6}));
+       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall envoi de bon','operateur':6,'operation':6,prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB}));
+      
        this.hidemodalenvoiboncash();
+        this.reinitialiser();
    }
-  
+   public validerbonachat(){
+       //sessionStorage.setItem('curentProcess',JSON.stringify({nom:'Wizall envoi de bon',operateur:6,operation:7,prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB}));
+      // let data={prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB};
+       this.reinitialiser();
+       this.hidemodalenvoibonachat();
+      /* this._wizallService.validerbonachat(data).then(response =>{
+         // let data=JSON.parse(response._body);
+          console.log(response);  
+       });*/
+   }
+   
    public showmodalretraitbon(){
-      this._wizallService.verifier_code_retraitbon().then(response => {
-          this.donneeretraitbon=response;
-          console.log(this.donneeretraitbon);
+      this.messageretraitcash=false;
+      this.messageretraitcasherror=false;
+      this.errorverifcode=false;
+      this._wizallService.verifier_code_retraitbon(this.codebon).then(response => {
+      //let data=response._body;
+      let data=JSON.parse(response);
+     // console.log(data);
+       if(response.indexOf("status")!=-1 && data.status=="valid"){
+          this.errorverifcode=false;
+          this.donneeretraitbon=data;
 		  this.prenomE=this.donneeretraitbon.customer.first_name;
 		  this.nomE=this.donneeretraitbon.customer.last_name;
 		  this.telE=this.donneeretraitbon.customer.phone_number;
@@ -101,10 +156,20 @@ export class WizallComponent implements OnInit {
 		  this.validerfirst=true;
 		  this.validersecond=false;
 		  this.modalretraitbon.show();
+		 }
+		 if(response.indexOf("code")!=-1 && data.error=="Token already used"){
+		   this.messageretraitcasherror=true;
+		   this.errorverifcode=false;
+		 }
+		 if(response.indexOf("code")!=-1 && data.error=="Invalid token"){
+		  this.errorverifcode=true;
+		  this.messageretraitcasherror=false;
+		 }
       }); 
    }
    public hidemodalretraitbon(){
       this.modalretraitbon.hide();
+      this.reinitialiser();
    }
 
     public depotmodal(){
@@ -116,32 +181,46 @@ export class WizallComponent implements OnInit {
 
     fermermodaldepot(){
       this.modaldepot.hide();
+      this.reinitialiser();
     }
 
     fermermodalretrait(){
+      this.reinitialiser();
       this.validerfirst=false;
       this.validersecond=false;
       this.modalretrait.hide();
       
     }
-    /*
-        $data = array("secure_id"=>"925938","used_value"=>"1789","agent_msisdn"=>"707511503",
-            "agent_pin"=>"1001","debtor_pos_id"=>"P1","debtor_employee_id"=>"V1","recipient_nationality"=>"SN",
-            "recipient_identity_type"=>"idcard","recipient_identity_number"=>"1392199000128"
-      );
-       
-    
-    */
+   
     valider_code(){
-       this.validerfirst=false;
-       this.validersecond=true; 
+       this._wizallService.getSendSecureID(this.codebon).then( response =>{
+          console.log(response);
+          this.validerfirst=false;
+          this.validersecond=true; 
+       });
     }
     validationretraitbon(){
        console.log(this.nationalite);
        console.log(this.num_card);
        console.log(this.secondcode);
-       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall retrait de bon','operateur':6,'operation':5,'secure_id':925938,'used_value':1789,'agent_msisdn':707511503,'agent_pin':1001,'debtor_pos_id':'P1','debtor_employee_id':'V1','recipient_nationality':this.nationalite,'recipient_identity_type':'idcard','recipient_identity_number':this.num_card}));
-       this.hidemodalretraitbon();
+       let data={nationalite:this.nationalite,num_card:this.num_card,type_carte:this.type_piece,codebon:this.secondcode,code_validation:this.codebon};
+      // sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall retrait de bon','operateur':6,'operation':5,'secure_id':925938,'used_value':1789,'agent_msisdn':707511503,'agent_pin':1001,'debtor_pos_id':'P1','debtor_employee_id':'V1','recipient_nationality':this.nationalite,'recipient_identity_type':'idcard','recipient_identity_number':this.num_card}));
+       
+       this._wizallService.bonDebitVoucher(data).then(response =>{
+        //console.log(response);
+        let data=JSON.parse(response);
+          if(response.indexOf("Operation")!=-1 && data.Operation=="Registration"){
+            this.messageretraitcash=true;
+            this.messageretraitcasherror=false;
+            this.hidemodalretraitbon();
+          }
+          
+          if(response.indexOf("code")!=-1 &&  data.error=="Invalid OTP"){
+               this.messagesecondcode=true;
+              
+          }
+       });
+       
     }
 
     public sdemodal(){
@@ -187,10 +266,12 @@ export class WizallComponent implements OnInit {
 
     fermersdemodal(){
       this.modalsde.hide();
+      this.reinitialiser();
     }
 
     fermersenelecmodal(){
       this.modalsenelec.hide();
+      this.reinitialiser();
     }
 
     deposer(){

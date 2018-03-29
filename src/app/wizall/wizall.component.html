@@ -26,7 +26,7 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="tab-pane fade col-sm-10 col-xs-10 in active" id="depot">
+                <div class="tab-pane fade col-lg-offset-1 col-md-offset-1 col-xs-offset-1 col-sm-10 col-xs-10 in active" id="depot">
                         <h2>Dépôt</h2>
                         <form name="transnat" (ngSubmit)="depotmodal()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 							<div class="form-inline">
@@ -41,7 +41,7 @@
                         </form>
                 </div>
 
-                <div class="tab-pane fade col-sm-10 col-xs-10" id="retrait">
+                <div class="tab-pane fade col-lg-offset-1 col-md-offset-1 col-xs-offset-1 col-sm-10 col-xs-10" id="retrait">
                         <h2>Retrait</h2>
                         <form name="transnat" (ngSubmit)="retirermodal()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 						  <div class="form-inline">
@@ -67,12 +67,19 @@
 									<div class="tab-pane active" id="boncache">
 										<form class="form-inline">
 											<label>code de bon :</label>
-											<input type="text" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
+											<input type="text" [(ngModel)]="codebon" name="codebon" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
 											<input (click)="showmodalretraitbon()" type="button" value="verifier" class="btn btn-success" />
-									</form>
+									    </form>
+									    
+									</div>
+									<div style="margin-left:auto;margin-right:auto">
+										<p *ngIf="messageretraitcash"  class="alert alert-success col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Operation reussie</p>
+									    <p *ngIf="messageretraitcasherror"   class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code deja utilisé</p>
+									    <p *ngIf="errorverifcode"  class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code bon incorrect</p>
+									
 									</div>
 									<div class="tab-pane" id="bonachat">
-										 <form class="form-inline">
+										 <form class="form-inline"> 
 											 <label>code du bon d'achat :</label>
 											 <input type="text" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
 											 <input type="button" (click)="showmodalretraitbonachat()" class="btn btn-success" value="verifier code" />
@@ -90,10 +97,10 @@
 									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#boncacheA" data-toggle="tab">bon cache</a></div>
 									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#bonachatA" data-toggle="tab">bon d'achat</a ></div>
 								</div>
-								<div class="tab-content col-lg-offset-2 col-md-offset-2" style="margin-top:10px;">
+								<div class="tab-content col-lg-offset-3 col-md-offset-3" style="margin-top:10px;">
 									<div class="tab-pane" id="boncacheA">
 										<div class="row">
-											<div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+											<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" >
 												<form>
 													<fieldset>
 														<legend>Envoyeur</legend>
@@ -102,7 +109,7 @@
 																<label>prenom</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="prenomE" name="prenomE" />
+																<input type="text" class="textinput" [(ngModel)]="prenomE" name="prenomE" />
 															</div>
 														</div>
 														<div class="row">
@@ -110,7 +117,7 @@
 																<label>nom</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="nomE" name="nomE" />
+																<input type="text" class="textinput" [(ngModel)]="nomE" name="nomE" />
 															</div>
 														</div>
 														<div class="row">
@@ -118,25 +125,25 @@
 																<label>Telephone</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="telE" name="telE" />
+																<input class="textinput" type="text" [(ngModel)]="telE" name="telE" />
 															</div>
 														</div>
 														<div class="row">
-															<div class="col-lg-3 col-md-3">
+															<div class="col-lg-4 col-md-4">
 																<label>nationnalité</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<select [(ngModel)]="nationalite" name="nationalite">
+																<select class="textinput" [(ngModel)]="nationalite" name="nationalite">
 																	<option>senegalaise</option>
 																</select>
 															</div>
 														</div>
 														<div class="row">
-															<div class="col-lg-4 col-md-4">
+															<div class="col-lg-3 col-md-3">
 																<label>type de piece</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<select [(ngModel)]="type_piece" name="type_piece">
+																<select class="textinput" [(ngModel)]="type_piece" name="type_piece">
 																	<option value="carte">carte d'identite</option>
 																	<option value="passport">passport</option>
 																	<option value="carteconsulaire">carte consulaire</option>
@@ -148,7 +155,7 @@
 																<label>numero carte</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="num_card" name="num_card" />
+																<input class="textinput" type="text" [(ngModel)]="num_card" name="num_card" />
 															</div>
 														</div>
 														<div class="row">
@@ -156,13 +163,13 @@
 																<label>montant</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="montant" name="montant" />
+																<input class="textinput" type="text" [(ngModel)]="montant" name="montant" />
 															</div>
 														</div>
 													</fieldset>
 												</form>
 											</div>
-											<div class="col-lg-offset-1 col-md-offset-1 col-lg-5 col-md-5 col-xs-5 col-sm-5">
+											<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4" style="margin-left:3em">
 												<form>
 													<fieldset>
 														<legend>Beneficiaire</legend>
@@ -171,7 +178,7 @@
 																<label>prenom</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="prenomB" name="prenomB" />
+																<input class="textinput" type="text" [(ngModel)]="prenomB" name="prenomB" />
 															</div>
 														</div>
 														<div class="row">
@@ -179,7 +186,7 @@
 																<label>nom</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="nomB" name="nomB" />
+																<input class="textinput" type="text" [(ngModel)]="nomB" name="nomB" />
 															</div>
 														</div>
 														<div class="row">
@@ -187,7 +194,7 @@
 																<label>telephone</label>
 															</div>
 															<div class="col-lg-3 col-md-3">
-																<input type="text" [(ngModel)]="telB" name="telB" />
+																<input class="textinput" type="text" [(ngModel)]="telB" name="telB" />
 															</div>
 														</div>
 														
@@ -210,8 +217,8 @@
 															 <b>type de bon</b>
 														 </div>
 														 <div class="col-lg-6 col-md-6">
-															  <select>
-																  <option (change)="recuperPrix()" [(ngModel)]="bon" name="bon" value="s.type" *ngFor="let s of typebon">{{s.type}}</option>
+															  <select [(ngModel)]="Typebon" name="Typebon">
+																  <option (change)="recuperPrix()" [(ngModel)]="bon" name="bon" value="{{s.type}}" *ngFor="let s of typebon">{{s.type}}</option>
 													          </select>
 														 </div>
 													 </div> 
@@ -220,19 +227,20 @@
 											 <div class="col-lg-offset-1 col-lg-5 col-md-5">
 												 <div class="row">
 														 <div class="col-lg-4 col-md-4">
-															 <b>prix bon</b>
+															 <b>montant bon</b>
 														 </div>
 														 <div class="col-lg-4 col-md-4">
-															  <select>
-																  <option value="pharmacie">2000</option>
-																  <option value="essence">3000</option>
-																  <option value="x">5000</option>
-																  <option value="y">8000</option>
+															  <select [(ngModel)]="montantbon" name="montantbon">
+																  <option value="2000">2000</option>
+																  <option value="3000">3000</option>
+																  <option value="5000">5000</option>
+																  <option value="8000">8000</option>
 													          </select>
 														 </div>
 													 </div>
 											 </div>
 										 </div>
+										 <input (click)="showmodalenvoibonachat()" type="button" class="btn btn-success" value="valider" /> 
 									</div>
 								</div>
                             </div>
@@ -300,6 +308,94 @@
 	    </div>
 	    
 </div>
+<div bsModal #modalenvoibonachat="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+		 <div class="modal-dialog modal-lg modal-md">
+		    <div class="modal-content" >
+		      <div class="modal-header">
+				<button type="button" class="close pull-right" aria-label="Close" (click)="fermermodaldepot()">
+				    <span aria-hidden="true">&times;</span>
+		        </button>
+	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Dépôt.</h4>
+		     </div>
+		     <div class="modal-body">
+		
+				 <div class="row">
+					  <div class="col-lg-7 col-md-7">
+					      <form>
+							  <fieldset>
+								  <legend>info client</legend>
+								  <div class="form-inline">
+									  <label>prenom</label>
+									  <input type="text" class="textinput" [(ngModel)]="prenom" name="prenom" />
+								  </div>
+								  <div class="form-inline">
+									  <label>nom</label>
+									  <input type="text" class="textinput" [(ngModel)]="nom" name="nom" />
+								  </div>
+								  <div class="form-inline">
+									  <label>Telephone</label>
+									  <input type="text" class="textinput" [(ngModel)]="telE" name="telE" />
+								  </div>
+								  <div class="form-inline">
+									  <label>Nationalite</label>
+									  <select class="textinput" [(ngModel)]="nationalite" name="nationalite" >
+										   <option value="SN">senegalaise</option>
+									  </select>
+								  </div>
+								  <div class="form-inline">
+									  <label>Type de piece</label>
+									  <select class="textinput" [(ngModel)]="type_piece" name="type_piece" >
+										   <option value="SN">passport</option>
+									  </select>
+								  </div>
+								  <div class="form-inline">
+									  <label>numero piece</label>
+									  <input type="text" class="textinput" [(ngModel)]="num_card" name="num_card" />
+								  </div>
+							  </fieldset>
+					      </form>
+					  </div>
+					  <div class="col-lg-4 col-md-4">
+						 <form>
+							  <fieldset>
+								  <legend>info Beneficiaire</legend>
+								  <div class="form-inline">
+									  <label>prenom</label>
+									  <input type="text" class="textinput" [(ngModel)]="prenomB" name="prenomB" />
+								  </div>
+								  <div class="form-inline">
+									  <label>nom</label>
+									  <input type="text" class="textinput" [(ngModel)]="nomB" name="nomB" />
+								  </div>
+								  <div class="form-inline">
+									  <label>Telephone</label>
+									  <input type="text" class="textinput" [(ngModel)]="telB" name="telE" />
+								  </div>  
+							  </fieldset>
+					      </form>
+					  </div>
+				 </div>
+				 <div class="row">
+					 <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+					    <label>Montant : 50000</label>
+					 </div>
+					 <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+					    <label>frais : 2000</label>
+					 </div>
+					 <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+					    <label>Total : 52000</label>
+					 </div>
+				 </div>
+		     </div>
+		     <div class="modal-footer">
+				  <input type="button" value="valider" (click)="validerbonachat()" class="btn btn-success" />
+				  <input type="button" value="fermer" (click)="fermermodaldepot()" class="btn btn-danger" />
+		     </div>
+		  </div> 
+	    </div>
+	    
+</div>
 <div bsModal #modalretraitbon="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
 		 <div class="modal-dialog modal-lg">
@@ -311,7 +407,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Dépôt.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+		         <p *ngIf="errorverifcode" class="alert alert-danger">Code incorrect</p>
 				 <div>
 					 <form *ngIf="validerfirst" class="form">
 						<div class="row">
@@ -319,15 +415,15 @@
 								<h2>Envoyeur</h2>
 							   <div class="form-inline">
 								   <label>prenom</label>
-								   <input type="text" [(ngModel)]="prenomE" name="prenomE" />
+								   <input type="text" class="textinput"  [(ngModel)]="prenomE" name="prenomE" />
 							   </div>
 							   <div class="form-inline">
 								   <label>nom</label>
-								   <input type="text" [(ngModel)]="nomE" name="nomE" />
+								   <input type="text" class="textinput" [(ngModel)]="nomE" name="nomE" />
 							   </div>
 							   <div class="form-inline">
 								   <label>Telephone</label>
-								   <input type="text" [(ngModel)]="telE" name="telE" />
+								   <input type="text" class="textinput" [(ngModel)]="telE" name="telE" />
 							   </div>
 							   
 							</div>
@@ -335,19 +431,19 @@
 								<h2>Beneficiaire</h2>
 							   <div class="form-inline">
 								   <label>prenom</label>
-								   <input type="text" [(ngModel)]="prenomB" name="prenomB" />
+								   <input type="text" class="textinput" [(ngModel)]="prenomB" name="prenomB" />
 							   </div>
 							   <div class="form-inline">
 								   <label>nom</label>
-								   <input type="text" [(ngModel)]="nomB" name="nomB" />
+								   <input type="text" class="textinput" [(ngModel)]="nomB" name="nomB" />
 							   </div>
 							   <div class="form-inline">
 								   <label>Telephone</label>
-								   <input type="text" [(ngModel)]="telB" name="telB" />
+								   <input type="text" class="textinput" [(ngModel)]="telB" name="telB" />
 							   </div>
 							   <div class="form-inline">
 								   <label>Montant</label>
-								   <input type="text" [(ngModel)]="montant" name="montant" />
+								   <input type="text" class="textinput" [(ngModel)]="montant" name="montant" />
 							   </div>
 							</div>
 						</div>
@@ -356,7 +452,7 @@
 					<form *ngIf="validersecond" >
 						<div class="form-inline">
 						     <label>code de validation</label>
-						     <input type="text" [(ngModel)]="secondcode" name="secondcode" />
+						     <input type="text" class="textinput" [(ngModel)]="secondcode" name="secondcode" />
 						</div>
 						<div class="form-inline">
 						     <label>nationalite</label>
@@ -368,16 +464,24 @@
 						     </select>
 						</div>
 						<div class="form-inline">
+							<label>type carte</label>
+							<select class="textinput" [(ngModel)]="type_piece" name="type_piece">
+								<option value="idcard">cni</option>
+								<option value="passport">passport</option>
+								<option></option>
+							</select>
+						</div>
+						<div class="form-inline">
 						     <label>numero carte</label>
-						     <input type="text" [(ngModel)]="num_card" name="num_card" />
+						     <input type="text" class="textinput" [(ngModel)]="num_card" name="num_card" />
 						</div>
 						
 						<input type="button" (click)="validationretraitbon()" class="btn btn-success" value="valider" />
 					</form>
+					<p *ngIf="messagesecondcode" class="alert alert-danger col-lg-3 col-md-3 col-xs-3 col-sm-3">Code Secret Incorrect</p>
 				 </div>
 		     </div><!--astoudiop0404@gmail.com/ASTOUDIOP2017-->
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="deposer()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="hidemodalretraitbon()" class="btn btn-danger" />
 		     </div>
 		  </div> 

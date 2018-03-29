@@ -104,5 +104,9 @@ label{
     text-decoration:none;
     cursor:pointer;
 }
-
+.textinput{
+    border:2px solid orange;
+    border-radius:10px 0px 10px 10px;
+    height:3rem
+}
 

@@ -68,7 +68,7 @@ export class AccueilComponent implements OnInit {
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
      // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
 
-      if(sesion.data.operateur==5){
+     if(sesion.data.operateur==5){
         this.articles.push(sesion);
         sessionStorage.setItem('panier',JSON.stringify(this.articles));
         console.log(this.articles);
@@ -201,13 +201,17 @@ export class AccueilComponent implements OnInit {
               }
               case 5:{
                  // this.payerSenelecWizall(sesion);
-                  break;
+                 this.validationretraitbon(sesion);
+                 break;
               }
               case 6:{
-                 // this.payerSenelecWizall(sesion);
-                 this._wizallService.validerenvoibon().then(response =>{
-                      console.log(response);
-                 });
+                
+                  this.validerenvoibon(sesion);
+                  break;
+              }
+              case 7:{
+                 
+                  this.validerbonachat(sesion);
                   break;
               }
               default : break;
@@ -788,7 +792,7 @@ export class AccueilComponent implements OnInit {
     	   console.log(etat.etats.id);
     }
   }
-  }
+}
 
 
 /******************************************************************************************************/
@@ -983,7 +987,45 @@ export class AccueilComponent implements OnInit {
               }
       });
     }
-
+    
+    validerenvoibon(objet:any){
+        this._wizallService.validerenvoiboncash(objet).then(response =>{
+               console.log(response.code);
+               let data =JSON.parse(response.code);
+               console.log(data);
+               if(response.code.indexOf("status")!=-1 && data.status=="valid"){
+				   objet.etats.etat=true;
+				   objet.etats.load='terminated';
+				   objet.etats.color='green';
+				   alert("operation reussie");
+               }
+               if(response.code.indexOf("code")!=-1 && data.code==500){
+                   objet.etats.etat=true;
+				   objet.etats.load='terminated';
+				   objet.etats.color='red';
+				   alert("echec de operation");
+               }
+              
+         });
+    }
+    validationretraitbon(objet:any){
+        this._wizallService.validationretraitbon().then(response =>{
+               console.log(response);
+               objet.etats.etat=true;
+               objet.etats.load='terminated';
+               objet.etats.color='green';
+         });
+    }
+    validerbonachat(objet:any){
+        this._wizallService.validerbonachat(objet).then(response =>{
+               console.log(response);
+               objet.etats.etat=true;
+               objet.etats.load='terminated';
+               objet.etats.color='green';
+              
+               
+         });
+    }
     payerSDEWizall(objet : any){
       console.log('payerSDEWizall');
       this._wizallService.intouchPayerFactureSde(objet.data.montant, objet.data.refclient, objet.data.refFacture).then( response =>{
