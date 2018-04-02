@@ -6,6 +6,7 @@ import 'rxjs/add/observable/of';
 import { TypeaheadMatch } from 'ng2-bootstrap/typeahead';
 
 import {EcomService} from "../services/ecom.service";
+import * as _ from "lodash";
 
 
 class OrderedArticle{
@@ -16,7 +17,6 @@ class OrderedArticle{
   public designation:string;
   public description:string;
   public nomImg:string;
-
 } 
 
 class Article {
@@ -34,7 +34,7 @@ class Article {
   styleUrls: ['./catalogue.component.css']
 })
 export class CatalogueComponent implements OnInit {
-
+  
 
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   loading = false ;
@@ -42,7 +42,7 @@ export class CatalogueComponent implements OnInit {
   p : any ;
   listarticles : any[] ;
   panier:Article[];
-
+  
   public asyncSelected: string;
   public typeaheadLoading: boolean;
   public typeaheadNoResults: boolean;
@@ -56,11 +56,11 @@ export class CatalogueComponent implements OnInit {
   orderedarticles:OrderedArticle [] = [];
   montant:number = 0;
   alert: boolean = false;
-  description:any=JSON.stringify({categorie:'',provenance:'',marque:'',couleur:'',origine:'',model:'',capacite:'',fonctions:'',matiere:'',tendance:'',mode:'',sexe:'',infosup:''});
-  desk:boolean;
 
-  
-  constructor(private _ecomService:EcomService) {
+  @ViewChild('viewMore') public addChildModal:ModalDirective;
+
+
+  constructor(public ecomCaller: EcomService) { 
     this.dataSource = Observable
       .create((observer: any) => {
         observer.next(this.asyncSelected);
@@ -69,34 +69,33 @@ export class CatalogueComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-   /* this.loading = true ;
+    this.loading = true ;
     this.ecomCaller.listeArticles(this.token, 'catalogue').then( response => {
-      console.log(response);
       this.listarticles = response.reverse();
-      //console.log(this.listarticles) ;
-    });*/
+      console.log(this.listarticles) ;
+      this.loading = false ;
+    }); 
   }
 
   public getStatesAsObservable(token: string): Observable<any> {
     let query = new RegExp(token, 'ig');
-
+ 
     return Observable.of(
       this.listarticles.filter((state: any) => {
         return query.test(state.designation);
       })
     );
   }
-
+ 
   public changeTypeaheadLoading(e: boolean): void {
     this.filterQuery = this.asyncSelected;
     this.typeaheadLoading = e;
   }
-
+ 
   public changeTypeaheadNoResults(e: boolean): void {
     this.typeaheadNoResults = e;
   }
-
+ 
   public typeaheadOnSelect(e: TypeaheadMatch): void {
     this.filterQuery = e.value;
   }
@@ -132,7 +131,7 @@ export class CatalogueComponent implements OnInit {
   }
   augmenterqte(i){
     if(this.orderedarticles[i].qte) {
-      this.orderedarticles[i].qte++;
+      this.orderedarticles[i].qte++;  
       this.recalculmontant();
     }
     else {
@@ -153,16 +152,15 @@ export class CatalogueComponent implements OnInit {
       this.montant += this.orderedarticles[i].montant;
     }
   }
+  
 
+  @ViewChild('childModalCommand') public childModalCommand:ModalDirective;
 
-   @ViewChild('childModalCommand') public childModalCommand:ModalDirective;
-   @ViewChild('addChildModal') public addChildModal:ModalDirective;
-
-  public showChildModalCommand():void {
+  public showChildModalCommand():void { 
     this.childModalCommand.show();
   }
 
-  public hideChildModalCommand():void {  this.childModalCommand.hide();
+  public hideChildModalCommand():void {  this.childModalCommand.hide(); 
     this.nom = null;
     this.prenom = null;
     this.telephone = null;
@@ -170,19 +168,19 @@ export class CatalogueComponent implements OnInit {
   }
 
   public commander():void {
-    let params = {
-      token: this.token ,
-      orderedarticles:""+JSON.stringify(this.orderedarticles),
-      montant: this.montant,
-      prenomclient: this.prenom,
-      nomclient: this.nom,
-      telephoneclient: this.telephone,
-      emailclient: this.email
+    let params = { 
+      token: this.token , 
+      orderedarticles:""+JSON.stringify(this.orderedarticles), 
+      montant: this.montant, 
+      prenomclient: this.prenom, 
+      nomclient: this.nom, 
+      telephoneclient: this.telephone, 
+      emailclient: this.email 
     };
     this.loading = true ;
-    this._ecomService.commander(params).then( response => {
+    this.ecomCaller.commander(params).then( response => {
       this.loading = false ;
-    });
+    });  
     this.hideChildModalCommand();
     this.orderedarticles = [];
   }
@@ -203,44 +201,32 @@ export class CatalogueComponent implements OnInit {
     return designation ;
   }
 
-
+ 
   public showAddChildModal(article):void {
     this.currentArticle=article ;
-    let data=undefined;
-    try{
-       data=JSON.parse(article.description);
-    }catch(e){
-       console.log(this.description); 
-        
-    }
-    if(data==undefined){
-       this.desk=false;
-       
-     }
-    else{
-       this.description=data;
-       this.desk=true;
-    }
-     this.addChildModal.show();
+    this.addChildModal.show();
   }
-
+ 
   public hideAddChildModal():void {
     this.addChildModal.hide();
   }
-
+  
   public ajouter_au_panier(article){
-  console.log(article);
     let articl=new Article();
     articl.prix=article.prix;
     articl.designation=article.designation;
     articl.description=article.description;
     articl.nomImg=article.nomImg;
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Mon Panier','operateur':5,'prix':articl.prix,'quantite':1,'nomImg':articl.nomImg,'designation':articl.designation,'description':articl.description,'infosup':article.infosup,'pourvoyeur':article.pourvoyeur}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Mon Panier','operateur':5,'prix':articl.prix,'quantite':1,'nomImg':articl.nomImg,'designation':articl.designation,'description':articl.description}));
     this.addChildModal.hide();
   }
-  validercommande(){
-    
+
+  public decoder(chaineEncodee){
+    return JSON.parse(chaineEncodee) ;
   }
 
+  public isEncoded(chaineToCheck){
+    return chaineToCheck.includes("{") && chaineToCheck.includes("}") ;
+  }
 
 }

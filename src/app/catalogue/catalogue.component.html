@@ -25,7 +25,7 @@
 							<tr *ngFor="let ordered of orderedarticles;let i=index;" >
 								<td class="cart_product">
 
-									<a><img src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{ordered.nomImg}}" alt="" height="150" ></a>
+									<a><img src="https://mysentool.pro/uploads/{{ordered.nomImg}}" alt="" height="150" ></a>
 
 								</td>
 								<td class="cart_description">
@@ -95,7 +95,7 @@
           <div class="col-sm-4" *ngFor="let article of listarticles | filtrecataloguecommande : filterQuery | paginate: { itemsPerPage: 3, currentPage: p } ; let i=index" id="art-{{i}}" style="width: 24rem;margin-top: 2rem;">
 	            <div class="well well-sm">
                   <h4 class="card-title">{{getFormatted(article.designation) }}</h4>
-	                <img class="card-img-top" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.nomImg}}" alt="Card image cap" height="200" width="200" (click)="showAddChildModal(article)">
+	                <img class="card-img-top" src="https://mysentool.pro/uploads/{{article.nomImg}}" alt="Card image cap" height="200" width="200" (click)="showAddChildModal(article)">
 	            </div>
               <div class="text-center">
 							  <p class="card-text">{{article.prix}}.FCFA</p>
@@ -128,7 +128,7 @@
       	<div class="col-sm-4">
             <div class="well well-sm">
                 <h4 class="card-title" style="width: 108.3%">{{getFormatted(currentArticle.designation) }}</h4>
-                <img class="card-img-top" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{currentArticle.nomImg}}" alt="Card image cap" height="200" width="200">
+                <img class="card-img-top" src="https://mysentool.pro/uploads/{{currentArticle.nomImg}}" alt="Card image cap" height="200" width="200">
             </div>
             <div class="text-center row">
 				<p class="card-text">{{currentArticle.prix}}.FCFA</p>

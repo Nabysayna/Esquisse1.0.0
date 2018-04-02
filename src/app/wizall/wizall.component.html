@@ -60,15 +60,15 @@
                        <div class="panel panel-default">
 						    <div class="panel-body">
 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
-									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#boncache" data-toggle="tab">bon cashe</a>
+									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#boncache" data-toggle="tab">Bon Cash</a>
 									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#bonachat" data-toggle="tab">bon d'achat</a >
 								</div>
 								<div class="tab-content" style="margin-top:10px">
 									<div class="tab-pane active" id="boncache">
 										<form class="form-inline">
-											<label>code de bon :</label>
+											<label>Code de Bon :</label>
 											<input type="text" [(ngModel)]="codebon" name="codebon" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
-											<input (click)="showmodalretraitbon()" type="button" value="verifier" class="btn btn-success" />
+											<input (click)="showmodalretraitbon()" type="button" value="Vérifier" class="btn btn-success" />
 									    </form>
 									    
 									</div>
@@ -94,8 +94,8 @@
                        <div class="panel panel-default">
 						    <div class="panel-body">
 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
-									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#boncacheA" data-toggle="tab">bon cache</a></div>
-									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#bonachatA" data-toggle="tab">bon d'achat</a ></div>
+									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#boncacheA" data-toggle="tab">Bon Cash</a></div>
+									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#bonachatA" data-toggle="tab">Bon Achat</a ></div>
 								</div>
 								<div class="tab-content col-lg-offset-3 col-md-offset-3" style="margin-top:10px;">
 									<div class="tab-pane" id="boncacheA">
@@ -413,37 +413,47 @@
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-xs-4">
 								<h2>Envoyeur</h2>
-							   <div class="form-inline">
-								   <label>prenom</label>
-								   <input type="text" class="textinput"  [(ngModel)]="prenomE" name="prenomE" />
+							   <div class="form-inline  badge">
+								   <label>{{prenomE}}</label>
+<!-- 								   <label>prenom</label>
+								   <input type="text" class="textinput"  [(ngModel)]="prenomE" name="prenomE" /> -->
 							   </div>
-							   <div class="form-inline">
-								   <label>nom</label>
-								   <input type="text" class="textinput" [(ngModel)]="nomE" name="nomE" />
+							   <div class="form-inline  badge">
+								   <label>{{nomE}}</label>
+<!-- 								   <label>nom</label>
+								   <input type="text" class="textinput" [(ngModel)]="nomE" name="nomE" /> -->
 							   </div>
-							   <div class="form-inline">
-								   <label>Telephone</label>
-								   <input type="text" class="textinput" [(ngModel)]="telE" name="telE" />
+							   <div class="form-inline  badge">
+								   <label>{{telE}}</label>
+<!-- 								   <label>Telephone</label>
+								   <input type="text" class="textinput" [(ngModel)]="telE" name="telE" /> -->
 							   </div>
 							   
 							</div>
+
+							<div class="col-lg-4 col-md-4 col-xs-4">
+								   <h2>Montant</h2>
+								   <div class="form-inline badge">
+									   <label>{{nombreFormate(montant)}}</label>
+								   </div>
+						   </div>
+
 							<div class="col-lg-4 col-md-4 col-xs-4">
 								<h2>Beneficiaire</h2>
-							   <div class="form-inline">
-								   <label>prenom</label>
-								   <input type="text" class="textinput" [(ngModel)]="prenomB" name="prenomB" />
+							   <div class="form-inline  badge">
+								   <label>{{prenomB}}</label>
+<!-- 								   <label>prenom</label>
+								   <input type="text" class="textinput" [(ngModel)]="prenomB" name="prenomB" /> -->
 							   </div>
-							   <div class="form-inline">
-								   <label>nom</label>
-								   <input type="text" class="textinput" [(ngModel)]="nomB" name="nomB" />
+							   <div class="form-inline  badge">
+								   <label>{{nomB}}</label>
+<!-- 								   <label>nom</label>
+								   <input type="text" class="textinput" [(ngModel)]="nomB" name="nomB" /> -->
 							   </div>
-							   <div class="form-inline">
-								   <label>Telephone</label>
-								   <input type="text" class="textinput" [(ngModel)]="telB" name="telB" />
-							   </div>
-							   <div class="form-inline">
-								   <label>Montant</label>
-								   <input type="text" class="textinput" [(ngModel)]="montant" name="montant" />
+							   <div class="form-inline  badge">
+								   <label>{{telB}}</label>
+<!-- 								   <label>Telephone</label>
+								   <input type="text" class="textinput" [(ngModel)]="telB" name="telB" /> -->
 							   </div>
 							</div>
 						</div>

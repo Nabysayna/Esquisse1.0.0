@@ -17,18 +17,21 @@
                 
                 <a href="#achatjula-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()" data-toggle="tab">Achat Jula</a>
                 
-                 <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
+<!--                  <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
 
                 <a href="#achatcodewoyofal-pills" (click)="reinitialiser()" data-toggle="tab">Woyofal</a>                                
-                <a href="#rapido-pills" (click)="reinitialiser()" data-toggle="tab">RAPIDO</a> 
+                <a href="#rapido-pills" (click)="reinitialiser()" data-toggle="tab">RAPIDO</a> -->
+
               <!-- <a href="#oolu-pills" (click)="reinitialiser()" data-toggle="tab">Oolu Solar</a> --> 
             </div>
 
             <!-- Tab panes -->
             <div class="tab-content">
 
-              <div class="col-sm-6 col-xs-12" *ngIf="erreur" style="padding-top: 7rem ; color: #337ab7">
-                <h5>Désolé! Votre requête n'a pas pu être traitée.</h5> <h5 style="color : red">{{errorMessage}}</h5>
+              <div class="col-sm-6 col-xs-12" *ngIf="erreur" style="padding-bottom: 1rem ; color: #337ab7 ; margin-left: 28rem ; ">
+                <h5>
+                  Désolé! Votre requête n'a pas pu être traitée.<b style="color : red">{{errorMessage}}</b>
+                </h5>
               </div>
 
               <div class="tab-pane fade col-sm-12 col-xs-12 in active" id="rechargementespece-pills">

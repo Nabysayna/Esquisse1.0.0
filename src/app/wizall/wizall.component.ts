@@ -165,7 +165,7 @@ export class WizallComponent implements OnInit {
 		  this.errorverifcode=true;
 		  this.messageretraitcasherror=false;
 		 }
-      }); 
+    }); 
    }
    public hidemodalretraitbon(){
       this.modalretraitbon.hide();
@@ -293,6 +293,10 @@ export class WizallComponent implements OnInit {
        this.fermersenelecmodal() ;
        let montant = Number(this.mntSENELEC) ;
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall Senelec','operateur':6,'operation':4,'montant':montant,'police':this.numpolice, 'numfacture':this.numFactureSenelec}));
+    }
+
+    nombreFormate(montant){   
+        return Number( montant.split(".")[0] ).toLocaleString() ;    
     }
 
 }

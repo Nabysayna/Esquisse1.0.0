@@ -11,7 +11,9 @@ export class FacturierService {
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
-  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
+//  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
+
+  private link = "https://mysentool.pro/index.php";
 
 
   private headers = new Headers();

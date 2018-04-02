@@ -28,7 +28,8 @@
                   <li role="presentation" ><a [routerLink]="['/accueil', 'Guide_utilisation']" ><i class="fa fa-book fa-2x pull-left"></i> <b>Guide d'utilisation</b> </a></li>
 -->
                   <li role="presentation"><a [routerLink]="['/accueil', 'E-COMMERCE']"> <i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>
-                  <li role="presentation"><a [routerLink]="['/accueil', 'panier']"> <i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>PANIER</b> </a></li>
+
+<!--                   <li role="presentation"><a [routerLink]="['/accueil', 'panier']"> <i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>PANIER</b> </a></li> -->
 
                   <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
 
@@ -85,22 +86,22 @@
                     </div>
                     <!--E-commerce -->
                     <div *ngIf="item.data.operateur==5;let j=index" class="row" style="border-radius:10px 0 10px 10px;width:300px;">
-						  <div  *ngFor="let article of articles let i=index"  class="col-lg-5 col-md-5 col-xs-5 col-sm-5" [ngStyle]="{'border-right':i%2==0?'4px solid orange':'2px solid white','border-top':i>=2?'4px solid orange':'2px solid white','border-bottom':(i==articles.length-2 && articles.length%2!=0)?'4px solid orange':'2px solid white'}" style="height:180px;border-radius:0px">
-							  <div class="row">
-								  <p style="color:blue;font-size:0.8em;text-align:center">{{getFormatted(article.data.designation)}}</p>
-							  </div>
-							  <div class="row"  style="background-image:url(../../assets/mag-rondell.png);background-repeat:no-repeat;">
-							    <img class="card-img-top  col-lg-8 col-md-8 col-xs-8 col-sm-8 img-circle" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.data.nomImg}}" style="width:90px;height:90px;margin-left:6%;margin-top:5px" alt="Card image cap">
-							  </div>
-							  <div class="row">
-							     <p class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="max-width:150px"><b style="color:blue;font-size:0.9em">{{currency(article.data.prix)}} fcfa</b></p>
-							  </div>
+              <div  *ngFor="let article of articles let i=index"  class="col-lg-5 col-md-5 col-xs-5 col-sm-5" [ngStyle]="{'border-right':i%2==0?'4px solid orange':'2px solid white','border-top':i>=2?'4px solid orange':'2px solid white','border-bottom':(i==articles.length-2 && articles.length%2!=0)?'4px solid orange':'2px solid white'}" style="height:180px;border-radius:0px">
+                <div class="row">
+                  <p style="color:blue;font-size:0.8em;text-align:center">{{getFormatted(article.data.designation)}}</p>
+                </div>
+                <div class="row"  style="background-image:url(../../assets/mag-rondell.png);background-repeat:no-repeat;">
+                  <img class="card-img-top  col-lg-8 col-md-8 col-xs-8 col-sm-8 img-circle" src="http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/uploads/{{article.data.nomImg}}" style="width:90px;height:90px;margin-left:6%;margin-top:5px" alt="Card image cap">
+                </div>
+                <div class="row">
+                   <p class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="max-width:150px"><b style="color:blue;font-size:0.9em">{{currency(article.data.prix)}} fcfa</b></p>
+                </div>
 
-						  </div>
+              </div>
 
 
                           <div class="row">
-							  <b class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="color:blue">Total : {{currency(totalpanier())}}</b>
+                <b class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="color:blue">Total : {{currency(totalpanier())}}</b>
                           </div>
 
                     </div>
@@ -201,8 +202,13 @@
                           <div>Police: {{item.data.police}}</div><br>
                           <div>Numéro Facture : {{item.data.numfacture}}</div><br>
                         </div>
+                        <div *ngIf="item.data.operation==5">
+                          <div>Montant : {{item.data.montant}}</div><br>
+                          <div>Numéro Client :{{item.data.num}}</div><br>
+                        </div>
 
                     </div>
+
 
                     <!-- wizall -->
                     <div *ngIf="item.data.operateur==6">
@@ -229,6 +235,28 @@
                           <div>Police: {{item.data.police}}</div><br>
                           <div>Numéro Facture : {{item.data.numfacture}}</div><br>
                         </div>
+                    </div>
+
+                    <!-- E-MONEY -->
+                    <div *ngIf="item.data.operateur==7">
+
+                      <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">
+                           {{retrieveOperationInfo(item)}}
+                      </div>
+
+                        <div *ngIf="item.data.operation==1">
+                          <div>Montant : {{item.data.mnt}}</div><br>
+                          <div>Numéro Client :{{item.data.numclient}}</div><br>
+                        </div>
+                        <div *ngIf="item.data.operation==2">
+                          <div>Reference : {{item.data.transactionReference}}</div><br>
+                          <div>OTP :{{item.data.OTP}}</div><br>
+                        </div>
+                        <div *ngIf="item.data.operation==3">
+                          <div>Montant:{{item.data.pin}}</div><br>
+                          <div>N° CNI: {{item.data.pin}}</div><br>
+                        </div>
+  
                     </div>
 
 
