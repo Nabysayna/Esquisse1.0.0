@@ -31,10 +31,10 @@ export class RapidoComponent implements OnInit {
   }
 
   validerrapido(){
+    this.modalrapido.hide();
     this._facturierService.validerrapido(this.numclient,this.montant,this.badge).then(response =>{
       console.log(response);
       this.messagesucce=true;
-      this.modalrapido.hide();
       this.montant=undefined;
       this.badge=undefined;
       this.numclient=undefined;

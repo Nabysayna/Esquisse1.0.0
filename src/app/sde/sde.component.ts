@@ -20,9 +20,7 @@ export class SdeComponent implements OnInit {
    statuspayment:boolean;
    dataImpression:any;
 
-   constructor(private _facturierService : FacturierService,private router: Router) {
-
-  }
+   constructor(private _facturierService : FacturierService,private router: Router) {}
 
 /******************************************************************************************************/
 
@@ -33,6 +31,8 @@ export class SdeComponent implements OnInit {
 
   detailfactursde(){
     this._facturierService.detailreglementsde(this.refclientsde).then(response =>{
+      console.log(response) ;
+      
       if(response.response==null){
          this.message=true;
 

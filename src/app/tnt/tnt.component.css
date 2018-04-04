@@ -1,3 +1,59 @@
+/*input{
+  margin-top : 1rem !important;
+}
+
+fieldset h4{
+    text-align: center;
+    color : white;
+    background-color : #F39200;
+    padding: 1rem;
+    border-radius: 12rem 0rem 12rem 12rem;
+    width: 85rem;
+}
+
+.nav-pills
+{
+    padding-bottom: 30px;
+    margin-left: 200px;
+}
+.tab-content
+{
+
+    border-right: 2px dotted #ccc;
+    
+}
+.panel-body{
+    overflow-x: auto ;
+}
+
+.panel{
+    border-style: hidden ;
+}
+
+.panel-heading{
+    font-size: -webkit-xxx-large ! important;
+    color : white !important;
+    background-color: #36A9E0 !important;
+    margin-bottom: 3rem ;
+}
+
+
+#elec{
+    margin-left: 20px;
+}
+#vdec{
+    margin-left: 20px;
+}
+#vcarte{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#tnt-options{
+    margin-left: 0px !important ;
+}
+*/
+
 label{
     color : #36A9E0;
     text-transform : capitalize ;
@@ -33,10 +89,11 @@ label{
 
 .panel-heading h2{
     background-color: #36A9E0 !important;
+/*    width : 68rem ;*/
     width : 34rem ;
     padding: 2rem ;
     z-index: 1 ;
-}
+}   
 
 .panel-body{
     position: relative;
@@ -48,6 +105,7 @@ label{
     z-index: 0 ;
     position: relative;
     top : -8rem ;
+/*    width: 94rem ;*/
     width: 61rem ;
     height: 10rem ;
 }
@@ -91,8 +149,13 @@ label{
     text-decoration: none ;
 }
 
+#om-options li:last-child{
+/*  margin-top: 2rem ; */
+}
+
+
 @media only screen and (max-width: 400px) {
     #om-options{
         width: max-content !important;
     }
-}
+}  

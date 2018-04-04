@@ -58,8 +58,8 @@ export class FacturierService {
     });
   }
 
-  public validerwoyofal(api:number,montant:number,compteur:string):Promise<any>{
-    let reEspParams={api:api,token:this.token,montant:montant,compteur:compteur};
+  public validerwoyofal(montant:string,compteur:string):Promise<any>{
+    let reEspParams={token:this.token,montant:montant,compteur:compteur};
     let url=this.link+"/facturier-sen/achatcodewoyofal";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
