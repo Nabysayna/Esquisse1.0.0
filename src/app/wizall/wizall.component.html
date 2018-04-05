@@ -12,13 +12,13 @@
         <div class="panel-body">
             <!-- Nav tabs -->
             <div id="om-options">
-                <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Depôt</a>
+                <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()"  data-toggle="tab">Depôt</a>
                 
-                <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()" data-toggle="tab">Retrait </a>
+                <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()" data-toggle="tab">Retrait </a>
                 
-                <a href="#retraitcode" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()" data-toggle="tab">Retrait de bon </a>
+                <a href="#retraitcode" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()" data-toggle="tab">Retrait de bon </a>
                 
-                <a href="#envoibon" (click)="reinitialise()" data-toggle="tab">Envoie de bon</a>
+                <a href="#envoibon" (click)="reinitialiser()" data-toggle="tab">Envoie de bon</a>
 
                 <!--<a href="#senelec" (click)="reinitialise()" data-toggle="tab">Paiement Senelec </a>-->
                                 
@@ -31,13 +31,15 @@
                         <form name="transnat" (ngSubmit)="depotmodal()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 							<div class="form-inline">
 							 <label>Numéro du client  :</label>
-                             <input autocomplete="off" type="number" autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                             <input autocomplete="off" type="text" autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                             <p style="color:red" *ngIf="errornumero">Verifier ce Champ</p>
                             </div>
                             <div class="form-inline">
 							 <label>Montant du dépôt :</label>
-                             <input type="number" autocomplete="off" autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                             <input type="text" autocomplete="off" autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                             <p style="color:red" *ngIf="errormontant">verifier ce champ</p>
                             </div>
-                            <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formdepot.form.valid">Valider</button>
+                            <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" >Valider</button>
                         </form>
                 </div>
 
@@ -46,13 +48,15 @@
                         <form name="transnat" (ngSubmit)="retirermodal()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 						  <div class="form-inline">
 							<label>Numéro du client :</label>
-                            <input type="number" autocomplete="off" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                            <input type="text" autocomplete="off" [(ngModel)]="this.numclient" name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                             <p style="color:red" *ngIf="errornumero">Verifier ce Champ</p>
                           </div>
                           <div class="form-inline">
 							<label>Montant à retirer :</label>
-                            <input type="number" autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                            <input type="text" autocomplete="off" [(ngModel)]="this.mnt" name="mnt" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                             <p style="color:red" *ngIf="errormontant">Verifier ce Champ</p>
                           </div>
-                            <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formretrait.form.valid">Valider</button>
+                            <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" >Valider</button>
                         </form>
                 </div>
                 <div style="margin-top:20px"  class="tab-pane fade col-sm-10 col-xs-10" id="retraitcode">
@@ -60,8 +64,8 @@
                        <div class="panel panel-default">
 						    <div class="panel-body">
 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
-									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#boncache" data-toggle="tab">bon cashe</a>
-									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#bonachat" data-toggle="tab">bon d'achat</a >
+									  <a (click)="reinitialiser()" style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#boncache" data-toggle="tab">bon cashe</a>
+									  <a (click)="reinitialiser()" style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#bonachat" data-toggle="tab">bon d'achat</a >
 								</div>
 								<div class="tab-content" style="margin-top:10px">
 									<div class="tab-pane active" id="boncache">
@@ -94,8 +98,8 @@
                        <div class="panel panel-default">
 						    <div class="panel-body">
 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
-									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#boncacheA" data-toggle="tab">bon cache</a></div>
-									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#bonachatA" data-toggle="tab">bon d'achat</a ></div>
+									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3"><a (click)="reinitialiser()" href="#boncacheA" data-toggle="tab">bon cache</a></div>
+									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3"><a (click)="reinitialiser()" href="#bonachatA" data-toggle="tab">bon d'achat</a ></div>
 								</div>
 								<div class="tab-content col-lg-offset-3 col-md-offset-3" style="margin-top:10px;">
 									<div class="tab-pane" id="boncacheA">
@@ -144,9 +148,9 @@
 															</div>
 															<div class="col-lg-3 col-md-3">
 																<select class="textinput" [(ngModel)]="type_piece" name="type_piece">
-																	<option value="carte">carte d'identite</option>
+																	<option value="idcard">carte d'identite</option>
 																	<option value="passport">passport</option>
-																	<option value="carteconsulaire">carte consulaire</option>
+																	
 																</select>
 															</div>
 														</div>
@@ -203,9 +207,10 @@
 												</form>
 											</div>
 										</div>
+										<p *ngIf="errorenvoi" class="alert alert-danger" >Veuillez remplir correctement les champs</p>
 										<div>
 												<input type="button" (click)="showmodalenvoiboncash()" value="valider" class="btn btn-success" />
-												<input type="button" value="annuler" class="btn btn-danger" />
+												<input type="button" (click)="annulerenvoicash()" value="annuler" class="btn btn-danger" />
 										 </div>
 									</div>
 									<div class="tab-pane" id="bonachatA">
@@ -504,7 +509,7 @@
 								 </select>
 						      </div>
 						</div>
-						<div class="row">
+						<div class="row" style="margin-top:10px">
 							<div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
 								<label>type carte</label>
 							</div>
