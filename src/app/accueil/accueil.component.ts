@@ -5,6 +5,7 @@ import {PostCashService} from "../services/postcash.service";
 import {WizallService} from "../services/wizall.service";
 import {OrangemoneyService} from "../services/orangemoney.service";
 import {TigocashService} from "../services/tigocash.service";
+import { ExpressocashService } from "../services/expressocash.service";
 
 
 class Article {
@@ -33,7 +34,7 @@ export class AccueilComponent implements OnInit {
   dataImpression:any;
 
 
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService){}
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService){}
 
 /******************************************************************************************************/
 
@@ -149,6 +150,10 @@ export class AccueilComponent implements OnInit {
                        this.retirertc(sesion);
                        break;
                 }
+                case 5:{
+                        this.creditIZItc(sesion) ;
+                        break ;
+                       }
                 default :break;
               }
                break ;
@@ -212,6 +217,27 @@ export class AccueilComponent implements OnInit {
               case 7:{
                  
                   this.validerbonachat(sesion);
+                  break;
+              }
+              default : break;
+             }
+       }
+
+       case 7:{
+             var operation=sesion.data.operation;
+         console.log(sesion);
+         console.log('E-money');
+             switch(operation){
+              case 1:{
+                   this.cashInEmoney(sesion);
+                   break;
+              }
+              case 2:{
+                  this.cashOutEmoney(sesion);
+                  break;
+              }
+              case 3:{
+                  this.cashOutPIN(sesion);
                   break;
               }
               default : break;
@@ -937,7 +963,7 @@ export class AccueilComponent implements OnInit {
     cashInWizall(objet : any){
       console.log('cashInWizall');
       this._wizallService.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
-              console.log(response)
+              console.log(response) ;
               if(response.commission!=undefined){
                 objet.dataI = {
                   apiservice:'wizall',
@@ -1214,7 +1240,27 @@ export class AccueilComponent implements OnInit {
 
         if (item.etats.errorCode=='400')
           return "Facture dèja payée." ;
+    }
 
+/* EXPRESSO */
+     if(item.data.operateur==7 ){
+
+        if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
+          return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;  
+        if (item.etats.errorCode=='2')
+          return "Cette requête n'est pas authorisée" ;  
+        if (item.etats.errorCode=='51')
+          return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;  
+        if (item.etats.errorCode=='3')
+          return "Numéro de téléphone invalide." ;  
+        if (item.etats.errorCode=='2')
+          return "Cette requête n'est pas authorisée" ;  
+        if (item.etats.errorCode=='7')
+          return "Votre compte a été verrouillé, contactez le service client." ;  
+        if (item.etats.errorCode=='9')
+          return "Votre compte est à l'état inactif." ;  
+
+          return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;  
     }
 
 
@@ -1236,7 +1282,6 @@ export class AccueilComponent implements OnInit {
       objet.etats.errorCode='r';
       return 0 ;
     }
-
 
     this._tcService.requerirControllerTC(requete).then( resp => {
       if (resp.status==200){
@@ -1405,6 +1450,169 @@ export class AccueilComponent implements OnInit {
     });
 
   }
+
+
+   creditIZItc(objet:any){
+    let requete = "5/"+objet.data.num+"/"+objet.data.montant ;
+
+    this._tcService.requerirControllerTC(requete).then( resp => {
+      if (resp.status==200){
+
+        console.log("For this 'retrait', we just say : "+resp._body) ;
+
+        if(resp._body.trim()=='0'){
+           objet.etats.etat=true;
+           objet.etats.load='terminated';
+           objet.etats.color='red';
+           objet.etats.errorCode='0';
+        }else
+            if(resp._body.match('-12')){
+               objet.etats.etat=true;
+               objet.etats.load='terminated';
+               objet.etats.color='red';
+               objet.etats.errorCode='-12';
+            }
+            else
+
+           setTimeout(()=>{
+
+              this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+                var donnee=rep._body.trim().toString();
+                console.log("Inside verifier retrait: "+donnee) ;
+                if(donnee=='1'){
+                   objet.etats.etat=true;
+                   objet.etats.load='terminated';
+                   objet.etats.color='green';
+                   clearInterval(periodicVerifier) ;
+                }
+                else{
+                  if(donnee!='-1'){
+                   objet.etats.etat=true;
+                   objet.etats.load='terminated';
+                   objet.etats.color='red';
+                   objet.etats.errorCode=donnee;
+                   clearInterval(periodicVerifier) ;
+                  }else{
+                      var periodicVerifier = setInterval(()=>{
+                      this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+                        var donnee=rep._body.trim().toString();
+                        console.log("Inside verifier retrait: "+donnee) ;
+                        if(donnee=='1'){
+                           objet.etats.etat=true;
+                           objet.etats.load='terminated';
+                           objet.etats.color='green';
+                           clearInterval(periodicVerifier) ;
+                        }
+                        else{
+                          if(donnee!='-1'){
+                           objet.etats.etat=true;
+                           objet.etats.load='terminated';
+                           objet.etats.color='red';
+                           objet.etats.errorCode=donnee;
+                           clearInterval(periodicVerifier) ;
+                          }
+                        }
+                      });
+                      },2000);
+                  }
+                }
+              });
+
+           },20000);
+      }
+      else{
+        console.log("error") ;
+
+        }
+    });
+
+  }
+
+
+/******************************** E-MONEY ************************************/
+
+  public cashInEmoney(objet){
+    this.expressocashwebservice.cashin(objet.data.numclient, objet.data.mnt).then(expressocashwebserviceList => {
+      if(!expressocashwebserviceList.match("cURL Error #:")){
+        let infoDepot = JSON.parse(JSON.parse(expressocashwebserviceList));
+        console.log(infoDepot) ;
+        if(infoDepot.status==0){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+        }
+        else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode=infoDepot.status.toString();
+        }
+      }
+      else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+         objet.etats.errorCode="-100";
+      }
+    });
+
+  }
+
+
+  public cashOutEmoney(objet){
+    this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP).then(expressocashwebserviceList => {
+      if(!expressocashwebserviceList.match("cURL Error #:")){
+        let infoRetraitsimpleconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
+        if(infoRetraitsimpleconfirm.status==0){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+        }
+        else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode=infoRetraitsimpleconfirm.status.toString();
+        }
+      }
+      else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode="-100";
+      }
+    });
+
+  }
+
+
+  public cashOutPIN(objet){
+    this.expressocashwebservice.pinCashout(objet.data.pin, objet.data.cni).then(expressocashwebserviceList => {
+      if(!expressocashwebserviceList.match("cURL Error #:")){
+        let infoRetraitaveccodeconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
+        if(infoRetraitaveccodeconfirm.status==0){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+        }
+        else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode=infoRetraitaveccodeconfirm.status.toString();
+        }
+      }
+      else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode="-100";
+      }
+    });
+  }
+
+
+/*********************************************************************/
 
 
 /*********************************/

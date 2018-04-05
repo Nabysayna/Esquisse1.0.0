@@ -65,6 +65,15 @@ label{
     width: 53rem;
 }
 
+.badge{
+    min-width: 28rem ;
+    margin-bottom: 1rem ;
+}
+
+.badge label{
+    color: white !important;
+} 
+
 #om-options{
     position: relative;
     top: -4.7rem;

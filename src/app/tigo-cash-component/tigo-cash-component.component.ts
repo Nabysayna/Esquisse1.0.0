@@ -89,10 +89,11 @@ export class TigoCashComponentComponent implements OnInit {
   /***********************************/
   /*************izi*******************/
      izi(){
-       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash izi','operateur':3,'operation':5,'telephone':this.telephone,'montant':this.montant}));
+       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant}));
        this.hidemodalvendreizi();
        this.reinitialiser();
      }
+     
   /***********************************/
   /********inscription****************/
   inscription(){

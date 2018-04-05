@@ -12,11 +12,11 @@
             </div>
 
             <div class="tab-content">
+
+                  <P *ngIf="echecdepot||echecretrait||echecretraitcode" class="alert alert-danger" style=" width: fit-content;">{{errorMessage}}</P>
+
                 <div class="tab-pane fade col-sm-12 col-xs-12 in" id="depot">
                   <h2>Dépôt</h2>
-                  <h3 *ngIf="depotreussi"  class="alert alert-success">Depot reussi!</h3>
-                  <h3 *ngIf="echecdepot" class="alert alert-danger">Echec de l'operation reessayer plus tard SVP!</h3>
-
                   <form name="transnat" (ngSubmit)="showmodaldepot()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
                     <div class="form-inline">
                       <label>Numéro du client  :</label>
@@ -35,7 +35,6 @@
                 <div class="tab-pane fade col-sm-12 col-xs-12" id="retrait">
                     <h2>Retrait sur compte principal</h2>
                     <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
-                    <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
                     <form name="transnat" (ngSubmit)="showmodalretrait()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
                       <div class="form-inline">
                         <label>Numéro du client :</label>
@@ -52,7 +51,6 @@
                 <div class="tab-pane fade col-sm-12 col-md-12 col-sm-12 col-xs-12" id="retraitcode">
                   <h2>Retrait avec code</h2>
                   <h3 *ngIf="retraitcodereussi" class="alert alert-success">Retrait avec code reussi!</h3>
-                  <h3 *ngIf="echecretraitcode" class="alert alert-success">Echec de l'operation reussi!</h3>
                   <form name="transnat" (ngSubmit)="showmodalretraitcode()" #formretraitcode="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;" class="">
 
                     <div class="form-inline row">

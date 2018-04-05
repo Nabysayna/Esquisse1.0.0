@@ -4,8 +4,9 @@ import { Http, RequestOptions, RequestMethod, Headers  } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 
 import {EcomService, Commande} from "../services/ecom.service";
-import * as _ from "lodash";
 
+import * as sha1 from 'js-sha1';
+import * as _ from "lodash";
 
 class Article {
   public id:number;
@@ -40,13 +41,13 @@ export class newCommande{
 
 @Component({
   selector: 'app-espace-perso',
-  templateUrl: './espace-perso.component.html',
+  templateUrl: './espace-perso.component.html', 
   styleUrls: ['./espace-perso.component.css']
 })
 export class EspacePersoComponent implements OnInit {
 
   articles:Article[][];
-
+  //ecomCaller: EcomServiceWeb;
   loading = false ;
   coderecept : string ;
   listeVentes : any[] ;
@@ -99,27 +100,16 @@ export class EspacePersoComponent implements OnInit {
   categorie:string;
   infosup:string;
   prix:string;
-  filtre : string = "" ;
-
+  
   modif:string="-";
   modifart:string;
   orderedArticles : string ;
   nbrePieds : number ;
   smart : string ;
- /* descriptions=[{'description':'Cosmetiques','value':['provenance','marque','couleur','origine']},
-                {'description':'Vêtements','value':['origine','matière','taille','sexe','tendances','couleur']},
-                {'description':'Chaussures','value':['tendances', 'sexe', 'taille', 'pointure', 'couleur', 'origine','matière']},
-                {'description':'Sac',value:['matière', 'couleur', 'origine', 'genre', 'tendances']},
-                {'description':'Electronique','value':['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-                {'description':'Accessoires',value:['origine', 'matière', 'sexe', 'qualité', 'poids']},
-                {'description':'Outils de bureau',value:['mode', 'dimensions', 'origine', 'fonctions', 'couleur', 'marque']},
-                {'description':'Electroménager',value:['modèle','origine','marque', 'capacité','utilisation']},
-                {'description':'Articles de maison',value:['origine','marque','utilisation','fonctions','modèle']},
-                {'description':'Autre',value:['autre description']}
-                ];*/
   descriptions=[{'description':'Cosmetiques'},{'description':'Vêtements'},{'description':'Chaussures'},{'description':'Sacs'},{'description':'Electronique'},{'description':'Accessoires'},{'description':'Outils de bureau'},{'description':'Electroménager'},{'description':'Articles de maison'},{'description':'Autre'}];
   descriptionsvalues=[];
 
+  uploadProgress: number;
   zone: NgZone;
 
   receivedArticles = "" ;
@@ -128,79 +118,79 @@ export class EspacePersoComponent implements OnInit {
   designation = "designation" ;
   asc = "asc" ;
 
-  
-  constructor(private http: Http,private ecomCaller:EcomService) { }
-
-  ngOnInit() {
-
-    this.loading = true ;
-    this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
-    {
-      this.articles = _.chunk(response, 3) ;
-      this.listarticles = response;
-      this.loading = false ;
-    });
-
-    this.ecomCaller.listerCategorie(this.token).then( response =>
-    {
-      this.categories = response;
-    });
+  constructor(private http: Http,private ecomCaller:EcomService) {
+      //this.ecomCaller = new EcomServiceWeb();
   }
-  deleteArticle(article:Article) {
-    for(var j=0; j<this.articles.length; j++){
-      var ligne=this.articles[j];
-      for (var i=0; i<ligne.length; i++)
-        if (ligne[i].nomImg==article.nomImg)
+
+  ngOnInit() { 
+
+      this.loading = true ;
+      this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
         {
-          this.loading = true ;
-          let artcle = JSON.stringify(ligne[i]) ;
-          let params = { article: artcle ,token: this.token } ;
-          this.ecomCaller.supprimerArticle(params).then( response =>
-          {
-            ligne.splice(i,1);
-            this.loading = false ;
-          });
-          break;
-        }
-    }
+          this.articles = _.chunk(response, 3) ;
+          this.listarticles = response;
+          this.loading = false ;
+        });  
+
+      this.ecomCaller.listerCategorie(this.token).then( response =>
+        {
+          this.categories = response;
+        });  
   }
-
-/* deleteArticle(article:Article) {      
- // filtre : string = "" ;
-}*/
-  filtrerCatalogue() : Article[][] {
-
-    let catalogueApresFiltre : Article[][] = [] ;
-    if (this.filtre=="" || this.filtre==null)
-      return this.articles ;
-    else
+ deleteArticle(article:Article) {      
       for(var j=0; j<this.articles.length; j++){
-        var ligne=this.articles[j] ;
-        let ligneCopy : Article[] = [] ;
-        let k : number = 0 ;
-        for (var i=0; i<ligne.length; i++)
-          if (this.repondAuFiltre(ligne[i]))
-          {
-            ligneCopy[k]=ligne[i];
-            k=k+1 ;
-          }
-        catalogueApresFiltre.push(ligneCopy) ;
+        var ligne=this.articles[j];
+          for (var i=0; i<ligne.length; i++)
+            if (ligne[i].nomImg==article.nomImg)
+            {
+              this.loading = true ;
+              let artcle = JSON.stringify(ligne[i]) ;
+              let params = { article: artcle ,token: this.token } ;
+              this.ecomCaller.supprimerArticle(params).then( response =>
+                {
+                  ligne.splice(i,1);
+                  this.loading = false ;
+                });              
+                break;
+            }
       }
-    return catalogueApresFiltre ;
+  }
+ 
+ filtre : string = "" ;
+
+ filtrerCatalogue() : Article[][] {
+
+     let catalogueApresFiltre : Article[][] = [] ;
+      if (this.filtre=="" || this.filtre==null)
+          return this.articles ;
+      else
+        for(var j=0; j<this.articles.length; j++){
+          var ligne=this.articles[j] ;
+          let ligneCopy : Article[] = [] ;
+          let k : number = 0 ;
+          for (var i=0; i<ligne.length; i++)
+            if (this.repondAuFiltre(ligne[i]))
+            {
+              ligneCopy[k]=ligne[i];
+              k=k+1 ;
+            }
+          catalogueApresFiltre.push(ligneCopy) ;
+        }
+        return catalogueApresFiltre ;
+ }
+
+ repondAuFiltre(article : Article) : boolean {
+      if (this.filtre=="" || this.filtre==null)
+        return true ;
+      else
+        if ( (article.nomImg.toLowerCase().match( this.filtre.toLowerCase() )!=null) || (article.designation.toLowerCase().match( this.filtre.toLowerCase() )!=null) ) 
+            return true ;
+       else
+            return false ;    
   }
 
-  repondAuFiltre(article : Article) : boolean {
-    if (this.filtre=="" || this.filtre==null)
-      return true ;
-    else
-    if ( (article.nomImg.toLowerCase().match( this.filtre.toLowerCase() )!=null) || (article.designation.toLowerCase().match( this.filtre.toLowerCase() )!=null) )
-      return true ;
-    else
-      return false ;
-  }
 
-
-  ajouter(){
+  ajouter(){ 
     this.loading = true ;
     var data=(JSON.stringify({categorie:this.categorie,provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,model:this.modele,capacite:this.capacite,fonctions:this.fonctions,matiere:this.matiere,tendance:this.tendances,mode:this.mode,sexe:this.sexe,infosup:this.infosup})).toString();
       //let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
@@ -223,95 +213,74 @@ export class EspacePersoComponent implements OnInit {
         }); 
   }
 //771765822 10000
- /* ajouterpta(){ 
-    //let params = { token: this.token , designation: this.designationa, description:this.descriptiona, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
-    let params = { token: this.token , designation: this.designationa, description:data, prix: this.prixa, stock:this.stocka, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriea, type:'ecom'}) };
-    console.log(params);
-    this.ecomCaller.ajouterArticle(params).then( response =>
-    {
-      console.log('fi la yamme');
-      this.loading = false ;
-      this.designationa=undefined;
-      this.descriptiona=undefined;
-      this.prixa=undefined ;
-      this.stocka=undefined;
-      this.uploadFile.generatedName = null ;
-      this.uploadFile.originalName = null ;
-      this.newImage = "imagevide.jpg" ;
-      this.prixa = undefined ;
-      this.categoriea = "--- Catégorie ---" ;
-      this.hideAddChildModal();
-    });
-  }*/
-
-  ajouterpta(){
+  ajouterpta(){ 
     this.loading = true ;
-    let params = { token: this.token , designation: this.designationpta, description:this.descriptionpta, prix: this.prixpta, stock:this.stockpta, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriepta, type:'petiteannonce'}) }
-    this.ecomCaller.ajouterArticle(params).then( response =>
-    {
-      this.designationpta=undefined;
-      this.descriptionpta=undefined;
-      this.prixpta=undefined ;
-      this.stockpta=undefined;
-      this.uploadFile.generatedName = null ;
-      this.uploadFile.originalName = null ;
-      this.newImage = "imagevide.jpg" ;
-      this.prixpta = undefined ;
-      this.loading = false ;
-      this.categoriepta = "--- Catégorie ---" ;
-    });
+
+      let params = { token: this.token , designation: this.designationpta, description:this.descriptionpta, prix: this.prixpta, stock:this.stockpta, img_link: this.uploadFile.generatedName, categorie:JSON.stringify({categorie : this.categoriepta, type:'petiteannonce'}) }
+      this.ecomCaller.ajouterArticle(params).then( response =>
+        {
+          this.designationpta=undefined;
+          this.descriptionpta=undefined;
+          this.prixpta=undefined ;
+          this.stockpta=undefined;
+          this.uploadFile.generatedName = null ;
+          this.uploadFile.originalName = null ;
+          this.newImage = "imagevide.jpg" ;
+          this.prixpta = undefined ;
+          this.loading = false ;
+          this.categoriepta = "--- Catégorie ---" ;
+        }); 
   }
 
 
   chargerCommandes(typeListe : string){
-    console.log('azertrytuyiuokyjtrgez chargerCommandes azertrytuyiuokyjtrgez')
     this.loading = true ;
     this.ecomCaller.listerCommandes(this.token, typeListe).then( response =>
-    {
-      console.log('azertrytuyiuokyjtrgez')
-      console.log(response)
-      this.listeCommande = null ;
-      if(typeListe=='toDeliver'){
-        this.smart =  response.borom;
-        this.listeCommande = response.order;
-      }
-      else
-        this.listeCommande =  response;
-      this.loading = false ;
-    });
+      {
+        this.listeCommande = null ;
+        if(typeListe=='toDeliver'){
+          this.smart =  JSON.parse(response).borom ;
+          this.listeCommande = JSON.parse(response).order ;        
+        }
+        else
+          this.listeCommande =  JSON.parse(response) ;
+        this.loading = false ;
+      });    
   }
 
   chargerVentes(){
     this.loading = true ;
     this.ecomCaller.listerVentes(this.token).then( response =>
-    {
-      this.listeVentes = [] ;
-      this.listeVentes =  response ;
-      this.loading = false ;
-    });
+      {
+        this.listeVentes = [] ;
+        this.listeVentes =  response ;
+        this.loading = false ;
+      });    
   }
+
 
   receptionner(idCommande : number){
     let params = {token: this.token, idCommande: idCommande};
     this.loading = true ;
     this.ecomCaller.receptionnerCommandes(params).then( response =>
-    {
-      if(response=="ok")
-        this.receivedArticles = this.receivedArticles + "-"+idCommande.toString()+"-" ;
-      this.loading = false ;
-    });
-  }
+      {
+        if(response=="ok")
+          this.receivedArticles = this.receivedArticles + "-"+idCommande.toString()+"-" ;
+          this.loading = false ;
+      });  
+   }
 
   fournir(idCommande : number){
     let params = {token: this.token, idCommande: idCommande};
     this.loading = true ;
     this.ecomCaller.fournirCommandes(params).then( response =>
-    {
-      if(response=="ok")
-        this.articlesFournis = this.articlesFournis + "-"+idCommande.toString()+"-" ;
-      this.loading = false ;
-    });
-  }
+      {
+        if(response=="ok")
+          this.articlesFournis = this.articlesFournis + "-"+idCommande.toString()+"-" ;
+          this.loading = false ;
+      });  
+   }
+
 
   receivedCmd(idCommande : number){
     return ( this.receivedArticles.indexOf("-"+idCommande.toString()+"-")>-1 ) ;
@@ -321,38 +290,32 @@ export class EspacePersoComponent implements OnInit {
     return ( this.articlesFournis.indexOf("-"+idCommande.toString()+"-")>-1 ) ;
   }
 
-  modifArticle(article:Article){
-    this.modif=article.nomImg;
+
+ modifArticle(article:Article){
+    this.modif=article.nomImg; 
     this.modifart="record"+article.nomImg;
-  }
+ }
 
   enregArticle(article: Article){
-    this.modif="";
-    this.modifart="";
+   this.modif="";
+   this.modifart="";
 
     this.loading = true ;
 
-    for(var j=0; j<this.articles.length; j++){
-      var ligne=this.articles[j];
+   for(var j=0; j<this.articles.length; j++){ 
+    var ligne=this.articles[j];
       for (var i=0; i<ligne.length; i++)
         if (ligne[i].nomImg==article.nomImg)
         {
           if(!(this.uploadFile === undefined)){
             ligne[i].nomImg = this.uploadFile.generatedName ;
           }
-
-       /* this.ecomCaller.modifierArticle(params).then( response =>
+        let artcle = JSON.stringify(ligne[i]) ;
+        let params = { article: artcle ,token: this.token } ;
+        this.ecomCaller.modifierArticle(params).then( response =>
           {
             this.loading = false ;
-          }); */            
-
-          let artcle = JSON.stringify(ligne[i]) ;
-          let params = { article: artcle ,token: this.token } ;
-          this.ecomCaller.modifierArticle(params).then( response =>
-          {
-            this.loading = false ;
-          });
-
+          });              
           break;
         }
     }
@@ -361,34 +324,34 @@ export class EspacePersoComponent implements OnInit {
   annulArticle(){
     this.loading = true ;
     this.ecomCaller.listeArticles(this.token, 'perso').then( response =>
-    {
-      this.articles = _.chunk(response, 5) ;
-      this.listarticles = response;
-      this.loading = false ;
-    });
-    this.modif="";
+      {
+        this.articles = _.chunk(response, 5) ;
+        this.listarticles = response;
+        this.loading = false ;
+      });  
+    this.modif=""; 
     this.modifart="";
-
+ 
   }
-  
   reinitialiser(){
-    this.provenance=undefined;
-    this.marque=undefined;
-    this.couleur=undefined;
-    this.origine=undefined;
-    this.tendence=undefined;
-    this.sexe=undefined;
-    this.mode=undefined;
-    this.utilisation=undefined;
-    this.fonctions=undefined;
-    this.modele=undefined;
-    this.capacite=undefined;
-    this.matiere=undefined;
-    this.tendances=undefined;
-
+     this.provenance=undefined;
+     this.marque=undefined;
+     this.couleur=undefined;
+     this.origine=undefined;
+     this.tendence=undefined;
+     this.sexe=undefined;
+     this.mode=undefined;
+     this.utilisation=undefined;
+     this.fonctions=undefined;
+     this.modele=undefined;
+     this.capacite=undefined;
+     this.matiere=undefined;
+     this.tendances=undefined;
+  
   }
 
   detailsCurrentCommande() : newCommande[]{
+
     if(this.orderedArticles){
       let tabOrder : newCommande[] = JSON.parse(this.orderedArticles) ;
       return tabOrder ;
@@ -396,10 +359,12 @@ export class EspacePersoComponent implements OnInit {
     return [] ;
   }
 
-  uploadFile: any;
+
+ uploadFile: any;
+
 
   @ViewChild('childModal') public childModal:ModalDirective;
-
+ 
   public showChildModal(ordereddArticles):void {
     this.orderedArticles = ordereddArticles ;
     if(JSON.parse(this.orderedArticles).length%3 == 0)
@@ -408,18 +373,17 @@ export class EspacePersoComponent implements OnInit {
       this.nbrePieds = JSON.parse(this.orderedArticles).length/3 + 1;
     this.childModal.show();
   }
-
+ 
   public hideChildModal():void {
     this.childModal.hide();
   }
-//773396188 
+
   /*-----------------------------------------------------------*/
 
   @ViewChild('addChildModal') public addChildModal:ModalDirective;
   @ViewChild('modalmodif') public modalmodif:ModalDirective;
   public showmodaldif(article){
     this.articlemodif=article;
-    this.articlemodif.description=JSON.parse(article.description);
     console.log(this.articlemodif);
     this.modalmodif.show();
     //modifArticle(article)
@@ -427,10 +391,10 @@ export class EspacePersoComponent implements OnInit {
   hidemodalmodif(){
     this.modalmodif.hide();
   }
- /* validermodif(article){
+  validermodif(article){
    // modifArticle(article);
    let data=(JSON.stringify({provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,tendance:this.tendances,mode:this.mode,sexe:this.sexe})).toString();
-   let params={'article':JSON.stringify({description:data,prix:this.prix,designation:this.designation,id:article.id,nomImg:article.nomImg}),'token':this.token};
+   let params=JSON.stringify({'article':{description:data,prix:this.prix,designation:this.designation,id:article.id,nomImg:article.nomImg,token:this.token}});
    console.log(params);
     this.ecomCaller.modifierArticle(params).then( response =>
           {
@@ -440,28 +404,12 @@ export class EspacePersoComponent implements OnInit {
            this.reinitialiser();
           });
    
-  }*/
-
-  validermodif(article){
-    // modifArticle(article);
-    let data=(JSON.stringify({provenance:this.provenance,marque:this.marque,couleur:this.couleur,origine:this.origine,tendance:this.tendances,mode:this.mode,sexe:this.sexe})).toString();
-    let params=JSON.stringify({'article':{description:data,prix:this.prix,designation:this.designation,id:article.id,nomImg:article.nomImg,token:this.token}});
-    console.log(params);
-    this.ecomCaller.modifierArticle(params).then( response =>
-    {
-      console.log(response);
-      // this.loading = false ;
-      this.hidemodalmodif();
-      this.reinitialiser();
-    });
-
   }
-
   public showAddChildModal():void {
     this.descriptionsvalues=[];
     this.addChildModal.show();
   }
-
+ 
   public hideAddChildModal():void {
     this.addChildModal.hide();
     this.categoriea = "--- Catégorie ---" ;
@@ -476,38 +424,38 @@ export class EspacePersoComponent implements OnInit {
     this.categoriea = "--- Catégorie ---" ;
   }
 
-  apiEndPoint = 'https://sentool.bbstvnet.com/sslayer/server-backend-upload/index.php' ;
+  apiEndPoint = 'http://51.254.200.129/backendprod/EsquisseBackEnd/server-backend-upload/index.php' ;
 
   fileChange(event) {
-    let fileList: FileList = event.target.files;
-    if(fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData:FormData = new FormData();
-      formData.append('file', file, file.name);
-      let headers = new Headers();
+      let fileList: FileList = event.target.files;
+      if(fileList.length > 0) {
+          let file: File = fileList[0];
+          let formData:FormData = new FormData();
+          formData.append('file', file, file.name);
+          let headers = new Headers();
 
-      /** No need to include Content-Type in Angular 4 */
-      //Applying content-type in the current case leads to an impossible upload
+          /** No need to include Content-Type in Angular 4 */
+          //Applying content-type in the current case leads to an impossible upload
 
-      // headers.append('Content-Type', 'multipart/form-data');
+          // headers.append('Content-Type', 'multipart/form-data'); 
 
-      headers.append('Accept', 'application/json');
-      let options = new RequestOptions({
-        headers: headers
-      });
+          headers.append('Accept', 'application/json');
+          let options = new RequestOptions({
+                              headers: headers
+                            });
 
-      this.http.post(`${this.apiEndPoint}`, formData, options)
-        .map(res => res.json())
-        .catch(error => Observable.throw(error))
-        .subscribe(
-          data => {
-            let newData = data;
-            this.uploadFile = newData;
-            this.newImage = this.uploadFile.generatedName ;
-          },
-          error => {}
-        )
-    }
+          this.http.post(`${this.apiEndPoint}`, formData, options)
+              .map(res => res.json())
+              .catch(error => Observable.throw(error))
+              .subscribe(
+                  data => { 
+                           let newData = data;
+                           this.uploadFile = newData;
+                           this.newImage = this.uploadFile.generatedName ;
+                        },
+                  error => {}
+              )
+      }
   }
 
   tauxreduc(basicPrice){
@@ -568,11 +516,9 @@ export class EspacePersoComponent implements OnInit {
   roundedValueOf(decimal){
     return Math.round(decimal) ;
   }
-
   descriptionarticle(categorie:string){
-    if(categorie=="--- Catégorie ---"){
+   if(categorie=="--- Catégorie ---"){
       this.descriptionsvalues=[];
-
    }
       //for(let i=0;i<this.descriptions.length;i++){
       //if(this.descriptions[i].description==categorie){
@@ -689,6 +635,6 @@ export class EspacePersoComponent implements OnInit {
       
    //}
     
-    }
-    
   }
+
+}

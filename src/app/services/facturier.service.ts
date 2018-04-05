@@ -11,7 +11,9 @@ export class FacturierService {
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
-  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
+//  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
+
+  private link = "https://mysentool.pro/index.php";
 
 
   private headers = new Headers();
@@ -56,8 +58,8 @@ export class FacturierService {
     });
   }
 
-  public validerwoyofal(api:number,montant:number,compteur:string):Promise<any>{
-    let reEspParams={api:api,token:this.token,montant:montant,compteur:compteur};
+  public validerwoyofal(montant:string,compteur:string):Promise<any>{
+    let reEspParams={token:this.token,montant:montant,compteur:compteur};
     let url=this.link+"/facturier-sen/achatcodewoyofal";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {

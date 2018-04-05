@@ -70,6 +70,9 @@ export class PostcashComponent implements OnInit {
     this.loading = true ;
     this._postCashService.rechargementespece('00221'+this.telephone+'',''+this.montant).then(postcashwebserviceList => {
       this.loading = false ;
+      postcashwebserviceList = JSON.parse( JSON.parse(postcashwebserviceList._body) ) ;
+      console.log(postcashwebserviceList) ;
+
       if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
         this.dataImpression = {
           apiservice:'postecash',
@@ -172,7 +175,11 @@ export class PostcashComponent implements OnInit {
   validateachatjula(){
       this.loading = true ;
       this._postCashService.achatjula(this.mt_carte+'',this.nb_carte+'').then(postcashwebserviceList => {
-          this.loading = false ;
+
+        this.loading = false ;
+
+        postcashwebserviceList = JSON.parse(postcashwebserviceList) ;
+
         if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
           this.loading = false ;
           this.dataImpression = {

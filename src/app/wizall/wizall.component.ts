@@ -191,8 +191,10 @@ export class WizallComponent implements OnInit {
 		  }); 
      }else{
        console.log("error code");
-     }
+     }    
+    
    }
+
    public hidemodalretraitbon(){
       this.modalretraitbon.hide();
       this.reinitialiser();
@@ -378,5 +380,9 @@ export class WizallComponent implements OnInit {
      }
      
   }
+
+    nombreFormate(montant){   
+        return Number( montant.split(".")[0] ).toLocaleString() ;    
+    }
 
 }
