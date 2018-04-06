@@ -47,12 +47,16 @@ export class SdeComponent implements OnInit {
       console.log(response);
     });
   }
+  
   showmodalsde(){
     this.modalsde.show();
     this.detailfactursde();
-
   }
+
   paimantsde(){
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'mntsde':this.mntsde, 'refclientsde':this.refclientsde, 'refFactureSDE':this.refFactureSDE}));
+/*
     this._facturierService.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
        this.hidemodalsde();
         this.dataImpression = {
@@ -72,7 +76,11 @@ export class SdeComponent implements OnInit {
         sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
         this.router.navigate(['accueil/impression']);
     });
+*/
+
   }
+
+
   hidemodalsde(){
    this.modalsde.hide();
   }

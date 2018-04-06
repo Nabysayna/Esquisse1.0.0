@@ -6,6 +6,7 @@ import {WizallService} from "../services/wizall.service";
 import {OrangemoneyService} from "../services/orangemoney.service";
 import {TigocashService} from "../services/tigocash.service";
 import { ExpressocashService } from "../services/expressocash.service";
+import {FacturierService} from "../services/facturier.service";
 
 
 class Article {
@@ -34,7 +35,7 @@ export class AccueilComponent implements OnInit {
   dataImpression:any;
 
 
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService){}
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService){}
 
 /******************************************************************************************************/
 
@@ -162,7 +163,8 @@ export class AccueilComponent implements OnInit {
 
        case 4:{
              var operation=sesion.data.operation;
-
+             console.log("here we go ...") ;
+             console.log(sesion) ;
              switch(operation){
               case 1:{
                    this.validnabon(sesion);
@@ -180,8 +182,6 @@ export class AccueilComponent implements OnInit {
              }
              break ;
        }
-
-
 
        case 6:{
              var operation=sesion.data.operation;
@@ -221,6 +221,7 @@ export class AccueilComponent implements OnInit {
               }
               default : break;
              }
+           break ;
        }
 
        case 7:{
@@ -244,6 +245,36 @@ export class AccueilComponent implements OnInit {
              }
        }
 
+       case 8:{
+         var operation=sesion.data.operation;
+         console.log(sesion);
+         console.log('FACTURIER');
+
+         switch(operation){
+              case 1:{
+                   this.paiemantsde(sesion);
+                   break;
+              }
+              case 2:{
+                  this.validerrapido(sesion);
+                  break;
+              }
+              case 3:{
+                  this.validerwoyofal(sesion);
+                  break;
+              }
+              case 4:{
+                  this.validerpaimentsenelec(sesion);
+                  break;
+              }
+              case 5:{
+                  this.payeroolusolar(sesion);
+                  break;
+              }
+              default : break;
+          }
+       }
+
         default:break;
       }
     }
@@ -251,6 +282,7 @@ export class AccueilComponent implements OnInit {
      console.log('not nice');
     }
   },3000);
+
   }
 
 
@@ -831,6 +863,7 @@ export class AccueilComponent implements OnInit {
       {
 
         let typedebouquet = "" ;
+        response = JSON.parse(response) ;
         console.log(response);
         if(response.response=="ok"){
 
@@ -984,7 +1017,7 @@ export class AccueilComponent implements OnInit {
                  objet.etats.color='red';
                  objet.etats.errorCode=500;
               }
-        });
+      });
     }
 
     cashOutWizall(objet : any){
@@ -1613,6 +1646,76 @@ export class AccueilComponent implements OnInit {
 
 
 /*********************************************************************/
+
+
+
+/*************************** FACTURIERS ******************************/
+
+  paiemantsde(objet){
+    this._facturierService.paimentsde(objet.data.mntsde,objet.date.refclientsde,objet.data.refFactureSDE,'sde').then( response =>{
+      console.log(response) ;
+
+        if( (typeof response.errorCode != "undefined") && response.errorCode == "0" && response.errorMessage == ""){
+        objet.dataI = {
+          apiservice:'postecash',
+          service:'achatcodewayafal',
+          infotransaction:{
+            client:{
+              transactionPostCash: response.transactionId,
+              transactionBBS: 'Id BBS',
+               referenceclient: objet.data.refclientsde,
+               montant: objet.data.mntsde,
+               refFacture: objet.data.refFactureSDE,
+            },
+
+          },
+        }
+
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+
+        }else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+        }
+    });
+
+  }
+
+  validerrapido(objet){
+    console.log(objet);
+    this._facturierService.validerrapido(objet.data.numclient,objet.data.montant,objet.data.badge).then(response =>{
+      console.log(response);
+      if(response.errorCode==0){
+      }else{
+        console.log(response);      
+      }      
+    });
+  }
+
+  payeroolusolar(objet){
+    this._facturierService.payeroolusolar("00221"+objet.data.telephone.toString(),objet.data.compte,objet.data.montant).then(response =>{
+      console.log(response);
+    });
+  }
+
+   validerpaimentsenelec(objet){
+    this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(response =>{
+        console.log(response) ;
+     });  
+   }
+
+  validerwoyofal(objet){
+    this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
+      console.log(response);
+    });
+  }
+
+
+
+
 
 
 /*********************************/

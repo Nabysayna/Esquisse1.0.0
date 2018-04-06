@@ -49,18 +49,18 @@ export class TntComponent implements OnInit {
   nbmNewClient: number;
   tbouquetNewClient : string = 'Sans Abonnement';
 
-	formvisible='';
-	noma:string;
-	prenoma:string;
-	tela:number;
+  formvisible='';
+  noma:string;
+  prenoma:string;
+  tela:number;
   cni : any  = '';
   nchip:number;
-	ncarte:any;
-	nbm:number;
-	tbouquet:string;
-	nAbonnement:NAbonnement;
-	lAbonnement:LAbonnement;
-	eFinancier:EFinancier;
+  ncarte:any;
+  nbm:number;
+  tbouquet:string;
+  nAbonnement:NAbonnement;
+  lAbonnement:LAbonnement;
+  eFinancier:EFinancier;
   public retourTntWS: {}[] ;
   private singleTntWS: TntResponse ;
 
@@ -95,33 +95,35 @@ export class TntComponent implements OnInit {
   @ViewChild('modaldecodeur') modaldecodeur: ModalDirective;
   @ViewChild('modalcarte') modalcarte: ModalDirective;
   constructor(
-  	     private eFinancierService:EFinancierService,
-  	     private lAbonnementService: LAbonnementService,
-  	  	 private nAbonnementService: NAbonnementService,
-  		   private location: Location,
-         private _tntService:TntService,
-         private _utilsService:UtilsService,
+         private eFinancierService:EFinancierService,
+         private lAbonnementService: LAbonnementService,
+         private nAbonnementService: NAbonnementService,
+         private location: Location,
          private route:ActivatedRoute,
-  	     private router: Router) { }
+         private tntCaller:TntService,
+         private utilService : UtilsService,
+         private router: Router) { }
 
   ngOnInit():void {
-    this.retrieveAlerteMessage() ;
+
     this.route.params.subscribe( (params : Params) => {
       this.nAbonnement = this.nAbonnementService.getNAbonnement(5);
     });
-    this.route.params.subscribe( (params : Params) => {
-        this.lAbonnement = this.lAbonnementService.getLAbonnement(5);
+      this.route.params.subscribe( (params : Params) => {
+      this.lAbonnement = this.lAbonnementService.getLAbonnement(5);
     });
-    this.route.params.subscribe( (params : Params) => {
+      this.route.params.subscribe( (params : Params) => {
       this.eFinancier = this.eFinancierService.getEFinancier(5);
     });
+
   }
 
   validVerifierNum(){
     this.loading = true ;
     this.erreur = false ;
-    this._tntService.checkNumber(this.token, this.verifierNumInput.toString()).then( response => {
+    this.tntCaller.checkNumber(this.token, this.verifierNumInput.toString()).then( response => {
         this.singleTntWS = response ;
+        console.log(this.singleTntWS);
         this.noma = this.singleTntWS.nom ;
         this.prenoma = this.singleTntWS.prenom ;
         this.telNewClient = Number(this.singleTntWS.tel);
@@ -145,46 +147,64 @@ export class TntComponent implements OnInit {
   }
 
   validnabon(){
-      this.modalabonnement.hide();
-      let typedebouquet : number ;
-      if(this.tbouquet == "Maanaa") typedebouquet=1;
-      if(this.tbouquet == "Boul khool") typedebouquet=2;
-      if(this.tbouquet == "Maanaa + Boul khool") typedebouquet=3;
+   
+    this.modalabonnement.hide(); 
+    var typedebouquet : number ;
+    if(this.tbouquet == "Maanaa")
+      typedebouquet=1;
+    if(this.tbouquet == "Boul khool")
+      typedebouquet=2;
+    if(this.tbouquet == "Maanaa + Boul khool")
+      typedebouquet=3;
 
-      sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
-      this.hidemodaldecodeur();
-      this.reinitialiserVariables();
+    /*this.singleTntWS.tel = this.telNewClient.toString() ;
+    this.singleTntWS.nchipNewClient = this.nchipNewClient.toString();
+    this.singleTntWS.ncarteNewClient = this.ncarteNewClient.toString() ;*/
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
+    this.hidemodaldecodeur(); 
+    this.reinitialiserVariables();
+ 
   }
+
 
   listerAbonnements(){
       this.loading = true ;
       this.erreur = false ;
 
-      this._tntService.listAbonnement(this.token).then( response => {
-        this.retourTntWS = response ;
-        this.loading = false ;
-      });
+      this.tntCaller.listAbonnement(this.token).then( response =>
+        {
+          this.retourTntWS = response ;
+          this.loading = false ;
+          //console.log("response "+this.retourTntWS) ;
+        }) ;
   }
 
   listerVenteDeco(){
       this.loading = true ;
       this.erreur = false ;
 
-      this._tntService.listeVenteDecods(this.token).then( response => {
-        this.retourTntWS = response.reverse() ;
-        this.loading = false ;
-      });
+      this.tntCaller.listeVenteDecods(this.token).then( response =>
+        {
+          this.retourTntWS = response.reverse() ;
+          this.loading = false ;
+          //console.log("response "+this.retourTntWS) ;
+        }) ;
   }
 
   listerVenteCarte(){
       this.loading = true ;
       this.erreur = false ;
-      console.log("*****************listerVenteCarte************")
-      this._tntService.listerVenteCartes(this.token).then( response => {
-        this.retourTntWS = response.reverse() ;
-        this.loading = false ;
-      });
+
+      this.tntCaller.listerVenteCartes(this.token).then( response =>
+        {
+          this.retourTntWS = response.reverse() ;
+          this.loading = false ;
+          //console.log("response "+this.retourTntWS) ;
+        }) ;
   }
+
+
 
   vendreDecodeur(){
      var typedebouquet : number ;
@@ -211,22 +231,9 @@ export class TntComponent implements OnInit {
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tnt vente carte','operateur':4,'operation':3,'prenom':this.prenomNewClient,'tel':this.telNewClient,adresse:this.adresseNewClient, region:this.regionNewClient, cni:this.cniNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'nomclient':this.nomNewClient}));
        this.modalcarte.hide();
        this.reinitialiserVariables() ;
-
+  
   }
 
-  retrieveAlerteMessage(){
-    let periodicVerifier = setInterval(()=>{
-      this._utilsService.consulterLanceurDalerte().subscribe(
-        data => {
-          this.message=data.message;
-        },
-        error => alert(error),
-        () => {
-          console.log(3)
-        }
-      )
-    },10000);
-  }
 
   reinitialiserVariables(){
       this.erreur = false ;
@@ -262,27 +269,21 @@ export class TntComponent implements OnInit {
     );
     popupWin.document.close();
   }
-
-  public showmodalabonnement(){
+ public showmodalabonnement(){
     this.modalabonnement.show();
   }
-
   public hidemodalcodewoyofal(){
     this.modalabonnement.hide();
   }
-
-  public showmodaldecodeur(){
+ public showmodaldecodeur(){
     this.modaldecodeur.show();
   }
-
   public hidemodaldecodeur(){
     this.modaldecodeur.hide();
   }
-
-  public showmodalcarte(){
+ public showmodalcarte(){
     this.modalcarte.show();
   }
-
   public hidemodalcarte(){
     this.modalcarte.hide();
   }

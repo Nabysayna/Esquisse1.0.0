@@ -73,35 +73,40 @@ export class SenelecComponent implements OnInit {
      });
    }
    validerpaimentsenelec(){
+    this.modalsenelec.hide();
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SENELEC','operateur':8,'operation':4, 'montant':this.montant,'police':this.police,'num_facture':this.num_facture,'service':this.service}));
+
+/*
     this._facturierService.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
-      if(response.errorCode==0){
-         this.modalsenelec.hide();
-         this.dataImpression = {
-            apiservice:'postecash',
-            service:'reglementsenelec',
-            infotransaction:{
-              client:{
-                transactionPostCash: response.transactionId,
-                transactionBBS: 'Id BBS',
-                police: this.police,
-                facture: this.num_facture,
-                montant: response.montant_reel,
+        if(response.errorCode==0){
+           this.modalsenelec.hide();
+           this.dataImpression = {
+              apiservice:'postecash',
+              service:'reglementsenelec',
+              infotransaction:{
+                client:{
+                  transactionPostCash: response.transactionId,
+                  transactionBBS: 'Id BBS',
+                  police: this.police,
+                  facture: this.num_facture,
+                  montant: response.montant_reel,
+
+                },
 
               },
+            }
+            sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+            this.router.navigate(['accueil/impression']);
+           console.log(response);
+        }else{
+          console.log(response);
+          this.modalsenelec.hide();
+        }
 
-            },
-          }
-          sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
-          this.router.navigate(['accueil/impression']);
-         console.log(response);
-      }else{
-        console.log(response);
-        this.modalsenelec.hide();
-      }
+     });
+*/
 
-   });
-
-   }
+  }
 
 
 }

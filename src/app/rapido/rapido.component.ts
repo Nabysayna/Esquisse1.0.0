@@ -10,7 +10,9 @@ import {FacturierService} from "../services/facturier.service";
   styleUrls: ['./rapido.component.css']
 })
 export class RapidoComponent implements OnInit {
+
   ngOnInit(){}
+
   numclient:string;
   badge:string;
   montant:string;
@@ -32,15 +34,8 @@ export class RapidoComponent implements OnInit {
 
   validerrapido(){
     this.modalrapido.hide();
-    this._facturierService.validerrapido(this.numclient,this.montant,this.badge).then(response =>{
-      console.log(response);
-      this.messagesucce=true;
-      this.montant=undefined;
-      this.badge=undefined;
-      this.numclient=undefined;
-  });
-
-}
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'RAPIDO','operateur':8,'operation':2,'numclient':this.numclient,'montant':this.montant, 'badge':this.badge}));
+  }
 
 }
 

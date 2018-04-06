@@ -21,13 +21,19 @@ export class OoluComponent implements OnInit {
   ngOnInit() { }
 
   payeroolusolar(){
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'OOLU SOLAR','operateur':8,'operation':5,'telephone':this.telephone.toString(), 'compte':this.compte, 'montant':this.montant}));
+
+/*  
     this._facturierService.payeroolusolar("00221"+this.telephone.toString(),this.compte,this.montant).then(response =>{
       console.log(response);
       this.montant=undefined;
       this.compte=undefined;
       this.telephone=undefined;
     });
+*/
   }
+
 
 }
 

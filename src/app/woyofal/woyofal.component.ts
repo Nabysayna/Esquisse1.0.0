@@ -36,10 +36,14 @@ export class WoyofalComponent implements OnInit {
    this.modalwoyofal.hide();
   }
   validerwoyofal(){
+    this.modalwoyofal.hide();
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'WOYOFAL','operateur':8,'operation':3,'montant':this.montant.toString(), 'compteur':this.compteur}));
+
+/*
     this._facturierService.validerwoyofal(this.montant.toString(),this.compteur).then(response =>{
       console.log(response);
       this.modalwoyofal.hide();
-/*
+
       this.dataImpression = {
           apiservice:'postecash',
           service:'achatcodewayafal',
@@ -56,9 +60,9 @@ export class WoyofalComponent implements OnInit {
         }
         sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
         this.router.navigate(['accueil/impression']);
+    });
 */
 
-    });
   }
 
 /******************************************************************************************************/
