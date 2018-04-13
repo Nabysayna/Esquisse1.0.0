@@ -28,6 +28,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade col-lg-offset-1 col-md-offset-1 col-xs-offset-1 col-sm-10 col-xs-10 in active" id="depot">
                         <h2>Dépôt</h2>
+                        <a (click)="showmodalfraiscashin()"> Consulter les frais </a>
                         <form name="transnat" (ngSubmit)="depotmodal()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 							<div class="form-inline">
 							 <label>Numéro du client  :</label>
@@ -43,6 +44,7 @@
 
                 <div class="tab-pane fade col-lg-offset-1 col-md-offset-1 col-xs-offset-1 col-sm-10 col-xs-10" id="retrait">
                         <h2>Retrait</h2>
+                        <b>Numéro Distributeur : 76 600 36 01</b>
                         <form name="transnat" (ngSubmit)="retirermodal()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 						  <div class="form-inline">
 							<label>Numéro du client :</label>
@@ -59,22 +61,22 @@
                        <!-- <h2>Retrait de bon</h2>-->
                        <div class="panel panel-default">
 						    <div class="panel-body">
-								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
+<!-- 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
 									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#boncache" data-toggle="tab">Bon Cash</a>
 									  <a style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3" href="#bonachat" data-toggle="tab">bon d'achat</a >
-								</div>
+								</div> -->
 								<div class="tab-content" style="margin-top:10px">
 									<div class="tab-pane active" id="boncache">
 										<form class="form-inline">
-											<label>Code de Bon :</label>
+											<label style="margin-left: 8rem">Code du Bon :</label>
 											<input type="text" [(ngModel)]="codebon" name="codebon" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
 											<input (click)="showmodalretraitbon()" type="button" value="Vérifier" class="btn btn-success" />
 									    </form>
 									    
 									</div>
 									<div style="margin-left:auto;margin-right:auto">
-										<p *ngIf="messageretraitcash"  class="alert alert-success col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Operation reussie</p>
-									    <p *ngIf="messageretraitcasherror"   class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code deja utilisé</p>
+										<p *ngIf="messageretraitcash"  class="alert alert-success col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Operation reussie. Vous pouvez remettre l'argent au client.</p>
+									    <p *ngIf="messageretraitcasherror"   class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code Incorrect</p>
 									    <p *ngIf="errorverifcode"  class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code bon incorrect</p>
 									
 									</div>
@@ -94,8 +96,8 @@
                        <div class="panel panel-default">
 						    <div class="panel-body">
 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
-									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#boncacheA" data-toggle="tab">Bon Cash</a></div>
-									  <div style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="#bonachatA" data-toggle="tab">Bon Achat</a ></div>
+									  <a href="#boncacheA" data-toggle="tab" style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3">Bon Cash</a>
+<!-- 									  <a href="#bonachatA" data-toggle="tab" style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3">Bon Achat</a > -->
 								</div>
 								<div class="tab-content col-lg-offset-3 col-md-offset-3" style="margin-top:10px;">
 									<div class="tab-pane" id="boncacheA">
@@ -209,7 +211,8 @@
 										 </div>
 									</div>
 									<div class="tab-pane" id="bonachatA">
-										 <div class="row">
+											Service en cours de finalisation.
+<!-- 										 <div class="row">
 											 <div class="col-lg-5 col-md-5">
 												 <form>
 													 <div class="row">
@@ -241,6 +244,7 @@
 											 </div>
 										 </div>
 										 <input (click)="showmodalenvoibonachat()" type="button" class="btn btn-success" value="valider" /> 
+ -->
 									</div>
 								</div>
                             </div>
@@ -295,6 +299,12 @@
 						 </div>
 						 <div class="form-group">
 							 <label >Montant Transaction : {{this.mnt}}</label>
+						 </div>
+						 <div class="form-group">
+							 <label >Frais Transaction : {{this.fraisDepot}}</label>
+						 </div>
+						 <div class="form-group">
+							 <label >Total à payer : {{this.fraisDepot + this.mnt}}</label>
 						 </div>
 					 </form>
 					
@@ -475,10 +485,7 @@
 							 </div>
 						     <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
 								 <select class="textinput" [(ngModel)]="nationalite" name="nationalite">
-									 <option value="SN">senegalaise</option>
-									 <option value="SN">senegalaise</option>
-									 <option value="SN">senegalaise</option>
-									 <option value="SN">senegalaise</option>
+									 <option value="SN">Sénégalaise</option>
 								 </select>
 						      </div>
 						</div>
@@ -508,7 +515,7 @@
 					</form>
 					
 				 </div>
-		     </div><!--astoudiop0404@gmail.com/ASTOUDIOP2017-->
+		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="fermer" (click)="hidemodalretraitbon()" class="btn btn-danger" />
 		     </div>
@@ -738,10 +745,28 @@
 				  <input type="button" value="fermer" (click)="fermersenelecmodal()" class="btn btn-danger" />
 		     </div>
 		  </div> 
-	    </div>
-
-  
+	    </div>  
 </div>
+
+<div bsModal #modalfraiscashin="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+		 <div class="modal-dialog modal-md">
+		    <div class="modal-content" >
+		      <div class="modal-header">
+				<button type="button" class="close pull-right" aria-label="Close" (click)="fermermodalfraiscashin()">
+				    <span aria-hidden="true">&times;</span>
+		        </button>
+	            <h4 class="modal-title" id="myModalLabel">FRAIS DEPOT.</h4>
+		     </div>
+		     <div class="modal-body">
+			    <img  src="assets/fraiswizall.PNG" />
+		     </div>
+		     <div class="modal-footer">
+		     </div>
+		  </div> 
+	    </div>  
+</div>
+
 
 <div *ngIf="this.loading">
     <app-loader></app-loader>    

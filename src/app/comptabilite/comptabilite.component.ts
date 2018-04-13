@@ -672,9 +672,16 @@ export class ComptabiliteComponent implements OnInit {
         this.bilanexploitationaveccommission[1].commission+=type.commission;
       }
       if(type.service == 'wizall'){
-        this.bilanexploitationaveccommission[2].cashin+=type.mnt;
+        if(type.designation == 'depot'){
+          this.bilanexploitationaveccommission[2].cashin+=type.mnt;
+        }
+        else{
+          this.bilanexploitationaveccommission[2].cashout+=type.mnt;
+          this.bilanexploitationaveccommission[6].cashin-=type.mnt;
+        }
         this.bilanexploitationaveccommission[2].commission+=type.commission;
       }
+
       if(type.service == 'emoney'){
         if(type.designation == 'depot'){
           this.bilanexploitationaveccommission[3].cashin+=type.mnt;

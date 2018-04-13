@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
@@ -7,6 +7,9 @@ import {OrangemoneyService} from "../services/orangemoney.service";
 import {TigocashService} from "../services/tigocash.service";
 import { ExpressocashService } from "../services/expressocash.service";
 import {FacturierService} from "../services/facturier.service";
+import {UtilsService} from "../services/utils.service";
+
+import { ModalDirective } from 'ng2-bootstrap/modal';
 
 
 class Article {
@@ -33,9 +36,15 @@ export class AccueilComponent implements OnInit {
   load="loader";
   actif = -1 ;
   dataImpression:any;
+  latitude : any ;
+  longitude :any ;
+  accuracy :any ;
+
+  localisation : any ;
+  messageGeolocation : any ;
 
 
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService){}
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService){}
 
 /******************************************************************************************************/
 
@@ -50,6 +59,42 @@ export class AccueilComponent implements OnInit {
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
     this.processus();
+  }
+
+/*******************************************************************************************************/
+
+geolocaliser(){
+  console.log("appel") ;
+  if(navigator.geolocation){
+      console.log("appel geolocation") ;
+      navigator.geolocation.getCurrentPosition(position => {
+        this.latitude = position.coords.latitude ;
+        this.longitude = position.coords.longitude ;
+        this.accuracy = position.coords.accuracy ;
+        console.log(this.latitude+ ' ET '+ this.longitude);
+        this.utilitaire.recordGeospatialCoords({latitude:this.latitude, longitude:this.longitude, accuracy:this.accuracy}).then(response=>{
+          if(response._body.match("done")){
+          this.messageGeolocation = "Votre Point a été Géolocalisé." ;
+          this.ouvrir() ;
+          }
+          console.log(response) ;
+
+        }) ;
+      });
+   }else{
+       this.messageGeolocation = "Votre navigateur empêche la géolocalisation. Veuillez contacter votre conseiller clientéle pour vous aider." ;
+        this.ouvrir() ;
+  }
+}
+
+  @ViewChild('viewMore') public successModal:ModalDirective;
+
+  ouvrir(){
+      this.successModal.show() ;
+  }
+
+  closeModal(){
+      this.successModal.hide() ;
   }
 
 /******************************************************************************************************/
@@ -205,7 +250,6 @@ export class AccueilComponent implements OnInit {
                   break;
               }
               case 5:{
-                 // this.payerSenelecWizall(sesion);
                  this.validationretraitbon(sesion);
                  break;
               }
@@ -360,7 +404,7 @@ export class AccueilComponent implements OnInit {
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifier) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=45){
+                            if(donnee=='-1' && objet.etats.nbtour>=70){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -460,7 +504,7 @@ export class AccueilComponent implements OnInit {
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifier) ;
                           }
-                            if(donnee=='-1' && objet.etats.nbtour>=10){
+                            if(donnee=='-1' && objet.etats.nbtour>=70){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -553,7 +597,7 @@ export class AccueilComponent implements OnInit {
                        objet.etats.errorCode=donnee;
                        clearInterval(periodicVerifier) ;
                     }
-                    if(donnee=='-1' && objet.etats.nbtour>=10){
+                    if(donnee=='-1' && objet.etats.nbtour>=70){
                       this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                         var donnee=rep._body.trim().toString();
                          if(donnee=="c"){
@@ -664,7 +708,7 @@ export class AccueilComponent implements OnInit {
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifier) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=10){
+                            if(donnee=='-1' && objet.etats.nbtour>=70){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -835,7 +879,7 @@ export class AccueilComponent implements OnInit {
 
      if(etat.etats.etat==true){
 
-       if(etat.data.operateur!=2 && etat.etats.color=='green'){
+       if(etat.data.operateur!=2 && etat.data.operateur!=6 && etat.data.operateur!=3 && etat.data.operateur!=1 && etat.etats.color=='green'){
 
   			 sessionStorage.setItem('dataImpression', JSON.stringify(imprime));
   			 this.router.navigate(['accueil']);
@@ -998,15 +1042,6 @@ export class AccueilComponent implements OnInit {
       this._wizallService.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
               console.log(response) ;
               if(response.commission!=undefined){
-                objet.dataI = {
-                  apiservice:'wizall',
-                  service:'senelec',
-                 infotransaction:{
-                    client:{
-                  },
-
-                },
-              };
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='green';
@@ -1022,18 +1057,10 @@ export class AccueilComponent implements OnInit {
 
     cashOutWizall(objet : any){
       console.log('cashOutWizall');
-      this._wizallService.intouchCashout("test 1", objet.data.num, objet.data.montant).then( response =>{
+      this._wizallService.intouchCashout(objet.data.num, objet.data.montant).then( response =>{
+              response = JSON.parse(JSON.parse(response._body)) ;
               console.log(response) ;
-              if(response.status=="PENDING"){
-                objet.dataI = {
-                  apiservice:'wizall',
-                  service:'senelec',
-                 infotransaction:{
-                    client:{
-                  },
-
-                },
-              };
+              if(response.commission!=undefined){
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='green';
@@ -1053,28 +1080,39 @@ export class AccueilComponent implements OnInit {
                let data =JSON.parse(response.code);
                console.log(data);
                if(response.code.indexOf("status")!=-1 && data.status=="valid"){
-				   objet.etats.etat=true;
-				   objet.etats.load='terminated';
-				   objet.etats.color='green';
-				   alert("operation reussie");
+      				   objet.etats.etat=true;
+      				   objet.etats.load='terminated';
+      				   objet.etats.color='green';
                }
                if(response.code.indexOf("code")!=-1 && data.code==500){
-                   objet.etats.etat=true;
-				   objet.etats.load='terminated';
-				   objet.etats.color='red';
-				   alert("echec de operation");
+                  objet.etats.etat=true;
+                  objet.etats.load='terminated';
+                  objet.etats.color='red';
                }
               
          });
     }
+
     validationretraitbon(objet:any){
-        this._wizallService.validationretraitbon().then(response =>{
-               console.log(response);
-               objet.etats.etat=true;
-               objet.etats.load='terminated';
-               objet.etats.color='green';
-         });
+        console.log("Retrait de bon via Accueil!");
+        console.log(objet);
+       this._wizallService.bonDebitVoucher(objet.data).then(response =>{
+        console.log(response);
+        let data=JSON.parse(response);
+          if( data.timestamp != undefined ){
+             objet.etats.etat=true;
+             objet.etats.load='terminated';
+             objet.etats.color='green';
+          }else{
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';          
+          }
+       });
+
     }
+
+
     validerbonachat(objet:any){
         this._wizallService.validerbonachat(objet).then(response =>{
                console.log(response);
@@ -1368,7 +1406,7 @@ export class AccueilComponent implements OnInit {
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifier) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=10){
+                            if(donnee=='-1' && objet.etats.nbtour>=70){
                               this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                                 var donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -1689,15 +1727,33 @@ export class AccueilComponent implements OnInit {
     this._facturierService.validerrapido(objet.data.numclient,objet.data.montant,objet.data.badge).then(response =>{
       console.log(response);
       if(response.errorCode==0){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
       }else{
-        console.log(response);      
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
       }      
     });
   }
 
   payeroolusolar(objet){
     this._facturierService.payeroolusolar("00221"+objet.data.telephone.toString(),objet.data.compte,objet.data.montant).then(response =>{
+      response = JSON.parse(response);
+
       console.log(response);
+/*
+      if(response.errorCode==0){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+      }else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+      }      
+*/
     });
   }
 
@@ -1709,7 +1765,29 @@ export class AccueilComponent implements OnInit {
 
   validerwoyofal(objet){
     this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
-      console.log(response);
+        console.log(response) ;
+        if( (typeof response.errorCode != "undefined") && response.errorCode == "0" && response.errorMessage == ""){
+        objet.dataI = {
+            apiservice:'postecash',
+            service:'achatcodewayafal',
+            infotransaction:{
+              client:{
+                transactionPostCash: response.transactionId,
+                transactionBBS: 'Id BBS',
+                codewoyafal: response.code,
+                montant: objet.data.montant,
+                compteur: objet.data.compteur,
+              },
+            },
+          };
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+        }else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+        }
     });
   }
 

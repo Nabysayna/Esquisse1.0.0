@@ -498,12 +498,20 @@ export class AdminmultipdvDashboardComponent implements OnInit {
 
       }
       if(type.service == 'wizall'){
-        this.bilantouslescommissions[2].liste.push(type);
-        this.bilantouslescommissions[2].cashout+=type.montant;
-        this.bilantouslescommissions[2].commission+=type.commission;
+        if(type.produit.match('retrait')){
+          this.bilantouslescommissions[2].cashin+=type.montant;
 
-        this.bilantouslescommissions[6].cashout+=type.montant;
+          this.bilantouslescommissions[6].cashin+=type.montant;
+        }
+        else{
+          this.bilantouslescommissions[2].cashout+=type.montant;
+
+          this.bilantouslescommissions[6].cashout+=type.montant;
+        }
+        this.bilantouslescommissions[2].liste.push(type);
+        this.bilantouslescommissions[2].commission+=type.commission;
       }
+
       if(type.service == 'tigocash'){
         this.bilantouslescommissions[5].liste.push(type);
         this.bilantouslescommissions[5].cashout+=type.montant;

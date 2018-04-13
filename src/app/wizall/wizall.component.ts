@@ -23,6 +23,9 @@ export class WizallComponent implements OnInit {
    nomclient : string ;
    statuspayment : boolean ;
    etat=false;
+
+   fraisDepot = 0 ;
+
    validerfirst:boolean;
    validersecond:boolean;
    bon:string;
@@ -77,7 +80,16 @@ export class WizallComponent implements OnInit {
   @ViewChild('modalretraitbonachat') public modalretraitbonachat:ModalDirective;
   @ViewChild('modalenvoiboncash') public modalenvoiboncash:ModalDirective;
   @ViewChild('modalenvoibonachat') public modalenvoibonachat:ModalDirective;
+  @ViewChild('modalfraiscashin') public modalfraiscashin:ModalDirective;
   
+
+   public showmodalfraiscashin(){
+      this.modalfraiscashin.show();
+   }
+   public fermermodalfraiscashin(){
+      this.modalfraiscashin.hide();
+   }
+
    public showmodalenvoibonachat(){
       this.modalenvoibonachat.show();
    }
@@ -119,11 +131,14 @@ export class WizallComponent implements OnInit {
    }
    
    public validerenvoibon(){
+
+       this.hidemodalenvoiboncash();
+
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall envoi de bon','operateur':6,'operation':6,prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB}));
       
-       this.hidemodalenvoiboncash();
         this.reinitialiser();
    }
+
    public validerbonachat(){
        //sessionStorage.setItem('curentProcess',JSON.stringify({nom:'Wizall envoi de bon',operateur:6,operation:7,prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB}));
       // let data={prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB};
@@ -140,9 +155,8 @@ export class WizallComponent implements OnInit {
       this.messageretraitcasherror=false;
       this.errorverifcode=false;
       this._wizallService.verifier_code_retraitbon(this.codebon).then(response => {
-      //let data=response._body;
       let data=JSON.parse(response);
-     // console.log(data);
+      console.log(data);
        if(response.indexOf("status")!=-1 && data.status=="valid"){
           this.errorverifcode=false;
           this.donneeretraitbon=data;
@@ -173,6 +187,7 @@ export class WizallComponent implements OnInit {
    }
 
     public depotmodal(){
+       this.fraisDepot = this.getFrais(this.mnt) ;
        this.modaldepot.show();
     }
     public retirermodal(){
@@ -199,28 +214,42 @@ export class WizallComponent implements OnInit {
           this.validersecond=true; 
        });
     }
+
     validationretraitbon(){
        console.log(this.nationalite);
        console.log(this.num_card);
        console.log(this.secondcode);
-       let data={nationalite:this.nationalite,num_card:this.num_card,type_carte:this.type_piece,codebon:this.secondcode,code_validation:this.codebon};
+
+       let montantRetrait = Number(this.montant) ;
+
+//       let data={nationalite:this.nationalite,num_card:this.num_card,type_carte:this.type_piece,codebon:this.secondcode,code_validation:this.codebon, 'montant':montantRetrait };
+
+        console.log("Montant retrait bon :::::"+montantRetrait) ;
+
+         let data={'nom':'Wizall retrait de bon','operateur':6,'operation':5, 'nationalite':this.nationalite,'num_card':this.num_card,'type_carte':this.type_piece,'codebon':this.secondcode,'code_validation':this.codebon, 'montant':montantRetrait };
+
+         this.hidemodalretraitbon();
+
+
+         sessionStorage.setItem('curentProcess',JSON.stringify(data) ) ;
+
       // sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall retrait de bon','operateur':6,'operation':5,'secure_id':925938,'used_value':1789,'agent_msisdn':707511503,'agent_pin':1001,'debtor_pos_id':'P1','debtor_employee_id':'V1','recipient_nationality':this.nationalite,'recipient_identity_type':'idcard','recipient_identity_number':this.num_card}));
        
+/*
+       this.hidemodalretraitbon();
        this._wizallService.bonDebitVoucher(data).then(response =>{
-        //console.log(response);
+        console.log(response);
         let data=JSON.parse(response);
-          if(response.indexOf("Operation")!=-1 && data.Operation=="Registration"){
+          if(data.timestamp!=undefined){
             this.messageretraitcash=true;
             this.messageretraitcasherror=false;
-            this.hidemodalretraitbon();
-          }
-          
-          if(response.indexOf("code")!=-1 &&  data.error=="Invalid OTP"){
+          }else{
+            this.messageretraitcasherror=true;
                this.messagesecondcode=true;
-              
           }
        });
-       
+*/
+
     }
 
     public sdemodal(){
@@ -276,6 +305,7 @@ export class WizallComponent implements OnInit {
 
     deposer(){
       this.fermermodaldepot() ;
+      this.mnt = this.mnt + this.fraisDepot ;
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient}));
     }
 
@@ -294,6 +324,53 @@ export class WizallComponent implements OnInit {
        let montant = Number(this.mntSENELEC) ;
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall Senelec','operateur':6,'operation':4,'montant':montant,'police':this.numpolice, 'numfacture':this.numFactureSenelec}));
     }
+
+    getFrais(montant){ 
+      let frais = 0 ;
+
+      if(montant>=1 && montant <=499) 
+        frais =  25 ;
+
+      if(montant>=500 && montant <=1100) 
+        frais =  60 ;
+
+      if(montant>=1101 && montant <=3000) 
+        frais =  150 ;
+
+      if(montant>=3001 && montant <=5000) 
+        frais =  200 ;
+
+      if(montant>=5001 && montant <=10000) 
+        frais =  400 ;
+
+      if(montant>=10001 && montant <=15000) 
+        frais =  600 ;
+      if(montant>=15001 && montant <=20000) 
+        frais =  800 ;
+      if(montant>=20001 && montant <=35000) 
+        frais =  1400 ;
+      if(montant>=35001 && montant <=60000) 
+        frais =  2400 ;
+      if(montant>=60001 && montant <=75000) 
+        frais =  2625 ;
+      if(montant>=75001 && montant <=100000) 
+        frais =  3100 ;
+      if(montant>=100001 && montant <=150000) 
+        frais =  4000 ;
+      if(montant>=150001 && montant <=200000) 
+        frais =  6000 ;
+      if(montant>=200001 && montant <=300000) 
+        frais =  7500 ;
+      if(montant>=300001 && montant <=400000) 
+        frais =  10000 ;
+      if(montant>=400001 && montant <=750000) 
+        frais =  14000 ;
+      if(montant>=750001 && montant <=1000000) 
+        frais =  montant*0.018 ;
+
+        return frais ;    
+    }
+
 
     nombreFormate(montant){   
         return Number( montant.split(".")[0] ).toLocaleString() ;    

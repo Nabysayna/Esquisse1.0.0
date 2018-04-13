@@ -37,8 +37,8 @@ export class WizallService {
     });
   }
 
-  public intouchCashout(agentmsisdn : string, usermsisdn : string, amount : number): Promise<any>  {
-    let reEspParams = {token:this.token, agentmsisdn: agentmsisdn, usermsisdn: usermsisdn, amount: amount} ;
+  public intouchCashout(usermsisdn : string, amount : number): Promise<any>  {
+    let reEspParams = {token:this.token, customer: usermsisdn, amount: amount} ;
     let params="params="+JSON.stringify(reEspParams);
     let link=this.link+"/wizall-sen/intouchCashout";
     return new Promise( (resolve, reject) => {
@@ -131,7 +131,7 @@ export class WizallService {
   
   public bonDebitVoucher(data:any):Promise<any>{
     let link=this.link+"/wizall-sen/bonDebitVoucher";
-    let params="params="+JSON.stringify({token:this.token,nationalite:data.nationalite,num_card:data.num_card,type_carte:data.type_carte,secure_id:data.codebon,code_validation:data.code_validation});
+    let params="params="+JSON.stringify({token:this.token,nationalite:data.nationalite,num_card:data.num_card,type_carte:data.type_carte,secure_id:data.codebon,code_validation:data.code_validation, montant:data.montant});
     return new Promise((resolve,reject) =>{
        this.http.post(link,params,{headers:this.headers}).map(res => res.json()).subscribe(data =>{
           // console.log(data);
@@ -139,6 +139,8 @@ export class WizallService {
        });
     });
   }
+
+  
   public validationretraitbon(){
       return new Promise((resolve,reject) =>{
       // let data=JSON.stringify({errorCod:0,message:'operation reussie'});

@@ -100,5 +100,12 @@ export class UtilsService {
       .map(res => res.json());
   }
 
+  recordGeospatialCoords(data:any) : Promise<any>{
+    let url = this.link+"/utils-sen/geolocationRegistration";
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, geoposition:data});
+    let params = 'params='+datas;
+    return this._http.post(url,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return error });
+  }
+
 
 }

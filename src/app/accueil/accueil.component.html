@@ -19,7 +19,7 @@
                 <img src="assets/mobmoney.png" style="margin-bottom: 1rem; margin-left: 1rem ;" /><b style="font-size: 2.3rem; color: #F39200;">Mobile Money</b>
                 <ul id="gauche" class="nav in" id="side-menu">
 
-<!--                   <li role="presentation" style="background-color: #f39200; color: white;"><a style="color: white;" [routerLink]="['/accueil', 'annonce']" >VIDEO ANNONCE</a></li> -->
+                   <li role="presentation" style="background-color: #f39200; color: white; cursor: pointer;" (click)="geolocaliser()"><a style="color: white;" >GEOLOCALISER LE POINT</a></li>
                   <li *ngFor="let api of registredAPIs; let i = index" ><a [routerLink]="['/accueil', api]"> <img src="assets/icoservice-{{i+1}}.png" /><b>{{api}}</b> </a></li>
 
 <!--                   <li role="presentation"><a [routerLink]="['/accueil', 'GESTIONREPORTING']" ><i class="fa fa-calculator fa-2x pull-left"></i> <b>GESTION REPORTING</b> </a></li>
@@ -260,6 +260,34 @@
                     </div>
 
 
+                    <!-- FACTURIER -->
+                    <div *ngIf="item.data.operateur==8">
+
+                      <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">
+                           {{retrieveOperationInfo(item)}}
+                      </div>
+
+                        <div *ngIf="item.data.operation==1">
+                          <div>Montant : {{item.data.mnt}}</div><br>
+                          <div>Numéro Client :{{item.data.numclient}}</div><br>
+                        </div>
+                        <div *ngIf="item.data.operation==2">
+                          <div>Montant:{{item.data.pin}}</div><br>
+                          <div>N° CNI: {{item.data.pin}}</div><br>
+                        </div>
+                        <div *ngIf="item.data.operation==3">
+                          <div>Compteur : {{item.data.compteur}}</div><br>
+                          <div>Montant :{{item.data.montant}}</div><br>
+                        </div>
+                        <div *ngIf="item.data.operation==4">
+                          <div>Montant:{{item.data.montant}}</div><br>
+                          <div>Police: {{item.data.police}}</div><br>
+                          <div>Numéro Facture: {{item.data.num_facture}}</div><br>
+                        </div>
+  
+                    </div>
+
+
                  </ng-template>
 
                 </div>
@@ -301,6 +329,25 @@
 
 </div>
     <!-- /#page-wrapper -->
+
+<div bsModal #viewMore="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background-color: #f39200; color: white;">
+      <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body" style="text-align: center ;">
+         <b>{{messageGeolocation}}</b> <br><br>
+         <b>Longitude : {{this.longitude}}</b> <br>
+         <b>Latitude : {{this.latitude}}</b> <br>
+         <b>Accuracy : {{this.accuracy}}</b> <br>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 
