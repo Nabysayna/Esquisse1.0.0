@@ -44,14 +44,18 @@ export class WizallComponent implements OnInit {
    type_piece:string;
    Typebon:string;
    montantbon:string;
-   codebon:string;
+   codebon:string="";
    messageretraitcash:boolean=false;
    errorverifcode:boolean=false;
    messageretraitcasherror:boolean=false;
    messagesecondcode:boolean=false;
+   errormontant:boolean=false;
+   errornumero:boolean=false;
+   errorenvoi:boolean=false;
    typebon=[{type:'pharmacie',prix:[10,2000,5000]},{type:'essence',prix:[1000,2000,5000]},{type:'x',prix:[10,2000,5000]},{type:'y',prix:[20000,50000,5000]}];
   constructor(private _wizallService : WizallService) {
   // this.donneeretraitbon={"status": "valid", "customer": {"phone_number": "778150416", "first_name": "Yapele Sosthene", "last_name": "KA Assane"}, "business_type": 0, "value": "100.000000", "model_voucher": {"is_cash": true, "product": "Bon Cash", "sub_product": "NA", "step_value": "1.000", "is_generic": true, "id": 3333, "is_secured": true, "minimum_value": "2000.000", "name": "Bon Cash ", "maximum_value": "3000.000", "network": "Transfert XOF", "currency_code": 952}, "recipient": {"phone_number": "775054827", "is_valid": false, "first_name": "KA Assane", "last_name": "KA Assane", "needed_kyc_infos": ["identityIsNeeded"]}, "id": 135137};
+    
   }
 
   ngOnInit() {
@@ -59,6 +63,7 @@ export class WizallComponent implements OnInit {
      this.messageretraitcasherror=false;
      this.errorverifcode=false;
      this.messagesecondcode=false;
+     
   }
 
   reinitialise(){
@@ -91,13 +96,25 @@ export class WizallComponent implements OnInit {
    }
 
    public showmodalenvoibonachat(){
+     if(this.prenomE!=undefined && this.nomE!=undefined && this.verif_phone_number(this.telE)==true && this.verif_montant(this.montant)==true && this.nationalite!=undefined && this.type_piece!=undefined && this.num_card!=undefined && this.prenomB!=undefined && this.nomB!=undefined && this.verif_phone_number(this.telB)==true){
       this.modalenvoibonachat.show();
+      }else{
+       console.log("vrifiele li ngua achat");
+      }
    }
    public hidemodalenvoibonachat(){
       this.modalenvoibonachat.hide();
    }
   public showmodalenvoiboncash(){
-      this.modalenvoiboncash.show();
+      this.errorenvoi=false;
+      if(this.prenomE!=undefined && this.nomE!=undefined && this.verif_phone_number(this.telE)==true && this.verif_montant(this.montant)==true && this.nationalite!=undefined && this.type_piece!=undefined && this.num_card!=undefined && this.prenomB!=undefined && this.nomB!=undefined && this.verif_phone_number(this.telB)==true){
+           this.modalenvoiboncash.show();
+      }else{
+           this.errorenvoi=true;
+      }
+  }
+  annulerenvoicash(){
+    this.reinitialiser();
   }
   public hidemodalenvoiboncash(){
       this.modalenvoiboncash.hide();
@@ -128,6 +145,12 @@ export class WizallComponent implements OnInit {
 	   this.messageretraitcasherror=false;
 	   this.errorverifcode=false;
 	   this.messagesecondcode=false;
+	   this.mnt=undefined;
+       this.numclient=undefined;
+       this.codebon=undefined;
+       this.errornumero=false;
+       this.errormontant=false;
+       this.errorenvoi=false;
    }
    
    public validerenvoibon(){
@@ -154,6 +177,8 @@ export class WizallComponent implements OnInit {
       this.messageretraitcash=false;
       this.messageretraitcasherror=false;
       this.errorverifcode=false;
+      console.log(this.codebon);
+      if(this.codebon!="" && this.codebon!=undefined){
       this._wizallService.verifier_code_retraitbon(this.codebon).then(response => {
       let data=JSON.parse(response);
       console.log(data);
@@ -180,7 +205,9 @@ export class WizallComponent implements OnInit {
 		  this.messageretraitcasherror=false;
 		 }
     }); 
+
    }
+
    public hidemodalretraitbon(){
       this.modalretraitbon.hide();
       this.reinitialiser();
@@ -191,7 +218,19 @@ export class WizallComponent implements OnInit {
        this.modaldepot.show();
     }
     public retirermodal(){
-       this.modalretrait.show();
+       this.errornumero=false;
+       this.errormontant=false;
+        if(this.verif_phone_number(this.numclient)==true && this.numclient!="" && this.verif_montant(this.mnt)==true && this.mnt!=""){
+          this.modalretrait.show();
+       }else{
+          if(this.verif_phone_number(this.numclient)==false || this.numclient=="" || this.numclient==undefined){
+             this.errornumero=true;
+          }
+          if(this.verif_montant(this.mnt)==false || this.mnt=="" || this.mnt==undefined){
+              this.errormontant=true;
+          }
+       
+       }
     }
 
     fermermodaldepot(){
@@ -307,23 +346,57 @@ export class WizallComponent implements OnInit {
       this.fermermodaldepot() ;
       this.mnt = this.mnt + this.fraisDepot ;
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient}));
+      this.fermermodaldepot() ;
     }
 
     retirer(){
-      this.fermermodalretrait() ;
+      
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall retrait','operateur':6,'operation':2,'montant':this.mnt,'num':this.numclient}));
+      this.fermermodalretrait() ;
     }
 
     payerSDE(){
-      this.fermersdemodal() ;
+      
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall SDE','operateur':6,'operation':3,'montant':this.mntSDE,'refclient':this.refclientsde,'refFacture':this.refFactureSDE}));
+      this.fermersdemodal() ;
     }
 
     payerSenelec(){
-       this.fermersenelecmodal() ;
+       
        let montant = Number(this.mntSENELEC) ;
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall Senelec','operateur':6,'operation':4,'montant':montant,'police':this.numpolice, 'numfacture':this.numFactureSenelec}));
+       this.fermersenelecmodal() ;   
     }
+     isNumber(num:string):boolean{
+    let tab=["0","1","2","3","4","5","6","7","8","9"];
+    for(let i=0;i<tab.length;i++){
+       if(num===tab[i]){
+         return true;
+       }
+    }
+    return false;
+  }
+  verif_phone_number(number:string):boolean{
+     let numero=number.split("");
+     console.log(numero.length);
+     if(numero.length!=parseInt("9")){
+        return false;
+     }
+     for(let i=0;i<numero.length;i++){
+       if(!this.isNumber(numero[i])){
+          return false;
+       }
+     }
+     return true; 
+  }
+  verif_montant(mnt:string):boolean{
+     if(parseInt(mnt)>1){
+       return true;
+     }else{
+       return false;
+     }
+     
+  }
 
     getFrais(montant){ 
       let frais = 0 ;
