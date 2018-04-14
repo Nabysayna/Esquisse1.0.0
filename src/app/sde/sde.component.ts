@@ -25,50 +25,56 @@ export class SdeComponent implements OnInit {
 /******************************************************************************************************/
 
 
-  ngOnInit() {  }
+  ngOnInit() {
+    console.log("sde")
+  }
 
   @ViewChild('modalsde') public modalsde:ModalDirective;
 
   detailfactursde(){
     this._facturierService.detailreglementsde(this.refclientsde).then(response =>{
       console.log(response) ;
-      
-      if(response.response==null){
+      if(response==null || response.length==0){
          this.message=true;
 
       }else{
          this.etat=true;
-         this.refFactureSDE=response.response.reference_facture;
-         this.nomclient=response.reponse.nom;
-         this.echeance=response.response.date_echeance;
-         this.statuspayment=response.response.statuspayment;
-         this.mntsde=response.response.montant;
+         this.refFactureSDE=response[0].reference_facture;
+        this.nomclient=response[0].nom;
+         this.echeance=response[0].date_echeance;
+         this.statuspayment=response[0].statuspayment;
+         this.mntsde=response[0].montant;
       }
-      console.log(response);
     });
   }
-  
+
   showmodalsde(){
+    console.log("show sde")
     this.modalsde.show();
     this.detailfactursde();
   }
 
   paimantsde(){
-
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'mntsde':this.mntsde, 'refclientsde':this.refclientsde, 'refFactureSDE':this.refFactureSDE}));
-/*
+
     this._facturierService.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
-       this.hidemodalsde();
+      console.log(response)
+        this.hidemodalsde();
         this.dataImpression = {
-          apiservice:'postecash',
-          service:'achatcodewayafal',
+          apiservice:'facturier',
+          service:'paimentsde',
           infotransaction:{
             client:{
-              transactionPostCash: response.transactionId,
               transactionBBS: 'Id BBS',
-               referenceclient: this.refclientsde,
-               montant: this.mntsde,
-               refFacture: this.refFactureSDE,
+              PAYMENT_TRANSACTION_NUMBER: response.PAYMENT_TRANSACTION_NUMBER,
+              reference_client: response.reference_client,
+              reference_facture: response.reference_facture,
+              nom: response.nom,
+              prenom: response.prenom,
+              montant: response.montant,
+              date_echeance: response.date_echeance,
+              statuspayment: response.statuspayment,
+              fees: response.fees,
             },
 
           },
@@ -76,7 +82,6 @@ export class SdeComponent implements OnInit {
         sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
         this.router.navigate(['accueil/impression']);
     });
-*/
 
   }
 
