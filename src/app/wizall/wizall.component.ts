@@ -185,7 +185,6 @@ export class WizallComponent implements OnInit {
        if(response.indexOf("status")!=-1 && data.status=="valid"){
           this.errorverifcode=false;
           this.donneeretraitbon=data;
-       }
 		  this.prenomE=this.donneeretraitbon.customer.first_name;
 		  this.nomE=this.donneeretraitbon.customer.last_name;
 		  this.telE=this.donneeretraitbon.customer.phone_number;
@@ -207,7 +206,8 @@ export class WizallComponent implements OnInit {
 		 }
     }); 
 
-   }
+  }
+}
 
    public hidemodalretraitbon(){
       this.modalretraitbon.hide();
