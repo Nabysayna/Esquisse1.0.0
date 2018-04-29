@@ -74,6 +74,10 @@ label{
     color: white !important;
 } 
 
+.fraistransfert:hover{
+    color : #337ab7;
+}
+
 #om-options{
     position: relative;
     top: -4.7rem;

@@ -462,9 +462,12 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
   }
   deposer(){
-          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money depot','operateur':2,'operation':1,'montant':this.mnt,'num':this.numclient}));
-         // this.loading = false ;
+
           this.addChildModal.hide();
+
+          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money depot','operateur':2,'operation':1,'montant':this.mnt,'num':this.numclient}));
+
+         // this.loading = false ;
          // this.depotreussi=true;
           this.numclient = undefined ;
           this.mnt = undefined;
@@ -497,9 +500,11 @@ export class OrangeMoneyComponentComponent implements OnInit {
 /*********************************************************/
 
   retirer(){
+
+          this.modalretrait.hide();
+
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':2,'montant':this.mnt,'numclient':this.numclient}));
-          this.modalretrait.hide();
-          this.modalretrait.hide();
+
           //this.depotreussi=true;
           this.numclient = undefined ;
           this.mnt = undefined;
@@ -528,8 +533,10 @@ export class OrangeMoneyComponentComponent implements OnInit {
 /***********************************************************/
 
   retraitAvecCode(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':this.prenom,'nomclient':this.nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
+
     this.hidemodalretraitcode() ;
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':this.prenom,'nomclient':this.nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
 //    let requete = "3/"+this.coderetrait+"/"+this.prenom+"/"+this.nom+"/"+this.date+"/"+this.cni+"/"+this.numclient;
 
     this.numclient = undefined ;

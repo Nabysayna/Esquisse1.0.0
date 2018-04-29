@@ -10,9 +10,9 @@ import {FacturierService} from "../services/facturier.service";
   styleUrls: ['./sde.component.css']
 })
 export class SdeComponent implements OnInit {
-   etat:boolean=false;
+   etat:boolean;
    message:boolean=false;
-   mntsde:number;
+   mntSDE:any;
    echeance:any;
    refclientsde:number;
    refFactureSDE:number;
@@ -33,16 +33,16 @@ export class SdeComponent implements OnInit {
     this._facturierService.detailreglementsde(this.refclientsde).then(response =>{
       console.log(response) ;
       
-      if(response.response==null){
+      if(response.response.montant==null || response.response.montant== undefined){
          this.message=true;
-
+         this.etat = false ;
       }else{
          this.etat=true;
          this.refFactureSDE=response.response.reference_facture;
          this.nomclient=response.reponse.nom;
          this.echeance=response.response.date_echeance;
          this.statuspayment=response.response.statuspayment;
-         this.mntsde=response.response.montant;
+         this.mntSDE=response.response.montant;
       }
       console.log(response);
     });
@@ -55,7 +55,11 @@ export class SdeComponent implements OnInit {
 
   paimantsde(){
 
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'mntsde':this.mntsde, 'refclientsde':this.refclientsde, 'refFactureSDE':this.refFactureSDE}));
+     this.hidemodalsde();
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'mntsde':this.mntSDE, 'refclientsde':this.refclientsde, 'refFactureSDE':this.refFactureSDE}));
+
+
 /*
     this._facturierService.paimentsde(this.mntsde,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
        this.hidemodalsde();

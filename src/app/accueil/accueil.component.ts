@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
@@ -40,6 +40,10 @@ export class AccueilComponent implements OnInit {
   longitude :any ;
   accuracy :any ;
 
+
+  @ViewChild('newoperation') public newOperation:ElementRef;
+
+
   localisation : any ;
   messageGeolocation : any ;
 
@@ -80,12 +84,22 @@ geolocaliser(){
           console.log(response) ;
 
         }) ;
-      });
+      }, function error(msg){alert('Veuillez activer la geolocalisation sur votre navigateur.');}, 
+      {maximumAge:600000, timeout:5000, enableHighAccuracy: true} );
+
    }else{
        this.messageGeolocation = "Votre navigateur empêche la géolocalisation. Veuillez contacter votre conseiller clientéle pour vous aider." ;
         this.ouvrir() ;
   }
 }
+
+
+  @ViewChild('testContainer') public testContainer:ElementRef;
+
+  ajouterBlock() {
+    this.testContainer.nativeElement.appendChild(this.newOperation.nativeElement);
+  }
+
 
   @ViewChild('viewMore') public successModal:ModalDirective;
 
@@ -1632,6 +1646,9 @@ geolocaliser(){
 
   public cashOutEmoney(objet){
     this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP).then(expressocashwebserviceList => {
+
+       console.log(expressocashwebserviceList);
+       
       if(!expressocashwebserviceList.match("cURL Error #:")){
         let infoRetraitsimpleconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
         if(infoRetraitsimpleconfirm.status==0){
@@ -1690,7 +1707,7 @@ geolocaliser(){
 /*************************** FACTURIERS ******************************/
 
   paiemantsde(objet){
-    this._facturierService.paimentsde(objet.data.mntsde,objet.date.refclientsde,objet.data.refFactureSDE,'sde').then( response =>{
+    this._facturierService.paimentsde(objet.data.mntsde,objet.data.refclientsde,objet.data.refFactureSDE,'sde').then( response =>{
       console.log(response) ;
 
         if( (typeof response.errorCode != "undefined") && response.errorCode == "0" && response.errorMessage == ""){
@@ -1773,7 +1790,7 @@ geolocaliser(){
             infotransaction:{
               client:{
                 transactionPostCash: response.transactionId,
-                transactionBBS: 'Id BBS',
+                transactionBBS: 'x-x-x',
                 codewoyafal: response.code,
                 montant: objet.data.montant,
                 compteur: objet.data.compteur,

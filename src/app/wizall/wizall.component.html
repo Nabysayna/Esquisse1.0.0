@@ -28,7 +28,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade col-lg-offset-1 col-md-offset-1 col-xs-offset-1 col-sm-10 col-xs-10 in active" id="depot">
                         <h2>Dépôt</h2>
-                        <a (click)="showmodalfraiscashin()"> Consulter les frais </a>
+                        <a (click)="showmodalfraiscashin()" class="fraistransfert"> <h4>Consulter les frais</h4> </a>
                         <form name="transnat" (ngSubmit)="depotmodal()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 							<div class="form-inline">
 							 <label>Numéro du client  :</label>
@@ -98,6 +98,8 @@
 								<div style="width:50%;margin-left:auto;margin-right:auto" class="row">
 									  <a href="#boncacheA" data-toggle="tab" style="border:2px solid orange;border-radius:10px 0px 10px 10px;height:3rem" class="menu col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3 col-sm-3 col-xs-3">Bon Cash</a>
 <!-- 									  <a href="#bonachatA" data-toggle="tab" style="border:2px solid orange;border-radius:10px 0px 10px 10px;margin-left:5px;height:3rem" class="menu col-lg-3 col-md-3 col-sm-3 col-xs-3">Bon Achat</a > -->
+			                        <a (click)="showmodalfraisEnvoieBon()" class="fraistransfert"> <h4>Consulter les frais</h4> </a>
+
 								</div>
 								<div class="tab-content col-lg-offset-3 col-md-offset-3" style="margin-top:10px;">
 									<div class="tab-pane" id="boncacheA">
@@ -575,37 +577,37 @@
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4">
 						 <h2>Envoyeur</h2>
-						 <div class="row">
+						 <div class="row badge">
 							 <label> prenom  : {{prenomE}}</label>
 						 </div>
-						 <div class="row">
+						 <div class="row badge">
 							 <label> nom  : {{nomE}}</label>
 						 </div>
-						 <div class="row">
+						 <div class="row badge">
 							 <label> telephone  : {{telE}}</label>
 						 </div>
-						 <div class="row">
+						 <div class="row badge">
 							 <label> nationalite : {{nationalite}}</label>
 						 </div>
 					 </div>
 					 <div class="col-lg-4 col-md-4 col-sm-4">
 						 <h2>Beneficiaire</h2>
-					    <div class="row">
+					    <div class="row badge">
 							<label>prenom : {{prenomB}}</label>
 					    </div>
-					    <div class="row">
+					    <div class="row badge">
 							<label>nom : {{nomB}}</label>
 					    </div>
-					    <div class="row">
+					    <div class="row badge">
 							<label>telephone : {{telB}}</label>
 					    </div>
 					 </div>
 				 </div>
-				 <div>
+				 <div class="row badge" style="text-align: center">
 					 <label>montant : {{montant}}</label>
 				 </div>
-				 <div>
-					 <label>frais : les frais ici</label>
+				 <div class="row badge" style="text-align: center">
+					 <label>frais : {{ getFraisTransfert(montant) }}</label>
 				 </div>
 		     </div>
 		     <div class="modal-footer">
@@ -767,7 +769,26 @@
 	    </div>  
 </div>
 
+<div bsModal #modalfraisEnvoieBon="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+		 <div class="modal-dialog modal-lg">
+		    <div class="modal-content" >
+		      <div class="modal-header">
+				<button type="button" class="close pull-right" aria-label="Close" (click)="fermermodalfraisEnvoieBon()">
+				    <span aria-hidden="true">&times;</span>
+		        </button>
+	            <h4 class="modal-title" id="myModalLabel">FRAIS TRANSFERT</h4>
+		     </div>
+		     <div class="modal-body">
+			    <img  src="assets/fraiswizalltrans.PNG" />
+		     </div>
+		     <div class="modal-footer">
+		     </div>
+		  </div> 
+	    </div>  
+</div>
 
 <div *ngIf="this.loading">
     <app-loader></app-loader>    
 </div>
+
