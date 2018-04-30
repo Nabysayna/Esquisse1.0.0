@@ -29,6 +29,7 @@
 				   <button class="btn btn-success" (click)="showmodalrapido()">valider</button>
 			   </div>
 		   </form>
+                        <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
         </div>
       </div>
   </div>

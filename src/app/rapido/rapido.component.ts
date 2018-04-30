@@ -16,7 +16,11 @@ export class RapidoComponent implements OnInit {
   numclient:string;
   badge:string;
   montant:string;
-  messagesucce:boolean=false;
+  message:boolean;
+  errorMessage : any ;
+  dataImpression:any;
+
+
   constructor(private router: Router, private _facturierService : FacturierService) { }
 
   @ViewChild('modalrapido') public modalrapido:ModalDirective;
@@ -34,8 +38,38 @@ export class RapidoComponent implements OnInit {
 
   validerrapido(){
     this.modalrapido.hide();
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'RAPIDO','operateur':8,'operation':2,'numclient':this.numclient,'montant':this.montant, 'badge':this.badge}));
+    this._facturierService.validerrapido(this.numclient,this.montant,this.badge).then(response =>{
+       response = JSON.parse(response) ;
+       console.log(response) ;
+      if( (response.timestamp != null) ){
+        this.dataImpression = {
+          apiservice:'wizall',
+          service:'rapido',
+          infotransaction:{
+            client:{
+              transactionBBS: 'x-x-x-x',
+               badge: this.badge,
+               numclient: this.numclient,
+               montant: this.montant,
+               transactionID:response.transactionid
+            },
+
+          },
+        }
+        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+        this.router.navigate(['accueil/impression']);
+      }else
+          if (response.error != null){
+            this.message = true ;
+            this.errorMessage = response.error ;
+          }
+          else{
+            this.message = true ;
+            this.errorMessage = response.response ;
+          }
+    });
   }
+
 
 }
 

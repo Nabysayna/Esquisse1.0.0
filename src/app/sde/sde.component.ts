@@ -19,6 +19,7 @@ export class SdeComponent implements OnInit {
    nomclient:string;
    statuspayment:boolean;
    dataImpression:any;
+   errorMessage : any ;
 
    constructor(private _facturierService : FacturierService,private router: Router) {}
 
@@ -83,8 +84,14 @@ export class SdeComponent implements OnInit {
         sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
         this.router.navigate(['accueil/impression']);
       }else
-          ;
-
+          if (response.error != null){
+            this.message = true ;
+            this.errorMessage = response.error ;
+          }
+          else{
+            this.message = true ;
+            this.errorMessage = response.response ;
+          }
     });
 
   }

@@ -21,6 +21,10 @@ class Article {
 export class SenelecComponent implements OnInit {
    etat1:boolean=false;
    etat2:boolean=false;
+
+   message:boolean=false;
+   errorMessage : any ;
+
    montant:number;
    service:string;
    mntsde:number;
@@ -74,18 +78,15 @@ export class SenelecComponent implements OnInit {
    }
    validerpaimentsenelec(){
     this.modalsenelec.hide();
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SENELEC','operateur':8,'operation':4, 'montant':this.montant,'police':this.police,'num_facture':this.num_facture,'service':this.service}));
 
-/*
     this._facturierService.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
         if(response.errorCode==0){
            this.modalsenelec.hide();
            this.dataImpression = {
-              apiservice:'postecash',
-              service:'reglementsenelec',
+              apiservice:'wizall',
+              service:'senelec',
               infotransaction:{
                 client:{
-                  transactionPostCash: response.transactionId,
                   transactionBBS: 'Id BBS',
                   police: this.police,
                   facture: this.num_facture,
@@ -99,12 +100,18 @@ export class SenelecComponent implements OnInit {
             this.router.navigate(['accueil/impression']);
            console.log(response);
         }else{
-          console.log(response);
+          if (response.error != null){
+            this.message = true ;
+            this.errorMessage = response.error ;
+          }
+          else{
+            this.message = true ;
+            this.errorMessage = response.response ;
+          }
           this.modalsenelec.hide();
         }
 
      });
-*/
 
   }
 
