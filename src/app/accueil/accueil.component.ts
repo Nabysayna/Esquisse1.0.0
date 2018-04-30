@@ -1709,18 +1709,19 @@ geolocaliser(){
   paiemantsde(objet){
     this._facturierService.paimentsde(objet.data.mntsde,objet.data.refclientsde,objet.data.refFactureSDE,'sde').then( response =>{
       console.log(response) ;
-
-        if( (typeof response.errorCode != "undefined") && response.errorCode == "0" && response.errorMessage == ""){
+       response = JSON.parse(response) ;
+        if( (response.PAYMENT_TRANSACTION_NUMBER != "undefined") ){
         objet.dataI = {
-          apiservice:'postecash',
-          service:'achatcodewayafal',
+          apiservice:'wizall',
+          service:'sde',
           infotransaction:{
             client:{
-              transactionPostCash: response.transactionId,
-              transactionBBS: 'Id BBS',
-               referenceclient: objet.data.refclientsde,
+              transactionPostCash: response.PAYMENT_TRANSACTION_NUMBER,
+              transactionBBS: 'x-x-x-x',
+               reference_client: objet.data.refclientsde,
+               reference_facture: objet.data.refclientsde,
+               date_echeance: response.date_echeance,
                montant: objet.data.mntsde,
-               refFacture: objet.data.refFactureSDE,
             },
 
           },
@@ -1777,6 +1778,32 @@ geolocaliser(){
    validerpaimentsenelec(objet){
     this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(response =>{
         console.log(response) ;
+        if( (typeof response.transactionid != "undefined") ){
+        objet.dataI = {
+          apiservice:'wizall',
+          service:'senelec',
+          infotransaction:{
+            client:{
+              transactionPostCash: response.transactionId,
+              transactionBBS: 'Id BBS',
+               referenceclient: objet.data.refclientsde,
+               montant: objet.data.mntsde,
+               refFacture: objet.data.refFactureSDE,
+            },
+
+          },
+        }
+
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+
+        }else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+        }
+
      });  
    }
 
@@ -1790,7 +1817,7 @@ geolocaliser(){
             infotransaction:{
               client:{
                 transactionPostCash: response.transactionId,
-                transactionBBS: 'x-x-x',
+                transactionBBS: 'x-x-x-x',
                 codewoyafal: response.code,
                 montant: objet.data.montant,
                 compteur: objet.data.compteur,

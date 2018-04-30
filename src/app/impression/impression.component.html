@@ -554,7 +554,7 @@
   </div>
 
   <div class="panel-heading" *ngIf="dataImpression.apiservice=='wizall' && dataImpression.service=='senelec'">
-    <div class="panel panel-default"  id="tntrecuimpressionventedecodeur">
+    <div class="panel panel-default"  id="wizallrecuimpressionsenelec">
       <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
       <div class="panel-heading">
         <p align="right" >
@@ -584,7 +584,7 @@
   </div>
 
   <div class="panel-heading" *ngIf="dataImpression.apiservice=='wizall' && dataImpression.service=='sde'">
-    <div class="panel panel-default"  id="tntrecuimpressionventedecodeur">
+    <div class="panel panel-default"  id="wizallrecuimpressionsde">
       <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
       <div class="panel-heading">
         <p align="right" >
@@ -598,14 +598,6 @@
         Numéro Transaction Sentool: {{dataImpression.infotransaction.client.transactionBBS}}<br>
         <table>
           <tr class="text-uppercase">
-            <td>
-              Nom Client: {{dataImpression.infotransaction.client.nom}}<br>
-              Prénom Client: {{dataImpression.infotransaction.client.prenom}}<br>
-              Téléphone Client: {{dataImpression.infotransaction.client.telephone}}<br>
-            </td>
-
-            <td width="200px">&nbsp;&nbsp;</td>
-
             <td>
               Réfèrence Client: {{dataImpression.infotransaction.client.reference_client}}<br>
 

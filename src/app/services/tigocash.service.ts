@@ -29,7 +29,7 @@ export class TigocashService {
   }
 
   public verifierReponseTC(requete:any): Promise<any>{
-    let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
+    let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token, cacheDisabler : Date.now()});
     let link=this.link+"/tc-sen/verifierReponseTC";
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
   }

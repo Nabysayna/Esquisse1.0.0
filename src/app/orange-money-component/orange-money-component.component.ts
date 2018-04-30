@@ -573,7 +573,9 @@ export class OrangeMoneyComponentComponent implements OnInit {
 /***********************************************************/
 
   retraitCpteRecep(){
+
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':4,'numclient':this.numclient,'montant':this.mnt}));
+
      this.loading = false ;
      this.numclient = undefined ;
      this.mnt = undefined;
@@ -614,8 +616,9 @@ export class OrangeMoneyComponentComponent implements OnInit {
 /*********************************************************/
 
   acheterCredit(){
-    this.hidemodalventecredit()
+    this.hidemodalventecredit() ;
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'OrangeMoney Vente Crédit','operateur':2,'operation':5,'numclient':this.numclient,'montant':this.mnt}));
+    
     this.loading = false ;
     this.numclient = undefined ;
     this.mnt = undefined;

@@ -59,8 +59,10 @@ export class ExpressoComponent implements OnInit {
 /*******************************  DEPOT *****************************************/
 
   public fairedepot(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':1,'numclient':this.numclient,'mnt':this.mnt}));
+
     this.hidemodaldepot();
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':1,'numclient':this.numclient,'mnt':this.mnt}));
   }
 
 /************************************************************************/
@@ -94,8 +96,10 @@ export class ExpressoComponent implements OnInit {
 
 /*************************** RETRAIT *************************************/
   public faireretraitsimpleConfirm(){
-      sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':2,'transactionReference':this.transactionReference,'OTP':this.OTP}));
+
       this.hidemodalretraitConfirm();
+
+      sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':2,'transactionReference':this.transactionReference,'OTP':this.OTP}));
   }
 
 /************************************************************************/
@@ -127,8 +131,10 @@ export class ExpressoComponent implements OnInit {
 /****************************** RETRAIT CODE ******************************************/
 
   public faireretraitaveccodeConfirm(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':3,'pin':this.pin,'cni':this.cni}));
+
       this.hidemodalretraitcodeConfirm();
+
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':3,'pin':this.pin,'cni':this.cni}));
   }
 /************************************************************************/
 

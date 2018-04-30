@@ -29,7 +29,8 @@ export class OrangemoneyService {
   }
 
   public verifierReponseOM(requete:any): Promise<any>{
-    let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
+    let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token, cacheDisabler : Date.now()});
+    
     let link=this.link+"/om-sen/verifierReponseOM";
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
   }

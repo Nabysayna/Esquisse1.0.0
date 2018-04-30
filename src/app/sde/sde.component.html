@@ -2,7 +2,7 @@
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
             
-            <h2>Paiment Facture Sde</h2>
+            <h2>Paiement Facture Sde</h2>
 
         </div>
         <!-- /.panel-heading -->
@@ -68,8 +68,8 @@
 					 </form>
 					
 				 </div>
-				 <div *ngIf="!etat">
-					 <p class="alert alert-danger">facture deja payé ou reference incorrecte</p>
+				 <div *ngIf="etat==false">
+					 <p class="alert alert-danger">facture deja payée ou Reference incorrecte</p>
 				 </div>
 		     </div>
 		     <div class="modal-footer">
