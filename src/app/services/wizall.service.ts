@@ -22,12 +22,13 @@ export class WizallService {
 
 
   constructor(private http:Http) {
-        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');   
    }
 
   public intouchCashin(frommsisdn : string, tomsisdn : string, amount : number): Promise<any>  {
     let reEspParams = {token:this.token, receiver_phone_number: tomsisdn, amount: amount} ;
     let params="params="+JSON.stringify(reEspParams);
+    
     let link=this.link+"/wizall-sen/intouchCashin";
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
@@ -36,13 +37,16 @@ export class WizallService {
       });
     });
   }
+ 
 
   public intouchCashout(usermsisdn : string, amount : number): Promise<any>  {
     let reEspParams = {token:this.token, customer: usermsisdn, amount: amount} ;
     let params="params="+JSON.stringify(reEspParams);
+   // console.log(params);
     let link=this.link+"/wizall-sen/intouchCashout";
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
+        console.log(data);
         resolve(data);
       });
     });
@@ -59,7 +63,7 @@ export class WizallService {
     });
   }
 
-  public intouchRecupereFactureSde(reference_client : number): Promise<any>  {
+  public intouchRecupereFactureSde(reference_client : number): Promise<any> {
     let reEspParams = {token:this.token, reference_client: reference_client} ;
     let params="params="+JSON.stringify(reEspParams);
     let link=this.link+"/wizall-sen/intouchRecupereFactureSde";
@@ -69,7 +73,7 @@ export class WizallService {
       });
     });
   }
-
+//8420
   public intouchPayerFactureSenelec(montant : number, police : string, numfacture : string): Promise<any>  {
     let reEspParams = {token:this.token, montant: montant, police: police, numfacture: numfacture} ;
     let params="params="+JSON.stringify(reEspParams);

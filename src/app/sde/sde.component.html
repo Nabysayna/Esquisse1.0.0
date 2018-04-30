@@ -1,20 +1,20 @@
 <div class="col-sm-12">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
-            
-            <h2>Paiement Facture Sde</h2>
+
+            <h2>Paiment Facture Sde</h2>
 
         </div>
         <!-- /.panel-heading -->
           <div class="cover"></div>
-       
+
 
         <div class="panel-body">
             <!-- Nav tabs -->
-            
+
 
             <!-- Tab panes -->
-            
+
 
                 <div class="col-sm-12 col-xs-12" id="sde">
                         <form name="transnat" #formsde="ngForm" (ngSubmit)="showmodalsde()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
@@ -27,15 +27,15 @@
 
                         <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
                 </div>
-                
 
-            
+
+
         </div>
     </div>
 </div>
 <div bsModal #modalsde="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
-		 <div class="modal-dialog modal-lg">
+		 <div class="modal-dialog modal-sm">
 		    <div class="modal-content" >
 		      <div class="modal-header">
 				<button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalsde()">
@@ -44,9 +44,9 @@
 	            <h4 class="modal-title" id="myModalLabel">Informations Facture SDE</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div *ngIf="etat">
-				 	
+
 					 <form class="form">
 						 <div class="form-group">
 							 <label *ngIf="statuspayment==false">Status : NON PAYEE</label>
@@ -68,17 +68,17 @@
 			               <label >Client : {{nomclient}}</label>
 			             </div>
 					 </form>
-					
+
 				 </div>
-				 <div *ngIf="etat==false">
-					 <p class="alert alert-danger">facture deja payée ou Reference incorrecte</p>
+				 <div *ngIf="!etat">
+					 <p class="alert alert-danger">facture deja payé ou reference incorrecte</p>
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" *ngIf="etat" value="valider" (click)=" paimantsde()" class="btn btn-success" />
 				  <input type="button" value="annuler" (click)="hidemodalsde()" class="btn btn-danger" />
 		     </div>
-		  </div> 
-	    </div>  
+		  </div>
+	    </div>
 </div>
 

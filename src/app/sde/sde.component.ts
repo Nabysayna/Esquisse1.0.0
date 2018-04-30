@@ -26,7 +26,9 @@ export class SdeComponent implements OnInit {
 /******************************************************************************************************/
 
 
-  ngOnInit() {  }
+  ngOnInit() {
+    console.log("sde")
+  }
 
   @ViewChild('modalsde') public modalsde:ModalDirective;
 
@@ -45,11 +47,11 @@ export class SdeComponent implements OnInit {
          this.statuspayment=response.response.statuspayment;
          this.mntSDE=response.response.montant;
       }
-      console.log(response);
     });
   }
-  
+
   showmodalsde(){
+    console.log("show sde")
     this.modalsde.show();
     this.detailfactursde();
   }
