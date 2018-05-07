@@ -89,7 +89,6 @@ export class WizallComponent implements OnInit {
   @ViewChild('modalfraisEnvoieBon') public modalfraisEnvoieBon:ModalDirective;
   
 
-
    public showmodalfraisEnvoieBon(){
       this.modalfraisEnvoieBon.show() ;
    }

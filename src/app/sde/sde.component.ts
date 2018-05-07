@@ -79,6 +79,7 @@ export class SdeComponent implements OnInit {
                reference_facture: this.refFactureSDE,
                date_echeance: response.date_echeance,
                montant: this.mntSDE,
+
             },
 
           },
