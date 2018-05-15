@@ -1,8 +1,8 @@
 <div class="col-sm-12">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
-            
-            <h2>Paiment senelec</h2>
+
+            <h2>Paiement senelec</h2>
 
         </div>
         <!-- /.panel-heading -->
@@ -11,14 +11,14 @@
 
         <div class="panel-body">
             <!-- Nav tabs -->
-            
+
 
             <!-- Tab panes -->
-            
+
 
             <div class="col-lg-offset-3 col-sm-offset-3 col-lg-5 col-sm-5 col-xs-5" id="woyofal">
                 <form name="transnat" #formsenelec="ngForm" (ngSubmit)="showmodalsenelec()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
-                  
+
                     <div class="form-group row">
                         <label class="col-lg-5 col-md-5" style="display:block;float:left">Numero de police :</label>
                         <div class="col-lg-5 col-md-5">
@@ -32,16 +32,16 @@
                         </div>
                     </div>
                     <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsenelec.form.valid">Valider</button>
-                  
+
                 </form>
 
                         <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
-           </div>    
+           </div>
         </div>
     </div>
 </div>
 <div bsModal #modalsenelec="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-     
+
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content" >
                 <div class="modal-header">
@@ -51,7 +51,7 @@
                         <h4 class="modal-title" id="myModalLabel">Informations Compteur Woyofal</h4>
                 </div>
                 <div class="modal-body">
-            
+
                     <div *ngIf="etat1">
                             <p class="alert alert-danger">Erreur de saisie</p>
                             <p class="alert alert-danger">Veuillez-reverifier les données saisie</p>
@@ -68,7 +68,7 @@
                     <input type="button" *ngIf="etat2" value="valider" (click)="validerpaimentsenelec()" class="btn btn-success" />
                     <input type="button" value="annuler" (click)="hidemodalsenelec()" class="btn btn-danger" />
                 </div>
-        </div> 
-    </div>  
+        </div>
+    </div>
 </div>
 

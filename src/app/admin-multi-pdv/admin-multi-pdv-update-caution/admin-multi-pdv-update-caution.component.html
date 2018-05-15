@@ -90,8 +90,12 @@
         <h4 class="modal-title" id="myModalLabel">Mettre à jour la caution de {{majcaution.adminpdv}}</h4>
       </div>
       <div class="modal-body">
-        <label for="inputCaution">Nouvelle caution</label>
-        <input id="inputCaution" name="inputCaution" type="number" min="0" placeholder="Nouvelle caution" class="form-control" required [(ngModel)]="inputCaution" #Caution="ngModel">
+        <div class="row">
+          <div class="col-sm-7">
+            <input id="inputCaution" name="inputCaution" type="number" min="0" placeholder="Nouvelle caution" class="form-control" required [(ngModel)]="inputCaution" #Caution="ngModel">
+          </div>
+          <div class="col-sm-5"><br>{{tocurrency(inputCaution)}}</div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="idmodalferme" data-dismiss="modal" #closeBtn>Annuler</button>
