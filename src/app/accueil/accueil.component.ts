@@ -84,7 +84,7 @@ geolocaliser(){
           console.log(response) ;
 
         }) ;
-      }, function error(msg){alert('Veuillez activer la geolocalisation sur votre navigateur.');}, 
+      }, function error(msg){alert('Veuillez activer la geolocalisation sur votre navigateur.');},
       {maximumAge:600000, timeout:5000, enableHighAccuracy: true} );
 
    }else{
@@ -268,12 +268,12 @@ geolocaliser(){
                  break;
               }
               case 6:{
-                
+
                   this.validerenvoibon(sesion);
                   break;
               }
               case 7:{
-                 
+
                   this.validerbonachat(sesion);
                   break;
               }
@@ -931,7 +931,24 @@ geolocaliser(){
 
           let montant:number = 0;
           if(objet.data.typedebouquet == 1){
-            montant = 5000 * objet.data.duree;
+            if(objet.data.duree==2){
+              montant = 8000;
+            }
+            else if(objet.data.duree==3){
+              montant = 13000 * objet.data.duree;
+            }
+            else if(objet.data.duree==6){
+              montant = 26000 * objet.data.duree;
+            }
+            else if(objet.data.duree==9){
+              montant = 39000 * objet.data.duree;
+            }
+            else if(objet.data.duree==12){
+              montant = 52000 * objet.data.duree;
+            }
+            else{
+              montant = 5000 * objet.data.duree;
+            }
             typedebouquet = 'Maanaa';
           }
           if(objet.data.typedebouquet == 2){
@@ -1087,7 +1104,7 @@ geolocaliser(){
               }
       });
     }
-    
+
     validerenvoibon(objet:any){
         this._wizallService.validerenvoiboncash(objet).then(response =>{
                console.log(response.code);
@@ -1103,7 +1120,7 @@ geolocaliser(){
                   objet.etats.load='terminated';
                   objet.etats.color='red';
                }
-              
+
          });
     }
 
@@ -1120,7 +1137,7 @@ geolocaliser(){
           }else{
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
-                objet.etats.color='red';          
+                objet.etats.color='red';
           }
        });
 
@@ -1133,8 +1150,8 @@ geolocaliser(){
                objet.etats.etat=true;
                objet.etats.load='terminated';
                objet.etats.color='green';
-              
-               
+
+
          });
     }
     payerSDEWizall(objet : any){
@@ -1331,21 +1348,21 @@ geolocaliser(){
      if(item.data.operateur==7 ){
 
         if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
-          return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;  
+          return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
         if (item.etats.errorCode=='2')
-          return "Cette requête n'est pas authorisée" ;  
+          return "Cette requête n'est pas authorisée" ;
         if (item.etats.errorCode=='51')
-          return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;  
+          return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;
         if (item.etats.errorCode=='3')
-          return "Numéro de téléphone invalide." ;  
+          return "Numéro de téléphone invalide." ;
         if (item.etats.errorCode=='2')
-          return "Cette requête n'est pas authorisée" ;  
+          return "Cette requête n'est pas authorisée" ;
         if (item.etats.errorCode=='7')
-          return "Votre compte a été verrouillé, contactez le service client." ;  
+          return "Votre compte a été verrouillé, contactez le service client." ;
         if (item.etats.errorCode=='9')
-          return "Votre compte est à l'état inactif." ;  
+          return "Votre compte est à l'état inactif." ;
 
-          return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;  
+          return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
     }
 
 
@@ -1648,7 +1665,7 @@ geolocaliser(){
     this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP).then(expressocashwebserviceList => {
 
        console.log(expressocashwebserviceList);
-       
+
       if(!expressocashwebserviceList.match("cURL Error #:")){
         let infoRetraitsimpleconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
         if(infoRetraitsimpleconfirm.status==0){
@@ -1752,7 +1769,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
-      }      
+      }
     });
   }
 
@@ -1770,7 +1787,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
-      }      
+      }
 */
     });
   }
@@ -1804,7 +1821,7 @@ geolocaliser(){
           objet.etats.color='red';
         }
 
-     });  
+     });
    }
 
   validerwoyofal(objet){
