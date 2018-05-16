@@ -161,7 +161,7 @@ export class TntComponent implements OnInit {
     this.singleTntWS.nchipNewClient = this.nchipNewClient.toString();
     this.singleTntWS.ncarteNewClient = this.ncarteNewClient.toString() ;*/
 
-    this.hidemodaldecodeur(); 
+//    this.hidemodaldecodeur(); 
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
 

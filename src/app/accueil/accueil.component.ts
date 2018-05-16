@@ -935,16 +935,16 @@ geolocaliser(){
               montant = 8000;
             }
             else if(objet.data.duree==3){
-              montant = 13000 * objet.data.duree;
+              montant = 13000 ;
             }
             else if(objet.data.duree==6){
-              montant = 26000 * objet.data.duree;
+              montant = 26000 ;
             }
             else if(objet.data.duree==9){
-              montant = 39000 * objet.data.duree;
+              montant = 39000 ;
             }
             else if(objet.data.duree==12){
-              montant = 52000 * objet.data.duree;
+              montant = 52000 ;
             }
             else{
               montant = 5000 * objet.data.duree;
