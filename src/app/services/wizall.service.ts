@@ -10,7 +10,7 @@ export class WizallService {
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
- 
+
 //  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
 //  private link = "http://127.0.0.1/kheuteuteupeuseu/index.php";
 
@@ -22,22 +22,25 @@ export class WizallService {
 
 
   constructor(private http:Http) {
-        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');   
+        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
    }
 
   public intouchCashin(frommsisdn : string, tomsisdn : string, amount : number): Promise<any>  {
     let reEspParams = {token:this.token, receiver_phone_number: tomsisdn, amount: amount} ;
+    console.log(reEspParams)
     let params="params="+JSON.stringify(reEspParams);
-    
+
     let link=this.link+"/wizall-sen/intouchCashin";
+    console.log(params)
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
+        console.log("just before response") ;
         console.log(data) ;
         resolve(JSON.parse(data.json()));
       });
     });
   }
- 
+
 
   public intouchCashout(usermsisdn : string, amount : number): Promise<any>  {
     let reEspParams = {token:this.token, customer: usermsisdn, amount: amount} ;
@@ -95,7 +98,7 @@ export class WizallService {
       });
     });
   }
-  
+
   public verifier_code_retraitbon(codebon:any):Promise<any>{
     let link=this.link+"/wizall-sen/verifiercodebonachat";
     let params="params="+JSON.stringify({codebon:codebon,token:this.token});
@@ -118,9 +121,9 @@ export class WizallService {
           resolve(data);
        });*/
     });
-    
+
   }
-  
+
   public getSendSecureID(codebon:any):Promise<string>{
     let link=this.link+"/wizall-sen/getSendSecureID";
     let params="params="+JSON.stringify({codebon:codebon,token:this.token});
@@ -130,9 +133,9 @@ export class WizallService {
          resolve(data.json());
       });
     });
-    
+
   }
-  
+
   public bonDebitVoucher(data:any):Promise<any>{
     let link=this.link+"/wizall-sen/bonDebitVoucher";
     let params="params="+JSON.stringify({token:this.token,nationalite:data.nationalite,num_card:data.num_card,type_carte:data.type_carte,secure_id:data.codebon,code_validation:data.code_validation, montant:data.montant});
@@ -144,7 +147,7 @@ export class WizallService {
     });
   }
 
-  
+
   public validationretraitbon(){
       return new Promise((resolve,reject) =>{
       // let data=JSON.stringify({errorCod:0,message:'operation reussie'});
@@ -157,7 +160,7 @@ export class WizallService {
           resolve(data);
        });
     });
-  
+
   }
  // $params=array("token"=> $params->token,"model_voucher_id" =>"0","requested_value" =>"7000","customer_phone_number" => $params->telE,"customer_first_name"=> $params->prenomE,"customer_nationality"=>$params->nationalite,"customer_identity_type"=>$params->type_piece,"customer_identity_number"=>$params->num_card,"recipient_phone_number"=>$params->telB,"recipient_first_name" => $params->prenomB,"recipient_last_name" => $params->nomB);
   public validerenvoiboncash(data:any):Promise<any>{
@@ -169,7 +172,7 @@ export class WizallService {
           console.log(data);
           resolve(data);
        });
-    });  
+    });
   }
   public validerbonachat(data:any){
        let link=this.link+"/wizall-sen/validerenvoibonachat";
@@ -180,7 +183,7 @@ export class WizallService {
 		   this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
 			  resolve(data);
 		 });
-    });  
+    });
   }
 
 

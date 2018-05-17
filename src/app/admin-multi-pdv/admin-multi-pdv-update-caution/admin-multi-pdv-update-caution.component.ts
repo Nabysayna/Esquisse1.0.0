@@ -80,19 +80,27 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
   }
 
   public validermaj(item):void {
-    this.loading = true;
-    this._adminmultipdvService.modifymajcaution({type: "azrrtt", idadminpdv: this.majcaution.idcaution, modifycaution: this.inputCaution, categorie:this.categoriepoint}).subscribe(
-      adminmultipdvServiceWebList => {
-        console.log(adminmultipdvServiceWebList);
-        this.closeModal();
-        this.categoriepoint = '---' ;
-      },
-      error => alert(error),
-      () => {
-        this.listmajcautions();
-        this.loading = false ;
-      }
-    )
+    if(confirm("Confirmer Positionnement dépot")){
+      this.loading = true;
+      this._adminmultipdvService.modifymajcaution({type: "azrrtt", idadminpdv: this.majcaution.idcaution, modifycaution: this.inputCaution, categorie:this.categoriepoint}).subscribe(
+        adminmultipdvServiceWebList => {
+          console.log(adminmultipdvServiceWebList);
+          this.closeModal();
+          this.categoriepoint = '---' ;
+        },
+        error => alert(error),
+        () => {
+          this.listmajcautions();
+          this.loading = false ;
+        }
+      )
+    }
+    else{
+      console.log("Je ne confirme pas")
+    }
+
+
+
   }
 
   // -------------- Categorisations

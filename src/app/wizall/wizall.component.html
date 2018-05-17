@@ -1,7 +1,7 @@
 <div class="col-sm-12">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
-            
+
             <h2>Wizall</h2>
 
         </div>
@@ -13,15 +13,15 @@
             <!-- Nav tabs -->
             <div id="om-options">
                 <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()"  data-toggle="tab">Depôt</a>
-                
+
                 <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()" data-toggle="tab">Retrait </a>
-                
+
                 <a href="#retraitcode" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()" data-toggle="tab">Retrait de bon </a>
-                
+
                 <a href="#envoibon" (click)="reinitialiser()" data-toggle="tab">Envoie de bon</a>
 
                 <!--<a href="#senelec" (click)="reinitialise()" data-toggle="tab">Paiement Senelec </a>-->
-                                
+
             </div>
 
             <!-- Tab panes -->
@@ -81,16 +81,16 @@
 											<input type="text" [(ngModel)]="codebon" name="codebon" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
 											<input (click)="showmodalretraitbon()" type="button" value="Vérifier" class="btn btn-success" />
 									    </form>
-									    
+
 									</div>
 									<div style="margin-left:auto;margin-right:auto">
 										<p *ngIf="messageretraitcash"  class="alert alert-success col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Operation reussie. Vous pouvez remettre l'argent au client.</p>
 									    <p *ngIf="messageretraitcasherror"   class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code Incorrect</p>
 									    <p *ngIf="errorverifcode"  class="alert alert-danger col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-3 col-md-3 col-xs-3 col-sm-3">Code bon incorrect</p>
-									
+
 									</div>
 									<div class="tab-pane" id="bonachat">
-										 <form class="form-inline"> 
+										 <form class="form-inline">
 											 <label>code du bon d'achat :</label>
 											 <input type="text" style="border:2px solid orange;border-radius:10px 0px 10px 10px" />
 											 <input type="button" (click)="showmodalretraitbonachat()" class="btn btn-success" value="verifier code" />
@@ -98,7 +98,7 @@
 									</div>
 								</div>
                             </div>
-                       </div>  
+                       </div>
                 </div>
                 <div style="margin-top:20px"  class="tab-pane fade col-sm-10 col-xs-10" id="envoibon">
                        <!-- <h2>Retrait de bon</h2>-->
@@ -159,7 +159,7 @@
 																<select class="textinput" [(ngModel)]="type_piece" name="type_piece">
 																	<option value="idcard">carte d'identite</option>
 																	<option value="passport">passport</option>
-																	
+
 																</select>
 															</div>
 														</div>
@@ -210,9 +210,9 @@
 																<input class="textinput" type="text" [(ngModel)]="telB" name="telB" />
 															</div>
 														</div>
-														
+
 													</fieldset>
-													
+
 												</form>
 											</div>
 										</div>
@@ -236,7 +236,7 @@
 																  <option (change)="recuperPrix()" [(ngModel)]="bon" name="bon" value="{{s.type}}" *ngFor="let s of typebon">{{s.type}}</option>
 													          </select>
 														 </div>
-													 </div> 
+													 </div>
 												 </form>
 											 </div>
 											 <div class="col-lg-offset-1 col-lg-5 col-md-5">
@@ -255,14 +255,14 @@
 													 </div>
 											 </div>
 										 </div>
-										 <input (click)="showmodalenvoibonachat()" type="button" class="btn btn-success" value="valider" /> 
+										 <input (click)="showmodalenvoibonachat()" type="button" class="btn btn-success" value="valider" />
  -->
 									</div>
 								</div>
                             </div>
                        </div>
-                      
-                       
+
+
                 </div>
 
                 <div class="tab-pane fade col-sm-10 col-xs-10" id="sde">
@@ -303,7 +303,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Dépôt.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -316,19 +316,19 @@
 							 <label >Frais Transaction : {{this.fraisDepot}}</label>
 						 </div>
 						 <div class="form-group">
-							 <label >Total à payer : {{this.fraisDepot + this.mnt}}</label>
+							 <label >Total à payer : {{nombreEntier(fraisDepot) + nombreEntier(mnt)}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="deposer()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="fermermodaldepot()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	    
+
 </div>
 <div bsModal #modalenvoibonachat="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -341,7 +341,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Dépôt.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div class="row">
 					  <div class="col-lg-7 col-md-7">
 					      <form>
@@ -393,7 +393,7 @@
 								  <div class="form-inline">
 									  <label>Telephone</label>
 									  <input type="text" class="textinput" [(ngModel)]="telB" name="telE" />
-								  </div>  
+								  </div>
 							  </fieldset>
 					      </form>
 					  </div>
@@ -414,9 +414,9 @@
 				  <input type="button" value="valider" (click)="validerbonachat()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="fermermodaldepot()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	    
+
 </div>
 <div bsModal #modalretraitbon="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -450,7 +450,7 @@
 <!-- 								   <label>Telephone</label>
 								   <input type="text" class="textinput" [(ngModel)]="telE" name="telE" /> -->
 							   </div>
-							   
+
 							</div>
 
 							<div class="col-lg-4 col-md-4 col-xs-4">
@@ -489,7 +489,7 @@
 						    <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
 								 <input type="text" class="textinput" [(ngModel)]="secondcode" name="secondcode" />
 						    </div>
-						    
+
 						</div>
 						<div class="row">
 							 <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
@@ -520,20 +520,20 @@
 						    <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
 								<input type="text" class="textinput" [(ngModel)]="num_card" name="num_card" />
 						    </div>
-						     
+
 						</div>
 						 <p *ngIf="messagesecondcode" class="alert alert-danger col-lg-3 col-md-3 col-xs-3 col-sm-3">Code Secret Incorrect</p>
 						<input type="button" (click)="validationretraitbon()" class="btn btn-success" value="valider" />
 					</form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="fermer" (click)="hidemodalretraitbon()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	    
+
 </div>
 <div bsModal #modalretraitbonachat="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -546,7 +546,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Dépôt.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form *ngIf="valider" class="form">
 						 <div class="form-group">
@@ -568,9 +568,9 @@
 				  <input type="button" value="valider" (click)="deposer()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="hidemodalretraitbonachat()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	    
+
 </div>
 <div bsModal #modalenvoiboncash="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -583,7 +583,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Envoi de bon Wizall.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4">
 						 <h2>Envoyeur</h2>
@@ -624,9 +624,9 @@
 				  <input type="button" value="valider" (click)="validerenvoibon()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="hidemodalenvoiboncash()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	    
+
 </div>
 
 <div bsModal #modalretrait="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -640,7 +640,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation Retrait.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -650,16 +650,16 @@
 							 <label >Montant Transaction : {{this.mnt}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="retirer()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="fermermodalretrait()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	    
+
 </div>
 
 
@@ -674,9 +674,9 @@
 	            <h4 class="modal-title" id="myModalLabel">Informations Facture SDE</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div *ngIf="etat">
-				 	
+
 					 <form class="form">
 						 <div class="form-group">
 							 <label *ngIf="statuspayment==false">Status : NON PAYEE</label>
@@ -698,7 +698,7 @@
 			               <label >Client : {{nomclient}}</label>
 			             </div>
 					 </form>
-					
+
 				 </div>
 				 <div *ngIf="!etat">
 					 <p class="alert alert-danger">facture deja payé ou reference incorrecte</p>
@@ -708,8 +708,8 @@
 				  <input type="button" *ngIf="etat" value="valider" (click)="payerSDE()" class="btn btn-success" />
 				  <input type="button" value="annuler" (click)="fermersdemodal()" class="btn btn-danger" />
 		     </div>
-		  </div> 
-	    </div>  
+		  </div>
+	    </div>
 </div>
 
 <div bsModal #modalsenelec="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -723,7 +723,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Information Facture Senelec.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div *ngIf="etat">
 
 					 <form class="form">
@@ -746,7 +746,7 @@
 			             <div class="form-group">
 			               <label >Client : {{refclient}}</label>
 			             </div>
-					 </form>					
+					 </form>
 				 </div>
 				 <div *ngIf="!etat">
 					 <p class="alert alert-danger">facture deja payé ou numero facture incorrecte</p>
@@ -756,8 +756,8 @@
 				  <input type="button" *ngIf="etat" value="valider" (click)="payerSenelec()" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="fermersenelecmodal()" class="btn btn-danger" />
 		     </div>
-		  </div> 
-	    </div>  
+		  </div>
+	    </div>
 </div>
 
 <div bsModal #modalfraiscashin="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -775,8 +775,8 @@
 		     </div>
 		     <div class="modal-footer">
 		     </div>
-		  </div> 
-	    </div>  
+		  </div>
+	    </div>
 </div>
 
 <div bsModal #modalfraisEnvoieBon="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -794,11 +794,11 @@
 		     </div>
 		     <div class="modal-footer">
 		     </div>
-		  </div> 
-	    </div>  
+		  </div>
+	    </div>
 </div>
 
 <div *ngIf="this.loading">
-    <app-loader></app-loader>    
+    <app-loader></app-loader>
 </div>
 

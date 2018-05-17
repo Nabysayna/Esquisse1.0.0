@@ -22,9 +22,9 @@ export class WizallComponent implements OnInit {
    refclient : string ;
    nomclient : string ;
    statuspayment : boolean ;
-   etat=false;
+   etat: Boolean=false;
 
-   fraisDepot = 0 ;
+   fraisDepot: Number = 0 ;
 
    validerfirst:boolean;
    validersecond:boolean;
@@ -87,7 +87,7 @@ export class WizallComponent implements OnInit {
   @ViewChild('modalenvoibonachat') public modalenvoibonachat:ModalDirective;
   @ViewChild('modalfraiscashin') public modalfraiscashin:ModalDirective;
   @ViewChild('modalfraisEnvoieBon') public modalfraisEnvoieBon:ModalDirective;
-  
+
 
    public showmodalfraisEnvoieBon(){
       this.modalfraisEnvoieBon.show() ;
@@ -213,7 +213,7 @@ export class WizallComponent implements OnInit {
 		  this.errorverifcode=true;
 		  this.messageretraitcasherror=false;
 		 }
-    }); 
+    });
   }
 }
 
@@ -352,8 +352,13 @@ export class WizallComponent implements OnInit {
     }
 
     deposer(){
-      this.fermermodaldepot() ;
-      this.mnt = this.mnt + this.fraisDepot ;
+      //this.fermermodaldepot() ;
+      this.mnt = Number(this.mnt) + Number(this.fraisDepot)+"" ;
+      console.log(this.mnt)
+      console.log(this.fraisDepot)
+      console.log(this.numclient)
+      console.log({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient})
+      console.log('********111111111**************')
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient}));
       this.fermermodaldepot() ;
     }
@@ -453,78 +458,82 @@ export class WizallComponent implements OnInit {
         return frais ;
     }
 
-    getFraisTransfert(montant){ 
+    getFraisTransfert(montant){
       let frais = 0 ;
 
-      if(montant>=2000 && montant <=3049) 
+      if(montant>=2000 && montant <=3049)
         frais =  200 ;
 
-      if(montant>=3050 && montant <=5049) 
+      if(montant>=3050 && montant <=5049)
         frais =  400 ;
 
-      if(montant>=5050 && montant <=10049) 
+      if(montant>=5050 && montant <=10049)
         frais =  700 ;
 
-      if(montant>=10050 && montant <=15049) 
+      if(montant>=10050 && montant <=15049)
         frais =  1100 ;
 
-      if(montant>=15050 && montant <=20049) 
+      if(montant>=15050 && montant <=20049)
         frais =  1300 ;
 
-      if(montant>=20050 && montant <=25049) 
+      if(montant>=20050 && montant <=25049)
         frais =  1500 ;
 
-      if(montant>=25050 && montant <=35049) 
+      if(montant>=25050 && montant <=35049)
         frais =  1700 ;
 
-      if(montant>=35050 && montant <=50049) 
+      if(montant>=35050 && montant <=50049)
         frais =  1800 ;
 
-      if(montant>=50050 && montant <=60049) 
+      if(montant>=50050 && montant <=60049)
         frais =  2300 ;
 
-      if(montant>=60050 && montant <=75049) 
+      if(montant>=60050 && montant <=75049)
         frais =  2700 ;
 
-      if(montant>=75050 && montant <=100049) 
+      if(montant>=75050 && montant <=100049)
         frais =  3200 ;
 
-      if(montant>=100050 && montant <=125049) 
+      if(montant>=100050 && montant <=125049)
         frais =  3600 ;
 
-      if(montant>=125050 && montant <=150049) 
+      if(montant>=125050 && montant <=150049)
         frais =  4000 ;
 
-      if(montant>=150050 && montant <=200049) 
+      if(montant>=150050 && montant <=200049)
         frais =  4800 ;
 
-      if(montant>=200050 && montant <=250049) 
+      if(montant>=200050 && montant <=250049)
         frais =  6350 ;
 
-      if(montant>=250050 && montant <=300049) 
+      if(montant>=250050 && montant <=300049)
         frais =  8050 ;
 
-      if(montant>=300050 && montant <=350049) 
+      if(montant>=300050 && montant <=350049)
         frais =  8450 ;
 
-      if(montant>=350050 && montant <=400049) 
+      if(montant>=350050 && montant <=400049)
         frais =  9750 ;
 
-      if(montant>=400050 && montant <=600049) 
+      if(montant>=400050 && montant <=600049)
         frais =  11850 ;
 
-      if(montant>=600050 && montant <=750049) 
+      if(montant>=600050 && montant <=750049)
         frais =  13550 ;
 
-      if(montant>=750050 && montant <=1000000) 
+      if(montant>=750050 && montant <=1000000)
         frais =  21650 ;
 
-        return frais ;    
+        return frais ;
     }
 
 
     nombreFormate(montant){
         return Number( montant.split(".")[0] ).toLocaleString() ;
     }
+
+  nombreEntier(montant){
+    return Number( montant ) ;
+  }
 
 }
