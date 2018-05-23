@@ -1384,7 +1384,9 @@ geolocaliser(){
       if (item.etats.errorCode=='9')
         return "Votre compte est à l'état inactif." ;
 */
-      if (item.etats.errorCode) return item.etats.errorCode;
+      if (item.etats.errorCode=='-1')
+        return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
+      else if (item.etats.errorCode) return item.etats.errorCode;
       return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
     }
 
@@ -1576,7 +1578,6 @@ geolocaliser(){
 
   }
 
-
    creditIZItc(objet:any){
     let requete = "5/"+objet.data.num+"/"+objet.data.montant ;
 
@@ -1683,7 +1684,6 @@ geolocaliser(){
 
   }
 
-
   public cashOutEmoney(objet){
     this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP).then(expressocashwebserviceList => {
 
@@ -1712,7 +1712,6 @@ geolocaliser(){
     });
 
   }
-
 
   public cashOutPIN(objet){
     this.expressocashwebservice.pinCashout(objet.data.pin, objet.data.cni).then(expressocashwebserviceList => {
@@ -1791,8 +1790,8 @@ geolocaliser(){
       }else{
           objet.etats.etat=true;
           objet.etats.load='terminated';
-        objet.etats.color='red';
-        objet.etats.errorCode= response.response
+          objet.etats.color='red';
+          objet.etats.errorCode= response.response?response.response:response
       }
     });
   }
@@ -1816,12 +1815,23 @@ geolocaliser(){
     });
   }
 
-   validerpaimentsenelec(objet){
+  validerpaimentsenelec(objet){
      this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
         console.log(resp) ;
+        /*resp = {
+          PAYMENT_TRANSACTION_NUMBER: "WZ2233",
+          police: "2030802106",
+          numfacture: "6688164",
+          client: "EL HADJI MOR CISS",
+          montant: "27930",
+          dateecheance: "2017-10-07",
+          statuspayment: true,
+          fees: "0",
+          transactionid: "2233",
+        }*/
         if( (typeof resp.transactionid != "undefined") ){
           objet.dataI = {
-            apiservice:'wizall',
+            apiservice:'facturier',
             service:'senelec',
             infotransaction:{
               client:{
@@ -1844,7 +1854,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
-          objet.etats.errorCode= resp.response
+          objet.etats.errorCode= resp.response?resp.response:resp
         }
 
      });
@@ -1886,11 +1896,10 @@ geolocaliser(){
 /*********************************/
 /*********************************/
 
-
-
   annulerOperation(){
     console.log("Opèration annulée ...") ;
   }
+
   color(i:number):string{
      if(i%2==0){
        return "border-left:2px solid green";
@@ -1899,12 +1908,14 @@ geolocaliser(){
        return "border-left:2px solid blue";
      }
   }
+
   getFormatted( designation) : string {
     if(designation.length>16)
       return designation.substring(0, 13)+'...' ;
 
     return designation ;
   }
+
   currency(prix:number){
    return Number(prix).toLocaleString();
   }
