@@ -35,6 +35,41 @@
         </div>
       </div>
     </div>
+    <div class="panel-heading" *ngIf="dataImpression.apiservice=='tntreimpression' && dataImpression.service=='abonnement'">
+      <div class="panel panel-default"  id="tntreimpressionrecuimpressionabonnement">
+        <div class="panel-heading">
+          <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+          <p align="right" >
+            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+            <strong>Service clientèle:</strong><br>
+            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+          </p>
+        </div>
+        <div class="panel-body">
+          Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
+          <table>
+            <tr class="text-uppercase">
+              <td>
+                Nom Client: {{dataImpression.infotransaction.client.nom}}<br>
+                Prénom Client: {{dataImpression.infotransaction.client.prenom}}<br>
+                Téléphone Client: {{dataImpression.infotransaction.client.telephone}}<br>
+              </td>
+              <td width="200px">&nbsp;&nbsp;</td>
+              <td>
+                Numéro Carte: {{dataImpression.infotransaction.client.carte}}<br>
+                Numéro Chip: {{dataImpression.infotransaction.client.chip}}<br>
+                Type bouquet: {{dataImpression.infotransaction.client.typebouquet}}<br>
+                Montant: {{dataImpression.infotransaction.client.montant}}<br>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="panel-footer">
+          Validité Abonnement: du {{dataImpression.infotransaction.dateoperation | date}} au {{dataImpression.infotransaction.echeance | date}}<br>
+        </div>
+      </div>
+    </div>
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='tnt' && dataImpression.service=='ventedecodeur'">
       <div class="panel panel-default"  id="tntrecuimpressionventedecodeur">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
@@ -98,103 +133,6 @@
       </div>
     </div>
 
-    <div class="panel-heading" *ngIf="dataImpression.apiservice=='tntreimpression' && dataImpression.service=='abonnement'">
-      <div class="panel panel-default"  id="tntreimpressionrecuimpressionabonnement">
-        <div class="panel-heading">
-          <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
-          <p align="right" >
-            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
-            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
-            <strong>Service clientèle:</strong><br>
-            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
-          </p>
-        </div>
-        <div class="panel-body">
-          Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
-          <table>
-            <tr class="text-uppercase">
-              <td>
-                Nom Client: {{dataImpression.infotransaction.client.nom}}<br>
-                Prénom Client: {{dataImpression.infotransaction.client.prenom}}<br>
-                Téléphone Client: {{dataImpression.infotransaction.client.telephone}}<br>
-              </td>
-              <td width="200px">&nbsp;&nbsp;</td>
-              <td>
-                Numéro Carte: {{dataImpression.infotransaction.client.carte}}<br>
-                Numéro Chip: {{dataImpression.infotransaction.client.chip}}<br>
-                Type bouquet: {{dataImpression.infotransaction.client.typebouquet}}<br>
-                Montant: {{dataImpression.infotransaction.client.montant}}<br>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <div class="panel-footer">
-          Validité Abonnement: du {{dataImpression.infotransaction.dateoperation | date}} au {{dataImpression.infotransaction.echeance | date}}<br>
-        </div>
-      </div>
-    </div>
-    <div class="panel-heading" *ngIf="dataImpression.apiservice=='postecashreimpression' && dataImpression.service=='achatcodewayafal'">
-      <div class="panel panel-default"  id="postecashreimpressionrecuimpressionachatcodewayafal">
-        <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
-        <h2 style="text-align: center"> POSTECASH - ACHAT WOYOFAL </h2>
-        <div class="panel-heading">
-          <p align="right" >
-            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
-            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
-            <strong>Service clientèle:</strong><br>
-            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
-          </p>
-        </div>
-        <div class="panel-body">
-          Numéro Transaction Postecash: {{dataImpression.infotransaction.transactionPostCash}}<br>
-          <table>
-            <tr class="text-uppercase">
-              <td colspan="3">
-                Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
-                Date effectuée: {{dataImpression.infotransaction.dateoperation | date}}<br>
-              </td>
-              <td width="200px">&nbsp;&nbsp;</td>
-              <td>
-                Code Woyofal: {{dataImpression.infotransaction.client.codewoyafal}}<br>
-                Montant Payé: {{dataImpression.infotransaction.client.montant}}<br>
-                Compteur: {{dataImpression.infotransaction.client.compteur}}<br>
-                Frais : 500 Fcfa<br>
-              </td>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="panel-heading" *ngIf="dataImpression.apiservice=='postecashreimpression' && dataImpression.service=='retraitespece'">
-      <div class="panel panel-default"  id="postecashreimpressionrecuimpressionretraitespece">
-        <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
-        <h2 style="text-align: center"> POSTECASH - RETRAIT ESPECE </h2>
-        <div class="panel-heading">
-          <p align="right" >
-            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
-            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
-            <strong>Service clientèle:</strong><br>
-            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
-          </p>
-        </div>
-        <div class="panel-body">
-          Numéro Transaction Postecash: {{dataImpression.infotransaction.transactionPostCash}}<br>
-          <table>
-            <tr class="text-uppercase">
-              <td colspan="3">
-                Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
-                Date effectuée: {{dataImpression.infotransaction.dateoperation | date}}<br>
-              </td>
-              <td width="200px">&nbsp;&nbsp;</td>
-              <td>
-                Téléphone Destinataire: {{dataImpression.infotransaction.client.telephone}}<br>
-                Montant Retrait : {{dataImpression.infotransaction.client.montant}}<br>
-              </td>
-          </table>
-        </div>
-      </div>
-    </div>
-
-
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='postecash' && dataImpression.service=='rechargementespece'">
       <div class="panel panel-default"  id="postecashrecuimpressionrechargementespece">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
@@ -247,6 +185,35 @@
         </div>
       </div>
     </div>
+    <div class="panel-heading" *ngIf="dataImpression.apiservice=='postecashreimpression' && dataImpression.service=='retraitespece'">
+      <div class="panel panel-default"  id="postecashreimpressionrecuimpressionretraitespece">
+        <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> POSTECASH - RETRAIT ESPECE </h2>
+        <div class="panel-heading">
+          <p align="right" >
+            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+            <strong>Service clientèle:</strong><br>
+            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+          </p>
+        </div>
+        <div class="panel-body">
+          Numéro Transaction Postecash: {{dataImpression.infotransaction.transactionPostCash}}<br>
+          <table>
+            <tr class="text-uppercase">
+              <td colspan="3">
+                Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
+                Date effectuée: {{dataImpression.infotransaction.dateoperation | date}}<br>
+              </td>
+              <td width="200px">&nbsp;&nbsp;</td>
+              <td>
+                Téléphone Destinataire: {{dataImpression.infotransaction.client.telephone}}<br>
+                Montant Retrait : {{dataImpression.infotransaction.client.montant}}<br>
+              </td>
+          </table>
+        </div>
+      </div>
+    </div>
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='postecash' && dataImpression.service=='achatcodewayafal'">
       <div class="panel panel-default"  id="postecashrecuimpressionachatcodewayafal">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
@@ -265,6 +232,37 @@
             <tr class="text-uppercase">
               <td colspan="3">
                 Numéro Transaction Sentool: {{dataImpression.infotransaction.client.transactionBBS}}<br>
+              </td>
+              <td width="200px">&nbsp;&nbsp;</td>
+              <td>
+                Code Woyofal: {{dataImpression.infotransaction.client.codewoyafal}}<br>
+                Montant Payé: {{dataImpression.infotransaction.client.montant}}<br>
+                Compteur: {{dataImpression.infotransaction.client.compteur}}<br>
+                Frais : 500 Fcfa<br>
+              </td>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="panel-heading" *ngIf="dataImpression.apiservice=='postecashreimpression' && dataImpression.service=='achatcodewayafal'">
+      <div class="panel panel-default"  id="postecashreimpressionrecuimpressionachatcodewayafal">
+        <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> POSTECASH - ACHAT WOYOFAL </h2>
+        <div class="panel-heading">
+          <p align="right" >
+            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+            <strong>Service clientèle:</strong><br>
+            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+          </p>
+        </div>
+        <div class="panel-body">
+          Numéro Transaction Postecash: {{dataImpression.infotransaction.transactionPostCash}}<br>
+          <table>
+            <tr class="text-uppercase">
+              <td colspan="3">
+                Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
+                Date effectuée: {{dataImpression.infotransaction.dateoperation | date}}<br>
               </td>
               <td width="200px">&nbsp;&nbsp;</td>
               <td>
@@ -652,9 +650,72 @@
       </div>
     </div>
 
+    <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturier' && dataImpression.service=='achatcodewayafal'">
+      <div class="panel panel-default"  id="facturierrecuimpressionachatcodewayafal">
+        <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> ACHAT WOYOFAL </h2>
+        <div class="panel-heading">
+          <p align="right" >
+            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+            <strong>Service clientèle:</strong><br>
+            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+          </p>
+        </div>
+        <div class="panel-body">
+          Numéro Transaction Postecash: {{dataImpression.infotransaction.client.transactionPostCash}}<br>
+          <table>
+            <tr class="text-uppercase">
+              <td colspan="3">
+                Numéro Transaction Sentool: {{dataImpression.infotransaction.client.transactionBBS}}<br>
+              </td>
+              <td width="200px">&nbsp;&nbsp;</td>
+              <td>
+                Code Woyofal: {{dataImpression.infotransaction.client.codewoyafal}}<br>
+                Montant Payé: {{dataImpression.infotransaction.client.montant}}<br>
+                Compteur: {{dataImpression.infotransaction.client.compteur}}<br>
+                Frais : 500 Fcfa<br>
+              </td>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturierreimpression' && dataImpression.service=='achatcodewayafal'">
+      <div class="panel panel-default"  id="facturierreimpressionrecuimpressionachatcodewayafal">
+        <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> ACHAT WOYOFAL </h2>
+        <div class="panel-heading">
+          <p align="right" >
+            <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
+            <strong>Guichetier(e):</strong> {{ operateur.prenom }} {{ operateur.nom }}<br>
+            <strong>Service clientèle:</strong><br>
+            77 226 12 27 - 77 398 18 31 - 77 398 18 58.<br>
+          </p>
+        </div>
+        <div class="panel-body">
+          Numéro Transaction Postecash: {{dataImpression.infotransaction.transactionPostCash}}<br>
+          <table>
+            <tr class="text-uppercase">
+              <td colspan="3">
+                Numéro Transaction Sentool: {{dataImpression.infotransaction.transactionBBS}}<br>
+                Date effectuée: {{dataImpression.infotransaction.dateoperation | date}}<br>
+              </td>
+              <td width="200px">&nbsp;&nbsp;</td>
+              <td>
+                Code Woyofal: {{dataImpression.infotransaction.client.codewoyafal}}<br>
+                Montant Payé: {{dataImpression.infotransaction.client.montant}}<br>
+                Compteur: {{dataImpression.infotransaction.client.compteur}}<br>
+                Frais : 500 Fcfa<br>
+              </td>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturier' && dataImpression.service=='senelec'">
       <div class="panel panel-default"  id="facturierrecuimpressionsenelec">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> SENELEC </h2>
         <div class="panel-heading">
           <p style="text-align: right" >
             <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
@@ -685,6 +746,7 @@
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturierreimpression' && dataImpression.service=='senelec'">
       <div class="panel panel-default"  id="facturierreimpressionrecuimpressionsenelec">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> SENELEC </h2>
         <div class="panel-heading">
           <p align="right" >
             <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
@@ -716,6 +778,7 @@
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturier' && dataImpression.service=='sde'">
       <div class="panel panel-default"  id="facturierrecuimpressionsde">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> SDE </h2>
         <div class="panel-heading">
           <p align="right" >
             <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
@@ -748,7 +811,7 @@
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturierreimpression' && dataImpression.service=='sde'">
       <div class="panel panel-default"  id="facturierreimpressionrecuimpressionsde">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
-        <h2 style="text-align: center"> POSTECASH - ACHAT WOYOFAL </h2>
+        <h2 style="text-align: center"> SDE </h2>
         <div class="panel-heading">
           <p align="right" >
             <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
@@ -780,6 +843,7 @@
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturier' && dataImpression.service=='rapido'">
       <div class="panel panel-default"  id="facturierrecuimpressionrapido">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
+        <h2 style="text-align: center"> RAPIDO </h2>
         <div class="panel-heading">
           <p align="right" >
             <strong>Entreprise:</strong> {{ operateur.nometps }}<br>
@@ -813,7 +877,7 @@
     <div class="panel-heading" *ngIf="dataImpression.apiservice=='facturierreimpression' && dataImpression.service=='rapido'">
       <div class="panel panel-default"  id="facturierreimpressionrecuimpressionrapido">
         <img src="../../assets/bbs.png" class="img-rounded"   height="100"/>
-        <h2 style="text-align: center"> POSTECASH - ACHAT WOYOFAL </h2>
+        <h2 style="text-align: center"> RAPIDO </h2>
         <div class="panel-heading">
           <p align="right" >
             <strong>Entreprise:</strong> {{ operateur.nometps }}<br>

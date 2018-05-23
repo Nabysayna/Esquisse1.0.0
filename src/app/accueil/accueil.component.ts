@@ -1751,7 +1751,7 @@ geolocaliser(){
        response = JSON.parse(response) ;
         if( (response.PAYMENT_TRANSACTION_NUMBER != "undefined") ){
         objet.dataI = {
-          apiservice:'wizall',
+          apiservice:'facturier',
           service:'sde',
           infotransaction:{
             client:{

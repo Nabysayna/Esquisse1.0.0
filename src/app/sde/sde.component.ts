@@ -10,7 +10,10 @@ import {FacturierService} from "../services/facturier.service";
   styleUrls: ['./sde.component.css']
 })
 export class SdeComponent implements OnInit {
-   etat:boolean;
+  etat1:boolean=false;
+  etat2:boolean=false;
+  etat3:boolean=false;
+  etat4:boolean=false;
    message:boolean=false;
    mntSDE:any;
    echeance:any;
@@ -33,75 +36,53 @@ export class SdeComponent implements OnInit {
   @ViewChild('modalsde') public modalsde:ModalDirective;
 
   detailfactursde(){
+    this.refFactureSDE=undefined;
+    this.nomclient=undefined;
+    this.echeance=undefined;
+    this.statuspayment=undefined;
+    this.mntSDE=undefined
+    this.etat1=false;
+    this.etat2=false;
+    this.etat3=false;
+    this.etat4=false;
     this._facturierService.detailreglementsde(this.refclientsde).then(response =>{
       console.log(response) ;
-      
-      if(response.response == null ){
-         this.message=true;
-         this.etat = false ;
+
+      if(response.errorCode==0){
+        if(typeof response.response !== 'object') this.etat4=true;
+        else if(response.response.length==0) this.etat3=true;
+        else{
+          this.etat2=true;
+          this.refFactureSDE=response.response.reference_facture;
+          this.nomclient=response.reponse.nom;
+          this.echeance=response.response.date_echeance;
+          this.statuspayment=response.response.statuspayment;
+          this.mntSDE=response.response.montant;
+        }
+        this.modalsde.show();
       }else{
-         this.etat=true;
-         this.refFactureSDE=response.response.reference_facture;
-         this.nomclient=response.reponse.nom;
-         this.echeance=response.response.date_echeance;
-         this.statuspayment=response.response.statuspayment;
-         this.mntSDE=response.response.montant;
+        this.etat1=true;
+        this.message=response.errorMessage;
+        this.modalsde.show();
       }
+
     });
   }
 
   showmodalsde(){
-    console.log("show sde")
     this.modalsde.show();
     this.detailfactursde();
   }
 
   paimantsde(){
-
-     this.hidemodalsde();
-/*
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'mntsde':this.mntSDE, 'refclientsde':this.refclientsde, 'refFactureSDE':this.refFactureSDE}));
-*/
-
-
-    this._facturierService.paimentsde(this.mntSDE,this.refclientsde,this.refFactureSDE,'sde').then( response =>{
-       response = JSON.parse(response) ;
-       console.log(response) ;
-      if( (response.PAYMENT_TRANSACTION_NUMBER != null) ){
-        this.dataImpression = {
-          apiservice:'wizall',
-          service:'sde',
-          infotransaction:{
-            client:{
-              transactionPostCash: response.PAYMENT_TRANSACTION_NUMBER,
-              transactionBBS: 'x-x-x-x',
-               reference_client: this.refclientsde,
-               reference_facture: this.refFactureSDE,
-               date_echeance: response.date_echeance,
-               montant: this.mntSDE,
-
-            },
-
-          },
-        }
-        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
-        this.router.navigate(['accueil/impression']);
-      }else
-          if (response.error != null){
-            this.message = true ;
-            this.errorMessage = response.error ;
-          }
-          else{
-            this.message = true ;
-            this.errorMessage = response.response ;
-          }
-    });
-
+    this.hidemodalsde();
   }
 
 
   hidemodalsde(){
    this.modalsde.hide();
+    this.refclientsde = undefined
   }
 
 }
