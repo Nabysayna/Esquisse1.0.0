@@ -1344,25 +1344,48 @@ geolocaliser(){
           return "Facture dèja payée." ;
     }
 
-/* EXPRESSO */
-     if(item.data.operateur==7 ){
+    /* EXPRESSO */
+    if(item.data.operateur==7 ){
 
-        if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
-          return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
-        if (item.etats.errorCode=='2')
-          return "Cette requête n'est pas authorisée" ;
-        if (item.etats.errorCode=='51')
-          return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;
-        if (item.etats.errorCode=='3')
-          return "Numéro de téléphone invalide." ;
-        if (item.etats.errorCode=='2')
-          return "Cette requête n'est pas authorisée" ;
-        if (item.etats.errorCode=='7')
-          return "Votre compte a été verrouillé, contactez le service client." ;
-        if (item.etats.errorCode=='9')
-          return "Votre compte est à l'état inactif." ;
+      if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
+        return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
+      if (item.etats.errorCode=='2')
+        return "Cette requête n'est pas authorisée" ;
+      if (item.etats.errorCode=='51')
+        return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;
+      if (item.etats.errorCode=='3')
+        return "Numéro de téléphone invalide." ;
+      if (item.etats.errorCode=='2')
+        return "Cette requête n'est pas authorisée" ;
+      if (item.etats.errorCode=='7')
+        return "Votre compte a été verrouillé, contactez le service client." ;
+      if (item.etats.errorCode=='9')
+        return "Votre compte est à l'état inactif." ;
 
-          return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
+      return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
+    }
+
+    /* EXPRESSO */
+    if(item.data.operateur==8 ){
+
+/*
+      if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
+        return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
+      if (item.etats.errorCode=='2')
+        return "Cette requête n'est pas authorisée" ;
+      if (item.etats.errorCode=='51')
+        return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;
+      if (item.etats.errorCode=='3')
+        return "Numéro de téléphone invalide." ;
+      if (item.etats.errorCode=='2')
+        return "Cette requête n'est pas authorisée" ;
+      if (item.etats.errorCode=='7')
+        return "Votre compte a été verrouillé, contactez le service client." ;
+      if (item.etats.errorCode=='9')
+        return "Votre compte est à l'état inactif." ;
+*/
+      if (item.etats.errorCode) return item.etats.errorCode;
+      return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
     }
 
 
@@ -1768,7 +1791,8 @@ geolocaliser(){
       }else{
           objet.etats.etat=true;
           objet.etats.load='terminated';
-          objet.etats.color='red';
+        objet.etats.color='red';
+        objet.etats.errorCode= response.response
       }
     });
   }
@@ -1820,6 +1844,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
+          objet.etats.errorCode= resp.response
         }
 
      });
