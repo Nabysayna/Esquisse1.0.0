@@ -4,15 +4,6 @@ import { Router, CanActivate } from '@angular/router';
 import {FacturierService} from "../services/facturier.service";
 
 
-class Article {
-  public id:number;
-  public nomImg:string;
-  public designation:string;
-  public description:string;
-  public prix:number;
-  public quantite:number;
-}
-
 @Component({
   selector: 'app-senelec',
   templateUrl: './senelec.component.html',
@@ -20,7 +11,9 @@ class Article {
 })
 export class SenelecComponent implements OnInit {
    etat1:boolean=false;
-   etat2:boolean=false;
+  etat2:boolean=false;
+  etat3:boolean=false;
+  etat4:boolean=false;
 
    message:boolean=false;
    errorMessage : any ;
@@ -33,8 +26,7 @@ export class SenelecComponent implements OnInit {
    refFactureSDE:number;
    nomclient:string;
    statuspayment:boolean;
-   detailfacturesenelec:any={errorCode:0,police:12545555,numeroFacture:156665,nom_client:'nom du client',montant:50000,dateEcheance:"12/3/2018"};
-   facture_deja_paye:boolean = false;
+   detailfacturesenelec:any={errorCode:0,police:12545555,numeroFacture:156665,nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
    police:string;
    num_facture:string;
    dataImpression:any;
@@ -55,34 +47,49 @@ export class SenelecComponent implements OnInit {
    }
    hidemodalsenelec(){
      this.modalsenelec.hide();
+     this.police = undefined;
+     this.num_facture = undefined;
    }
    detailfactsenelec(){
-     this._facturierService.detailfacturesenelec(this.police,this.num_facture).then(response =>{
-        if(response.errorCode==0){
-          this.etat2=true;
-          this.detailfacturesenelec.police=response.police;
-          this.detailfacturesenelec.numeroFacture=response.num_facture;
-          this.detailfacturesenelec.nomclient=response.nom_client;
-          this.detailfacturesenelec.montant=response.montant;
-          this.detailfacturesenelec.dateEcheance=response.dateEcheance;
-
+     this.detailfacturesenelec={errorCode:0,police:5,numeroFacture:5,nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
+     this.etat1=false;
+     this.etat2=false;
+     this.etat3=false;
+     this.etat4=false;
+     this._facturierService.detailfacturesenelec(this.police,this.num_facture).then(resp =>{
+       console.log(resp);
+        if(resp.errorCode==0){
+          if(typeof resp.response !== 'object') this.etat4=true;
+          else if(resp.response.length==0) this.etat3=true;
+          else{
+            this.etat2=true;
+            this.detailfacturesenelec.service = resp.typeservice;
+            this.detailfacturesenelec.police=resp.response[0].police;
+            this.detailfacturesenelec.numeroFacture=resp.response[0].numfacture;
+            this.detailfacturesenelec.nomclient=resp.response[0].client;
+            this.detailfacturesenelec.montant=resp.response[0].montant;
+            this.detailfacturesenelec.dateecheance=resp.response[0].dateecheance;
+          }
           this.modalsenelec.show();
         }else{
-          console.log(response);
           this.etat1=true;
-          this.detailfacturesenelec.errorCode=response.errorCode;
+          this.detailfacturesenelec.errorCode=resp.errorMessage;
           this.modalsenelec.show();
         }
 
      });
    }
-   validerpaimentsenelec(){
-    this.modalsenelec.hide();
 
-    this._facturierService.validerpaimentsenelec(this.montant,this.police,this.num_facture,this.service).then(response =>{
-        if(response.errorCode==0){
-           this.modalsenelec.hide();
-           this.dataImpression = {
+   validerpaimentsenelec(){
+     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service}));
+     this.hidemodalsenelec();
+    /*this._facturierService.validerpaimentsenelec(this.police,this.num_facture,this.detailfacturesenelec.service).then(resp =>{
+      console.log("11*****************************************************");
+      console.log(resp);
+      console.log("12*****************************************************");
+      if(resp.errorCode==0){
+           //this.modalsenelec.hide();
+           /!*this.dataImpression = {
               apiservice:'wizall',
               service:'senelec',
               infotransaction:{
@@ -97,22 +104,21 @@ export class SenelecComponent implements OnInit {
               },
             }
             sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
-            this.router.navigate(['accueil/impression']);
-           console.log(response);
+            this.router.navigate(['accueil/impression']);*!/
         }else{
-          if (response.error != null){
+          if (resp.error != null){
             this.message = true ;
-            this.errorMessage = response.error ;
+            this.errorMessage = resp.error ;
           }
           else{
             this.message = true ;
-            this.errorMessage = response.response ;
+            this.errorMessage = resp.response ;
           }
           this.modalsenelec.hide();
         }
 
      });
-
+*/
   }
 
 

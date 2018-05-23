@@ -352,13 +352,7 @@ export class WizallComponent implements OnInit {
     }
 
     deposer(){
-      //this.fermermodaldepot() ;
       this.mnt = Number(this.mnt) + Number(this.fraisDepot)+"" ;
-      console.log(this.mnt)
-      console.log(this.fraisDepot)
-      console.log(this.numclient)
-      console.log({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient})
-      console.log('********111111111**************')
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient}));
       this.fermermodaldepot() ;
     }

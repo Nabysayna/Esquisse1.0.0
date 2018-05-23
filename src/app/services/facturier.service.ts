@@ -70,6 +70,7 @@ export class FacturierService {
   }
 
   public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
+    console.log("********************************************************")
     let reEspParams={token:this.token,police:police,num_facture:numfacture};
     let url=this.link+"/facturier-sen/detailreglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
@@ -81,7 +82,7 @@ export class FacturierService {
   }
 
   public validerpaimentsenelec(montant:number,police:string,num_facture:string,service:string):Promise<any>{
-    let reEspParams={token:this.token,police:police,num_facture:num_facture,service:service};
+    let reEspParams={token:this.token,montant:montant,police:police,num_facture:num_facture,service:service};
     let url=this.link+"/facturier-sen/reglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {

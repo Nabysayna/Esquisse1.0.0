@@ -1793,24 +1793,25 @@ geolocaliser(){
   }
 
    validerpaimentsenelec(objet){
-    this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(response =>{
-        console.log(response) ;
-        if( (typeof response.transactionid != "undefined") ){
-        objet.dataI = {
-          apiservice:'wizall',
-          service:'senelec',
-          infotransaction:{
-            client:{
-              transactionPostCash: response.transactionId,
-              transactionBBS: 'Id BBS',
-               referenceclient: objet.data.refclientsde,
-               montant: objet.data.mntsde,
-               refFacture: objet.data.refFactureSDE,
+     this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
+        console.log(resp) ;
+        if( (typeof resp.transactionid != "undefined") ){
+          objet.dataI = {
+            apiservice:'wizall',
+            service:'senelec',
+            infotransaction:{
+              client:{
+                transactionApi: resp.transactionid,
+                transactionBBS: 'x-x-x-x',
+                police: resp.police,
+                numfacture: resp.numfacture,
+                client: resp.client,
+                montant: resp.montant,
+                dateecheance: resp.dateecheance,
+              },
+
             },
-
-          },
-        }
-
+          }
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
