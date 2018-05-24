@@ -67,6 +67,7 @@ export class PostcashComponent implements OnInit {
   private closeModalCodeValidation(): void { this.closeBtnModalCodeValidation.nativeElement.click(); }
 
   validrechargementespece(){
+    this.errorMessage =  undefined;
     this.loading = true ;
     this._postCashService.rechargementespece('00221'+this.telephone+'',''+this.montant).then(postcashwebserviceList => {
       this.loading = false ;
@@ -240,6 +241,65 @@ export class PostcashComponent implements OnInit {
     });
   }
 
+  validationretraitespeceaveccarte(){
+    this.errorMessage =  undefined;
+    this.loading = true ;
+    this._postCashService.retraitaveccarte('00221'+this.telephone+'',''+this.montant).then(postcashwebserviceList => {
+      this.loading = false ;
+     // postcashwebserviceList = JSON.parse( JSON.parse(postcashwebserviceList._body) ) ;
+      console.log(postcashwebserviceList) ;
 
+      // if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
+      //   this.dataImpression = {
+      //     apiservice:'postecash',
+      //     service:'retraitaveccarte',
+      //     infotransaction:{
+      //       client:{
+      //         transactionPostCash: postcashwebserviceList.transactionId,
+      //         transactionBBS: 'Id BBS',
+      //         telephone:'00221'+this.telephone,
+      //         montant:this.montant,
+      //       },
 
+      //     },
+      //   }
+      //   sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+      //   this.router.navigate(['accueil/impression']);
+      // }else{
+      //   this.erreur = true ;
+      //   this.errorMessage = postcashwebserviceList.errorMessage;
+      // }
+    });
+  }
+
+  validateretraitespecesanscarte(){
+    this.errorMessage =  undefined;
+    this.loading = true ;
+    this._postCashService.retraitsanscarte('00221'+this.telephone+'',''+this.montant,''+ this.codevalidation).then(postcashwebserviceList => {
+      this.loading = false ;
+      console.log(postcashwebserviceList) ;
+
+      // if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
+      //   this.dataImpression = {
+      //     apiservice:'postecash',
+      //     service:'retraitsanscarte',
+      //     infotransaction:{
+      //       client:{
+      //         transactionPostCash: postcashwebserviceList.transactionId,
+      //         transactionBBS: 'Id BBS',
+      //         telephone:'00221'+this.telephone,
+      //         montant:this.montant,
+      //         code:this.codevalidation,
+      //       },
+
+      //     },
+      //   }
+      //   sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+      //   this.router.navigate(['accueil/impression']);
+      // }else{
+      //   this.erreur = true ;
+      //   this.errorMessage = postcashwebserviceList.errorMessage;
+      // }
+    });
+  }
 }

@@ -1,9 +1,7 @@
-<div class="col-sm-12">
+<div class="col-sm-12" style="font-family: 'caviar dreams bold';">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
-
-          <h2>POSTECASH</h2>
-
+          <h2 style="border-radius: 0rem 0rem 2rem 2rem;">POSTECASH</h2>
         </div>
 
         <div class="cover"></div>
@@ -12,66 +10,63 @@
 
             <div id="om-options">
                 <a href="#rechargementespece-pills" style="margin-left: -1.3rem; padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Recharge Espece</a>
-
-<!--                 <a href="#rechargementespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Retrait sur Carte</a> -->
-                
+<!--            <a href="#rechargementespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Retrait sur Carte</a> -->
                 <a href="#achatjula-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()" data-toggle="tab">Achat Jula</a>
-                
-<!--                  <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
-
+                <a href="#retraitespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()" data-toggle="tab">Retrait Espece</a>
+<!--            <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
                 <a href="#achatcodewoyofal-pills" (click)="reinitialiser()" data-toggle="tab">Woyofal</a>                                
                 <a href="#rapido-pills" (click)="reinitialiser()" data-toggle="tab">RAPIDO</a> -->
-
               <!-- <a href="#oolu-pills" (click)="reinitialiser()" data-toggle="tab">Oolu Solar</a> --> 
             </div>
-
             <!-- Tab panes -->
             <div class="tab-content">
-
-              <div class="col-sm-6 col-xs-12" *ngIf="erreur" style="padding-bottom: 1rem ; color: #337ab7 ; margin-left: 28rem ; ">
-                <h5>
-                  Désolé! Votre requête n'a pas pu être traitée.<b style="color : red">{{errorMessage}}</b>
-                </h5>
-              </div>
-
-              <div class="tab-pane fade col-sm-12 col-xs-12 in active" id="rechargementespece-pills">
-                    <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2> Rechargement Espèce</h2>
-                    </fieldset>
-                    <form (ngSubmit)="validrechargementespece()" #rechargementespece="ngForm" autocomplete="on">
-                      <div class="form-group row">
-                        <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
-                        <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
-                        <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required>
-                        </div>
-                      </div>
-
-                      <div class="row text-center">
-                        <button type="submit" class="btn btn-success" [disabled]="!rechargementespece.form.valid">Valider</button>
-                        <button type="reset" class="btn btn-danger" [disabled]="!rechargementespece.form.valid" >Annuler</button>
-                      </div>
-                    </form>
+                <div class="col-sm-6 col-xs-12" *ngIf="erreur" style="padding-bottom: 1rem ; color: #337ab7 ; margin-left: 28rem ; ">
+                  <h5 style="font-family: 'caviar dreams bold';" *ngIf="this.errorMessage!=undefined; ">
+                    Désolé! Votre requête n'a pas pu être traitée.<b style="color : red">{{errorMessage}}</b>
+                  </h5>
                 </div>
+                <div class="tab-pane fade col-sm-12 col-xs-12 in active" id="rechargementespece-pills">
+                      <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
+                          <h2 style="font-family: 'caviar dreams bold';"> Rechargement Espèce</h2>
+                      </fieldset>
+                      <form (ngSubmit)="validrechargementespece()" #rechargementespece="ngForm" autocomplete="on">
+                        <div class="form-group row">
+                          <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                          <div class="col-sm-8">
+                            <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
+                          <div class="col-sm-8">
+                            <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required>
+                          </div>
+                        </div>
 
-                <div class="tab-pane fade col-sm-12 col-xs-12" id="retraitespece-pills">
+                        <div class="row text-center">
 
+                          <button type="submit" class="btn btn-success" [disabled]="!rechargementespece.form.valid">Valider</button>
+                          <button type="reset" class="btn btn-danger" [disabled]="!rechargementespece.form.valid" >Annuler</button>
+                        </div>
+                      </form>
+                  </div>
+
+                  <div class="tab-pane fade col-sm-12 col-xs-12" id="retraitespece-pills">
+                      <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
+                          <h2 style="font-family: 'caviar dreams bold';">Retrait Espece</h2>
+                      </fieldset>
                   <div class="row"  style="margin-top: 2rem">
                     <div>
-                      <button type="button" class="btn btn-info" (click)="isselectretraitespeceaveccarte = true; selectretraitespeceaveccarte();">Retrait sans carte</button>
-                      <button type="button" class="btn btn-info" (click)="isselectretraitespeceaveccarte = false; selectretraitespeceaveccarte();">Retrait avec carte</button>
+                      <button type="button" class="btn btn-info" (click)="isselectretraitespeceaveccarte = true; selectretraitespeceaveccarte();" style="background-color: white !important; border-color: #36a9e0 !important;color: #36a9e0 !important;">Retrait sans carte</button>
+                      <button type="button" class="btn btn-info" (click)="isselectretraitespeceaveccarte = false; selectretraitespeceaveccarte();" style="background-color: white !important; border-color: #36a9e0 !important;color: #36a9e0 !important;">Retrait avec carte</button>
                     </div>
 
                     <div style="margin-top: 2rem" *ngIf="isselectretraitespeceaveccarte">
+
                       <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h4> Sans carte</h4>
+                        <h4 style="font-family: 'caviar dreams bold';"> Sans carte</h4>
                       </fieldset>
-                      <form (ngSubmit)="validateretraitespece()" #retraitespece="ngForm" autocomplete="on">
+                      <form (ngSubmit)="validateretraitespecesanscarte()" #retraitespece="ngForm" autocomplete="on">
 
                         <div class="form-group row">
                           <label for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
@@ -103,9 +98,9 @@
 
                     <div style="margin-top: 2rem" *ngIf="!isselectretraitespeceaveccarte">
                       <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h4> Avec carte</h4>
+                        <h4 style="font-family: 'caviar dreams bold';"> Avec carte</h4>
                       </fieldset>
-                      <form (ngSubmit)="attentecodevalidationretraitespeceaveccarte()" #attentevalidateretraitespece="ngForm" autocomplete="on">
+                      <form (ngSubmit)="validationretraitespeceaveccarte()" #attentevalidateretraitespece="ngForm" autocomplete="on">
 
                         <div class="form-group row">
                           <label for="telephoneretraitespeceattentevalid" class="col-sm-3 col-form-label">Téléphone client</label>
@@ -132,7 +127,7 @@
 
                 <div class=" tab-pane fade col-sm-12 col-xs-12" id="achatjula-pills" >
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2> Achat JULA</h2>
+                        <h2 style="font-family: 'caviar dreams bold';"> Achat JULA</h2>
                     </fieldset>
                     <form (ngSubmit)="validateachatjula()" #achatjula="ngForm" autocomplete="on">
 
@@ -165,27 +160,27 @@
 
                 <div class="tab-pane fade col-sm-12 col-xs-12" id="reglementsenelec-pills">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2>Règlement SENELEC</h2>
+                        <h2 style="font-family: 'caviar dreams bold';">Règlement SENELEC</h2>
                     </fieldset>
                     <form (ngSubmit)="validatedetailfacturesenelec()" #reglementsenelec="ngForm" autocomplete="on">
 
                       <div class="form-group row">
-                        <label for="police" class="col-sm-3 col-form-label">Numéro de police</label>
-                        <div class="col-sm-8">
-                          <input type="text" [(ngModel)]="this.police"   name="police" id="police" class="form-control" placeholder="numéro de police " required>
-                        </div>
+                          <label for="police" class="col-sm-3 col-form-label">Numéro de police</label>
+                          <div class="col-sm-8">
+                            <input type="text" [(ngModel)]="this.police"   name="police" id="police" class="form-control" placeholder="numéro de police " required>
+                          </div>
                       </div>
 
                       <div class="form-group row">
-                        <label for="num_facture" class="col-sm-3 col-form-label">Numéro de facture</label>
-                        <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.num_facture"   name="num_facture" id="num_facture" class="form-control" placeholder="numéro de facture " required>
-                        </div>
+                          <label for="num_facture" class="col-sm-3 col-form-label">Numéro de facture</label>
+                          <div class="col-sm-8">
+                            <input type="number" [(ngModel)]="this.num_facture"   name="num_facture" id="num_facture" class="form-control" placeholder="numéro de facture " required>
+                          </div>
                       </div>
 
                       <div class="row text-center">
-                        <button class="btn btn-success"   data-toggle="modal" data-target="#myModalPostSenec" type="submit" [disabled]="!reglementsenelec.form.valid">Envoyer</button>
-                        <button class="btn btn-danger" [disabled]="!reglementsenelec.form.valid" type="reset">Annuler</button>
+                          <button class="btn btn-success"   data-toggle="modal" data-target="#myModalPostSenec" type="submit" [disabled]="!reglementsenelec.form.valid" >Envoyer</button>
+                          <button class="btn btn-danger" [disabled]="!reglementsenelec.form.valid" type="reset" >Annuler</button>
                       </div>
 
                     </form>
@@ -193,7 +188,7 @@
 
                 <div class="tab-pane fade col-sm-12 col-xs-12" id="achatcodewoyofal-pills">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2>Achat Code Woyofal</h2>
+                        <h2 style="font-family: 'caviar dreams bold';">Achat Code Woyofal</h2>
                     </fieldset>
                     <form (ngSubmit)="validateachatcodewoyofal()" #achatcodewoyofal="ngForm" autocomplete="on">
 
@@ -221,7 +216,7 @@
 
               <div class="tab-pane fade col-sm-12 col-xs-12 in " id="rapido-pills">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2> Recharge Badge RAPIDO</h2>
+                        <h2 style="font-family: 'caviar dreams bold';"> Recharge Badge RAPIDO</h2>
                     </fieldset>
                     <form (ngSubmit)="validrechargementrapido()" #rechargementRAPIDO="ngForm" autocomplete="on">
                       <div class="form-group row">
@@ -254,7 +249,7 @@
 
               <div class="tab-pane fade col-sm-12 col-xs-12 in " id="oolu-pills">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2> Paiement Oolu Solar</h2>
+                        <h2 style="font-family: 'caviar dreams bold';"> Paiement Oolu Solar</h2>
                     </fieldset>
                     <form (ngSubmit)="payeroolusolar()" #payeroolusolarform="ngForm" autocomplete="on">
                       <div class="form-group row">
@@ -286,7 +281,7 @@
 
                 <div class="tab-pane fade col-sm-12 col-xs-12" id="achatcredittelephone-pills">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h2>ACHAT CREDIT TELEPHONIQUE</h2>
+                        <h2 style="font-family: 'caviar dreams bold';">ACHAT CREDIT TELEPHONIQUE</h2>
                     </fieldset>
                     <form (ngSubmit)="validachatcredittelephonique()" #achatcredittelephoniq="ngForm" autocomplete="on">
 
@@ -323,12 +318,12 @@
 </div>
 
 <!-- Les Modal -->
-<div class="modal fade" id="myModalPostSenec" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModalPostSenec" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-family: 'caviar dreams bold';">
   <div class="modal-dialog">
     <div class="modal-content" *ngIf="detailfacturepostcash">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Détail facture</h4>
+        <h4 class="modal-title" id="myModalLabel" style="font-family: 'caviar dreams bold';">Détail facture</h4>
       </div>
       <div class="modal-body">
         <div *ngIf="detailfacturepostcash.errorCode=='0'">
@@ -352,7 +347,7 @@
 </div>
 
 <!-- Modal code validation -->
-<div class="modal fade" id="myModalCodeValidation" tabindex="-1" role="dialog" aria-labelledby="myModalLabelCodeValidation" aria-hidden="true">
+<div class="modal fade" id="myModalCodeValidation" tabindex="-1" role="dialog" aria-labelledby="myModalLabelCodeValidation" aria-hidden="true" style="font-family: 'caviar dreams bold';">
   <div class="modal-dialog">
     <div class="modal-content" *ngIf="detailcodevalidateretraitespece">
       <div class="modal-header">
