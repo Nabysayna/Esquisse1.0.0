@@ -36,10 +36,10 @@
       </div>
       <div class="modal-body">
         <div *ngIf="etat1 ">
-          <p class="alert alert-danger">Veuillez reessayer plus tard</p>
+          <p class="alert alert-danger">{{detailfacturesenelec.errorCode}}</p>
         </div>
         <div *ngIf="etat4">
-          <p class="alert alert-danger">Veuillez reessayer plus tard</p>
+          <p class="alert alert-danger">{{detailfacturesenelec.errorCode}}</p>
         </div>
         <div *ngIf="etat3">
           <p class="alert alert-info">Facture inexistante ou déja payée</p>
@@ -48,7 +48,8 @@
           <p><strong>Police: {{detailfacturesenelec.police}}</strong></p>
           <p><strong>Numéro de facture: {{detailfacturesenelec.numeroFacture}}</strong></p>
           <p><strong>Client: {{detailfacturesenelec.nomclient}}</strong></p>
-          <p><strong>Montant: {{detailfacturesenelec.montant}}</strong></p>
+          <p><strong>Montant: {{detailfacturesenelec.montant}} FCFA</strong></p>
+          <p><strong>Frais: 500 FCFA</strong></p>
           <p><strong>Date Echeance: {{detailfacturesenelec.dateecheance}}</strong></p>
         </div>
       </div>
