@@ -9,6 +9,7 @@
                 <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Depôt</a>
                 <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiseR()" data-toggle="tab">Retrait </a>
                 <a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
+                <a href="#inscription" (click)="reinitialiseRcode()" data-toggle="tab">Inscription Client</a>
             </div>
 
             <div class="tab-content">
@@ -59,6 +60,61 @@
                     </div>
                     <button style="margin: 1rem;" type="submit" class="btn btn-success" [disabled]="coderetrait==undefined">Valider</button>
                   </form>
+                </div>
+                <div style="width:50%;margin-left:auto;margin-right:auto" class="tab-pane fade" id="inscription" >
+					<h2>Inscription Client</h2>
+					<form>
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+								<label class="label" >Numero Telephone :</label>
+							</div>
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+								<input class="input" type="text" name="msisdn" [(ngModel)]="msisdn" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+								<label class="label">Numero Carte D'identite :</label>
+							</div>
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+								<input class="input" type="text" name="id" [(ngModel)]="id" />
+							</div>
+						</div>
+						<div class="row">
+							<div  class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+								<label class="label" style="text-align:left;">Nom :</label>
+							</div>
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+								<input class="input"  type="text" name="lastname" [(ngModel)]="lastname" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+								<label class="label">Prenom :</label>
+							</div>
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+								<input class="input" type="text" name="firstname" [(ngModel)]="firstname" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+								<label class="label" >Identifiant :</label>
+							</div>
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+								<input class="input" type="text" name="clientID" [(ngModel)]="clientID" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+								<label class="label" >Password :</label>
+							</div>
+							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+								<input class="input" type="text" name="clientPassword" [(ngModel)]="clientPassword" />
+							</div>
+						</div>
+						<button (click)="showmodalinscription()" class="btn btn success">valider</button>
+						<button class="btn btn-danger">annuler</button>
+					</form>
                 </div>
 
 
@@ -216,6 +272,30 @@
       <div class="modal-footer" style="margin: 0 auto; text-align: center">
         <input type="button" value="valider" [disabled]="cni==undefined" (click)="faireretraitaveccodeConfirm()" class="btn btn-success" />
         <input type="button" value="annuler" (click)="hidemodalretraitcodeConfirm()" class="btn btn-danger" />
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #modalinscription="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalinscription()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabelretraitcodeConfirm">Fenêtre de validation .</h4>
+      </div>
+      <div >
+			<div><label class="label">Numero Telephone : {{msisdn}}</label></div>
+			<div><label class="label">Numero Carte D'identite : {{id}}</label></div>
+			<div><label class="label">Nom : {{lastname}}</label></div>
+			<div><label class="label">prenoom : {{firstname}}</label></div>
+			<div><label class="label">Identifiant : {{clientID}}</label></div>
+			<div><label class="label">Password : {{clientPassword}}</label></div>
+       </div>
+      <div class="modal-footer" style="margin: 0 auto; text-align: center">
+        <input type="button" (click)="customerRegistration()" value="valider"  class="btn btn-success" />
+        <input type="button" value="annuler"  class="btn btn-danger" />
       </div>
     </div>
   </div>

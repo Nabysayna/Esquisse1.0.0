@@ -107,6 +107,18 @@ fieldset h2{
 #paiefact select{
 	margin-left: 1rem ;
 }
+.input{
+    border:2px solid orange;
+    border-radius:10px 0px 10px 10px; 
+}
+.align{
+    text-align:left;
+    padding-top:5px;
+}
+.label{
+    margin-top:7px;
+    font-size:1.1em;
+}
 
 
 @media only screen and (max-width: 400px) {
