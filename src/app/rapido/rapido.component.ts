@@ -38,12 +38,12 @@ export class RapidoComponent implements OnInit {
 
   validerrapido(){
     this.modalrapido.hide();
-    this._facturierService.validerrapido(this.numclient,this.montant,this.badge).then(response =>{
+    this._facturierService.validerrapido(this.numclient+"",this.montant+"",this.badge+"").then(response =>{
        response = JSON.parse(response) ;
        console.log(response) ;
       if( (response.timestamp != null) ){
         this.dataImpression = {
-          apiservice:'wizall',
+          apiservice:'facturier',
           service:'rapido',
           infotransaction:{
             client:{
