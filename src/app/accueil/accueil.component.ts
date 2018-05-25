@@ -1753,7 +1753,7 @@ geolocaliser(){
       console.log("********************************************************")
       console.log(resp) ;
 
-      if( (resp.transactionid?resp.transactionid:resp.PAYMENT_TRANSACTION_NUMBER) && (typeof resp.transactionid != "undefined") ){
+      if( typeof resp.transactionid != "undefined" ){
         objet.dataI = {
           apiservice:'facturier',
           service:'sde',
@@ -1821,7 +1821,7 @@ geolocaliser(){
 
   validerpaimentsenelec(objet){
      this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
-        if( (resp.transactionid?resp.transactionid:resp.PAYMENT_TRANSACTION_NUMBER) && (typeof resp.transactionid != "undefined") ){
+        if( typeof resp.transactionid != "undefined" ){
           objet.dataI = {
             apiservice:'facturier',
             service:'senelec',

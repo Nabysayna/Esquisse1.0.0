@@ -37,21 +37,6 @@ export class SdeComponent implements OnInit {
     this.etat3=false;
     this.etat4=false;
     this._facturierService.detailreglementsde(this.refClientSDE).then(response =>{
-
-      response = {
-        errorCode: 0,
-        typeservice: "wizall",
-        response: [{
-          reference_client: "108000039700",
-          reference_facture: "000039701061701",
-          nom: "BBS",
-          prenom: "TEST",
-          montant: "548",
-          date_echeance: "10/07/2017",
-          statuspayment: false
-        }],
-      }
-
       if(response.errorCode==0){
         if(typeof response.response !== 'object') this.etat4=true;
         else if(response.response.length==0) this.etat3=true;
@@ -89,7 +74,6 @@ export class SdeComponent implements OnInit {
   hidemodalsde(){
     this.modalsde.hide();
     this.refClientSDE = undefined;
-    //this.detailfacturesde = null;
   }
 
 }
