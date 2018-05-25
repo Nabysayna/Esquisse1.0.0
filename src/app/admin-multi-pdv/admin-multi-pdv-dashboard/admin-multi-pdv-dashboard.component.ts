@@ -48,7 +48,6 @@ export class AdminmultipdvDashboardComponent implements OnInit {
     this._adminmultipdvService.nombredereclamationagentpdvvente({type:"azrrtt"}).subscribe(
       data => {
         console.log("Localhost Test");
-        console.log(data.response);
         this.AdminmultipdvNombredereclamationagentpdvvente = data.response ;
         this.suiviserviceInit();
       },
@@ -80,7 +79,6 @@ export class AdminmultipdvDashboardComponent implements OnInit {
   public performancesadminclasserbydate(type:string):void {
     this._adminmultipdvService.performancesadminclasserbydate({typedate:type}).subscribe(
       adminmultipdvServiceWebList => {
-        console.log(adminmultipdvServiceWebList.response);
         this.adminmultpdvperformancesservices = adminmultipdvServiceWebList.response ;
         this.nbreOp = adminmultipdvServiceWebList.nbreop ;
         this.datasets = [{

@@ -47,7 +47,6 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
               categorie: (elt.cautioninitiale==0 && elt.montantconsomme==0 )?'pas':(elt.cautioninitiale==0 && elt.montantconsomme!=0 )?'pasdepot_aveccaution':((100*elt.montantconsomme)/elt.cautioninitiale)<25?'faible':((100*elt.montantconsomme)/elt.cautioninitiale)>=25 && ((100*elt.montantconsomme)/elt.cautioninitiale)<=50?'passable':'bien',
             }
           })
-          console.log(this.adminmultipdvMajcaution);
         }
         else{
           this.adminmultipdvMajcaution = [];
@@ -84,7 +83,6 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
       this.loading = true;
       this._adminmultipdvService.modifymajcaution({type: "azrrtt", idadminpdv: this.majcaution.idcaution, modifycaution: this.inputCaution, categorie:this.categoriepoint}).subscribe(
         adminmultipdvServiceWebList => {
-          console.log(adminmultipdvServiceWebList);
           this.closeModal();
           this.categoriepoint = '---' ;
         },
@@ -109,7 +107,6 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
   public pointasuivre:any;
 
   getCategorie(categorie: string){
-    console.log(categorie)
     if(categorie=='Tous'){
       this.categorie = 'Tous';
       this.listepoints = this.adminmultipdvMajcaution;
@@ -120,7 +117,6 @@ export class AdminmultipdvUpdateCautionComponent implements OnInit {
     }
     if(categorie=='Pas de depot Avec caution'){
       this.categorie = 'Pas de depot Avec caution';
-      console.log(this.listepoints);
       this.listepoints = this.adminmultipdvMajcaution.filter(type => type.categorie=='pasdepot_aveccaution');
     }
     if(categorie=='Faible'){

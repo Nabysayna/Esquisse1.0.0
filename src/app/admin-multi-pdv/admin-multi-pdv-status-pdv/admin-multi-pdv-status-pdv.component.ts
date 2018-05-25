@@ -20,7 +20,6 @@ export class AdminmultipdvStatusPdvComponent implements OnInit {
   ngOnInit() {
     this.loading = true ;
     this._mapsService.listmaps('azrrtt').then(mapsServiceWebList => {
-      console.log(mapsServiceWebList);
       this.adminmultipdvListmap = mapsServiceWebList.response;
       this.loading = false ;
     });
