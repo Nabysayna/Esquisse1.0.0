@@ -352,8 +352,7 @@ geolocaliser(){
 			 }
 			return total;
       }
-
-    deposer(objet:any){
+  deposer(objet:any){
 
     let requete = "1/"+objet.data.montant+"/"+objet.data.num ;
 
