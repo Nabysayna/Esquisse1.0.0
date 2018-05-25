@@ -41,6 +41,12 @@ export class ExpressoComponent implements OnInit {
   cni:string;
   date:string;
   verifretraitcode=[false,false,false,false];
+  msisdn:string;
+  id:string;
+  firstname:string;
+  lastname:string;
+  clientID:string;
+  clientPassword:string;
 
   constructor(private expressocashwebservice : ExpressocashService) {
   }
@@ -50,6 +56,14 @@ export class ExpressoComponent implements OnInit {
   @ViewChild('modalretraitConfirm') public modalretraitConfirm:ModalDirective;
   @ViewChild('modalretraitcode') public modalretraitcode:ModalDirective;
   @ViewChild('modalretraitcodeConfirm') public modalretraitcodeConfirm:ModalDirective;
+  @ViewChild('modalinscription') public modalinscription:ModalDirective;
+  
+  showmodalinscription(){
+     this.modalinscription.show(); 
+  }
+  hidemodalinscription(){
+     this.modalinscription.hide(); 
+  }
 
   ngOnInit() { }
 
@@ -235,6 +249,14 @@ export class ExpressoComponent implements OnInit {
       }
     }
   }
+  /************validat new customer******************/
+    customerRegistration(){
+      /*this.expressocashwebservice.customerRegistration(msisdn:this.msisdn,id:this.id,firstname:this.firstname,lastname:this.lastname,clientID:this.clientID,clientPassword:this.clientPassword).then(response =>{
+         console.log(response);
+      
+      }); */ 
+    }
+  /*************************************************/
   /************verif code***************************/
   verifcode(event:any){
     if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
