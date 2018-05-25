@@ -10,7 +10,7 @@
             <form name="transnat" #formsde="ngForm" (ngSubmit)="showmodalsde()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
               <div class="form-inline">
                 <label>Réfèrence client :</label>
-                <input type="number" autocomplete="off" [(ngModel)]="this.refclientsde" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                <input type="number" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
                 <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsde.form.valid">Valider</button>
               </div>
             </form>
@@ -30,21 +30,21 @@
       </div>
       <div class="modal-body">
         <div *ngIf="etat1 ">
-          <p class="alert alert-danger">{{message}}</p>
+          <p class="alert alert-danger">{{detailfacturesde.errorCode}}</p>
         </div>
         <div *ngIf="etat4">
-          <p class="alert alert-danger">{{message}}</p>
+          <p class="alert alert-danger">{{detailfacturesde.errorCode}}</p>
         </div>
         <div *ngIf="etat3">
           <p class="alert alert-info">Facture inexistante ou déja payée</p>
         </div>
         <div *ngIf="etat2">
-          <p><strong>Réf. Client: {{refclientsde}}</strong></p>
-          <p><strong>Réf. Facture: {{refFactureSDE}}</strong></p>
-          <p><strong>Client: {{nomclient}}</strong></p>
-          <p><strong>Montant: {{mntsde}} FCFA</strong></p>
+          <p><strong>Réf. Client: {{detailfacturesde.reference_client}}</strong></p>
+          <p><strong>Réf. Facture: {{detailfacturesde.reference_facture}}</strong></p>
+          <p><strong>Client: {{detailfacturesde.client}}</strong></p>
+          <p><strong>Montant: {{detailfacturesde.montant}} FCFA</strong></p>
           <p><strong>Frais: 500 FCFA</strong></p>
-          <p><strong>Date Echeance: {{echeance}}</strong></p>
+          <p><strong>Date Echeance: {{detailfacturesde.echeance}}</strong></p>
         </div>
       </div>
        <div class="modal-footer">

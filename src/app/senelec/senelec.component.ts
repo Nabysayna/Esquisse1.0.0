@@ -11,21 +11,14 @@ import {FacturierService} from "../services/facturier.service";
 })
 export class SenelecComponent implements OnInit {
    etat1:boolean=false;
-  etat2:boolean=false;
-  etat3:boolean=false;
-  etat4:boolean=false;
+    etat2:boolean=false;
+    etat3:boolean=false;
+    etat4:boolean=false;
 
    message:boolean=false;
    errorMessage : any ;
 
-   montant:number;
    service:string;
-   mntsde:number;
-   echeance:any;
-   refclientsde:number;
-   refFactureSDE:number;
-   nomclient:string;
-   statuspayment:boolean;
    detailfacturesenelec:any={errorCode:0,police:12545555,numeroFacture:156665,nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
    police:string;
    num_facture:string;
@@ -83,43 +76,7 @@ export class SenelecComponent implements OnInit {
    validerpaimentsenelec(){
      sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service}));
      this.hidemodalsenelec();
-    /*this._facturierService.validerpaimentsenelec(this.police,this.num_facture,this.detailfacturesenelec.service).then(resp =>{
-      console.log("11*****************************************************");
-      console.log(resp);
-      console.log("12*****************************************************");
-      if(resp.errorCode==0){
-           //this.modalsenelec.hide();
-           /!*this.dataImpression = {
-              apiservice:'wizall',
-              service:'senelec',
-              infotransaction:{
-                client:{
-                  transactionBBS: 'Id BBS',
-                  police: this.police,
-                  facture: this.num_facture,
-                  montant: response.montant_reel,
-
-                },
-
-              },
-            }
-            sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
-            this.router.navigate(['accueil/impression']);*!/
-        }else{
-          if (resp.error != null){
-            this.message = true ;
-            this.errorMessage = resp.error ;
-          }
-          else{
-            this.message = true ;
-            this.errorMessage = resp.response ;
-          }
-          this.modalsenelec.hide();
-        }
-
-     });
-*/
-  }
+   }
 
 
 }

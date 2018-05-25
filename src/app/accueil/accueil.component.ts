@@ -305,7 +305,6 @@ geolocaliser(){
 
        case 8:{
          var operation=sesion.data.operation;
-         console.log(sesion);
          console.log('FACTURIER');
 
          switch(operation){
@@ -1286,6 +1285,8 @@ geolocaliser(){
 
         if (item.etats.errorCode=='-13')
           return "Le code de retrait saisi est incorrect. Veuillez recommencer!" ;
+
+       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
 /* TC */
@@ -1326,6 +1327,7 @@ geolocaliser(){
         if (item.etats.errorCode=='-13')
           return "Le code de retrait saisi est incorrect. Veuillez recommencer!" ;
 
+       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
 
@@ -1333,15 +1335,15 @@ geolocaliser(){
 
         if (item.etats.errorCode=='0')
           return "Vous n'êtes pas autorisé à effectuer cette opèration." ;
+       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
      if(item.data.operateur==6 ){
 
-        if (item.etats.errorCode=='500')
-          return "Une erreur a empêché le traitement de votre requête. Réessayez plus tard ou contactez le service client." ;
+        if (item.etats.errorCode=='500') return "Une erreur a empêché le traitement de votre requête. Réessayez plus tard ou contactez le service client." ;
 
-        if (item.etats.errorCode=='400')
-          return "Facture dèja payée." ;
+        if (item.etats.errorCode=='400') return "Facture dèja payée." ;
+       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
     /* EXPRESSO */
@@ -1362,10 +1364,10 @@ geolocaliser(){
       if (item.etats.errorCode=='9')
         return "Votre compte est à l'état inactif." ;
 
-      return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
+      return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
-    /* EXPRESSO */
+    /* FACTURIER */
     if(item.data.operateur==8 ){
 
 /*
@@ -1386,8 +1388,8 @@ geolocaliser(){
 */
       if (item.etats.errorCode=='-1')
         return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
-      else if (item.etats.errorCode) return item.etats.errorCode;
-      return "Votre requête n'a pas pu être traitée. Merci de réssayer plus tard ou contacter le service client." ;
+      else if (item.etats.errorCode && (typeof item.etats.errorCode == 'string')) return item.etats.errorCode;
+      return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
 
@@ -1746,37 +1748,39 @@ geolocaliser(){
 /*************************** FACTURIERS ******************************/
 
   paiemantsde(objet){
-    this._facturierService.paimentsde(objet.data.mntsde,objet.data.refclientsde,objet.data.refFactureSDE,'sde').then( response =>{
-      console.log(response) ;
-       response = JSON.parse(response) ;
-        if( (response.PAYMENT_TRANSACTION_NUMBER != "undefined") ){
+    console.log(objet)
+    this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
+      console.log("********************************************************")
+      console.log(resp) ;
+
+      if( typeof resp.transactionid != "undefined" ){
         objet.dataI = {
           apiservice:'facturier',
           service:'sde',
           infotransaction:{
             client:{
-              transactionPostCash: response.PAYMENT_TRANSACTION_NUMBER,
+              transactionApi: resp.transactionid,
               transactionBBS: 'x-x-x-x',
-               reference_client: objet.data.refclientsde,
-               reference_facture: objet.data.refclientsde,
-               date_echeance: response.date_echeance,
-               montant: objet.data.mntsde,
+              reference_client: resp.reference_client,
+              reference_facture: resp.reference_facture,
+              client: resp.prenom+" "+resp.nom,
+              date_echeance: resp.date_echeance,
+              montant: resp.montant,
             },
 
           },
         }
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
 
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
-
-        }else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-        }
+      }else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode= resp.response?resp.response:resp
+      }
     });
-
   }
 
   validerrapido(objet){
@@ -1817,19 +1821,7 @@ geolocaliser(){
 
   validerpaimentsenelec(objet){
      this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
-        console.log(resp) ;
-        /*resp = {
-          PAYMENT_TRANSACTION_NUMBER: "WZ2233",
-          police: "2030802106",
-          numfacture: "6688164",
-          client: "EL HADJI MOR CISS",
-          montant: "27930",
-          dateecheance: "2017-10-07",
-          statuspayment: true,
-          fees: "0",
-          transactionid: "2233",
-        }*/
-        if( (typeof resp.transactionid != "undefined") ){
+        if( typeof resp.transactionid != "undefined" ){
           objet.dataI = {
             apiservice:'facturier',
             service:'senelec',

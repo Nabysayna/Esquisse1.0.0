@@ -43,7 +43,6 @@ export class AdminmultipdvMonitoringComponent implements OnInit {
 
     this._adminmultipdvService.bilandeposit({type:"azrrtt"}).subscribe(
       adminmultipdvServiceWebList => {
-        console.log(adminmultipdvServiceWebList.response);
         this.monitoringAdminmultipdvDeposit = adminmultipdvServiceWebList.response;
         this.max = this.monitoringAdminmultipdvDeposit.depositInitial;
         this.dynamic = this.monitoringAdminmultipdvDeposit.depositConsomme;
