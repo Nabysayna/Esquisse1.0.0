@@ -12,8 +12,10 @@
                 <a href="#rechargementespece-pills" style="margin-left: -1.3rem; padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Recharge Espece</a>
 <!--            <a href="#rechargementespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Retrait sur Carte</a> -->
                 <a href="#achatjula-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()" data-toggle="tab">Achat Jula</a>
-                <a href="#retraitespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()" data-toggle="tab">Retrait Espece</a>
-<!--            <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
+                <a href="#retraitespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser();this.codevaliadtion==false;" data-toggle="tab">Retrait Espece</a>
+                <a href="#debiterCarte-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser();this.codevaliadtion==true;" data-toggle="tab">Debiter Carte</a>
+                
+                <!--            <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
                 <a href="#achatcodewoyofal-pills" (click)="reinitialiser()" data-toggle="tab">Woyofal</a>                                
                 <a href="#rapido-pills" (click)="reinitialiser()" data-toggle="tab">RAPIDO</a> -->
               <!-- <a href="#oolu-pills" (click)="reinitialiser()" data-toggle="tab">Oolu Solar</a> --> 
@@ -21,7 +23,7 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="col-sm-6 col-xs-12" *ngIf="erreur" style="padding-bottom: 1rem ; color: #337ab7 ; margin-left: 28rem ; ">
-                  <h5 style="font-family: 'caviar dreams bold';" *ngIf="this.errorMessage!=undefined; ">
+                  <h5 style="font-family: 'caviar dreams bold';" *ngIf="this.erreur==true">
                     Désolé! Votre requête n'a pas pu être traitée.<b style="color : red">{{errorMessage}}</b>
                   </h5>
                 </div>
@@ -56,33 +58,22 @@
                           <h2 style="font-family: 'caviar dreams bold';">Retrait Espece</h2>
                       </fieldset>
                   <div class="row"  style="margin-top: 2rem">
-                    <div>
-                      <button type="button" class="btn btn-info" (click)="isselectretraitespeceaveccarte = true; selectretraitespeceaveccarte();" style="background-color: white !important; border-color: #36a9e0 !important;color: #36a9e0 !important;">Retrait sans carte</button>
-                      <button type="button" class="btn btn-info" (click)="isselectretraitespeceaveccarte = false; selectretraitespeceaveccarte();" style="background-color: white !important; border-color: #36a9e0 !important;color: #36a9e0 !important;">Retrait avec carte</button>
-                    </div>
-
-                    <div style="margin-top: 2rem" *ngIf="isselectretraitespeceaveccarte">
-
-                      <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h4 style="font-family: 'caviar dreams bold';"> Sans carte</h4>
-                      </fieldset>
-                      <form (ngSubmit)="validateretraitespecesanscarte()" #retraitespece="ngForm" autocomplete="on">
-
-                        <div class="form-group row">
+                      <form  #retraitespece="ngForm" autocomplete="on">
+                        <div class="form-group row"  *ngIf="!codevaliadtion">
                           <label for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephoneretraitespece" class="form-control" placeholder="téléphone client" required>
                           </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row" *ngIf="!codevaliadtion">
                           <label for="montantretraitespece" class="col-sm-3 col-form-label">Montant</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantretraitespece" class="form-control" placeholder="montant à retirer" required>
                           </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row" *ngIf="codevaliadtion" >
                           <label for="codevalidation" class="col-sm-3 col-form-label">Code de validation</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.codevalidation"   name="codevalidation" id="codevalidation" class="form-control" placeholder="Code de validation" required>
@@ -90,41 +81,47 @@
                         </div>
 
                         <div class="row text-center">
-                          <button type="submit" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
+                          <button type="button" (click)="CodeValidation()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
                           <button type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" >Annuler</button>
                         </div>
                       </form>
-                    </div>
-
-                    <div style="margin-top: 2rem" *ngIf="!isselectretraitespeceaveccarte">
-                      <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
-                        <h4 style="font-family: 'caviar dreams bold';"> Avec carte</h4>
-                      </fieldset>
-                      <form (ngSubmit)="validationretraitespeceaveccarte()" #attentevalidateretraitespece="ngForm" autocomplete="on">
-
-                        <div class="form-group row">
-                          <label for="telephoneretraitespeceattentevalid" class="col-sm-3 col-form-label">Téléphone client</label>
-                          <div class="col-sm-8">
-                            <input type="number" [(ngModel)]="this.telephone"   name="telephoneretraitespeceattentevalid" id="telephoneretraitespeceattentevalid" class="form-control" placeholder="téléphone client" required>
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <label for="montantretraitespeceattentevalid" class="col-sm-3 col-form-label">Montant</label>
-                          <div class="col-sm-8">
-                            <input type="number" [(ngModel)]="this.montant"   name="montantretraitespeceattentevalid" id="montantretraitespeceattentevalid" class="form-control" placeholder="montant à retirer" required>
-                          </div>
-                        </div>
-
-                        <div class="row text-center">
-                          <button data-toggle="modal" data-target="#myModalCodeValidation" type="submit" class="btn btn-success" [disabled]="!attentevalidateretraitespece.form.valid">Valider</button>
-                          <button type="reset" class="btn btn-danger" [disabled]="!attentevalidateretraitespece.form.valid" >Annuler</button>
-                        </div>
-                      </form>
-                    </div>
                   </div>
                 </div>
 
+                <div class="tab-pane fade col-sm-12 col-xs-12" id="debiterCarte-pills">
+                  <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
+                      <h2 style="font-family: 'caviar dreams bold';">Debiter Carte</h2>
+                  </fieldset>
+              <div class="row"  style="margin-top: 2rem">
+                <form  #retraitespece="ngForm" autocomplete="on">
+                    <div class="form-group row" *ngIf="!codevaliadtion">
+                      <label for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                      <div class="col-sm-8">
+                        <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephoneretraitespece" class="form-control" placeholder="téléphone client" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="!codevaliadtion">
+                      <label for="montantretraitespece" class="col-sm-3 col-form-label">Montant</label>
+                      <div class="col-sm-8">
+                        <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantretraitespece" class="form-control" placeholder="montant à retirer" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="codevaliadtion" >
+                      <label for="codevalidation" class="col-sm-3 col-form-label">Code de validation</label>
+                      <div class="col-sm-8">
+                        <input type="number" [(ngModel)]="this.codevalidation"   name="codevalidation" id="codevalidation" class="form-control" placeholder="Code de validation" required>
+                      </div>
+                    </div>
+
+                    <div class="row text-center">
+                      <button type="button" (click)="CodeValidation()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
+                      <button type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" >Annuler</button>
+                    </div>
+                  </form>
+              </div>
+            </div>
                 <div class=" tab-pane fade col-sm-12 col-xs-12" id="achatjula-pills" >
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                         <h2 style="font-family: 'caviar dreams bold';"> Achat JULA</h2>
