@@ -12,8 +12,8 @@
                 <a href="#rechargementespece-pills" style="margin-left: -1.3rem; padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Recharge Espece</a>
 <!--            <a href="#rechargementespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()"  data-toggle="tab">Retrait sur Carte</a> -->
                 <a href="#achatjula-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser()" data-toggle="tab">Achat Jula</a>
-                <a href="#retraitespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser();this.codevaliadtion==false;" data-toggle="tab">Retrait Espece</a>
-                <a href="#debiterCarte-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="reinitialiser();this.codevaliadtion==true;" data-toggle="tab">Debiter Carte</a>
+                <a href="#retraitespece-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="this.codevaliadtion=false;reinitialiser();this.codevaliadtion==false;" data-toggle="tab">Retrait Espece</a>
+                <a href="#debiterCarte-pills" style="padding-left: 2rem; padding-right: 2rem;" (click)="this.codevaliadtion=false;reinitialiser();this.codevaliadtion==true;" data-toggle="tab">Debiter Carte</a>
                 
                 <!--            <a href="#reglementsenelec-pills" (click)="reinitialiser()" data-toggle="tab">Senelec</a>
                 <a href="#achatcodewoyofal-pills" (click)="reinitialiser()" data-toggle="tab">Woyofal</a>                                
@@ -22,8 +22,8 @@
             </div>
             <!-- Tab panes -->
             <div class="tab-content">
-                <div class="col-sm-6 col-xs-12" *ngIf="erreur" style="padding-bottom: 1rem ; color: #337ab7 ; margin-left: 28rem ; ">
-                  <h5 style="font-family: 'caviar dreams bold';" *ngIf="this.erreur==true">
+                <div class="col-sm-6 col-xs-12"  style="padding-bottom: 1rem ; color: #337ab7 ; margin-left: 28rem ; ">
+                  <h5 style="font-family: 'caviar dreams bold';" *ngIf="this.erreur">
                     Désolé! Votre requête n'a pas pu être traitée.<b style="color : red">{{errorMessage}}</b>
                   </h5>
                 </div>
@@ -46,7 +46,6 @@
                         </div>
 
                         <div class="row text-center">
-
                           <button type="submit" class="btn btn-success" [disabled]="!rechargementespece.form.valid">Valider</button>
                           <button type="reset" class="btn btn-danger" [disabled]="!rechargementespece.form.valid" >Annuler</button>
                         </div>
@@ -81,7 +80,7 @@
                         </div>
 
                         <div class="row text-center">
-                          <button type="button" (click)="CodeValidation()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
+                          <button type="button" (click)="(this.codevaliadtion==false)?CodeValidation():validationretraitespece()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
                           <button type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" >Annuler</button>
                         </div>
                       </form>
@@ -116,7 +115,7 @@
                     </div>
 
                     <div class="row text-center">
-                      <button type="button" (click)="CodeValidation()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
+                      <button type="button" (click)="(this.codevaliadtion==false)?CodeValidation():validatedebitercarte()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
                       <button type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" >Annuler</button>
                     </div>
                   </form>
