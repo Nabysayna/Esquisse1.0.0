@@ -14,8 +14,6 @@ import {ComptabiliteService} from "../services/comptabilite.service";
 export class GestionreportingComponent implements OnInit {
 
   public servicepoint:Servicepoint[];
-
-
   libelleCharge : string ;
   montantCharge : number ;
   service : string ;
@@ -267,15 +265,14 @@ export class GestionreportingComponent implements OnInit {
   }
 
   reimprimerhistop(operation){
+    console.log(operation)
     this._gestionreportingService.reimpression({idpdv:10, operation:JSON.stringify(operation), infooperation:operation.operateur})
-      .subscribe(
-        gestreportserviceList => {
-          console.log('reimpression');
+      .subscribe(gestreportserviceList => {
           let getdataimpression = gestreportserviceList;
-          console.log(getdataimpression)
+          console.log("***************************************")
           let dataImpression = null;
           let infos = JSON.parse(getdataimpression.infosoperation);
-          if(operation.operateur=="TNT"){
+          if(operation.operateur.toUpperCase()=="TNT"){
             if(getdataimpression.typeoperation=="abonnement"){
               let typebouquet = "";
               if (infos.id_typeabonnement==1){
@@ -316,6 +313,87 @@ export class GestionreportingComponent implements OnInit {
             if(getdataimpression.typeoperation=="carte"){
               let infos = JSON.parse(getdataimpression.infosoperation);
               console.log(infos);
+            }
+          }
+          if(operation.operateur.toUpperCase()=="WIZALL"){
+            if(getdataimpression.typeoperation.toLowerCase().match("sde")){
+              let infos = JSON.parse(getdataimpression.infosoperation);
+              dataImpression = {
+                apiservice:'facturierreimpression',
+                service:'sde',
+                infotransaction:{
+                  dateoperation:getdataimpression.dateOperation.date.split('.')[0],
+                  transactionBBS: getdataimpression.idoperation,
+                  client:{
+                    reference_client: infos.reference_client,
+                    reference_facture: infos.reference_facture,
+                    client: infos.prenom+" "+infos.nom,
+                    date_echeance: infos.date_echeance,
+                    montant: infos.montant,
+                  },
+                },
+              }
+              sessionStorage.setItem('dataImpression', JSON.stringify(dataImpression));
+              this.router.navigate(['accueil/impression']);
+            }
+            if(getdataimpression.typeoperation.toLowerCase().match("senelec")){
+              let infos = JSON.parse(getdataimpression.infosoperation);
+              dataImpression = {
+                apiservice:'facturierreimpression',
+                service:'senelec',
+                infotransaction:{
+                  dateoperation:getdataimpression.dateOperation.date.split('.')[0],
+                  transactionBBS: getdataimpression.idoperation,
+                  client:{
+                    police: infos.police,
+                    numfacture: infos.numfacture,
+                    client: infos.client,
+                    montant: infos.montant,
+                    dateecheance: infos.dateecheance,
+                  },
+                },
+              }
+              sessionStorage.setItem('dataImpression', JSON.stringify(dataImpression));
+              this.router.navigate(['accueil/impression']);
+            }
+            if(getdataimpression.typeoperation.toLowerCase().match("woyofal")){
+              let infos = JSON.parse(getdataimpression.infosoperation);
+              dataImpression = {
+                apiservice:'facturierreimpression',
+                service:'achatcodewayafal',
+                infotransaction:{
+                  dateoperation:getdataimpression.dateOperation.date.split('.')[0],
+                  transactionBBS: getdataimpression.idoperation,
+                  client:{
+                    codewoyafal: infos.TOKEN,
+                    montant: infos.amount,
+                    compteur: infos.METER_NO,
+                  },
+                },
+              }
+              sessionStorage.setItem('dataImpression', JSON.stringify(dataImpression));
+              this.router.navigate(['accueil/impression']);
+            }
+            if(getdataimpression.typeoperation.toLowerCase().match("rapido")){
+              let infos = JSON.parse(getdataimpression.infosoperation);
+              console.log(infos)
+              dataImpression = {
+                apiservice:'facturierreimpression',
+                service:'rapido',
+                infotransaction:{
+                  dateoperation:getdataimpression.dateOperation.date.split('.')[0],
+                  transactionBBS: getdataimpression.idoperation,
+                  client:{
+                    badge_num: infos.badge_num,
+                    numclient: infos.telephone,
+                    montant: infos.amount,
+                    transactionID:infos.transactionid
+                  },
+                },
+              }
+              console.log(dataImpression)
+              sessionStorage.setItem('dataImpression', JSON.stringify(dataImpression));
+              this.router.navigate(['accueil/impression']);
             }
           }
           if(operation.operateur=="POSTCASH"){
