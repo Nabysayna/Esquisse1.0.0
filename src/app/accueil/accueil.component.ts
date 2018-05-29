@@ -284,8 +284,8 @@ geolocaliser(){
 
        case 7:{
              var operation=sesion.data.operation;
-         console.log(sesion);
-         console.log('E-money');
+                 console.log(sesion);
+                 console.log('E-money');
              switch(operation){
               case 1:{
                    this.cashInEmoney(sesion);
@@ -301,6 +301,7 @@ geolocaliser(){
               }
               default : break;
              }
+             break;
        }
 
        case 8:{
@@ -1687,30 +1688,32 @@ geolocaliser(){
   }
 
   public cashOutEmoney(objet){
-    this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP).then(expressocashwebserviceList => {
-
+    this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP,parseInt(objet.data.montant),objet.data.tel).then(expressocashwebserviceList => {
        console.log(expressocashwebserviceList);
-
-      if(!expressocashwebserviceList.match("cURL Error #:")){
-        let infoRetraitsimpleconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
-        if(infoRetraitsimpleconfirm.status==0){
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
+      if(expressocashwebserviceList!="" && typeof expressocashwebserviceList!='boolean'){
+          if(!expressocashwebserviceList.match("cURL Error #:")){
+				let infoRetraitsimpleconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
+				if(infoRetraitsimpleconfirm.status==0){
+				  objet.etats.etat=true;
+				  objet.etats.load='terminated';
+				  objet.etats.color='green';
+				}
+				else{
+				  objet.etats.etat=true;
+				  objet.etats.load='terminated';
+				  objet.etats.color='red';
+				  objet.etats.errorCode=infoRetraitsimpleconfirm.status.toString();
+				}
+          }
+         else{
+				  objet.etats.etat=true;
+				  objet.etats.load='terminated';
+				  objet.etats.color='red';
+				  objet.etats.errorCode="-100";
         }
-        else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-          objet.etats.errorCode=infoRetraitsimpleconfirm.status.toString();
-        }
-      }
-      else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-          objet.etats.errorCode="-100";
-      }
+      }else{
+       console.log("vide ou bool");
+     }  
     });
 
   }

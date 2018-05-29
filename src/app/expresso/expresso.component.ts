@@ -47,6 +47,14 @@ export class ExpressoComponent implements OnInit {
   lastname:string;
   clientID:string;
   clientPassword:string;
+  errormsisdn:boolean=false;
+  errorid:boolean=false;
+  errorfirstname:boolean=false;
+  errorlastname:boolean=false;
+  errorclientID:boolean=false;
+  errorclientPassword:boolean=false;
+  positiveresponseregistration:boolean=false;
+  negativeresponseregistration:boolean=false;
 
   constructor(private expressocashwebservice : ExpressocashService) {
   }
@@ -58,12 +66,7 @@ export class ExpressoComponent implements OnInit {
   @ViewChild('modalretraitcodeConfirm') public modalretraitcodeConfirm:ModalDirective;
   @ViewChild('modalinscription') public modalinscription:ModalDirective;
   
-  showmodalinscription(){
-     this.modalinscription.show(); 
-  }
-  hidemodalinscription(){
-     this.modalinscription.hide(); 
-  }
+  
 
   ngOnInit() { }
 
@@ -89,6 +92,7 @@ export class ExpressoComponent implements OnInit {
   public faireretraitsimple(){
     this.hidemodalretrait();
     this.expressocashwebservice.cashout(this.numclient, this.mnt).then(expressocashwebserviceList => {
+       console.log(expressocashwebserviceList);
       if(!expressocashwebserviceList.match("cURL Error #:")){
         this.infoRetraitsimple = JSON.parse(JSON.parse(expressocashwebserviceList));
         if(this.infoRetraitsimple.status==0){
@@ -113,7 +117,7 @@ export class ExpressoComponent implements OnInit {
 
       this.hidemodalretraitConfirm();
 
-      sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':2,'transactionReference':this.transactionReference,'OTP':this.OTP}));
+      sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':2,'transactionReference':this.transactionReference,'OTP':this.OTP,montant:this.mnt,tel:this.numclient}));
   }
 
 /************************************************************************/
@@ -124,6 +128,7 @@ export class ExpressoComponent implements OnInit {
     this.pin = this.coderetrait;
     this.hidemodalretraitcode();
     this.expressocashwebservice.pinCashoutCheck(this.coderetrait).then(expressocashwebserviceList => {
+       console.log(expressocashwebserviceList);
       if(!expressocashwebserviceList.match("cURL Error #:")){
         this.infoRetraitaveccode = JSON.parse(JSON.parse(expressocashwebserviceList));
         if(this.infoRetraitaveccode.status==0){
@@ -183,6 +188,13 @@ export class ExpressoComponent implements OnInit {
     this.echecdepot = false ;
     this.echecretrait = false ;
     this.echecretraitcode = false ;
+    this.id=undefined;
+    this.firstname=undefined;
+    this.lastname=undefined;
+    this.clientID=undefined;
+    this.clientPassword=undefined;
+    this.clientID=undefined;
+    this.msisdn=undefined;
   }
 
 
@@ -251,10 +263,86 @@ export class ExpressoComponent implements OnInit {
   }
   /************validat new customer******************/
     customerRegistration(){
-      /*this.expressocashwebservice.customerRegistration(msisdn:this.msisdn,id:this.id,firstname:this.firstname,lastname:this.lastname,clientID:this.clientID,clientPassword:this.clientPassword).then(response =>{
-         console.log(response);
+    //707699269
+      console.log(this.verifData());
+      this.expressocashwebservice.customerRegistration(this.msisdn,this.id,this.firstname,this.lastname).then(response =>{
+           console.log(response);
+           // console.log(reponse);
+          if(!response.match("cURL Error #:")){
+					// let reponse = JSON.parse(response);
+					console.log("pas probleme au niveau du serveur");
+					 if(response.status==0){
+						this.positiveresponseregistration=true;
+						this.reinitialiseRcode();
+						this.hidemodalinscription();
+					  }
+					 else{
+					   if(response.status==1006){
+						  console.log("numero incorrect");
+						  this.negativeresponseregistration=true;
+					   } 
+					}
+         }
+         else{
+             this.echecretraitcode = true;
+             this.retraitcodereussi = false;
+             console.log("probleme au niveau du serveur");
+        }
+    });  
+  }
+    isNumber(tel:string):boolean{
+      let tab=tel.split("");
+      for(let i=0;i<tab.length;i++){
+         if(!this.ischiffre(tab[i])){
+            return false;
+         }
+      }
       
-      }); */ 
+        return true;
+    }
+    ischiffre(c:string):boolean{
+      let tab=["0","1","2","3","4","5","6","7","8","9"];
+      for(let j=0;j<tab.length;j++){
+         if(tab[j].localeCompare(c)==0){
+            return true;
+         }
+      }
+      return false;
+    }
+    verifData():boolean{
+    let tel=[];
+    let cni=[];
+       if(this.msisdn!="" && this.msisdn!=undefined && this.id!="" && this.id!=undefined ){
+		   tel=this.msisdn.split("");
+		   cni=this.id.split("");
+       }
+       let tontou:boolean;
+       if(this.firstname!="" && this.firstname!=undefined && this.lastname!="" && this.lastname!=undefined && this.isNumber(this.id) && cni.length==13 && this.isNumber(this.msisdn) && tel.length==9){
+          tontou=true;
+       }else{
+			if(!this.isNumber(this.id) || cni.length!=13){
+			   this.errorid=true;
+			}
+			if(!this.isNumber(this.msisdn) || tel.length!=9){
+			   this.errormsisdn=true;
+			}
+			if(this.firstname=="" || this.firstname==undefined){
+			   this.errorfirstname=true;
+			}
+			if(this.lastname=="" || this.lastname==undefined){
+			   this.errorlastname=true;
+			}
+		   tontou=false;
+       }
+       return tontou;
+    }
+    reinitialiserbool(){
+      this.errormsisdn=false;
+      this.errorid=false;
+      this.errorfirstname=false;
+      this.errorlastname=false;
+      this.positiveresponseregistration=false;
+      
     }
   /*************************************************/
   /************verif code***************************/
@@ -371,6 +459,14 @@ export class ExpressoComponent implements OnInit {
   }
   public hidemodalretraitcodeConfirm(){
     this.modalretraitcodeConfirm.hide();
+  }
+  public showmodalinscription(){
+   if(this.verifData()){
+       this.modalinscription.show(); 
+    }
+  }
+  public hidemodalinscription(){
+     this.modalinscription.hide(); 
   }
 
 }
