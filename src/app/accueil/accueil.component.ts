@@ -1687,7 +1687,7 @@ geolocaliser(){
 
   }
 
-  public cashOutEmoney(objet){
+  public cashOutEmoney(objet:any){
     this.expressocashwebservice.confirmCashout(objet.data.transactionReference, objet.data.OTP,parseInt(objet.data.montant),objet.data.tel).then(expressocashwebserviceList => {
        console.log(expressocashwebserviceList);
       if(expressocashwebserviceList!="" && typeof expressocashwebserviceList!='boolean'){
