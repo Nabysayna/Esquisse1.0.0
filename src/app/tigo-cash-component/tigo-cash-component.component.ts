@@ -71,7 +71,7 @@ export class TigoCashComponentComponent implements OnInit {
       retrait(){
 
          this.hidemodalretrait();
-
+         console.log({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant});
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant}));
          this.reinitialiser();
       }
@@ -95,7 +95,7 @@ export class TigoCashComponentComponent implements OnInit {
      izi(){
 
        this.hidemodalvendreizi();
-
+       console.log({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant});
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant}));
        this.reinitialiser();
      }
@@ -111,6 +111,7 @@ export class TigoCashComponentComponent implements OnInit {
   /*******verif numero reference*****/
      verifnumeroreference(){
         let requet="3/"+this.reference;
+        console.log(this.reference);
         this.tcservice.requerirControllerTC(requet).then(rep=>{
       if(rep.statut==200){
 			   if(rep.body.trim()!=""){
@@ -129,7 +130,8 @@ export class TigoCashComponentComponent implements OnInit {
 	    }
 	    else{
 	    }
-	 })
+   })
+
   }
   validerpayertansfert(){
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash payer transfert','operateur':3,'operation':3,'reference':this.reference,'confirmation':'c'}));
