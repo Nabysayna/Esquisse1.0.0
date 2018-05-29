@@ -10,23 +10,23 @@
 			   <div class="row">
 				  <label class="col-lg-3 col-md-3">Telephone</label>
 				  <div class="col-lg-3 col-md-3">
-					<input type="text" [(ngModel)]="numclient" name="numclient"  placeholder="telephone" class="form-control" />
+					<input type="number" [(ngModel)]="numclient" name="numclient"  placeholder="telephone" class="form-control" />
 				  </div>
 			   </div>
 			   <div class="row">
 				  <label class="col-lg-3 col-md-3 col-lg-3">Montant a recharger</label>
 				  <div class="col-lg-3 col-md-3">
-					<input type="text" [(ngModel)]="montant" name="montant"  placeholder="montant" class="form-control" />
+					<input type="number" [(ngModel)]="montant" name="montant"  placeholder="montant" class="form-control" />
 				  </div>
 			   </div>
 			   <div class="row">
 					<label class="col-lg-3 col-md-3">Badge</label>
 					<div class="col-lg-3 col-md-3">
-					  <input type="text" [(ngModel)]="badge" name="badge"  placeholder="badge" class="form-control" />
+					  <input type="number" [(ngModel)]="badge" name="badge"  placeholder="badge" class="form-control" />
 					</div>
 			   </div>
 			   <div class="col-lg-2 col-md-2">
-				   <button class="btn btn-success" (click)="showmodalrapido()">valider</button>
+				   <button class="btn btn-success" [disabled]="badge==undefined || montant==undefined || numclient==undefined" (click)="showmodalrapido()">valider</button>
 			   </div>
 		   </form>
                         <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
@@ -57,15 +57,15 @@
 			    </form>
 		   </div>
 		   <div class="modal-footer">
-				<input type="button" (click)="validerrapido()" value="valider" class="btn btn-success" />
+				<input type="button"  (click)="validerrapido()" value="valider" class="btn btn-success" />
 				<input type="button" value="fermer" (click)="hidemodalraoido()"  class="btn btn-danger" />
 		   </div>
-	  </div> 
-   </div>  
+	  </div>
+   </div>
 </div>
 
 
 
 <!--<div *ngIf="this.loading">
-  <app-loader></app-loader>    
+  <app-loader></app-loader>
 </div>-->

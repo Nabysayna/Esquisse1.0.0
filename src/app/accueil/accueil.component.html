@@ -1,6 +1,6 @@
 <div id="wrapper">
 
-    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: transparent !important; border-style: hidden ;" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: transparent !important; border-style: hidden; font-family:'caviar dreams bold';" role="navigation">
 
         <div  id="navbHead" ><app-navbar-top></app-navbar-top></div>
 
@@ -234,8 +234,8 @@
                     </div>
 
                     <div *ngIf="item.data.operation==1">
-                      <div>Montant : {{item.data.mnt}}</div><br>
-                      <div>Numéro Client :{{item.data.numclient}}</div><br>
+                      <div>Ref. Client: {{item.data.reference_client}}</div><br>
+                      <div>Montant: {{item.data.montant}}</div><br>
                     </div>
                     <div *ngIf="item.data.operation==2">
                       <div>Montant:{{item.data.pin}}</div><br>

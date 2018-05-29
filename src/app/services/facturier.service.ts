@@ -31,7 +31,8 @@ export class FacturierService {
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
+        let resp = JSON.parse(data)?JSON.parse(data):data;
+        resolve(resp);
       });
     });
   }
@@ -70,7 +71,6 @@ export class FacturierService {
   }
 
   public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
-    console.log("********************************************************")
     let reEspParams={token:this.token,police:police,num_facture:numfacture};
     let url=this.link+"/facturier-sen/detailreglementsenelec";
     let params="params="+JSON.stringify(reEspParams);

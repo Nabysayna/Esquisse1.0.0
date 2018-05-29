@@ -281,3 +281,21 @@ select{
   }*/
 }
 
+.mafleche{
+  animation-duration: 1s;
+  animation-name: glissement;
+  animation-iteration-count: infinite;
+}
+
+@keyframes glissement {
+  0% {
+    margin-top: 0rem;
+  }
+
+  50%{
+    margin-top: 4rem;
+  }
+  100% {
+    margin-top: 0rem;
+  }
+}

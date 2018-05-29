@@ -3,6 +3,7 @@ label{
     color : #36A9E0;
     text-transform : capitalize ;
     margin-top: 2rem;
+    font-family: 'caviar dreams bold';
 }
 
 .tab-content{
@@ -76,7 +77,6 @@ fieldset h2{
 }
 
 
-
 #om-options{
     position: relative;
     width: 98rem;
@@ -119,3 +119,13 @@ fieldset h2{
         width: max-content !important;
     }
 }  
+
+input , select {
+    border: 1px solid #36a9e0;
+    border-radius: 2rem 0rem 2rem 2rem;
+    font-family: 'caviar dreams bold';
+}
+
+div , a , li , ul , span , h1,h2,h3,h4,h5,h6,button , p , {
+    font-family: 'caviar dreams bold' !important;
+}

@@ -94,4 +94,44 @@ export class PostCashService {
     });
   }
 
+  public retraitespece(tel_destinataire : string, montant : string): Promise<any>  {
+    let links = "http://localhost/kheuteuteupeuseu/index.php";
+    var reEspParams = {token:this.token, tel_destinataire: tel_destinataire, montant: montant} ;
+    let params="params="+JSON.stringify(reEspParams);
+    let link= links+"/postcash-sen/retraitespece";
+    return new Promise( (resolve, reject) => {
+      this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
+             console.log(data);
+             resolve(data);
+      });
+    });
+  }
+
+  public debitercarte(tel_destinataire : string, montant : string,code : string): Promise<any>  {
+    let links = "http://localhost/kheuteuteupeuseu/index.php";
+    var reEspParams = {token:this.token, tel_destinataire: tel_destinataire, montant: montant} ;
+    let params="params="+JSON.stringify(reEspParams);
+    let link= links+"/postcash-sen/debitercarte";
+    return new Promise( (resolve, reject) => {
+      this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
+             console.log(data);
+             resolve(data);
+      });
+    });
+  }
+
+  public codeValidation(tel_destinataire : string, montant : string): Promise<any>  {
+    let links = "http://localhost/kheuteuteupeuseu/index.php";
+    var reEspParams = {token:this.token, tel_destinataire: tel_destinataire, montant: montant} ;
+    let params="params="+JSON.stringify(reEspParams);
+    let link= links+"/postcash-sen/codevalidation";
+    return new Promise( (resolve, reject) => {
+      this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
+            console.log(data);
+            resolve(data);
+      });
+    });
+  }
+  
+
 }
