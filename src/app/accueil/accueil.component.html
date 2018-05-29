@@ -210,24 +210,21 @@
                   </div>
                   <!-- E-MONEY -->
                   <div *ngIf="item.data.operateur==7">
-
-                    <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">
-                      {{retrieveOperationInfo(item)}}
-                    </div>
-
-                    <div *ngIf="item.data.operation==1">
-                      <div>Montant : {{item.data.mnt}}</div><br>
-                      <div>Numéro Client :{{item.data.numclient}}</div><br>
-                    </div>
-                    <div *ngIf="item.data.operation==2">
-                      <div>Reference : {{item.data.transactionReference}}</div><br>
-                      <div>OTP :{{item.data.OTP}}</div><br>
-                    </div>
-                    <div *ngIf="item.data.operation==3">
-                      <div>Montant:{{item.data.pin}}</div><br>
-                      <div>N° CNI: {{item.data.pin}}</div><br>
-                    </div>
-
+						<div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">
+						  {{retrieveOperationInfo(item)}}
+						</div>
+						<div *ngIf="item.data.operation==1">
+						  <div>Montant : {{item.data.mnt}}</div><br>
+						  <div>Numéro Client :{{item.data.numclient}}</div><br>
+						</div>
+						<div *ngIf="item.data.operation==2">
+						  <div>Reference : {{item.data.transactionReference}}</div><br>
+						  <div>OTP :{{item.data.OTP}}</div><br>
+						</div>
+						<div *ngIf="item.data.operation==3">
+						  <div>Montant:{{item.data.pin}}</div><br>
+						  <div>N° CNI: {{item.data.pin}}</div><br>
+						</div>
                   </div>
                   <!-- FACTURIER -->
                   <div *ngIf="item.data.operateur==8">

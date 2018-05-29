@@ -9,7 +9,7 @@
                 <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Depôt</a>
                 <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiseR()" data-toggle="tab">Retrait </a>
                 <a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
-                <a href="#inscription" (click)="reinitialiseRcode()" data-toggle="tab">Inscription Client</a>
+                <a href="#inscription" (click)="reinitialiseRcode();reinitialiserbool()" data-toggle="tab">Inscription Client</a>
             </div>
 
             <div class="tab-content">
@@ -69,51 +69,57 @@
 								<label class="label" >Numero Telephone :</label>
 							</div>
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-								<input class="input" type="text" name="msisdn" [(ngModel)]="msisdn" />
+								<input (keyup)="reinitialiserbool()" class="input" type="text" name="msisdn" [(ngModel)]="msisdn" />
 							</div>
+							<p *ngIf="errormsisdn" class="alert alert-danger">Veuillez Verifier Ce Champ</p>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
 								<label class="label">Numero Carte D'identite :</label>
 							</div>
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-								<input class="input" type="text" name="id" [(ngModel)]="id" />
+								<input (keyup)="reinitialiserbool()" class="input" type="text" name="id" [(ngModel)]="id" />
 							</div>
+							<p *ngIf="errorid" class="alert alert-danger">Veuillez Verifier Ce Champ</p>
 						</div>
 						<div class="row">
 							<div  class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
 								<label class="label" style="text-align:left;">Nom :</label>
 							</div>
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-								<input class="input"  type="text" name="lastname" [(ngModel)]="lastname" />
+								<input (keyup)="reinitialiserbool()" class="input"  type="text" name="lastname" [(ngModel)]="lastname" />
 							</div>
+							<p *ngIf="errorfirstname" class="alert alert-danger">Champ Requis</p>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
 								<label class="label">Prenom :</label>
 							</div>
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-								<input class="input" type="text" name="firstname" [(ngModel)]="firstname" />
+								<input (keyup)="reinitialiserbool()" class="input" type="text" name="firstname" [(ngModel)]="firstname" />
 							</div>
+							<p *ngIf="errorlastname" class="alert alert-danger">Champ Requis</p>
 						</div>
-						<div class="row">
+						<!--<div class="row">
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
 								<label class="label" >Identifiant :</label>
 							</div>
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-								<input class="input" type="text" name="clientID" [(ngModel)]="clientID" />
+								<input (keyup)="reinitialiserbool()" class="input" type="text" name="clientID" [(ngModel)]="clientID" />
 							</div>
+							<p *ngIf="errorclientID" class="alert alert-danger">Champ Requis</p>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
 								<label class="label" >Password :</label>
 							</div>
 							<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-								<input class="input" type="text" name="clientPassword" [(ngModel)]="clientPassword" />
+								<input class="input" (keyup)="reinitialiserbool()" type="text" name="clientPassword" [(ngModel)]="clientPassword" />
 							</div>
-						</div>
+							<p *ngIf="errorclientPassword" class="alert alert-danger">Champ Requis</p>
+						</div>-->
 						<button (click)="showmodalinscription()" class="btn btn success">valider</button>
-						<button class="btn btn-danger">annuler</button>
+						<button (click)="reinitialiseRcode();reinitialiserbool()" class="btn btn-danger">annuler</button>
 					</form>
                 </div>
 
@@ -290,15 +296,13 @@
 			<div><label class="label">Numero Carte D'identite : {{id}}</label></div>
 			<div><label class="label">Nom : {{lastname}}</label></div>
 			<div><label class="label">prenoom : {{firstname}}</label></div>
-			<div><label class="label">Identifiant : {{clientID}}</label></div>
-			<div><label class="label">Password : {{clientPassword}}</label></div>
        </div>
       <div class="modal-footer" style="margin: 0 auto; text-align: center">
         <input type="button" (click)="customerRegistration()" value="valider"  class="btn btn-success" />
-        <input type="button" value="annuler"  class="btn btn-danger" />
+        <input type="button" (click)="hidemodalinscription()" value="annuler"  class="btn btn-danger" />
       </div>
     </div>
-  </div>
+  </div><!--775723666 3000-->
 </div>
 
 <div *ngIf="this.loading">

@@ -45,10 +45,11 @@ export class ExpressocashService {
     });
   }
 
-  public confirmCashout(transactionReference: string, OTP: string): Promise<any>  {
-    let reEspParams = {token:this.token, transactionReference: transactionReference, OTP: OTP};
+  public confirmCashout(transactionReference: string, OTP: string,montant:number,tel:string): Promise<any>  {
+    let reEspParams = {token:this.token,montant:montant,tel:tel, transactionReference: transactionReference, OTP: OTP};
     let url=this.link+"/expressocash-sen/confirmCashout";
     let params="params="+JSON.stringify(reEspParams);
+    console.log(params);
     return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
         resolve(data);
@@ -73,8 +74,20 @@ export class ExpressocashService {
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(data);
+          resolve(data);
       });
+    });
+  }
+  public customerRegistration(Msisdn:string,Id:string,Firstname:string,Lastname:string):Promise<any>{
+    let reEspParams={token:this.token,msisdn:Msisdn,id:Id,firstname:Firstname,lastname:Lastname};
+   // let url=this.link+"/expressocash-sen/customerRegistration";
+    let url="http://127.0.0.1/kheuteuteupeuseu/index.php/expressocash-sen/customerRegistration";
+    let params="params="+JSON.stringify(reEspParams);
+    return new Promise((resolve,reject) =>{
+        this.http.post(url,params,{headers:this.headers}).map(res => res.json()).subscribe(data =>{
+           resolve(data);
+        });
+       
     });
   }
 
