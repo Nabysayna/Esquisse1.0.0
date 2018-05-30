@@ -213,7 +213,12 @@ geolocaliser(){
                 case 5:{
                         this.creditIZItc(sesion) ;
                         break ;
-                       }
+                      }
+                case 6:{
+                      console.log(sesion);
+                      this.retraitaveccodetc(sesion) ;
+                      break ;
+                      }
                 default :break;
               }
                break ;
@@ -1498,8 +1503,92 @@ geolocaliser(){
 /******************************************************************************************************/
 
    retirertc(objet:any){
-    let requete = "2/"+objet.data.numclient+"/"+objet.data.montant ;
+    let requete = "2/"+objet.data.num+"/"+objet.data.montant ;
 
+    if (this.repeatedInLastFifteen('tc-retrait', requete)==1){
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+      objet.etats.errorCode='r';
+      return 0 ;
+    }
+
+    this._tcService.requerirControllerTC(requete).then( resp => {
+      if (resp.status==200){
+
+        console.log("For this 'retrait', we just say : "+resp._body) ;
+
+        if(resp._body.trim()=='0'){
+           objet.etats.etat=true;
+           objet.etats.load='terminated';
+           objet.etats.color='red';
+           objet.etats.errorCode='0';
+        }else
+            if(resp._body.match('-12')){
+               objet.etats.etat=true;
+               objet.etats.load='terminated';
+               objet.etats.color='red';
+               objet.etats.errorCode='-12';
+            }
+            else
+
+           setTimeout(()=>{
+
+              this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+                var donnee=rep._body.trim().toString();
+                console.log("Inside verifier retrait: "+donnee) ;
+                if(donnee=='1'){
+                   objet.etats.etat=true;
+                   objet.etats.load='terminated';
+                   objet.etats.color='green';
+                   clearInterval(periodicVerifier) ;
+                }
+                else{
+                  if(donnee!='-1'){
+                   objet.etats.etat=true;
+                   objet.etats.load='terminated';
+                   objet.etats.color='red';
+                   objet.etats.errorCode=donnee;
+                   clearInterval(periodicVerifier) ;
+                  }else{
+                      var periodicVerifier = setInterval(()=>{
+                      this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
+                        var donnee=rep._body.trim().toString();
+                        console.log("Inside verifier retrait: "+donnee) ;
+                        if(donnee=='1'){
+                           objet.etats.etat=true;
+                           objet.etats.load='terminated';
+                           objet.etats.color='green';
+                           clearInterval(periodicVerifier) ;
+                        }
+                        else{
+                          if(donnee!='-1'){
+                           objet.etats.etat=true;
+                           objet.etats.load='terminated';
+                           objet.etats.color='red';
+                           objet.etats.errorCode=donnee;
+                           clearInterval(periodicVerifier) ;
+                          }
+                        }
+                      });
+                      },2000);
+                  }
+                }
+              });
+
+           },20000);
+      }
+      else{
+        console.log("error") ;
+
+        }
+    });
+
+  }
+
+  retraitaveccodetc(objet:any){
+    let requete = "4/"+objet.data.coderetrait+"/"+objet.data.typepiece+"/"+objet.data.numeropiece+"/"+objet.data.montant;
+    console.log(requete);
     if (this.repeatedInLastFifteen('tc-retrait', requete)==1){
       objet.etats.etat=true;
       objet.etats.load='terminated';

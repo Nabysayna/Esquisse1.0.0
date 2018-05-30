@@ -90,37 +90,40 @@
 											<div class="form-group row">
 													<label class="col-lg-3" style="text-align:left;">Code de retrait :</label>
 													<div class="form-inline col-sm-8">
-															<input type="text" [(ngModel)]="this.coderetrait" autocomplete="off" (keyup)="verifcode($event)" id="numclient" name="coderetrait"  class="form-control" placeholder="Code de retrait" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+															<input type="text" [(ngModel)]="this.coderetrait" autocomplete="off"  id="numclient" name="coderetrait"  class="form-control" placeholder="Code de retrait" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 													</div>
 											</div>
 											<div class="form-group row">
 													<label class="col-lg-3" style="text-align:left;">Prénom :</label>
 													<div class="form-inline col-sm-8">
-															<input type="text" [(ngModel)]="this.prenom" autocomplete="off" (keyup)="veriprenomnom()" name="prenom"  id="numclient"  class="form-control col-lg-5" placeholder="Prenom du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
+															<input type="text" [(ngModel)]="this.prenom" autocomplete="off"  name="prenom"  id="numclient"  class="form-control col-lg-5" placeholder="Prenom du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
 													</div>
 											</div>
 											<div class="form-group row">
 													<label class="col-lg-3" style="text-align:left;">Nom :</label>
 													<div class="form-inline col-sm-8">
-															<input type="text" [(ngModel)]="this.nom" (keyup)="veriprenomnom()" id="mnttrans" name="nom"  class="form-control col-lg-5 " placeholder="Nom du Client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+															<input type="text" [(ngModel)]="this.nom"  id="mnttrans" name="nom"  class="form-control col-lg-5 " placeholder="Nom du Client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											</div>
+											<div class="form-group row ">
+													<label class="col-lg-3" style="text-align:left;">type de piece</label>
+													<div class="form-inline col-sm-8">
+															<select class="form-control" [(ngModel)]="this.typepiece" name="typepiece" style="margin-left:1rem; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
+																<option value="2">carte national d'identite</option>
+																<option value="1">passport</option>
+															</select>
 													</div>
 											</div>
 											<div class="form-group row">
-													<label class="col-lg-3" style="text-align:left;">Date de naissance :</label>
+													<label  class="col-lg-3" style="text-align:left;">Numéro  piece  :</label>
 													<div class="form-inline col-sm-8">
-															<input type="text" [(ngModel)]="this.date" name="date" autocomplete="off" (keyup)="verifdate($event)" id="numclient"  class="form-control col-lg-5" placeholder="Exemple : 03041900" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
-													</div>
-											</div>
-											<div class="form-group row">
-													<label  class="col-lg-3" style="text-align:left;">Numéro de piece d'identite :</label>
-													<div class="form-inline col-sm-8">
-															<input type="text" [(ngModel)]="this.cni" (keyup)="verifcni($event)" autocomplete="off" name="cni"  id="mnttrans"  class="form-control col-lg-5" placeholder="Numero d'identite du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+															<input type="text" [(ngModel)]="this.numeropiece"  autocomplete="off" name="cni"  id="mnttrans"  class="form-control col-lg-5" placeholder="Numero d'identite du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 													</div>
 											</div>
 											<div class="form-group row">
 													<label class="col-lg-3" style="text-align:left;">Numéro Client</label>
 													<div class="form-inline col-sm-8">
-															<input type="string" (keyup)="veriftel($event)" autocomplete="off" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control col-lg-5" placeholder="Numéro du client" required autofocus style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+															<input type="string"  autocomplete="off" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control col-lg-5" placeholder="Numéro du client" required autofocus style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 													</div>
 											</div>
 											<div class="form-group row">
@@ -301,8 +304,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="depot()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" />
-				  <input type="button" value="fermer" (click)="hidemodaldepot()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
+				  <input type="button" value="valider" (click)="depot()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
+				  <input type="button" value="fermer" (click)="hidemodaldepot()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -333,8 +336,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="retrait()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" />
-				  <input type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" />
+				  <input type="button" value="valider" (click)="retrait()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem" />
+				  <input type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
 		     </div>
 		  </div> 
 	    </div>
@@ -353,6 +356,10 @@
 		
 				 <div>
 					 <form class="form">
+							Code de retrait
+							<div class="form-group">
+									<label >Code de retrait: {{this.coderetrait}}</label>
+							</div>
 						 <div class="form-group">
 							 <label >Telephone client : {{this.telephone}}</label>
 						 </div>
@@ -373,8 +380,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="inscription()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" />
-				  <input type="button" value="fermer" (click)="hidemodalinscription()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
+				  <input type="button" value="valider" (click)="inscription()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
+				  <input type="button" value="fermer" (click)="hidemodalinscription()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -394,18 +401,28 @@
 		
 				 <div>
 					 <form class="form">
-						 <div class="form-group">
-							 <label >Numero de reference : {{this.reference}}</label>
-							 
-						 </div>
-						 
+								<div class="form-group">
+									<label >Code Retrait : {{this.coderetrait}}</label>
+								</div>
+								<div class="form-group">
+									<label >Nom du cient : {{this.nom}}</label>
+								</div>
+								<div class="form-group">
+									<label >Prenom du client : {{this.prenom}}</label>
+								</div>
+								<div class="form-group">
+									<label >Numero piece: {{this.numeropiece}}</label>
+								</div>
+								<div class="form-group">
+									<label >Montant : {{this.mnt}}</label>
+								</div>
 					 </form>
 					
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="Chercher" (click)="verifnumeroreference()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
-				  <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
+				  <input type="button"  (click)="payerTransfer()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+				  <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -488,8 +505,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="envoiyerargent()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
-				  <input type="button" value="fermer" (click)="hidemodalenvoi()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
+				  <input type="button" value="valider" (click)="envoiyerargent()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+				  <input type="button" value="fermer" (click)="hidemodalenvoi()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>

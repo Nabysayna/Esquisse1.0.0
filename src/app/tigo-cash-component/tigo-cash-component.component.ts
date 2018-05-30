@@ -18,15 +18,19 @@ export class TigoCashComponentComponent implements OnInit {
    prenomBeneficiaire: string;
    nomExpediteur: string;
    nomBeneficiaire: string;
-   numeropiece: number;
-   typepiece: number;
+   numeropiece: any;
+   typepiece: any;
    prenom: string;
    nom: string;
    messagepayertransfert:boolean=false;
    donneepayertransfert:boolean=false;
    donneetransfert:string;
    reference:number;
-
+   coderetrait:any;
+   date:any;
+   cni:any;
+   numclient:any;
+   mnt:any;
    @ViewChild('modaldepot') modaldepot: ModalDirective;
    @ViewChild('modalretrait') modalretrait: ModalDirective;
    @ViewChild('modalpaiment') modalpaiment: ModalDirective;
@@ -56,6 +60,9 @@ export class TigoCashComponentComponent implements OnInit {
    this.messagepayertransfert=false;
    this.donneetransfert=undefined;
    this.reference=undefined;
+   this.date=undefined;
+   this.coderetrait=undefined;
+   this.mnt=undefined;
   }
   /***********************************/
   /********depot**********************/
@@ -75,6 +82,15 @@ export class TigoCashComponentComponent implements OnInit {
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant}));
          this.reinitialiser();
       }
+  /***********************************/
+  /********retrait**********************/
+  payerTransfer(){
+
+    // this.hidemodalretrait();
+    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt});
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt}));
+    this.reinitialiser();
+ }
   /***********************************/
   /**********envoyer argent***********/
        envoiyerargent(){
