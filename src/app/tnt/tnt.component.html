@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<div class="col-sm-12" style="font-family:'caviar dreams bold';">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading"><h2>TNT BY EXCAF</h2></div>
         <div class="cover"></div>
@@ -24,7 +24,7 @@
             <div class="tab-content center-block" style="margin: 0 auto; text-align: center">
                 <div class="tab-pane fade col-sm-offset-2 col-xs-offset-2 col-sm-7 col-xs-7 in active" id="home-pills">
 
-                      <div class="row" style="margin-left: 23rem ;" *ngIf="this.verifierNumInputValide" >
+                      <div class="row" style="margin-left: 10rem ;" *ngIf="this.verifierNumInputValide" >
 
                         <marquee style="height: 5rem; background-color: white;">
                           <h3 style="color : black; text-transform: capitalize;">{{message}}</h3>
@@ -33,10 +33,10 @@
                         <form name="validVerifierNum" (ngSubmit)="validVerifierNum()" #verifiernum="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem; text-align: -webkit-left;">
                             <label for="verifiernuminput"> Numéro chip, Numéro carte ou Téléphone </label>
                             <div class="col-md-8">
-                                <input type="number" [(ngModel)]="this.verifierNumInput" name="verifiernuminput" id="verifiernuminput"  class="form-control" placeholder="Numéro du chip ou de la carte" required autofocus>
+                                <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="this.verifierNumInput" name="verifiernuminput" id="verifiernuminput"  class="form-control" placeholder="Numéro du chip ou de la carte" required autofocus>
                             </div>
                             <div class="col-md-4">
-                                <button style="margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!verifiernum.form.valid">Vérifier</button>
+                                <input style=" border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!verifiernum.form.valid" />
                             </div>
                         </form>
                     </div>
@@ -48,34 +48,34 @@
                         <form (ngSubmit)="showmodalabonnement()" #nabon="ngForm" autocomplete="on">
 
                             <label for="noma">Nom client</label>
-                            <input type="text" [(ngModel)]="this.noma" name="noma" id="noma"  class="form-control" placeholder="nom client" required autofocus>
+                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="this.noma" name="noma" id="noma"  class="form-control" placeholder="nom client" required autofocus>
 
                             <label for="prenoma">Prénom client</label>
-                            <input type="text" [(ngModel)]="this.prenoma" name="prenoma" id="prenoma"  class="form-control" placeholder="prénom client" required >
+                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="this.prenoma" name="prenoma" id="prenoma"  class="form-control" placeholder="prénom client" required >
 
                             <label for="tela">Téléphone client</label>
-                            <input type="number" [(ngModel)]="this.telNewClient"   name="telNewClient" id="telNewClient" class="form-control" placeholder="téléphone client" required>
+                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="this.telNewClient"   name="telNewClient" id="telNewClient" class="form-control" placeholder="téléphone client" required>
 
                             <label for="nchip">Numéro chip</label>
-                            <input type="number"  [(ngModel)]="this.nchipNewClient"   name="nchipNewClient" id="nchipNewClient" class="form-control" placeholder="numéro chip" required>
+                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number"  [(ngModel)]="this.nchipNewClient"   name="nchipNewClient" id="nchipNewClient" class="form-control" placeholder="numéro chip" required>
 
                             <label for="ncarte">Numéro carte</label>
-                            <input type="number" [(ngModel)]="this.ncarteNewClient"   name="ncarteNewClient" id="ncarteNewClient" class="form-control" placeholder="numéro carte" required>
+                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="this.ncarteNewClient"   name="ncarteNewClient" id="ncarteNewClient" class="form-control" placeholder="numéro carte" required>
 
 
                             <label for="nbm">Nombre de mois</label>
-                            <input type="number" [(ngModel)]="this.nbm"   name="nbm" id="nbm" class="form-control" placeholder="nombre de mois" required>
+                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="this.nbm"   name="nbm" id="nbm" class="form-control" placeholder="nombre de mois" required>
 
 
                             <label for="tbouquet">Type de bouquet</label>
-                            <select class="form-control" name="tbouquet" id="tbouquet" [(ngModel)]="this.tbouquet" style="margin-bottom: 2rem;margin-left: 1rem;" required>
+                            <select class="form-control" name="tbouquet" id="tbouquet" [(ngModel)]="this.tbouquet" style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0; margin-bottom: 2rem;margin-left: 1rem;" required>
                                 <option>Maanaa</option>
                                 <option>Boul khool</option>
                                 <option>Maanaa + Boul khool</option>
                             </select>
 
-                            <button type="submit" class="btn btn-success" [disabled]="!nabon.form.valid">Abonner</button>
-                            <button type="reset" class="btn btn-danger" (click)="this.verifierNumInputValide=true" >Annuler</button>
+                            <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="submit" class="btn btn-success" [disabled]="!nabon.form.valid" value="Abonner" />
+                            <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="reset" class="btn btn-danger" (click)="this.verifierNumInputValide=true" />
 
                         </form>
 
@@ -92,7 +92,7 @@
                       <tr>
                         <th colspan="5" style="padding-right: 3rem ;">
                           Rechercher :
-                          <input class="form-control" [(ngModel)]="filtre"/>
+                          <input class="form-control" [(ngModel)]="filtre" style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" />
                         </th>
                       </tr>
                       <tr>
@@ -147,47 +147,47 @@
                       <div class="form-row">
                         <div class="form-group col-sm-6">
                           <label for="nomNewClientDeco" class="col-form-label">Nom du client</label>
-                          <input type="text" name="nomNewClientDeco" id="nomNewClientDeco" [(ngModel)]="this.nomNewClient"  class="form-control" placeholder="nom client" required autofocus>
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="nomNewClientDeco" id="nomNewClientDeco" [(ngModel)]="this.nomNewClient"  class="form-control" placeholder="nom client" required autofocus>
                         </div>
                         <div class="form-group col-sm-6">
                           <label for="prenomNewClientDeco" class="col-form-label">Prénom du client</label>
-                          <input type="text" name="prenomNewClientDeco" id="prenomNewClientDeco" [(ngModel)]="this.prenomNewClient"  class="form-control" placeholder="prénom client" required >
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="prenomNewClientDeco" id="prenomNewClientDeco" [(ngModel)]="this.prenomNewClient"  class="form-control" placeholder="prénom client" required >
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-sm-6">
                           <label for="telNewClientDeco" class="col-form-label">Téléphone du client</label>
-                          <input type="number" name="telNewClient" id="telNewClientDeco" [(ngModel)]="this.telNewClient" class="form-control" placeholder="téléphone client" required>
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" name="telNewClient" id="telNewClientDeco" [(ngModel)]="this.telNewClient" class="form-control" placeholder="téléphone client" required>
                         </div>
                         <div class="form-group col-sm-6">
                           <label for="regionNewClientDeco" class="col-form-label">Région du client</label>
-                          <input type="text" name="regionNewClient" id="regionNewClientDeco" [(ngModel)]="this.regionNewClient" class="form-control" placeholder="Région du client" required>
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="regionNewClient" id="regionNewClientDeco" [(ngModel)]="this.regionNewClient" class="form-control" placeholder="Région du client" required>
                         </div>
                       </div>
                       <div class="form-row">
                         <label for="adresseNewClientDeco" class="col-sm-2 col-form-label">Adresse du client</label>
                         <div class="col-sm-10">
-                          <textarea name="adresseNewClientDeco" style="margin-bottom: 2rem" id="adresseNewClientDeco" [(ngModel)]="this.adresseNewClient" class="form-control" placeholder="Adresse client" required rows="2"></textarea>
+                          <textarea style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" name="adresseNewClientDeco" style="margin-bottom: 2rem" id="adresseNewClientDeco" [(ngModel)]="this.adresseNewClient" class="form-control" placeholder="Adresse client" required rows="2"></textarea>
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-sm-4">
                           <label for="cniNewClientDeco" class="col-form-label">Numéro CNI du client</label>
-                          <input type="text" name="cniNewClientDeco" id="cniNewClientDeco" [(ngModel)]="this.cniNewClient" class="form-control" placeholder="Numéro CNI" required>
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="cniNewClientDeco" id="cniNewClientDeco" [(ngModel)]="this.cniNewClient" class="form-control" placeholder="Numéro CNI" required>
                         </div>
                         <div class="form-group col-sm-4">
                           <label for="nchipNewClientDeco" class="col-form-label">Numéro Chip du client</label>
-                          <input type="text" name="nchipNewClientDeco" id="nchipNewClientDeco" [(ngModel)]="this.nchipNewClient" class="form-control" placeholder="Numèro carte" required>
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="nchipNewClientDeco" id="nchipNewClientDeco" [(ngModel)]="this.nchipNewClient" class="form-control" placeholder="Numèro carte" required>
                         </div>
                         <div class="form-group col-sm-4">
                           <label for="ncarteNewClientDeco" class="col-form-label">Numéro Carte du client</label>
-                          <input type="text" name="ncarteNewClientDeco" id="ncarteNewClientDeco" [(ngModel)]="this.ncarteNewClient" class="form-control" placeholder="Numèro carte" required>
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="ncarteNewClientDeco" id="ncarteNewClientDeco" [(ngModel)]="this.ncarteNewClient" class="form-control" placeholder="Numèro carte" required>
                         </div>
                       </div>
 
                       <div class="form-row">
                         <label for="ncarteNewClientDeco" class="col-form-label">Type</label>
-                        <select type="text" name="tbouquetNewClient" [(ngModel)]="this.tbouquetNewClient" class="form-control" style="margin-bottom: 3rem ; margin-left: 1rem ;" required>
+                        <select type="text" name="tbouquetNewClient" [(ngModel)]="this.tbouquetNewClient" class="form-control" style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0; margin-bottom: 3rem ; margin-left: 1rem ;" required>
                           <option>Sans Abonnement</option>
                           <option>+ 1 Mois</option>
                           <option>+ 3 Mois</option>
@@ -196,7 +196,7 @@
 
 
 
-                        <button type="submit" class="btn btn-success" (click)="showmodaldecodeur()">Valider</button>
+                        <input style="border-radius: 2rem 0rem 2rem 2rem;" type="submit" class="btn btn-success" (click)="showmodaldecodeur()" />
 <!--                         <button type="reset" class="btn btn-danger" >Annuler</button>
  -->
                     </form>
@@ -207,41 +207,41 @@
                   <div class="form-row">
                     <div class="form-group col-sm-6">
                       <label for="nomNewClient" class="col-form-label">Nom du client</label>
-                      <input type="text" name="nomNewClient" id="nomNewClient" [(ngModel)]="this.nomNewClient"  class="form-control" placeholder="nom client" required autofocus>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="nomNewClient" id="nomNewClient" [(ngModel)]="this.nomNewClient"  class="form-control" placeholder="nom client" required autofocus>
                     </div>
                     <div class="form-group col-sm-6">
                       <label for="prenomNewClient" class="col-form-label">Prénom du client</label>
-                      <input type="text" name="prenomNewClient" id="prenomNewClient" [(ngModel)]="this.prenomNewClient"  class="form-control" placeholder="prénom client" required >
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="prenomNewClient" id="prenomNewClient" [(ngModel)]="this.prenomNewClient"  class="form-control" placeholder="prénom client" required >
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-sm-6">
                       <label for="telNewClient" class="col-form-label">Téléphone du client</label>
-                      <input type="number" name="telNewClient" id="telNewClient" [(ngModel)]="this.telNewClient" class="form-control" placeholder="téléphone client" required>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" name="telNewClient" id="telNewClient" [(ngModel)]="this.telNewClient" class="form-control" placeholder="téléphone client" required>
                     </div>
                     <div class="form-group col-sm-6">
                       <label for="regionNewClient" class="col-form-label">Région du client</label>
-                      <input type="text" name="regionNewClient" id="regionNewClient" [(ngModel)]="this.regionNewClient" class="form-control" placeholder="Région client" required>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="regionNewClient" id="regionNewClient" [(ngModel)]="this.regionNewClient" class="form-control" placeholder="Région client" required>
                     </div>
                   </div>
                   <div class="form-row"  style="margin-top: 2rem">
                     <div class="form-group col-sm-12">
                       <label for="adresseNewClient" class="col-form-label">Adresse du client</label>
-                      <input type="text" name="adresseNewClient" id="adresseNewClient" [(ngModel)]="this.adresseNewClient" class="form-control" placeholder="Adresse client" required>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="adresseNewClient" id="adresseNewClient" [(ngModel)]="this.adresseNewClient" class="form-control" placeholder="Adresse client" required>
                     </div>
                   </div>
                   <div class="form-row"  style="margin-top: 2rem">
                     <div class="form-group col-sm-6">
                       <label for="cniNewClient" class="col-form-label">Numéro CNI du client</label>
-                      <input type="text" name="cniNewClient" id="cniNewClient" [(ngModel)]="this.cniNewClient" class="form-control" placeholder="Numéro CNI" required>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="cniNewClient" id="cniNewClient" [(ngModel)]="this.cniNewClient" class="form-control" placeholder="Numéro CNI" required>
                     </div>
                     <div class="form-group col-sm-6">
                       <label for="ncarteNewClient" class="col-form-label">Numéro Carte du client</label>
-                      <input type="text" name="ncarteNewClient" id="ncarteNewClient" [(ngModel)]="this.ncarteNewClient" class="form-control" placeholder="Numèro carte" required>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" name="ncarteNewClient" id="ncarteNewClient" [(ngModel)]="this.ncarteNewClient" class="form-control" placeholder="Numèro carte" required>
                     </div>
                   </div>
                   <div class="row" style="text-align: center">
-                    <button type="submit" class="btn btn-success" (click)="modalcarte.show()">Valider</button>
+                    <input style="border-radius: 2rem 0rem 2rem 2rem" type="submit" class="btn btn-success" (click)="modalcarte.show()" />
                   </div>
                 </div>
 
@@ -252,7 +252,7 @@
                                     <tr>
                                         <th colspan="3" style="padding-right: 3rem ;">
                                             Rechercher :
-                                            <input class="form-control" [(ngModel)]="filtreDeco"/>
+                                            <input class="form-control" [(ngModel)]="filtreDeco" style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
                                         </th>
                                     </tr>
                                     <tr>
@@ -294,7 +294,7 @@
                                     <tr>
                                         <th colspan="3" style="padding-right: 3rem ;">
                                             Rechercher :
-                                            <input class="form-control" [(ngModel)]="filtreCarte"/>
+                                            <input class="form-control" [(ngModel)]="filtreCarte" style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"/>
                                         </th>
                                     </tr>
                                     <tr>
@@ -337,7 +337,7 @@
     <!-- /.panel -->
 
 </div>
-<div bsModal #modalabonnement="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #modalabonnement="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold'">
 
      <div class="modal-dialog modal-sm">
         <div class="modal-content" >
@@ -380,15 +380,15 @@
          </div>
          </div>
          <div class="modal-footer">
-          <input type="button" value="valider" (click)="validnabon()" class="btn btn-success" />
-          <input type="button" value="fermer" (click)="modalabonnement.hide();" class="btn btn-danger" />
+          <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="valider" (click)="validnabon()" class="btn btn-success" />
+          <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="fermer" (click)="modalabonnement.hide();" class="btn btn-danger" />
          </div>
       </div>
       </div>
 
 
 </div>
-<div bsModal #modaldecodeur="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #modaldecodeur="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold'">
 
      <div class="modal-dialog modal-sm">
         <div class="modal-content" >
@@ -430,15 +430,15 @@
          </div>
          </div>
          <div class="modal-footer">
-          <input type="button" value="valider" (click)="vendreDecodeur()" class="btn btn-success" />
-          <input type="button" value="fermer" (click)="modaldecodeur.hide();" class="btn btn-danger" />
+          <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="vendreDecodeur()" class="btn btn-success" />
+          <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="fermer" (click)="modaldecodeur.hide();" class="btn btn-danger" />
          </div>
       </div>
       </div>
 
 
 </div>
-<div bsModal #modalcarte="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #modalcarte="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold'">
 
      <div class="modal-dialog modal-sm">
         <div class="modal-content" >
