@@ -19,7 +19,6 @@
                 <div style="width:50%;margin-left:auto;margin-right:auto" class="tab-pane fade  in" id="depot">
                   <h2>Dépôt</h2>
                   <form name="transnat" (ngSubmit)="showmodaldepot()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
-<<<<<<< HEAD
                     <div class="row">
 					  <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 labs">
 						   <label>Numéro du client  :</label>
@@ -37,21 +36,6 @@
                            <input type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="mnt" name="verifiernuminput" id="mnttransdepot"  class="input" placeholder="Montant du transfert" required autofocus>
                         </div>
                       <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
-=======
-                    <div class="form-group">
-                        <label style="text-align:left;">Numéro du client  :</label>
-                        <div class="form-inline">
-                          <input autocomplete="off" type="text" (keyup)="verifNumber($event)" autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient" name="verifiernuminput" id="numclientdepot"  class="form-control" placeholder="Numéro du client" autofocus>
-                          <p *ngIf="mag1" style="color:red">numero incorrect</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label style="text-align:left;">Montant dépot :</label>
-                        <div class="form-inline">
-                          <input type="text" autocomplete="off" (keyup)="verifMontant($event)" autocomplete="off" [(ngModel)]="mnt" name="verifiernuminput" id="mnttransdepot"  class="form-control" placeholder="Montant du transfert" required autofocus>
-                          <p *ngIf="mag2" style="color:red">montant incorrect</p>
-                        </div>
->>>>>>> faec1097a8f3f263154d158f618e250c92b55d06
                     </div>
                     <button style="margin-top: 1rem;"   type="submit" class="btn btn-success" [disabled]="numclient==undefined || mnt<1">Valider</button>
                   </form>
