@@ -68,8 +68,8 @@ export class ExpressocashService {
     });
   }
 
-  public pinCashout(pin: string, receiverIDNumber: string): Promise<any>  {
-    let reEspParams = {token:this.token, pin: pin, receiverIDNumber: receiverIDNumber};
+  public pinCashout(pin: string, receiverIDNumber: string,Montant:number,Tel:string): Promise<any>  {
+    let reEspParams = {token:this.token, pin: pin, receiverIDNumber: receiverIDNumber,montant:Montant,tel:Tel};
     let url=this.link+"/expressocash-sen/pinCashout";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
