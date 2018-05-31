@@ -55,6 +55,8 @@ export class ExpressoComponent implements OnInit {
   errorclientPassword:boolean=false;
   positiveresponseregistration:boolean=false;
   negativeresponseregistration:boolean=false;
+  errornumeroretraitsimple:boolean=false;
+  errormontantretraitsimple:boolean=false;
 
   constructor(private expressocashwebservice : ExpressocashService) {
   }
@@ -67,12 +69,12 @@ export class ExpressoComponent implements OnInit {
   @ViewChild('modalinscription') public modalinscription:ModalDirective;
   
   
-
+  public testtab=[];
   ngOnInit() { }
 
   // retrait simple
   infoDepot:any;
-
+  
 /*******************************  DEPOT *****************************************/
 
   public fairedepot(){
@@ -153,7 +155,7 @@ export class ExpressoComponent implements OnInit {
 
       this.hidemodalretraitcodeConfirm();
 
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':3,'pin':this.pin,'cni':this.cni}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money retrait avec code','operateur':7,'operation':3,'pin':this.pin,'cni':this.cni,montant:parseInt(this.infoRetraitaveccode.amount),tel:this.infoRetraitaveccode.receiver}));
   }
 /************************************************************************/
 
@@ -202,9 +204,9 @@ export class ExpressoComponent implements OnInit {
    verifNumber(event:any){
     if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
 
-     var nb=event.target.value.length;
-     var val=event.target.value.split('');
-     var j=0,k=0;
+     let nb=event.target.value.length;
+     let val=event.target.value.split('');
+     let j=0,k=0;
      for(j=0;j<this.nombre.length;j++){
        if(val[event.target.value.length-1]==this.nombre[j]){
          k=1;
@@ -214,7 +216,7 @@ export class ExpressoComponent implements OnInit {
         this.mag1=true;
         this.numclient=undefined;
     }
-     var i=0,v=0;
+     let i=0,v=0;
      for(i=0;i<this.keycode.length;i++){
         if(event.keyCode==this.keycode[i].code){
             this.mag1=false;
@@ -233,9 +235,9 @@ export class ExpressoComponent implements OnInit {
 
     if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
 
-      var nb=event.target.value.length;
-      var val=event.target.value.split('');
-      var j=0,k=0;
+      let nb=event.target.value.length;
+      let val=event.target.value.split('');
+      let j=0,k=0;
       for(j=0;j<this.nombre.length;j++){
         if(val[event.target.value.length-1]==this.nombre[j]){
           k=1;
@@ -247,7 +249,7 @@ export class ExpressoComponent implements OnInit {
         return ;
       }
       //console.log(val);
-      var i=0,v=0;
+      let i=0,v=0;
       for(i=0;i<this.keycode.length;i++){
         if(event.keyCode==this.keycode[i].code){
           this.mag2=false;
@@ -263,7 +265,6 @@ export class ExpressoComponent implements OnInit {
   }
   /************validat new customer******************/
     customerRegistration(){
-    //707699269
       console.log(this.verifData());
       this.expressocashwebservice.customerRegistration(this.msisdn,this.id,this.firstname,this.lastname).then(response =>{
            console.log(response);
@@ -342,6 +343,10 @@ export class ExpressoComponent implements OnInit {
       this.errorfirstname=false;
       this.errorlastname=false;
       this.positiveresponseregistration=false;
+      this.mag1=false;
+      this.mag2=false;
+      this.errornumeroretraitsimple=false;
+      this.errormontantretraitsimple=false;
       
     }
   /*************************************************/
@@ -427,14 +432,39 @@ export class ExpressoComponent implements OnInit {
 
 
   public showmodaldepot():void {
-    this.modaldepot.show();
+   let tab=this.numclient.split("");
+   
+   if(this.isNumber(this.numclient) && tab.length==9 && tab[0]=="7" && (tab[1]=="0") && this.isNumber(this.mnt) && parseInt(this.mnt)>0){
+       this.modaldepot.show();
+    }
+    else{
+        if(!this.isNumber(this.numclient) || tab[0]!="7" || tab[1]!="0" || tab.length!=9){
+            this.mag1=true;
+        }
+        if(!this.isNumber(this.mnt) || parseInt(this.mnt)<=0){
+            this.mag2=true;
+        }
+      
+    }
   }
   public hidemodaldepot():void {
     this.modaldepot.hide();
   }
 
   public showmodalretrait():void{
-    this.modalretrait.show();
+   let tab=this.numclient.split("");
+    if(this.isNumber(this.mnt) && tab.length==9 && tab[0]=="7" && (tab[1]=="0") && this.isNumber(this.mnt) && parseInt(this.mnt)>0){
+        this.modalretrait.show();
+    }
+    else{
+        if(!this.isNumber(this.numclient) || tab[0]!="7" || tab[1]!="0" || tab.length!=9){
+            this.errornumeroretraitsimple=true;
+        }
+        if(!this.isNumber(this.mnt) || parseInt(this.mnt)<=0){
+            this.errormontantretraitsimple=true;
+        }
+         
+    }
   }
   public hidemodalretrait():void{
     this.modalretrait.hide();

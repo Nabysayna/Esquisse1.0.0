@@ -119,7 +119,9 @@ fieldset h2{
     margin-top:7px;
     font-size:1.1em;
 }
-
+.labs{
+    margin-top:10px;
+}
 
 @media only screen and (max-width: 400px) {
     #om-options{

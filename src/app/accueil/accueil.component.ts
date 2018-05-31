@@ -141,7 +141,7 @@ geolocaliser(){
            this.process.push(sesion);
       }
 
-      console.log(sesion.etats.id);
+     // console.log(sesion.etats.id);
       sessionStorage.removeItem('curentProcess');
       var operateur=sesion.data.operateur;
       switch(operateur){
@@ -583,7 +583,6 @@ geolocaliser(){
             else
 
            setTimeout(()=>{
-
               this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 var donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
@@ -1811,7 +1810,8 @@ geolocaliser(){
   }
 
   public cashOutPIN(objet){
-    this.expressocashwebservice.pinCashout(objet.data.pin, objet.data.cni).then(expressocashwebserviceList => {
+    this.expressocashwebservice.pinCashout(objet.data.pin, objet.data.cni,objet.data.montant,objet.data.tel).then(expressocashwebserviceList => {
+      console.log(expressocashwebserviceList);
       if(!expressocashwebserviceList.match("cURL Error #:")){
         let infoRetraitaveccodeconfirm = JSON.parse(JSON.parse(expressocashwebserviceList));
         if(infoRetraitaveccodeconfirm.status==0){
