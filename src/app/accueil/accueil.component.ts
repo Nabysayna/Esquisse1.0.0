@@ -1806,7 +1806,7 @@ geolocaliser(){
 
   }
 
-  public cashOutPIN(objet){
+  public cashOutPIN(objet:any){
     this.expressocashwebservice.pinCashout(objet.data.pin, objet.data.cni,objet.data.montant,objet.data.tel).then(expressocashwebserviceList => {
       console.log(expressocashwebserviceList);
       if(!expressocashwebserviceList.match("cURL Error #:")){
