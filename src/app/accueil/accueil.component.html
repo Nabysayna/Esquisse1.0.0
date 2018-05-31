@@ -207,6 +207,12 @@
                       <div>Police: {{item.data.police}}</div><br>
                       <div>Numéro Facture : {{item.data.numfacture}}</div><br>
                     </div>
+                    <div *ngIf="item.data.operation==5">
+                      <div>Montant:{{item.data.montant}}</div><br>
+                    </div>
+                    <div *ngIf="item.data.operation==6">
+                      <div>Montant:{{item.data.montant}}</div><br>
+                    </div>
                   </div>
                   <!-- E-MONEY -->
                   <div *ngIf="item.data.operateur==7">

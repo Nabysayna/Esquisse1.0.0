@@ -1,9 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { Router, CanActivate } from '@angular/router';
-import {FacturierService} from "../services/facturier.service";
-
-
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   selector: 'app-woyofal',
@@ -11,64 +7,28 @@ import {FacturierService} from "../services/facturier.service";
   styleUrls: ['./woyofal.component.css'],
 })
 export class WoyofalComponent implements OnInit {
-   etat:boolean=true;
-   api:number=5;
-   compteur:string;
-   montant:number;
-   dataImpression:any;
-  constructor(private router: Router, private _facturierService : FacturierService) {
+  compteur:string;
+  montant:number;
 
-  }
+  constructor() {}
 
-/******************************************************************************************************/
+  ngOnInit() { }
 
-
-  ngOnInit() {
-
-
-  }
   @ViewChild('modalwoyofal') public modalwoyofal:ModalDirective;
+
   showmodalwoyofal(){
-   this.modalwoyofal.show();
+    this.modalwoyofal.show();
   }
 
   hidemodalwoyofal(){
-   this.modalwoyofal.hide();
+    this.modalwoyofal.hide();
+    this.compteur = undefined;
+    this.montant = undefined;
   }
   validerwoyofal(){
-    this.modalwoyofal.hide();
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'WOYOFAL','operateur':8,'operation':3,'montant':this.montant.toString(), 'compteur':this.compteur}));
-
-/*
-    this._facturierService.validerwoyofal(this.montant.toString(),this.compteur).then(response =>{
-      console.log(response);
-      this.modalwoyofal.hide();
-
-      this.dataImpression = {
-          apiservice:'postecash',
-          service:'achatcodewayafal',
-          infotransaction:{
-            client:{
-              transactionPostCash: response.transactionId,
-              transactionBBS: 'Id BBS',
-               codewoyafal: response.code,
-               montant: this.montant,
-               compteur: this.compteur,
-            },
-
-          },
-        }
-        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
-        this.router.navigate(['accueil/impression']);
-    });
-*/
-
+    this.hidemodalwoyofal();
   }
-
-/******************************************************************************************************/
-
-
-
 
 }
 

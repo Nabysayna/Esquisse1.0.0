@@ -249,39 +249,27 @@ geolocaliser(){
 
        case 6:{
              var operation=sesion.data.operation;
-         console.log(sesion);
-         console.log('Willa');
              switch(operation){
-              case 1:{
-                   this.cashInWizall(sesion);
-                   break;
-              }
-              case 2:{
-                  this.cashOutWizall(sesion);
-                  break;
-              }
-              case 3:{
-                  this.payerSDEWizall(sesion);
-                  break;
-              }
-              case 4:{
-                  this.payerSenelecWizall(sesion);
-                  break;
-              }
-              case 5:{
+               case 1:{
+                 this.cashInWizall(sesion);
+                 break;
+               }
+               case 2:{
+                 this.cashOutWizall(sesion);
+                 break;
+               }
+               case 5:{
                  this.validationretraitbon(sesion);
                  break;
-              }
-              case 6:{
-
-                  this.validerenvoibon(sesion);
-                  break;
-              }
-              case 7:{
-
-                  this.validerbonachat(sesion);
-                  break;
-              }
+               }
+               case 6:{
+                 this.validerenvoibon(sesion);
+                 break;
+               }
+               case 7:{
+                 this.validerbonachat(sesion);
+                 break;
+               }
               default : break;
              }
            break ;
@@ -359,97 +347,112 @@ geolocaliser(){
 			return total;
       }
   deposer(objet:any){
-
+    console.log("Debut 1- "+JSON.stringify(objet))
     let requete = "1/"+objet.data.montant+"/"+objet.data.num ;
-
     if (this.repeatedInLastFifteen('om-depot', requete)==1){
+      console.log("repeatedInLastFifteen 2- "+requete)
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
       objet.etats.errorCode='r';
       return 0 ;
     }
-
-
-    this._omService.requerirControllerOM(requete).then( resp => {
-      if (resp.status==200){
-           console.log("For this 'depot', we just say : "+resp._body) ;
-            if(resp._body.trim()=='0'){
-               objet.etats.etat=true;
-               objet.etats.load='terminated';
-               objet.etats.color='red';
-               objet.etats.errorCode='0';
-            }else
-            if(resp._body.match('-12')){
-               objet.etats.etat=true;
-               objet.etats.load='terminated';
-               objet.etats.color='red';
-               objet.etats.errorCode='-12';
-            }
-            else
-
-           setTimeout(()=>{
-              this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
-                var donnee=rep._body.trim().toString();
-                console.log("Inside verifier depot : "+donnee) ;
-                if(donnee=='1'){
-                   objet.etats.etat=true;
-                   objet.etats.load='terminated';
-                   objet.etats.color='green';
-                }
-                else{
-                  if(donnee!='-1'){
-                     objet.etats.etat=true;
-                     objet.etats.load='terminated';
-                     objet.etats.color='red';
-                     objet.etats.errorCode=donnee;
-                   }else{
-                        var periodicVerifier = setInterval(()=>{
-                        objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                        this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
-                          var donnee=rep._body.trim().toString();
-                          console.log("Inside verifier depot : "+donnee) ;
-                          if(donnee=='1'){
-                             objet.etats.etat=true;
-                             objet.etats.load='terminated';
-                             objet.etats.color='green';
-                             clearInterval(periodicVerifier) ;
-                          }
-                          else{
-                            if(donnee!='-1'){
-                             objet.etats.etat=true;
-                             objet.etats.load='terminated';
-                             objet.etats.color='red';
-                             objet.etats.errorCode=donnee;
-                             clearInterval(periodicVerifier) ;
-                            }
-                            if(donnee=='-1' && objet.etats.nbtour>=70){
-                              this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
-                                var donnee=rep._body.trim().toString();
-                                 if(donnee=="c"){
-                                   objet.etats.etat=true;
-                                   objet.etats.load='terminated';
-                                   objet.etats.color='red';
-                                   objet.etats.errorCode="c";
-                                   clearInterval(periodicVerifier) ;
-                                   }
-                              }) ;
-                            }
-                          }
-                        });
-                        },2000);
-                   }
-                }
+    this._omService.requerirControllerOM(requete)
+      .then( respData => {
+        console.log("requerirControllerOM Debut 3- "+JSON.stringify(respData))
+        if (respData.status==200){
+          console.log("requerirControllerOM : "+respData._body) ;
+          if(respData._body.trim().toString()=='1'){
+            objet.etats.etat=true;
+            objet.etats.load='terminated';
+            objet.etats.color='green';
+          }
+          else if(respData._body=='-1'){
+            let periodicVerifierOMDepot = setInterval(()=>{
+              console.log("setInterval : "+respData._body) ;
+              objet.etats.nbtour = objet.etats.nbtour + 1 ;
+              this._omService.verifierReponseOM(respData._body.trim().toString())
+                .then(rep =>{
+                  console.log("verifierReponseOM : "+rep._body) ;
+                  let donnee=rep._body.trim().toString();
+                  if(donnee=='1'){
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='green';
+                    clearInterval(periodicVerifierOMDepot) ;
+                  }
+                  else{
+                    if(donnee!='-1'){
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      objet.etats.errorCode=donnee;
+                      clearInterval(periodicVerifierOMDepot) ;
+                    }
+                    if(donnee=='-1' && objet.etats.nbtour>=70){
+                      console.log("nbtour : "+objet.etats.nbtour) ;
+                      this._omService.demanderAnnulationOM(respData._body.trim().toString())
+                        .then(rep =>{
+                        console.log("demanderAnnulationOM : "+rep._body) ;
+                        let donnee=rep._body.trim().toString();
+                        if(donnee=="c"){
+                          objet.etats.etat=true;
+                          objet.etats.load='terminated';
+                          objet.etats.color='red';
+                          objet.etats.errorCode="c";
+                          clearInterval(periodicVerifierOMDepot) ;
+                        }
+                        else {
+                          objet.etats.etat=true;
+                          objet.etats.load='terminated';
+                          objet.etats.color='red';
+                          objet.etats.errorCode="bad";
+                          clearInterval(periodicVerifierOMDepot) ;
+                        }
+                      })
+                        .catch(resp => {
+                        console.log(resp);
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        objet.etats.errorCode='bad';
+                        clearInterval(periodicVerifierOMDepot);
+                      });
+                    }
+                  }
+                })
+                .catch(resp => {
+                console.log(resp);
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                objet.etats.errorCode='bad';
               });
-
-           },5000);
-      }
-      else{
-        console.log("error") ;
-
+            },2000);
+          }
+          else {
+            objet.etats.etat=true;
+            objet.etats.load='terminated';
+            objet.etats.color='red';
+            objet.etats.errorCode=respData._body.trim().toString();
+          }
         }
+        else{
+          console.log("error") ;
+          console.log(respData);
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode='bad';
+        }
+      })
+      .catch(resp => {
+      console.log(resp);
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+      objet.etats.errorCode='bad';
     });
-
   }
 
 
@@ -1071,147 +1074,151 @@ geolocaliser(){
   }
 
 /******************************************************************************************************/
-/******************************************************************************************************/
 
-    cashInWizall(objet : any){
-      console.log('cashInWizall');
-      this._wizallService.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
-              console.log(response) ;
-              if(response.commission!=undefined){
-                objet.etats.etat=true;
-                objet.etats.load='terminated';
-                objet.etats.color='green';
-              }
-              else{
-                 objet.etats.etat=true;
-                 objet.etats.load='terminated';
-                 objet.etats.color='red';
-                 objet.etats.errorCode=500;
-              }
-      });
-    }
+  /************************************ Debut Wizall ******************************************************************/
 
-    cashOutWizall(objet : any){
-      console.log('cashOutWizall');
-      this._wizallService.intouchCashout(objet.data.num, objet.data.montant).then( response =>{
-              response = JSON.parse(JSON.parse(response._body)) ;
-              console.log(response) ;
-              if(response.commission!=undefined){
-                objet.etats.etat=true;
-                objet.etats.load='terminated';
-                objet.etats.color='green';
-              }
-              else{
-                 objet.etats.etat=true;
-                 objet.etats.load='terminated';
-                 objet.etats.color='red';
-                 objet.etats.errorCode=500;
-              }
-      });
-    }
+  cashInWizall(objet : any){
+    console.log('cashInWizall');
+    this._wizallService.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
+      console.log(response) ;
+      if(typeof response !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if(response.commission!=undefined){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }
+      else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode=500;
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+    });
+  }
 
-    validerenvoibon(objet:any){
-        this._wizallService.validerenvoiboncash(objet).then(response =>{
-               console.log(response.code);
-               let data =JSON.parse(response.code);
-               console.log(data);
-               if(response.code.indexOf("status")!=-1 && data.status=="valid"){
-      				   objet.etats.etat=true;
-      				   objet.etats.load='terminated';
-      				   objet.etats.color='green';
-               }
-               if(response.code.indexOf("code")!=-1 && data.code==500){
-                  objet.etats.etat=true;
-                  objet.etats.load='terminated';
-                  objet.etats.color='red';
-               }
+  cashOutWizall(objet : any){
+    console.log('cashOutWizall');
+    this._wizallService.intouchCashout(objet.data.num, objet.data.montant).then( response =>{
+      console.log(response) ;
+      if(typeof response !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if(response.commission!=undefined){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }
+      else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode=500;
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+    });
+  }
 
-         });
-    }
+  validerenvoibon(objet:any){
+    this._wizallService.validerenvoiboncash(objet).then(response =>{
+      console.log("Envoi de bon via Accueil!");
+      console.log(response);
+      if(typeof response !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if(response.status=="valid"){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }
+      else if(response.code !== undefined && JSON.parse(response.code).status && JSON.parse(response.code).status=="valid"){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }
+      else if(response.code !== undefined && JSON.parse(response.code).code && JSON.parse(response.code).code==500){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode = JSON.parse(response.code).error
+      }
+      else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+    });
+  }
 
-    validationretraitbon(objet:any){
-        console.log("Retrait de bon via Accueil!");
-        console.log(objet);
-       this._wizallService.bonDebitVoucher(objet.data).then(response =>{
-        console.log(response);
-        let data=JSON.parse(response);
-          if( data.timestamp != undefined ){
-             objet.etats.etat=true;
-             objet.etats.load='terminated';
-             objet.etats.color='green';
-          }else{
-                objet.etats.etat=true;
-                objet.etats.load='terminated';
-                objet.etats.color='red';
-          }
-       });
+  validationretraitbon(objet:any){
+    console.log(objet);
+    this._wizallService.bonDebitVoucher(objet.data).then(response =>{
+      console.log("Retrait de bon via Accueil!");
+      console.log(response);
+      if(typeof response !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if( response.timestamp != undefined ){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode = 500
 
-    }
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+    });
 
+  }
 
-    validerbonachat(objet:any){
-        this._wizallService.validerbonachat(objet).then(response =>{
-               console.log(response);
-               objet.etats.etat=true;
-               objet.etats.load='terminated';
-               objet.etats.color='green';
+  validerbonachat(objet:any){
+    this._wizallService.validerbonachat(objet).then(response =>{
+      console.log(response);
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='green';
+    });
+  }
 
-
-         });
-    }
-    payerSDEWizall(objet : any){
-      console.log('payerSDEWizall');
-      this._wizallService.intouchPayerFactureSde(objet.data.montant, objet.data.refclient, objet.data.refFacture).then( response =>{
-        if(response=="ok"){
-          objet.dataI = {
-            apiservice:'wizall',
-            service:'senelec',
-           infotransaction:{
-              client:{
-            },
-
-          },
-        };
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
-        }
-        else{
-           objet.etats.etat=true;
-           objet.etats.load='terminated';
-           objet.etats.color='red';
-           objet.etats.errorCode=response.code;
-        }
-      });
-    }
-
-    payerSenelecWizall(objet : any){
-      console.log('payerSenelecWizall');
-      this._wizallService.intouchPayerFactureSenelec(objet.data.montant, objet.data.police, objet.data.numfacture).then( response =>{
-        if(response=="ok"){
-          objet.dataI = {
-            apiservice:'wizall',
-            service:'senelec',
-           infotransaction:{
-              client:{
-            },
-
-          },
-        };
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
-        }
-        else{
-           objet.etats.etat=true;
-           objet.etats.load='terminated';
-           objet.etats.color='red';
-           objet.etats.errorCode=response.code;
-        }
-
-      });
-    }
-
+  /************************************ FIN WIZALL ******************************************************************/
 
 /******************************************************************************************************/
 
@@ -1344,12 +1351,21 @@ geolocaliser(){
        return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
-     if(item.data.operateur==6 ){
-
-        if (item.etats.errorCode=='500') return "Une erreur a empêché le traitement de votre requête. Réessayez plus tard ou contactez le service client." ;
-
-        if (item.etats.errorCode=='400') return "Facture dèja payée." ;
-       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
+    /* WIZALL */
+    if(item.data.operateur==6 ){
+      if (item.etats.errorCode=='-12' || item.etats.errorCode==-12)
+        return "Impossible de se connecter au serveur du partenaire. Merci de contacter le service client.";
+      else if (item.etats.errorCode=='-11' || item.etats.errorCode==-11)
+        return "Opèration annulée. La requête n'est pas parvenue au serveur. Merci de contacter le service client." ;
+      else if (item.etats.errorCode=='-1' || item.etats.errorCode==-1)
+        return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
+      else if (item.etats.errorCode=='500' || item.etats.errorCode==500)
+        return "Une erreur a empêché le traitement de votre requête. Réessayez plus tard ou contactez le service client." ;
+      else if (item.etats.errorCode=='400' || item.etats.errorCode==400)
+        return "Facture dèja payée." ;
+      else if (item.etats.errorCode && (typeof item.etats.errorCode == 'string'))
+        return item.etats.errorCode;
+      return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
     }
 
     /* EXPRESSO */
@@ -1375,24 +1391,11 @@ geolocaliser(){
 
     /* FACTURIER */
     if(item.data.operateur==8 ){
-
-/*
-      if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
-        return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
-      if (item.etats.errorCode=='2')
-        return "Cette requête n'est pas authorisée" ;
-      if (item.etats.errorCode=='51')
-        return "Le numéro du destinataire n'est pas authorisé à recevoir de transfert." ;
-      if (item.etats.errorCode=='3')
-        return "Numéro de téléphone invalide." ;
-      if (item.etats.errorCode=='2')
-        return "Cette requête n'est pas authorisée" ;
-      if (item.etats.errorCode=='7')
-        return "Votre compte a été verrouillé, contactez le service client." ;
-      if (item.etats.errorCode=='9')
-        return "Votre compte est à l'état inactif." ;
-*/
-      if (item.etats.errorCode=='-1')
+      if (item.etats.errorCode=='-12' || item.etats.errorCode==-12)
+        return "Impossible de se connecter au serveur du partenaire. Merci de contacter le service client.";
+      else if (item.etats.errorCode=='-11' || item.etats.errorCode==-11)
+        return "Opèration annulée. La requête n'est pas parvenue au serveur. Merci de contacter le service client." ;
+      else if (item.etats.errorCode=='-1' || item.etats.errorCode==-1)
         return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
       else if (item.etats.errorCode && (typeof item.etats.errorCode == 'string')) return item.etats.errorCode;
       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
@@ -1802,7 +1805,7 @@ geolocaliser(){
         }
       }else{
        console.log("vide ou bool");
-     }  
+     }
     });
 
   }
@@ -1837,7 +1840,7 @@ geolocaliser(){
 
 
 
-/*************************** FACTURIERS ******************************/
+  /***************************Debut FACTURIERS ******************************/
 
   paiemantsde(objet){
     console.log(objet)
@@ -1845,7 +1848,13 @@ geolocaliser(){
       console.log("********************************************************")
       console.log(resp) ;
 
-      if( typeof resp.transactionid != "undefined" ){
+      if(typeof resp !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if( typeof resp.transactionid != "undefined" ){
         objet.dataI = {
           apiservice:'facturier',
           service:'sde',
@@ -1867,11 +1876,17 @@ geolocaliser(){
         objet.etats.color='green';
 
       }else{
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='red';
-        objet.etats.errorCode= resp.response?resp.response:resp
       }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
     });
   }
 
@@ -1879,98 +1894,130 @@ geolocaliser(){
     console.log(objet);
     this._facturierService.validerrapido(objet.data.numclient,objet.data.montant,objet.data.badge).then(response =>{
       console.log(response);
-      if(response.errorCode==0){
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
-      }else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-          objet.etats.errorCode= response.response?response.response:response
+      if(typeof response !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
       }
+      else if(response.errorCode==0){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }else{
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
     });
   }
 
   payeroolusolar(objet){
     this._facturierService.payeroolusolar("00221"+objet.data.telephone.toString(),objet.data.compte,objet.data.montant).then(response =>{
-      response = JSON.parse(response);
-
       console.log(response);
-/*
-      if(response.errorCode==0){
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
-      }else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-      }
-*/
     });
   }
 
   validerpaimentsenelec(objet){
-     this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
-        if( typeof resp.transactionid != "undefined" ){
-          objet.dataI = {
-            apiservice:'facturier',
-            service:'senelec',
-            infotransaction:{
-              client:{
-                transactionApi: resp.transactionid,
-                transactionBBS: 'x-x-x-x',
-                police: resp.police,
-                numfacture: resp.numfacture,
-                client: resp.client,
-                montant: resp.montant,
-                dateecheance: resp.dateecheance,
-              },
-
+    this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
+      if(typeof resp !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if( typeof resp.transactionid != "undefined" ){
+        objet.dataI = {
+          apiservice:'facturier',
+          service:'senelec',
+          infotransaction:{
+            client:{
+              transactionApi: resp.transactionid,
+              transactionBBS: 'x-x-x-x',
+              police: resp.police,
+              numfacture: resp.numfacture,
+              client: resp.client,
+              montant: resp.montant,
+              dateecheance: resp.dateecheance,
             },
-          }
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
 
-        }else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-          objet.etats.errorCode= resp.response?resp.response:resp
+          },
         }
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
 
-     });
-   }
+      }else{
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+    });
+  }
 
   validerwoyofal(objet){
     this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
-        console.log(response) ;
-        if( (typeof response.errorCode != "undefined") && response.errorCode == "0" && response.errorMessage == ""){
+      console.log(response) ;
+      if(typeof response !== 'object') {
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else if( (typeof response.errorCode != "undefined") && response.errorCode == "0" && response.errorMessage == ""){
         objet.dataI = {
-            apiservice:'postecash',
-            service:'achatcodewayafal',
-            infotransaction:{
-              client:{
-                transactionPostCash: response.transactionId,
-                transactionBBS: 'x-x-x-x',
-                codewoyafal: response.code,
-                montant: objet.data.montant,
-                compteur: objet.data.compteur,
-              },
+          apiservice:'facturier',
+          service:'achatcodewayafal',
+          infotransaction:{
+            client:{
+              transactionPostCash: response.transactionId,
+              transactionBBS: 'x-x-x-x',
+              codewoyafal: response.code,
+              montant: objet.data.montant,
+              compteur: objet.data.compteur,
             },
-          };
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='green';
-        }else{
-          objet.etats.etat=true;
-          objet.etats.load='terminated';
-          objet.etats.color='red';
-        }
+          },
+        };
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+      }
+      else if(typeof response.errorMessage == "string"){
+        objet.etats.errorCode = response.errorMessage
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+      else{
+        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+    }).catch(response => {
+      console.log(response);
+      objet.etats.errorCode == response;
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
     });
   }
+
+  /***************Fin FACTURIERS ******************/
 
 
 

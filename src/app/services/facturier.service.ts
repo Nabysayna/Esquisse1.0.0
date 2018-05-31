@@ -30,10 +30,19 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/reglementsde";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        let resp = JSON.parse(data)?JSON.parse(data):data;
-        resolve(resp);
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
 
@@ -42,9 +51,19 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/detailreglementsde";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
 
@@ -53,9 +72,19 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/achatrapido";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(data);
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
 
@@ -64,9 +93,19 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/achatcodewoyofal";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
 
@@ -75,9 +114,19 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/detailreglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
 
@@ -86,9 +135,19 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/reglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
 
@@ -97,11 +156,20 @@ export class FacturierService {
     let url=this.link+"/facturier-sen/paiementoolusolar";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
-      this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
-      });
+      this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
+        data =>{
+          console.log(data)
+          if(typeof data === 'boolean') reject(JSON.parse("-11"))
+          else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
+          else if((typeof data === 'object') ) resolve(data)
+          else reject(JSON.parse("-12"))
+        },
+        error => reject(JSON.parse("-11")),
+        () => {
+          console.log("Finish")
+        }
+      );
     });
   }
-
 
 }

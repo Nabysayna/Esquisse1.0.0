@@ -13,7 +13,6 @@ import { LoadersCssModule } from 'angular2-loaders-css';
 import {DataTableModule} from "angular2-datatable";
 import { AlertModule, TabsModule, CollapseModule, ProgressbarModule, PopoverModule, ModalModule, TypeaheadModule, PaginationModule, AccordionModule} from 'ng2-bootstrap';
 
-import { AgmCoreModule } from '@agm/core';
 import { ChartsModule } from 'ng2-charts';
 
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -101,8 +100,6 @@ import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { panierComponent } from './panier/panier.component';
 import { SenelecComponent } from './senelec/senelec.component';
 import { OoluComponent } from './oolu/oolu.component';
-
-import { GeomapComponentComponent } from './geomap-component/geomap-component.component';
 
 
 /*-----------------*/
@@ -236,7 +233,6 @@ import {MapsService} from "./services/maps.service";
     AdminpdvStatusReclamationComponent,
     AdminpdvparametrecompteComponent,
 
-    GeomapComponentComponent,
     LoaderComponent,
     NavbarTopComponent,
     ExpressoComponent,
@@ -316,9 +312,6 @@ import {MapsService} from "./services/maps.service";
     PaginationModule.forRoot(),
     AccordionModule.forRoot(),
     AlertModule.forRoot(),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC-2WxSYvBmnQ0HgUYU7fWxCyY_itypwn8'
-    }),
     NgxPaginationModule
   ],
   providers: [

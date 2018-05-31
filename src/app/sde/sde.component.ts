@@ -1,6 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { Router, CanActivate } from '@angular/router';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 import {FacturierService} from "../services/facturier.service";
 
 
@@ -13,15 +12,14 @@ export class SdeComponent implements OnInit {
   etat1:boolean=false;
   etat2:boolean=false;
   etat3:boolean=false;
-  etat4:boolean=false;
   refClientSDE:any;
   message:boolean=false;
   detailfacturesde:any={errorCode:0,reference_client:"",reference_facture:"",client:'nom du client',montant:1,dateecheance:"12/3/2018",service:"wizall"};
   errorMessage : any ;
 
-   constructor(private _facturierService : FacturierService,private router: Router) {}
+  constructor(private _facturierService : FacturierService) {}
 
-/******************************************************************************************************/
+  /******************************************************************************************************/
 
 
   ngOnInit() {
@@ -35,10 +33,13 @@ export class SdeComponent implements OnInit {
     this.etat1=false;
     this.etat2=false;
     this.etat3=false;
-    this.etat4=false;
     this._facturierService.detailreglementsde(this.refClientSDE).then(response =>{
+      console.log(typeof response)
       if(response.errorCode==0){
-        if(typeof response.response !== 'object') this.etat4=true;
+        if(typeof response.response !== 'object') {
+          this.etat1=true;
+          this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        }
         else if(response.response.length==0) this.etat3=true;
         else{
           let une = response.response[0];
@@ -52,11 +53,25 @@ export class SdeComponent implements OnInit {
         }
         this.modalsde.show();
       }else{
+        console.log("je suis la")
         this.etat1=true;
-        this.detailfacturesde.errorCode=response.errorMessage;
+        this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         this.modalsde.show();
       }
 
+    }).catch(response => {
+      console.log(response);
+      if(response==-11){
+        this.detailfacturesde.errorCode = "Opèration annulée. La requête n'est pas parvenue au serveur. Merci de contacter le service client."
+      }
+      else if(response==-12){
+        this.detailfacturesde.errorCode = "Impossible de se connecter au serveur du partenaire. Merci de contacter le service client."
+      }
+      else {
+        this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+      }
+      this.etat1=true;
+      this.modalsde.show();
     });
   }
 
