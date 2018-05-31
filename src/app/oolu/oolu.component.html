@@ -1,20 +1,20 @@
-<div class="col-sm-12">
-    <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
-        <div class="panel-heading">
+<div class="col-sm-12" style="font-family:'caviar dreams bold'">
+    <div class="panel panel-default" style="margin-top: 5rem">
+        <div class="panel-heading" style="margin-left: -26rem;">
 
             <h2>Paiement Oolu Solar</h2>
 
         </div>
         <!-- /.panel-heading -->
 
-		<div class="cover"></div>
+		<div class="cover" style="margin-left: -26rem;"></div>
 
         <div class="panel-body">-->
             <!-- Nav tabs -->
 
             <!-- Tab panes -->
 
-            <div class="tab-pane fade col-lg-offset-3 col-sm-offset-3 col-xs-offset-3 col-sm-7 col-xs-7 col-lg-7 col-md-7 in " id="oolu-pills">
+            <div class="tab-pane fade col-sm-8 col-xs-8 col-lg-9 col-md-9 in " id="oolu-pills">
                <!-- <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                     <h2> Paiement Oolu Solar</h2>
                 </fieldset>-->
@@ -27,6 +27,7 @@
                      </div>
                     <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
                       <input  type="text" (keyup)="reinitialiserbool()" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="input" placeholder="téléphone client" required>
+
                     </div>
                     <p class="alert alert-danger" *ngIf="errornumero">Numero Incorrect</p>
                   </div>
@@ -36,6 +37,7 @@
                       </div>
                     <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
                       <input (keyup)="reinitialiserbool()" type="string" [(ngModel)]="this.compte"   name="compte" id="compte" class="input" placeholder="Numéro Compte" required>
+
                     </div>
                     <p class="alert alert-danger" *ngIf="errorcompte">Numero Compte Incorrect</p>
                   </div>
@@ -45,6 +47,7 @@
                       </div>
                     <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
                       <input (keyup)="reinitialiserbool()" type="text" [(ngModel)]="this.montant"   name="montant" id="montant" class="input" placeholder="montant à recharger" required>
+
                     </div>
                     <p class="alert alert-danger" *ngIf="errormontant">Montant Incorrect</p>
                   </div>
@@ -52,6 +55,7 @@
                   <div class="row text-center">
                     <button type="submit" class="btn btn-success" (click)="showmodaloolu()" >Valider</button>
                     <button type="reset" class="btn btn-danger"  >Annuler</button>
+
                   </div>
                 </form>
             </div>
@@ -59,7 +63,7 @@
         </div>
     </div>
 </div>
-<div bsModal #modaloolu="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div style="font-family:'caviar dreams bold'" bsModal #modaloolu="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" >

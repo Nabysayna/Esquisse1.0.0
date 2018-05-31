@@ -30,9 +30,9 @@
                           <h3 style="color : black; text-transform: capitalize;">{{message}}</h3>
                         </marquee>
 
-                        <form name="validVerifierNum" (ngSubmit)="validVerifierNum()" #verifiernum="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem; text-align: -webkit-left;">
-                            <label for="verifiernuminput"> Numéro chip, Numéro carte ou Téléphone </label>
-                            <div class="col-md-8">
+                        <form name="validVerifierNum" (ngSubmit)="validVerifierNum()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;">
+                            <label style="text-align:left" class="col-md-12 col-1g-12" for="verifiernuminput"> Numéro chip, Numéro carte ou Téléphone </label>
+                            <div class="col-md-8 col-md-8">
                                 <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="this.verifierNumInput" name="verifiernuminput" id="verifiernuminput"  class="form-control" placeholder="Numéro du chip ou de la carte" required autofocus>
                             </div>
                             <div class="col-md-4">
