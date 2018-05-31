@@ -68,19 +68,19 @@ export class TigoCashComponentComponent implements OnInit {
   /********depot**********************/
       depot(){
 
-         this.hidemodaldepot();
 
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash depot','operateur':3,'operation':1,'num':this.telephone,'montant':this.montant}));
+    this.hidemodaldepot();
 //         this.reinitialiser();
       }
   /***********************************/
   /********retrait**********************/
       retrait(){
 
-         this.hidemodalretrait();
          console.log({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant});
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant}));
          this.reinitialiser();
+    this.hidemodalretrait();
       }
   /***********************************/
   /********retrait**********************/
@@ -110,12 +110,12 @@ export class TigoCashComponentComponent implements OnInit {
   /*************izi*******************/
      izi(){
 
-       this.hidemodalvendreizi();
        console.log({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant});
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant}));
        this.reinitialiser();
+    this.hidemodalvendreizi();
      }
-     
+
   /***********************************/
   /********inscription****************/
   inscription(){

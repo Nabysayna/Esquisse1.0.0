@@ -463,8 +463,6 @@ export class OrangeMoneyComponentComponent implements OnInit {
   }
   deposer(){
 
-          this.addChildModal.hide();
-
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money depot','operateur':2,'operation':1,'montant':this.mnt,'num':this.numclient}));
 
          // this.loading = false ;
@@ -472,6 +470,8 @@ export class OrangeMoneyComponentComponent implements OnInit {
           this.numclient = undefined ;
           this.mnt = undefined;
 
+
+    this.addChildModal.hide();
 
   /*  let requete = "1/"+this.mnt+"/"+this.numclient ;
     this.loading = true ;
@@ -501,11 +501,10 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
   retirer(){
 
-          this.modalretrait.hide();
-
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':2,'montant':this.mnt,'numclient':this.numclient}));
 
-          //this.depotreussi=true;
+
+    this.modalretrait.hide();
           this.numclient = undefined ;
           this.mnt = undefined;
     /*let requete = "2/"+this.numclient+"/"+this.mnt ;
@@ -534,10 +533,10 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
   retraitAvecCode(){
 
-    this.hidemodalretraitcode() ;
-
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':this.prenom,'nomclient':this.nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
 //    let requete = "3/"+this.coderetrait+"/"+this.prenom+"/"+this.nom+"/"+this.date+"/"+this.cni+"/"+this.numclient;
+
+    this.hidemodalretraitcode() ;
 
     this.numclient = undefined ;
     this.mnt = undefined;
@@ -616,9 +615,9 @@ export class OrangeMoneyComponentComponent implements OnInit {
 /*********************************************************/
 
   acheterCredit(){
-    this.hidemodalventecredit() ;
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'OrangeMoney Vente Crédit','operateur':2,'operation':5,'numclient':this.numclient,'montant':this.mnt}));
-    
+    this.hidemodalventecredit() ;
+
     this.loading = false ;
     this.numclient = undefined ;
     this.mnt = undefined;
