@@ -98,7 +98,7 @@ export class FacturierService {
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-        resolve(JSON.parse(data));
+        resolve(data);
       });
     });
   }

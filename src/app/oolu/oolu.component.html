@@ -20,29 +20,42 @@
                 </fieldset>-->
                 <p *ngIf="etatsuccess" class="alert alert-success">paiment oolu solar reussi</p>
                 <p *ngIf="etaterror" class="alert alert-danger">echec de l'operation</p>
-                <form (ngSubmit)="payeroolusolar()" #payeroolusolarform="ngForm" autocomplete="on">
-                  <div class="form-group row">
-                    <label style="margin-top: 1.5rem;margin-left:0px; text-align: left;" for="telephonerechargementespece" class="col-sm-3 col-lg-3 col-md-3 col-xs-3 col-form-label">Téléphone </label>
-                    <div class="col-sm-8 col-lg-8 col-md-8 col-xs-8">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
+                <form  #payeroolusolarform="ngForm" autocomplete="on">
+                  <div class="row">
+					 <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                        <label for="telephonerechargementespece" >Téléphone </label>
+                     </div>
+                    <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                      <input  type="text" (keyup)="reinitialiserbool()" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="input" placeholder="téléphone client" required>
+
                     </div>
+                    <p class="alert alert-danger" *ngIf="errornumero">Numero Incorrect</p>
                   </div>
-                  <div class="form-group row">
-                    <label style="margin-top: 1.5rem;margin-left:0px; text-align: left;"  for="montantrechargementespece" class="col-sm-3 col-lg-3 col-md-3 col-xs-3 col-form-label">N° Compte</label>
-                    <div class="col-sm-8 col-lg-8 col-md-8 col-xs-8">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="string" [(ngModel)]="this.compte"   name="compte" id="compte" class="form-control" placeholder="Numéro Compte" required>
+                  <div class="row">
+					  <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                        <label for="montantrechargementespece" class="col-form-label">N° Compte</label>
+                      </div>
+                    <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                      <input (keyup)="reinitialiserbool()" type="string" [(ngModel)]="this.compte"   name="compte" id="compte" class="input" placeholder="Numéro Compte" required>
+
                     </div>
+                    <p class="alert alert-danger" *ngIf="errorcompte">Numero Compte Incorrect</p>
                   </div>
-                  <div class="form-group row">
-                    <label style="margin-top: 1.5rem;margin-left:0px; text-align: left;"  for="montantrechargementespece" class="col-sm-3 col-lg-3 col-md-3 col-xs-3 col-form-label">Montant à recharger</label>
-                    <div class="col-sm-8 col-lg-8 col-md-8 col-xs-8">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  type="number" [(ngModel)]="this.montant"   name="montant" id="montant" class="form-control" placeholder="montant à recharger" required>
+                  <div class="row">
+					  <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                        <label for="montantrechargementespece" class="col-form-label">Montant à recharger</label>
+                      </div>
+                    <div class="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                      <input (keyup)="reinitialiserbool()" type="text" [(ngModel)]="this.montant"   name="montant" id="montant" class="input" placeholder="montant à recharger" required>
+
                     </div>
+                    <p class="alert alert-danger" *ngIf="errormontant">Montant Incorrect</p>
                   </div>
 
                   <div class="row text-center">
-                    <input style="border-radius: 2rem 0rem 2rem 2rem;" type="submit" class="btn btn-success" [disabled]="!payeroolusolarform.form.valid"/>
-                    <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="reset" class="btn btn-danger" [disabled]="!payeroolusolarform.form.valid" />
+                    <button type="submit" class="btn btn-success" (click)="showmodaloolu()" >Valider</button>
+                    <button type="reset" class="btn btn-danger"  >Annuler</button>
+
                   </div>
                 </form>
             </div>
@@ -60,17 +73,36 @@
                         </button>
                         <h4 class="modal-title" id="myModalLabel">Informations Compteur Oolu</h4>
                 </div>
-                <div class="modal-body">
+                <div  class="modal-body">
                        <div class="row">
-                           <label class="col-lg-3 col-md-3 col-sm-3">telephone : {{this.telephone}}</label>
-
+						   <div style="text-align:left" class="col-lg-3 col-md-3 col-sm-3">
+                              <label>Telephone : </label>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label> {{this.telephone}}</label>
+                           </div>
                        </div>
-
-
+                       <div  class="row">
+                           <div style="text-align:left" class="col-lg-3 col-md-3 col-sm-3">
+							   <label>Numero Compte :</label>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-3">
+							   <label>{{this.compte}}</label>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div style="text-align:left" class="col-lg-3 col-md-3 col-sm-3">
+							   <label>Montant A Recharger :</label>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-3">
+							   <label>{{this.montant}}</label>
+                           </div>
+                       </div>
+                    <input type="button" (click)="payeroolusolar()" value="valider"  class="btn btn-success" />
+                    <input type="button" value="annuler" (click)="hidemodaloolu()" class="btn btn-danger" />
                 </div>
                 <div class="modal-footer">
-                    <input type="button" *ngIf="etat" value="valider"  class="btn btn-success" />
-                    <input type="button" value="annuler" (click)="hidemodaloolu()" class="btn btn-danger" />
+                    
                 </div>
         </div>
     </div>
