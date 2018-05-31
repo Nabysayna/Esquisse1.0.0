@@ -35,7 +35,7 @@
                         <h2>Dépôt</h2>
                     </fieldset>
 
-                    <form (ngSubmit)="showmodaldepot()" #rechargementespece="ngForm" autocomplete="on">
+                    <form (ngSubmit)="showmodaldepot()" #depot="ngForm" autocomplete="on">
                       <div class="form-group row">
                         <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                         <div class="col-sm-8">
@@ -50,8 +50,8 @@
                       </div>
 
                       <div class="row text-center">
-                        <input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" /> 
-                        <input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
+                        <input [disabled]="!depot.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" /> 
+                        <input [disabled]="!depot.form.valid" type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
                       </div>
                     </form>
                 </div>
@@ -60,7 +60,7 @@
                         <h2>Retrait</h2>
                     </fieldset>
             
-                    <form (ngSubmit)="showmodalretrait()" #rechargementespece="ngForm" autocomplete="on">
+                    <form (ngSubmit)="showmodalretrait()" #retrait="ngForm" autocomplete="on">
                       <div class="form-group row">
                         <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                         <div class="col-sm-8">
@@ -75,8 +75,8 @@
                       </div>
 
                       <div class="row text-center">
-                        <input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
-                        <input type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input [disabled]="!retrait.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input [disabled]="!retrait.form.valid" type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
                       </div>
                     </form>
                 </div>
@@ -85,7 +85,7 @@
                         <h2>Payer un transfert</h2>
                     </fieldset>
 
-                    <form (ngSubmit)="showmodalpaiment()" #rechargementespece="ngForm" autocomplete="on">
+                    <form (ngSubmit)="showmodalpaiment()" #payertransfer="ngForm" autocomplete="on">
 
 											<div class="form-group row">
 													<label class="col-lg-3" style="text-align:left;">Code de retrait :</label>
@@ -133,8 +133,8 @@
 													</div>
 											</div>
 											<div class="row text-center">
-													<input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
-													<input type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
+													<input [disabled]="!payertransfer.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+													<input [disabled]="!payertransfer.form.valid" type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
 											</div>
                     </form>
                 </div>
@@ -204,7 +204,7 @@
                         <h2>Vente IZI</h2>
                     </fieldset>
 
-                    <form (ngSubmit)="showmodalvendreizi()" #rechargementespece="ngForm" autocomplete="on">
+                    <form (ngSubmit)="showmodalvendreizi()" #izi="ngForm" autocomplete="on">
                       <div class="form-group row">
 						 							<label style="text-align:left;" class="col-sm-3 col-form-label">Numero client</label>
                          <div class="col-sm-8">
@@ -218,8 +218,8 @@
 	                      </div>
                       </div>
                       <div class="row text-center">
-                        <input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
-                        <input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
+                        <input [disabled]="!izi.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input [disabled]="!izi.form.valid" type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
                       </div>
                     </form>
  
@@ -421,7 +421,7 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button"  (click)="payerTransfer()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+				  <input type="button" value="valider" (click)="payerTransfer()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 				  <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 

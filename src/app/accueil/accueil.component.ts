@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { Router } from '@angular/router';
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
 import {WizallService} from "../services/wizall.service";
@@ -81,8 +81,6 @@ geolocaliser(){
           this.messageGeolocation = "Votre Point a été Géolocalisé." ;
           this.ouvrir() ;
           }
-          console.log(response) ;
-
         }) ;
       }, function error(msg){alert('Veuillez activer la geolocalisation sur votre navigateur.');},
       {maximumAge:600000, timeout:5000, enableHighAccuracy: true} );
@@ -132,7 +130,6 @@ geolocaliser(){
      if(sesion.data.operateur==5){
         this.articles.push(sesion);
         sessionStorage.setItem('panier',JSON.stringify(this.articles));
-        console.log(this.articles);
         if(this.articles.length==1){
           this.process.push(sesion);
         }
@@ -228,7 +225,7 @@ geolocaliser(){
        case 4:{
              let operation=sesion.data.operation;
              console.log("here we go ...") ;
-             console.log(sesion) ;
+            // console.log(sesion) ;
              switch(operation){
               case 1:{
                    this.validnabon(sesion);
@@ -319,6 +316,7 @@ geolocaliser(){
                   break;
               }
               case 5:{
+
                   this.payeroolusolar(sesion);
                   break;
               }
@@ -928,7 +926,6 @@ geolocaliser(){
 
         let typedebouquet = "" ;
         response = JSON.parse(response) ;
-        console.log(response);
         if(response.response=="ok"){
 
            objet.etats.etat=true;
@@ -1078,7 +1075,6 @@ geolocaliser(){
   cashInWizall(objet : any){
     console.log('cashInWizall');
     this._wizallService.intouchCashin("test 1", objet.data.num, objet.data.montant).then( response =>{
-      console.log(response) ;
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
@@ -1097,7 +1093,6 @@ geolocaliser(){
         objet.etats.errorCode=500;
       }
     }).catch(response => {
-      console.log(response);
       objet.etats.errorCode == response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
@@ -1109,7 +1104,6 @@ geolocaliser(){
     console.log('cashOutWizall');
     this._wizallService.intouchCashout(objet.data.num, objet.data.montant).then( response =>{
       console.log("*************************") ;
-      console.log(response) ;
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
@@ -1128,7 +1122,6 @@ geolocaliser(){
         objet.etats.errorCode=500;
       }
     }).catch(response => {
-      console.log(response);
       objet.etats.errorCode == response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
@@ -1139,7 +1132,6 @@ geolocaliser(){
   validerenvoibon(objet:any){
     this._wizallService.validerenvoiboncash(objet).then(response =>{
       console.log("Envoi de bon via Accueil!");
-      console.log(response);
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
@@ -1168,7 +1160,6 @@ geolocaliser(){
         objet.etats.color='red';
       }
     }).catch(response => {
-      console.log(response);
       objet.etats.errorCode == response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
@@ -1177,10 +1168,8 @@ geolocaliser(){
   }
 
   validationretraitbon(objet:any){
-    console.log(objet);
     this._wizallService.bonDebitVoucher(objet.data).then(response =>{
       console.log("Retrait de bon via Accueil!");
-      console.log(response);
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
@@ -1199,7 +1188,6 @@ geolocaliser(){
 
       }
     }).catch(response => {
-      console.log(response);
       objet.etats.errorCode == response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
@@ -1210,7 +1198,6 @@ geolocaliser(){
 
   validerbonachat(objet:any){
     this._wizallService.validerbonachat(objet).then(response =>{
-      console.log(response);
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='green';
@@ -1857,7 +1844,7 @@ geolocaliser(){
 
   }
 
-  public cashOutPIN(objet){
+  public cashOutPIN(objet:any){
     this.expressocashwebservice.pinCashout(objet.data.pin, objet.data.cni,objet.data.montant,objet.data.tel).then(expressocashwebserviceList => {
       console.log(expressocashwebserviceList);
       if(!expressocashwebserviceList.match("cURL Error #:")){
@@ -1970,6 +1957,19 @@ geolocaliser(){
   payeroolusolar(objet){
     this._facturierService.payeroolusolar("00221"+objet.data.telephone.toString(),objet.data.compte,objet.data.montant).then(response =>{
       console.log(response);
+      let Response = JSON.parse(response);
+      console.log(Response);
+
+      if(Response.errorCode==0){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='green';
+      }else{
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode=Response.errorMessage;
+      }
     });
   }
 

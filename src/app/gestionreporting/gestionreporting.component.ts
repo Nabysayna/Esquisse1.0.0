@@ -52,7 +52,6 @@ export class GestionreportingComponent implements OnInit {
       .subscribe(
         data => {
           this.servicepoint = data;
-          console.log(data)
         },
         error => console.log(error),
         () => {
@@ -92,7 +91,6 @@ export class GestionreportingComponent implements OnInit {
       .subscribe(
         data => {
           this.servicepoint = data;
-          console.log(data)
         },
         error => console.log(error),
         () => {
@@ -106,7 +104,6 @@ export class GestionreportingComponent implements OnInit {
     this._gestionreportingService.ajoutdepense({libelle:this.libelleCharge, service:this.service, montant:this.montantCharge})
       .subscribe(
         data => {
-          console.log(data)
           this.libelleCharge = "" ;
           this.service = "" ;
           this.montantCharge = 0 ;
@@ -124,7 +121,6 @@ export class GestionreportingComponent implements OnInit {
     this._gestionreportingService.reclamation({sujet:this.sujet, nomservice:this.nomservice, message:this.message})
       .subscribe(
         data => {
-          console.log(data)
           this.sujet = "" ;
           this.nomservice = "" ;
           this.message = "" ;
@@ -149,7 +145,6 @@ export class GestionreportingComponent implements OnInit {
       .subscribe(
         data => {
           console.log("------ vente -----------")
-          console.log(data)
           this.designation = "" ;
           this.servicevente = "" ;
           this.quantite=0;
@@ -265,7 +260,6 @@ export class GestionreportingComponent implements OnInit {
   }
 
   reimprimerhistop(operation){
-    console.log(operation)
     this._gestionreportingService.reimpression({idpdv:10, operation:JSON.stringify(operation), infooperation:operation.operateur})
       .subscribe(gestreportserviceList => {
           let getdataimpression = gestreportserviceList;
@@ -308,11 +302,9 @@ export class GestionreportingComponent implements OnInit {
             }
             if(getdataimpression.typeoperation=="decodeur"){
               let infos = JSON.parse(getdataimpression.infosoperation);
-              console.log(infos);
             }
             if(getdataimpression.typeoperation=="carte"){
               let infos = JSON.parse(getdataimpression.infosoperation);
-              console.log(infos);
             }
           }
           if(operation.operateur.toUpperCase()=="WIZALL"){
@@ -376,7 +368,6 @@ export class GestionreportingComponent implements OnInit {
             }
             if(getdataimpression.typeoperation.toLowerCase().match("rapido")){
               let infos = JSON.parse(getdataimpression.infosoperation);
-              console.log(infos)
               dataImpression = {
                 apiservice:'facturierreimpression',
                 service:'rapido',
@@ -391,7 +382,6 @@ export class GestionreportingComponent implements OnInit {
                   },
                 },
               }
-              console.log(dataImpression)
               sessionStorage.setItem('dataImpression', JSON.stringify(dataImpression));
               this.router.navigate(['accueil/impression']);
             }
