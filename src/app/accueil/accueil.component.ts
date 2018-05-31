@@ -1109,6 +1109,7 @@ geolocaliser(){
   cashOutWizall(objet : any){
     console.log('cashOutWizall');
     this._wizallService.intouchCashout(objet.data.num, objet.data.montant).then( response =>{
+      console.log("*************************") ;
       console.log(response) ;
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."

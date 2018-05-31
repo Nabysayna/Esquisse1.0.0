@@ -42,40 +42,22 @@
     </div>
 </div>
 <div bsModal #modalwoyofal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-
-		 <div class="modal-dialog modal-sm">
-		    <div class="modal-content" >
-		      <div class="modal-header">
-				<button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalwoyofal()">
-				    <span aria-hidden="true">&times;</span>
-		        </button>
-	            <h4 class="modal-title" id="myModalLabel">Informations Compteur Woyofal</h4>
-		     </div>
-		     <div class="modal-body">
-
-				 <div *ngIf="etat">
-
-					 <form class="form">
-
-						 <div class="form-group">
-							 <label >Numero Compteur : {{compteur}}</label>
-						 </div>
-			             <div class="form-group">
-			               	  <label >Montant : {{montant}}</label>
-			             </div>
-
-					 </form>
-
-				 </div>
-				 <div *ngIf="!etat">
-					 <p class="alert alert-danger">facture deja payé ou reference incorrecte</p>
-				 </div>
-		     </div>
-		     <div class="modal-footer">
-				  <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" *ngIf="etat" value="valider" (click)="validerwoyofal()" class="btn btn-success" />
-				  <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="annuler" (click)="hidemodalwoyofal()" class="btn btn-danger" />
-		     </div>
-		  </div>
-	    </div>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalwoyofal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Informations Compteur Woyofal</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label >Numero Compteur : {{compteur}}</label></div>
+        <div class="form-group"><label >Montant : {{montant}}</label></div>
+      </div>
+      <div class="modal-footer">
+        <input type="button" value="valider" [disabled]="compteur==undefined || montant==undefined" (click)="validerwoyofal()" class="btn btn-success" />
+        <input type="button" value="annuler" (click)="hidemodalwoyofal()" class="btn btn-danger" />
+      </div>
+    </div>
+  </div>
 </div>
-
