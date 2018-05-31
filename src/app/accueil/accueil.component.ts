@@ -143,10 +143,10 @@ geolocaliser(){
 
      // console.log(sesion.etats.id);
       sessionStorage.removeItem('curentProcess');
-      var operateur=sesion.data.operateur;
+      let operateur=sesion.data.operateur;
       switch(operateur){
         case 1:{
-                var operation=sesion.data.operation;
+                let operation=sesion.data.operation;
                 switch(operation){
                   case 1:{
                         this.validrechargementespece(sesion);
@@ -170,7 +170,7 @@ geolocaliser(){
         }
 
         case 2:{
-             var operation=sesion.data.operation;
+             let operation=sesion.data.operation;
 
               switch(operation){
                 case 1:{
@@ -199,7 +199,7 @@ geolocaliser(){
         }
 
         case 3:{
-             var operation=sesion.data.operation;
+             let operation=sesion.data.operation;
 
               switch(operation){
                 case 1:{
@@ -228,7 +228,7 @@ geolocaliser(){
        case 4:{
              var operation=sesion.data.operation;
              console.log("here we go ...") ;
-             console.log(sesion) ;
+            // console.log(sesion) ;
              switch(operation){
               case 1:{
                    this.validnabon(sesion);
@@ -248,9 +248,9 @@ geolocaliser(){
        }
 
        case 6:{
-             var operation=sesion.data.operation;
-         console.log(sesion);
-         console.log('Willa');
+             let operation=sesion.data.operation;
+        // console.log(sesion);
+        // console.log('Willa');
              switch(operation){
               case 1:{
                    this.cashInWizall(sesion);
@@ -288,9 +288,9 @@ geolocaliser(){
        }
 
        case 7:{
-             var operation=sesion.data.operation;
-                 console.log(sesion);
-                 console.log('E-money');
+             let operation=sesion.data.operation;
+                 //console.log(sesion);
+                // console.log('E-money');
              switch(operation){
               case 1:{
                    this.cashInEmoney(sesion);
@@ -310,7 +310,7 @@ geolocaliser(){
        }
 
        case 8:{
-         var operation=sesion.data.operation;
+         let operation=sesion.data.operation;
          console.log('FACTURIER');
 
          switch(operation){
@@ -331,6 +331,7 @@ geolocaliser(){
                   break;
               }
               case 5:{
+                  
                   this.payeroolusolar(sesion);
                   break;
               }
@@ -1894,11 +1895,12 @@ geolocaliser(){
 
   payeroolusolar(objet){
     this._facturierService.payeroolusolar("00221"+objet.data.telephone.toString(),objet.data.compte,objet.data.montant).then(response =>{
-      response = JSON.parse(response);
-
+      
       console.log(response);
-/*
-      if(response.errorCode==0){
+      let Response = JSON.parse(response);
+      console.log(Response);
+
+      if(Response.errorCode==0){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
@@ -1906,8 +1908,9 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
+          objet.etats.errorCode=Response.errorMessage;
       }
-*/
+
     });
   }
 
