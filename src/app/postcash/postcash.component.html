@@ -33,21 +33,21 @@
                       </fieldset>
                       <form (ngSubmit)="validrechargementespece()" #rechargementespece="ngForm" autocomplete="on">
                         <div class="form-group row">
-                          <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                          <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
+                          <label style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required>
                           </div>
                         </div>
 
                         <div class="row text-center">
-                          <button type="submit" class="btn btn-success" [disabled]="!rechargementespece.form.valid">Valider</button>
-                          <button type="reset" class="btn btn-danger" [disabled]="!rechargementespece.form.valid" >Annuler</button>
+                          <input type="submit" class="btn btn-success" [disabled]="!rechargementespece.form.valid" />
+                          <input type="reset" class="btn btn-danger" [disabled]="!rechargementespece.form.valid" />
                         </div>
                       </form>
                   </div>
@@ -57,9 +57,9 @@
                           <h2 style="font-family: 'caviar dreams bold';">Retrait Espece</h2>
                       </fieldset>
                   <div class="row"  style="margin-top: 2rem">
-                      <form  #retraitespece="ngForm" autocomplete="on">
+                      <form (ngSubmit)="(this.codevaliadtion==false)?CodeValidation():validationretraitespece()"  #retraitespece="ngForm" autocomplete="on">
                         <div class="form-group row"  *ngIf="!codevaliadtion">
-                          <label for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                          <label style="text-align:left;" for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephoneretraitespece" class="form-control" placeholder="téléphone client" required>
                           </div>
@@ -80,8 +80,8 @@
                         </div>
 
                         <div class="row text-center">
-                          <button type="button" (click)="(this.codevaliadtion==false)?CodeValidation():validationretraitespece()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
-                          <button type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" >Annuler</button>
+                          <input type="submit"  class="btn btn-success" [disabled]="!retraitespece.form.valid" />
+                          <input type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" />
                         </div>
                       </form>
                   </div>
@@ -92,31 +92,31 @@
                       <h2 style="font-family: 'caviar dreams bold';">Debiter Carte</h2>
                   </fieldset>
               <div class="row"  style="margin-top: 2rem">
-                <form  #retraitespece="ngForm" autocomplete="on">
+                <form  (ngSubmit)="(this.codevaliadtion==false)?CodeValidation():validatedebitercarte()" #retraitespece="ngForm" autocomplete="on">
                     <div class="form-group row" *ngIf="!codevaliadtion">
-                      <label for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                      <label  style="text-align:left;" for="telephoneretraitespece" class="col-sm-3 col-form-label">Téléphone client</label>
                       <div class="col-sm-8">
                         <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephoneretraitespece" class="form-control" placeholder="téléphone client" required>
                       </div>
                     </div>
 
                     <div class="form-group row" *ngIf="!codevaliadtion">
-                      <label for="montantretraitespece" class="col-sm-3 col-form-label">Montant</label>
+                      <label style="text-align:left;" for="montantretraitespece" class="col-sm-3 col-form-label">Montant</label>
                       <div class="col-sm-8">
                         <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantretraitespece" class="form-control" placeholder="montant à retirer" required>
                       </div>
                     </div>
 
                     <div class="form-group row" *ngIf="codevaliadtion" >
-                      <label for="codevalidation" class="col-sm-3 col-form-label">Code de validation</label>
+                      <label style="text-align:left;" for="codevalidation" class="col-sm-3 col-form-label">Code de validation</label>
                       <div class="col-sm-8">
                         <input type="number" [(ngModel)]="this.codevalidation"   name="codevalidation" id="codevalidation" class="form-control" placeholder="Code de validation" required>
                       </div>
                     </div>
 
                     <div class="row text-center">
-                      <button type="button" (click)="(this.codevaliadtion==false)?CodeValidation():validatedebitercarte()" class="btn btn-success" [disabled]="!retraitespece.form.valid">Valider</button>
-                      <button type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" >Annuler</button>
+                      <input type="submit"  class="btn btn-success" [disabled]="!retraitespece.form.valid" />
+                      <input type="reset" class="btn btn-danger" [disabled]="!retraitespece.form.valid" />
                     </div>
                   </form>
               </div>
@@ -128,14 +128,14 @@
                     <form (ngSubmit)="validateachatjula()" #achatjula="ngForm" autocomplete="on">
 
                       <div class="form-group row">
-                        <label for="nb_carte" class="col-sm-3 col-form-label">Nombre de carte</label>
+                        <label style="text-align:left;" for="nb_carte" class="col-sm-3 col-form-label">Nombre de carte</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.nb_carte"   name="nb_carte" id="nb_carte" class="form-control" placeholder="nombre de carte" required>
                         </div>
                       </div>
 
                       <div class="form-group row">
-                        <label for="mt_carte" class="col-sm-3 col-form-label">Montant Carte</label>
+                        <label style="text-align:left;" for="mt_carte" class="col-sm-3 col-form-label">Montant Carte</label>
                         <div class="col-sm-8">
                           <select class="form-control input-sm" name="mt_carte" id="mt_carte" [(ngModel)]="mt_carte" required style="margin-bottom: 1rem; margin-left: 1rem;">
                             <option>2000</option>
@@ -147,8 +147,8 @@
                       </div>
 
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success" [disabled]="!achatjula.form.valid">Valider</button>
-                        <button type="reset" class="btn btn-danger" [disabled]="!achatjula.form.valid" >Annuler</button>
+                        <input type="submit" class="btn btn-success" [disabled]="!achatjula.form.valid" />
+                        <input type="reset" class="btn btn-danger" [disabled]="!achatjula.form.valid" />
                       </div>
 
                     </form>
@@ -161,22 +161,22 @@
                     <form (ngSubmit)="validatedetailfacturesenelec()" #reglementsenelec="ngForm" autocomplete="on">
 
                       <div class="form-group row">
-                          <label for="police" class="col-sm-3 col-form-label">Numéro de police</label>
+                          <label  style="text-align:left;" for="police" class="col-sm-3 col-form-label">Numéro de police</label>
                           <div class="col-sm-8">
                             <input type="text" [(ngModel)]="this.police"   name="police" id="police" class="form-control" placeholder="numéro de police " required>
                           </div>
                       </div>
 
                       <div class="form-group row">
-                          <label for="num_facture" class="col-sm-3 col-form-label">Numéro de facture</label>
+                          <label style="text-align:left;" for="num_facture" class="col-sm-3 col-form-label">Numéro de facture</label>
                           <div class="col-sm-8">
                             <input type="number" [(ngModel)]="this.num_facture"   name="num_facture" id="num_facture" class="form-control" placeholder="numéro de facture " required>
                           </div>
                       </div>
 
                       <div class="row text-center">
-                          <button class="btn btn-success"   data-toggle="modal" data-target="#myModalPostSenec" type="submit" [disabled]="!reglementsenelec.form.valid" >Envoyer</button>
-                          <button class="btn btn-danger" [disabled]="!reglementsenelec.form.valid" type="reset" >Annuler</button>
+                          <input class="btn btn-success"   data-toggle="modal" data-target="#myModalPostSenec" type="submit" [disabled]="!reglementsenelec.form.valid" />
+                          <input class="btn btn-danger" [disabled]="!reglementsenelec.form.valid" type="reset" />
                       </div>
 
                     </form>
@@ -189,22 +189,22 @@
                     <form (ngSubmit)="validateachatcodewoyofal()" #achatcodewoyofal="ngForm" autocomplete="on">
 
                       <div class="form-group row">
-                        <label for="montantachatcodewoyofal" class="col-sm-3 col-form-label">Montant d'achat</label>
+                        <label style="text-align:left;" for="montantachatcodewoyofal" class="col-sm-3 col-form-label">Montant d'achat</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantachatcodewoyofal" class="form-control" placeholder="montant d'achat" required>
                         </div>
                       </div>
 
                       <div class="form-group row">
-                        <label for="compteur" class="col-sm-3 col-form-label">Numéro du compteur</label>
+                        <label style="text-align:left;" for="compteur" class="col-sm-3 col-form-label">Numéro du compteur</label>
                         <div class="col-sm-8">
                           <input type="text" [(ngModel)]="this.compteur"   name="compteur" id="compteur" class="form-control" placeholder="numéro du compteur" required>
                         </div>
                       </div>
 
                       <div class="row text-center">
-                        <button class="btn btn-success" type="submit" [disabled]="!achatcodewoyofal.form.valid" >Valider</button>
-                        <button class="btn btn-danger" [disabled]="!achatcodewoyofal.form.valid" type="reset">Annuler</button>
+                        <input class="btn btn-success" type="submit" [disabled]="!achatcodewoyofal.form.valid" />
+                        <input class="btn btn-danger" [disabled]="!achatcodewoyofal.form.valid" type="reset" />
                       </div>
 
                     </form>
@@ -216,20 +216,20 @@
                     </fieldset>
                     <form (ngSubmit)="validrechargementrapido()" #rechargementRAPIDO="ngForm" autocomplete="on">
                       <div class="form-group row">
-                        <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                        <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
+                        <label style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required>
                         </div>
                       </div>
 
                       <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">Badge</label>
+                        <label style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">Badge</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.badge"   name="montant" id="badge" class="form-control" placeholder="Badge" required>
                         </div>
@@ -249,27 +249,27 @@
                     </fieldset>
                     <form (ngSubmit)="payeroolusolar()" #payeroolusolarform="ngForm" autocomplete="on">
                       <div class="form-group row">
-                        <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone </label>
+                        <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone </label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">N° Compte</label>
+                        <label style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">N° Compte</label>
                         <div class="col-sm-8">
                           <input type="string" [(ngModel)]="this.compte"   name="compte" id="compte" class="form-control" placeholder="Numéro Compte" required>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
+                        <label style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.montant"   name="montant" id="montant" class="form-control" placeholder="montant à recharger" required>
                         </div>
                       </div>
 
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success" [disabled]="!payeroolusolarform.form.valid">Valider</button>
-                        <button type="reset" class="btn btn-danger" [disabled]="!payeroolusolarform.form.valid" >Annuler</button>
+                        <input type="submit" class="btn btn-success" [disabled]="!payeroolusolarform.form.valid"/>
+                        <input type="reset" class="btn btn-danger" [disabled]="!payeroolusolarform.form.valid" />
                       </div>
                     </form>
                 </div>
@@ -282,27 +282,25 @@
                     <form (ngSubmit)="validachatcredittelephonique()" #achatcredittelephoniq="ngForm" autocomplete="on">
 
                       <div class="form-group row">
-                        <label for="telephoneachatcredittelephone" class="col-sm-3 col-form-label">Numéro téléphone</label>
+                        <label style="text-align:left;" for="telephoneachatcredittelephone" class="col-sm-3 col-form-label">Numéro téléphone</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephoneachatcredittelephone" class="form-control" placeholder="numéro de téléphone" required>
                         </div>
                       </div>
 
                       <div class="form-group row">
-                        <label for="montantachatcredittelephone" class="col-sm-3 col-form-label">Montant d'achat</label>
+                        <label style="text-align:left;" for="montantachatcredittelephone" class="col-sm-3 col-form-label">Montant d'achat</label>
                         <div class="col-sm-8">
                           <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantachatcredittelephone" class="form-control" placeholder="montant d'achat" required>
                         </div>
                       </div>
 
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success" [disabled]="!achatcredittelephoniq.form.valid">Valider</button>
-                        <button type="reset" class="btn btn-danger" [disabled]="!achatcredittelephoniq.form.valid" >Annuler</button>
+                        <input type="submit" class="btn btn-success" [disabled]="!achatcredittelephoniq.form.valid" />
+                        <input type="reset" class="btn btn-danger" [disabled]="!achatcredittelephoniq.form.valid" />
                       </div>
                     </form>
                 </div>
-
-
 
             </div>
         </div>

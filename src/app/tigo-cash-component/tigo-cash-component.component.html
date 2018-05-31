@@ -1,4 +1,4 @@
-  <div class="col-sm-12">
+  <div class="col-sm-12" style="font-family: 'caviar dreams bold';">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
         
@@ -37,21 +37,21 @@
 
                     <form (ngSubmit)="showmodaldepot()" #rechargementespece="ngForm" autocomplete="on">
                       <div class="form-group row">
-                        <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                        <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                         <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
+                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
+                        <label style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
                         <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required>
+                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                       </div>
 
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success">Valider</button>
-                        <button type="reset" class="btn btn-danger" >Annuler</button>
+                        <input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" /> 
+                        <input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
                       </div>
                     </form>
                 </div>
@@ -59,55 +59,90 @@
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                         <h2>Retrait</h2>
                     </fieldset>
-                    <h4>Le service est en cours de finalisation.</h4>
-
-<!--                     <form (ngSubmit)="showmodalretrait()" #rechargementespece="ngForm" autocomplete="on">
+            
+                    <form (ngSubmit)="showmodalretrait()" #rechargementespece="ngForm" autocomplete="on">
                       <div class="form-group row">
-                        <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
+                        <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                         <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
+                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
+                        <label  style="text-align:left;" for="montantrechargementespece" class="col-sm-3 col-form-label">Montant à recharger</label>
                         <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required>
+                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="montantrechargementespece" class="form-control" placeholder="montant à recharger" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                       </div>
 
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success">Valider</button>
-                        <button type="reset" class="btn btn-danger" >Annuler</button>
+                        <input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
                       </div>
                     </form>
- -->                </div>
+                </div>
                <div class="tab-pane fade col-sm-12 col-xs-12" id="payertranfert">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                         <h2>Payer un transfert</h2>
                     </fieldset>
-                    <h4>Le service sera bientôt disponible</h4>
 
-<!--                     <form (ngSubmit)="showmodalpaiment()" #rechargementespece="ngForm" autocomplete="on">
-                      <div class="form-group row">
-                        <label for="telephonerechargementespece" class="col-sm-3 col-form-label">Numero de reference</label>
-                        <div class="col-sm-8 form-inline">
-                          <input type="number" [(ngModel)]="this.reference"   name="reference" id="telephonerechargementespece" class="form-control" placeholder="Numero de reference" required>
-                          <button type="submit" class="btn btn-success" >Chercher</button>
-                        </div>
-                      </div>
-                      <p *ngIf="messagepayertransfert" class="alert alert-danger">Numero incorrect</p>
-                      <div *ngIf="donneepayertransfert" class="row text-center">
-						  <p class="alert alert-success">{{this.donneetransfert}}</p><br>
-                        <button type="submit" class="btn btn-success" >Valider</button>
-                        <button type="reset" (click)="reinitialiser()" class="btn btn-danger">Annuler</button>
-                      </div>
-                    </form> -->
+                    <form (ngSubmit)="showmodalpaiment()" #rechargementespece="ngForm" autocomplete="on">
+
+											<div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Code de retrait :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.coderetrait" autocomplete="off"  id="numclient" name="coderetrait"  class="form-control" placeholder="Code de retrait" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											</div>
+											<div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Prénom :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.prenom" autocomplete="off"  name="prenom"  id="numclient"  class="form-control col-lg-5" placeholder="Prenom du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
+													</div>
+											</div>
+											<div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Nom :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.nom"  id="mnttrans" name="nom"  class="form-control col-lg-5 " placeholder="Nom du Client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											</div>
+											<div class="form-group row ">
+													<label class="col-lg-3" style="text-align:left;">type de piece</label>
+													<div class="form-inline col-sm-8">
+															<select class="form-control" [(ngModel)]="this.typepiece" name="typepiece" style="margin-left:1rem; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
+																<option value="2">carte national d'identite</option>
+																<option value="1">passport</option>
+															</select>
+													</div>
+											</div>
+											<div class="form-group row">
+													<label  class="col-lg-3" style="text-align:left;">Numéro  piece  :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.numeropiece"  autocomplete="off" name="cni"  id="mnttrans"  class="form-control col-lg-5" placeholder="Numero d'identite du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											</div>
+											<div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Numéro Client</label>
+													<div class="form-inline col-sm-8">
+															<input type="string"  autocomplete="off" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control col-lg-5" placeholder="Numéro du client" required autofocus style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											</div>
+											<div class="form-group row">
+													<label  class="col-lg-3" style="text-align:left;">Montant retrait</label>
+													<div class="form-inline col-sm-8">
+															<input type="number" autocomplete="off" [(ngModel)]="this.mnt" name="montantretrait" id="montantretrait"  class="form-control col-lg-5" placeholder="Montant à retirer" required autofocus style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											</div>
+											<div class="row text-center">
+													<input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+													<input type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
+											</div>
+                    </form>
                 </div>
                <div class="tab-pane fade col-sm-12 col-xs-12" id="envoyerargent">
 
-                    <h4>Le service sera bientôt disponible</h4>
+        
 
-<!--                   <div class="row">
+                  <div class="row">
 					  <div class="col-lg-5">
 							<form  #rechargementespece="ngForm" autocomplete="on">
 							 <fieldset>
@@ -115,20 +150,20 @@
 							  <div class="form-group row">
 								
 								<div class="col-sm-8 form-group form-inline">
-								  <label>Montant</label>
-								  <input type="text" [(ngModel)]="this.montant"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="Montant" required>
+								  <label style="text-align:left;">Montant</label>
+								  <input type="text" [(ngModel)]="this.montant"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="Montant" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 								</div>
 								<div class="col-sm-8 form-group">
-								  <label>Prenom</label>
-								  <input type="text" [(ngModel)]="this.prenomExpediteur"   name="prenom" id="telephonerechargementespece" class="form-control" placeholder="Prenom" required>
+								  <label style="text-align:left;">Prenom</label>
+								  <input type="text" [(ngModel)]="this.prenomExpediteur"   name="prenom" id="telephonerechargementespece" class="form-control" placeholder="Prenom" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 								</div>
 								<div class="col-sm-8 form-group">
-								  <label>Nom</label>
-								  <input type="text" [(ngModel)]="this.nomExpediteur"   name="nom" id="telephonerechargementespece" class="form-control" placeholder="Nom" required>
+								  <label style="text-align:left;">Nom</label>
+								  <input type="text" [(ngModel)]="this.nomExpediteur"   name="nom" id="telephonerechargementespece" class="form-control" placeholder="Nom" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 								</div>
 								<div class="col-sm-8 form-group">
-								  <label>Telephone</label>
-								  <input type="text" [(ngModel)]="this.telephoneExpediteur"   name="telephoneExpediteur" id="telephonerechargementespece" class="form-control" placeholder="Telephone" required>
+								  <label style="text-align:left;">Telephone</label>
+								  <input type="text" [(ngModel)]="this.telephoneExpediteur"   name="telephoneExpediteur" id="telephonerechargementespece" class="form-control" placeholder="Telephone" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 								</div>
 							  </div>
 							  </fieldset>
@@ -141,15 +176,15 @@
 							  <div class="form-group row">
 								
 								<div class="col-sm-8 form-group">
-								  <label>Prenom</label>
+								  <label style="text-align:left;">Prenom</label>
 								  <input type="text" [(ngModel)]="this.prenomBeneficiaire"   name="prenom" id="telephonerechargementespece" class="form-control" placeholder="Prenom" required>
 								</div>
 								<div class="col-sm-8 form-group">
-								  <label>Nom</label>
+								  <label style="text-align:left;">Nom</label>
 								  <input type="text" [(ngModel)]="this.nomBeneficiaire"   name="nom" id="telephonerechargementespece" class="form-control" placeholder="Nom" required>
 								</div>
 								<div class="col-sm-8 form-group">
-								  <label>Telephone</label>
+								  <label style="text-align:left;">Telephone</label>
 								  <input type="text" [(ngModel)]="this.telephoneBeneficiaire"   name="telephoneBeneficiaire" id="telephonerechargementespece" class="form-control" placeholder="Telephone" required>
 								</div>
 							  </div>
@@ -159,35 +194,35 @@
                     
                    </div>
                    <div class="row text-center">
-								<button type="submit" (click)="showmodalenvoi()" class="btn btn-success">Valider</button>
-								<button type="reset" class="btn btn-danger"  >Annuler</button>
+								<input type="submit" (click)="showmodalenvoi()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
+								<input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
 					 </div>
- -->                </div>
+                </div>
              <div class="tab-pane fade col-sm-12 col-xs-12" id="vendreizi">
-             	Ce service est en maintenance.
-<!--                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
+      
+                    <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                         <h2>Vente IZI</h2>
                     </fieldset>
 
                     <form (ngSubmit)="showmodalvendreizi()" #rechargementespece="ngForm" autocomplete="on">
                       <div class="form-group row">
-						 <label class="col-sm-3 col-form-label">Numero client</label>
+						 							<label style="text-align:left;" class="col-sm-3 col-form-label">Numero client</label>
                          <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required>
+                          <input type="number" [(ngModel)]="this.telephone"   name="telephone" id="telephonerechargementespece" class="form-control" placeholder="téléphone client" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                          </div>
                       </div>
                       <div class="form-group row">
-						 <label class="col-sm-3 col-form-label">Montant</label>
+												 <label style="text-align:left;"  class="col-sm-3 col-form-label">Montant</label>
                          <div class="col-sm-8">
-                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="téléphone montant" required>
+                          <input type="number" [(ngModel)]="this.montant"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="téléphone montant" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
 	                      </div>
                       </div>
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success" >Valider</button>
-                        <button type="reset" class="btn btn-danger"  >Annuler</button>
+                        <input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
                       </div>
                     </form>
- --> 
+ 
                 </div>
              <div class="tab-pane fade col-sm-12 col-xs-12" id="inscription">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
@@ -197,34 +232,34 @@
                       <div class="form-group row">
                         
                         <div class="col-sm-8">
-						 <label>Numero client</label>
-                          <input type="number" [(ngModel)]="this.telephoneBeneficiaire"   name="telephone"  class="form-control" placeholder="téléphone client" required>
+						 							<label style="text-align:left;">Numero client</label>
+                          <input type="number" [(ngModel)]="this.telephoneBeneficiaire"   name="telephone"  class="form-control" placeholder="téléphone client" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                         <div class="col-sm-8">
-						 <label>Prenom</label>
-                          <input type="text" [(ngModel)]="this.prenom"   name="prenom"  class="form-control" placeholder="prenom clienr" required>
+						 							<label style="text-align:left;">Prenom</label>
+                          <input type="text" [(ngModel)]="this.prenom"   name="prenom"  class="form-control" placeholder="prenom clienr" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                         <div class="col-sm-8">
-						 <label>Nom</label>
-                          <input type="text" [(ngModel)]="this.nom" name="nom"  class="form-control" placeholder="nom client" required>
+						 							<label style="text-align:left;">Nom</label>
+                          <input type="text" [(ngModel)]="this.nom" name="nom"  class="form-control" placeholder="nom client" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                         <div class="col-sm-8">
-						<div class="form-group">
-							 <label>type de piece</label>
-								<select class="form-control" [(ngModel)]="this.typepiece" name="typepiece">
-									<option value="1">carte national d'identite</option>
-									<option value="2">passport</option>
-								</select>
-                         </div>
+														<div class="form-group">
+																<label style="text-align:left;">type de piece</label>
+																	<select class="form-control" [(ngModel)]="this.typepiece" name="typepiece" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+																		<option value="1">carte national d'identite</option>
+																		<option value="2">passport</option>
+																	</select>
+														</div>
                         </div>
                         <div class="col-sm-8">
-						 <label>numero piece</label>
-                          <input type="text" [(ngModel)]="this.numeropiece"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="téléphone montant" required>
+														<label	style="text-align:left;">numero piece</label>
+														<input type="text" [(ngModel)]="this.numeropiece"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="téléphone montant" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
                         </div>
                       </div>
                       <div class="row text-center">
-                        <button type="submit" class="btn btn-success" >Valider</button>
-                        <button type="reset" class="btn btn-danger" >Annuler</button>
+													<input type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem; "/>
+													<input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
                       </div>
                     </form>
                     
@@ -269,8 +304,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="depot()" class="btn btn-success" />
-				  <input type="button" value="fermer" (click)="hidemodaldepot()" class="btn btn-danger" />
+				  <input type="button" value="valider" (click)="depot()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
+				  <input type="button" value="fermer" (click)="hidemodaldepot()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -301,8 +336,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="retrait()" class="btn btn-success" />
-				  <input type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" />
+				  <input type="button" value="valider" (click)="retrait()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem" />
+				  <input type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
 		     </div>
 		  </div> 
 	    </div>
@@ -321,6 +356,10 @@
 		
 				 <div>
 					 <form class="form">
+							Code de retrait
+							<div class="form-group">
+									<label >Code de retrait: {{this.coderetrait}}</label>
+							</div>
 						 <div class="form-group">
 							 <label >Telephone client : {{this.telephone}}</label>
 						 </div>
@@ -341,8 +380,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="inscription()" class="btn btn-success" />
-				  <input type="button" value="fermer" (click)="hidemodalinscription()" class="btn btn-danger" />
+				  <input type="button" value="valider" (click)="inscription()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
+				  <input type="button" value="fermer" (click)="hidemodalinscription()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -362,18 +401,28 @@
 		
 				 <div>
 					 <form class="form">
-						 <div class="form-group">
-							 <label >Numero de reference : {{this.reference}}</label>
-							 
-						 </div>
-						 
+								<div class="form-group">
+									<label >Code Retrait : {{this.coderetrait}}</label>
+								</div>
+								<div class="form-group">
+									<label >Nom du cient : {{this.nom}}</label>
+								</div>
+								<div class="form-group">
+									<label >Prenom du client : {{this.prenom}}</label>
+								</div>
+								<div class="form-group">
+									<label >Numero piece: {{this.numeropiece}}</label>
+								</div>
+								<div class="form-group">
+									<label >Montant : {{this.mnt}}</label>
+								</div>
 					 </form>
 					
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="Chercher" (click)="verifnumeroreference()" class="btn btn-success" />
-				  <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" />
+				  <input type="button"  (click)="payerTransfer()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+				  <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -404,8 +453,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="izi()" class="btn btn-success" />
-				  <input type="button" value="fermer" (click)="hidemodalvendreizi()" class="btn btn-danger" />
+				  <input type="button" value="valider" (click)="izi()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+				  <input type="button" value="fermer" (click)="hidemodalvendreizi()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>
@@ -456,8 +505,8 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input type="button" value="valider" (click)="envoiyerargent()" class="btn btn-success" />
-				  <input type="button" value="fermer" (click)="hidemodalenvoi()" class="btn btn-danger" />
+				  <input type="button" value="valider" (click)="envoiyerargent()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+				  <input type="button" value="fermer" (click)="hidemodalenvoi()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
 		  </div> 
 	    </div>

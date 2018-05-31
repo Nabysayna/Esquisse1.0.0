@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<div class="col-sm-12" style="font-family:'caviar dreams bold'">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading"><h2>Paiement Facture Sde</h2></div>
         <!-- /.panel-heading -->
@@ -10,8 +10,8 @@
             <form name="transnat" #formsde="ngForm" (ngSubmit)="showmodalsde()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
               <div class="form-inline">
                 <label>Réfèrence client :</label>
-                <input type="number" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
-                <button style="margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsde.form.valid">Valider</button>
+                <input style="width:33%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsde.form.valid" />
               </div>
             </form>
             <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<div bsModal #modalsde="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #modalsde="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold'">
   <div class="modal-dialog modal-sm">
     <div class="modal-content" >
       <div class="modal-header">

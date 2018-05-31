@@ -18,15 +18,19 @@ export class TigoCashComponentComponent implements OnInit {
    prenomBeneficiaire: string;
    nomExpediteur: string;
    nomBeneficiaire: string;
-   numeropiece: number;
-   typepiece: number;
+   numeropiece: any;
+   typepiece: any;
    prenom: string;
    nom: string;
    messagepayertransfert:boolean=false;
    donneepayertransfert:boolean=false;
    donneetransfert:string;
    reference:number;
-
+   coderetrait:any;
+   date:any;
+   cni:any;
+   numclient:any;
+   mnt:any;
    @ViewChild('modaldepot') modaldepot: ModalDirective;
    @ViewChild('modalretrait') modalretrait: ModalDirective;
    @ViewChild('modalpaiment') modalpaiment: ModalDirective;
@@ -56,6 +60,9 @@ export class TigoCashComponentComponent implements OnInit {
    this.messagepayertransfert=false;
    this.donneetransfert=undefined;
    this.reference=undefined;
+   this.date=undefined;
+   this.coderetrait=undefined;
+   this.mnt=undefined;
   }
   /***********************************/
   /********depot**********************/
@@ -71,10 +78,19 @@ export class TigoCashComponentComponent implements OnInit {
       retrait(){
 
          this.hidemodalretrait();
-
+         console.log({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant});
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant}));
          this.reinitialiser();
       }
+  /***********************************/
+  /********retrait**********************/
+  payerTransfer(){
+
+    // this.hidemodalretrait();
+    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt});
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt}));
+    this.reinitialiser();
+ }
   /***********************************/
   /**********envoyer argent***********/
        envoiyerargent(){
@@ -95,7 +111,7 @@ export class TigoCashComponentComponent implements OnInit {
      izi(){
 
        this.hidemodalvendreizi();
-
+       console.log({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant});
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash izi','operateur':3,'operation':5,'num':this.telephone,'montant':this.montant}));
        this.reinitialiser();
      }
@@ -111,6 +127,7 @@ export class TigoCashComponentComponent implements OnInit {
   /*******verif numero reference*****/
      verifnumeroreference(){
         let requet="3/"+this.reference;
+        console.log(this.reference);
         this.tcservice.requerirControllerTC(requet).then(rep=>{
       if(rep.statut==200){
 			   if(rep.body.trim()!=""){
@@ -129,7 +146,8 @@ export class TigoCashComponentComponent implements OnInit {
 	    }
 	    else{
 	    }
-	 })
+   })
+
   }
   validerpayertansfert(){
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'tigo cash payer transfert','operateur':3,'operation':3,'reference':this.reference,'confirmation':'c'}));
