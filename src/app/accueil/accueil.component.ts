@@ -1594,7 +1594,7 @@ geolocaliser(){
   }
 
   retraitaveccodetc(objet:any){
-    let requete = "4/"+objet.data.coderetrait+"/"+objet.data.typepiece+"/"+objet.data.numeropiece+"/"+objet.data.montant;
+    let requete = "4/"+objet.data.coderetrait+"/"+objet.data.typepiece+"/"+objet.data.numeropiece+"/"+objet.data.montant+"/"+objet.data.num;
     console.log(requete);
     if (this.repeatedInLastFifteen('tc-retrait', requete)==1){
       objet.etats.etat=true;

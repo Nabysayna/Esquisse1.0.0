@@ -63,7 +63,7 @@
                               </div> 
                               <p *ngIf="errormontantretraitsimple" class="alert alert-danger">Montant Incorrect</p>    
                           </div>
-                          <input tyle="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success" />
+                          <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success" />
                     </form>
                 </div>
 
@@ -79,7 +79,7 @@
                                 <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="this.coderetrait" autocomplete="off" (keyup)="verifcode($event)" id="numclientretraitcode" name="coderetrait"  class="form-control" placeholder="Code de retrait" required >
                             </div>
                         </div>
-                        <input tyle="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="coderetrait==undefined" />
+                        <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="coderetrait==undefined" />
                     </form>
                 </div>
                 <div style="width:50%;margin-left:auto;margin-right:auto" class="tab-pane fade" id="inscription" >
@@ -139,8 +139,8 @@
                     </div>
                     <p *ngIf="errorclientPassword" class="alert alert-danger">Champ Requis</p>
                   </div>-->
-                  <input tyle="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" (click)="showmodalinscription()" class="btn btn success" value="valider" />
-                  <input tyle="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" (click)="reinitialiseRcode();reinitialiserbool()" class="btn btn-danger" value="réinitialiser" />
+                  <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" (click)="showmodalinscription()" class="btn btn success" value="valider"/>
+                  <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" (click)="reinitialiseRcode();reinitialiserbool()" class="btn btn-danger" value="réinitialiser" />
                 </form>
                 </div>
 

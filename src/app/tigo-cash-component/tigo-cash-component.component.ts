@@ -89,8 +89,8 @@ export class TigoCashComponentComponent implements OnInit {
   payerTransfer(){
 
     this.hidemodalpaiment();
-    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt});
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt}));
+    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt,'num':this.numclient});
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt,'num':this.numclient}));
     this.reinitialiser();
     return false;
  }
