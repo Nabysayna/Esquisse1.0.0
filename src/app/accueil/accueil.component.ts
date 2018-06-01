@@ -391,7 +391,7 @@ geolocaliser(){
                   objet.etats.errorCode=donnee;
                 }else{
                   let periodicVerifierOMDepot = setInterval(()=>{
-                    console.log("periodicVerifierTCDepot : "+objet.etats.nbtour) ;
+                    console.log("periodicVerifierOMDepot : "+objet.etats.nbtour) ;
                     objet.etats.nbtour = objet.etats.nbtour + 1 ;
                     this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                       let donnee=rep._body.trim().toString();
