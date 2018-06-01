@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
-import { Location }               from '@angular/common';
-
-import * as sha1 from 'js-sha1';
-import * as _ from "lodash";
+import {TarifsService} from "../services/tarifs.service";
 
 
 @Component({
@@ -17,13 +13,20 @@ export class GuideUserCaisseComponent implements OnInit {
     loading = false ;
 
 
-  constructor(
+  constructor(private _tarifsService:TarifsService) { }
 
-     private location: Location,
-  	 private route:ActivatedRoute) { }
+  ngOnInit() {
+    this._tarifsService.getTarifTntAbon({typedemande:'abonne',typedebouquet:1,duree:2})
+      .subscribe(
+        data => {
+          console.log(data);
+        },
+        error => alert(error),
+        () => {
+          console.log('test getTarifTnt sentool')
+        }
+      );
+  }
 
-  ngOnInit() { }
-
-  demandeprt() {  }
 
 }

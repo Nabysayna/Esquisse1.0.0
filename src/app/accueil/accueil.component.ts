@@ -8,6 +8,8 @@ import {TigocashService} from "../services/tigocash.service";
 import { ExpressocashService } from "../services/expressocash.service";
 import {FacturierService} from "../services/facturier.service";
 import {UtilsService} from "../services/utils.service";
+import {TarifsService} from "../services/tarifs.service";
+
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
@@ -48,7 +50,7 @@ export class AccueilComponent implements OnInit {
   messageGeolocation : any ;
 
 
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService){}
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
 
 /******************************************************************************************************/
 
@@ -924,6 +926,7 @@ geolocaliser(){
     this._tntService.abonner(objet.data.token, objet.data.prenom,objet.data.nomclient, objet.data.tel,objet.data.cni, objet.data.chip, objet.data.carte, objet.data.duree, objet.data.typedebouquet).then( response =>
       {
 
+        let montant:number = 0;
         let typedebouquet = "" ;
         response = JSON.parse(response) ;
         if(response.response=="ok"){
@@ -932,55 +935,42 @@ geolocaliser(){
            objet.etats.load='terminated';
            objet.etats.color='green';
 
-          let montant:number = 0;
-          if(objet.data.typedebouquet == 1){
-            if(objet.data.duree==2){
-              montant = 8000;
-            }
-            else if(objet.data.duree==3){
-              montant = 13000 ;
-            }
-            else if(objet.data.duree==6){
-              montant = 26000 ;
-            }
-            else if(objet.data.duree==9){
-              montant = 39000 ;
-            }
-            else if(objet.data.duree==12){
-              montant = 52000 ;
-            }
-            else{
-              montant = 5000 * objet.data.duree;
-            }
-            typedebouquet = 'Maanaa';
-          }
-          if(objet.data.typedebouquet == 2){
-            montant = 3000 * objet.data.duree;
-            typedebouquet = 'Boul khool';
-          }
-          if(objet.data.typedebouquet == 3){
-            montant = 8000 * objet.data.duree;
-            typedebouquet = 'Maanaa & Boul khool';
-          }
-
-          objet.dataI = {
-            apiservice:'tnt',
-            service:'abonnement',
-            infotransaction:{
-              client:{
-                transactionBBS: response.idtransactionbbs,
-                prenom:objet.data.prenom,
-                nom:objet.data.nomclient,
-                telephone:objet.data.tel,
-                carte:objet.data.carte,
-                chip:objet.data.chip,
-                typebouquet:typedebouquet,
-                montant: montant,
-                duree:objet.data.duree
+          this._tarifsService.getTarifTntAbon({typedemande:'abonne',typedebouquet:Number(objet.data.typedebouquet),duree:Number(objet.data.duree)})
+            .subscribe(
+              data => {
+                console.log(data);
+                if(data.errorCode){
+                  typedebouquet = data.message.typedebouquetLetter;
+                  montant = data.message.montant
+                }
+                else{
+                  typedebouquet = data.errorMessage;
+                }
               },
+              error => console.log(error),
+              () => {
+                objet.dataI = {
+                  apiservice:'tnt',
+                  service:'abonnement',
+                  infotransaction:{
+                    client:{
+                      transactionBBS: response.idtransactionbbs,
+                      prenom:objet.data.prenom,
+                      nom:objet.data.nomclient,
+                      telephone:objet.data.tel,
+                      carte:objet.data.carte,
+                      chip:objet.data.chip,
+                      typebouquet:typedebouquet,
+                      montant: montant,
+                      duree:objet.data.duree
+                    },
 
-            },
-          }
+                  },
+                }
+              }
+            );
+
+
         }else{
            objet.etats.etat=true;
            objet.etats.load='terminated';

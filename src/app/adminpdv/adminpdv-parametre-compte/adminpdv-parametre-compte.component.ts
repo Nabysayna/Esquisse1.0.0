@@ -57,13 +57,12 @@ export class AdminpdvparametrecompteComponent implements OnInit {
       data => {
         this.monitoringAdminpdvUserpdv = data.response ;
       },
-      error => alert(error),
+      error => console.log(error),
       () => {
         this.getRegionNewCaissier();
         this.loading = false ;
       }
     );
-
   }
 
   getRegionNewCaissier(){
@@ -72,7 +71,7 @@ export class AdminpdvparametrecompteComponent implements OnInit {
         data => {
           this.regions = data;
         },
-        error => alert(error),
+        error => console.log(error),
         () => {
           console.log('test init sentool')
         }
