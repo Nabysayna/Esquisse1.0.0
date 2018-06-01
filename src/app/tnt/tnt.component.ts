@@ -1,9 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ViewChild} from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
-import {NAbonnement} from '../tnt/tntmodels';
-import {LAbonnement} from '../tnt/tntmodels';
-import {EFinancier} from '../tnt/tntmodels';
 import {TntService, TntResponse} from "../services/tnt.service";
 
 @Pipe({name: 'dataToArray'})
@@ -137,8 +134,6 @@ export class TntComponent implements OnInit {
         }) ;
   }
 
-
-
   vendreDecodeur(){
      var typedebouquet : number ;
     var prix:number ;
@@ -165,7 +160,6 @@ export class TntComponent implements OnInit {
        this.modalcarte.hide();
        this.reinitialiserVariables() ;
   }
-
 
   reinitialiserVariables(){
       this.erreur = false ;
@@ -201,4 +195,3 @@ export class TntComponent implements OnInit {
   }
 
 }
-
