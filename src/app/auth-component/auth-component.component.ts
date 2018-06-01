@@ -30,7 +30,7 @@ export class AuthComponentComponent implements OnInit {
   public issouszones:boolean;
   public isadresse : boolean  ;
   usedLogin = false ;
-
+  codevalidation:any;
   region : any ;
   zone : any ;
   souszone : any ;
@@ -161,7 +161,7 @@ export class AuthComponentComponent implements OnInit {
   }
 
   inscrire(){
-    let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.telephone, 'nometps':this.nometps, 'nomshop':this.nomshop, adresse : JSON.stringify({'region':this.region, 'zone':this.zone, 'souszone':this.souszone, 'address':this.adresse}), 'idcommercial':3 } ;
+    let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.telephone+"#"+this.codevalidation, 'nometps':this.nometps, 'nomshop':this.nomshop, adresse : JSON.stringify({'region':this.region, 'zone':this.zone, 'souszone':this.souszone, 'address':this.adresse}), 'idcommercial':3 } ;
     this.loading = true ;
     console.log( "Nouvel Inscrit : "+JSON.stringify(paramInscrpt) ) ;
     this.authenticationService.inscrire(paramInscrpt).then( retourserveur => {
@@ -185,7 +185,7 @@ export class AuthComponentComponent implements OnInit {
         this.souszone=undefined ;
         this.adresse=undefined ;
       }
-    }) ;
+    });
   }
 
 }
