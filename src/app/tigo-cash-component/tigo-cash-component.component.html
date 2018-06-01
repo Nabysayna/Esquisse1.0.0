@@ -1,9 +1,9 @@
   <div class="col-sm-12" style="font-family: 'caviar dreams bold';">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
-        
+
           <h2>TigoCash</h2>
-        
+
         </div>
 
         <div class="cover"></div>
@@ -11,15 +11,15 @@
         <div class="panel-body">
              <div id="om-options">
                 <a href="#depottigocash" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()"  data-toggle="tab">Dépôt</a>
-                
+
                 <a href="#retraittigocash" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialiser()" data-toggle="tab">Retrait </a>
-                
+
                 <a href="#payertranfert" (click)="reinitialiser()" data-toggle="tab">Payer un transfert</a>
 
                 <a href="#envoyerargent" style="display: none ;" (click)="reinitialiser()" data-toggle="tab">Envoyer de l'argent</a>
-                
+
                 <a href="#vendreizi" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialiser()" data-toggle="tab">Vente IZI</a>
-                
+
             </div>
 
 
@@ -50,7 +50,7 @@
                       </div>
 
                       <div class="row text-center">
-                        <input [disabled]="!depot.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" /> 
+                        <input [disabled]="!depot.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
                         <input [disabled]="!depot.form.valid" type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
                       </div>
                     </form>
@@ -59,8 +59,8 @@
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                         <h2>Retrait</h2>
                     </fieldset>
-            
-                    <form (ngSubmit)="showmodalretrait()" #retrait="ngForm" autocomplete="on">
+
+                    <form (ngSubmit)="showmodalretrait()" #retrait1="ngForm" autocomplete="on">
                       <div class="form-group row">
                         <label style="text-align:left;" for="telephonerechargementespece" class="col-sm-3 col-form-label">Téléphone client</label>
                         <div class="col-sm-8">
@@ -75,8 +75,8 @@
                       </div>
 
                       <div class="row text-center">
-                        <input [disabled]="!retrait.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
-                        <input [disabled]="!retrait.form.valid" type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input [disabled]="!retrait1.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+                        <input [disabled]="!retrait1.form.valid" type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
                       </div>
                     </form>
                 </div>
@@ -140,7 +140,7 @@
                 </div>
                <div class="tab-pane fade col-sm-12 col-xs-12" id="envoyerargent">
 
-        
+
 
                   <div class="row">
 					  <div class="col-lg-5">
@@ -148,7 +148,7 @@
 							 <fieldset>
 								 <legend>Information Expediteur</legend>
 							  <div class="form-group row">
-								
+
 								<div class="col-sm-8 form-group form-inline">
 								  <label style="text-align:left;">Montant</label>
 								  <input type="text" [(ngModel)]="this.montant"   name="montant" id="telephonerechargementespece" class="form-control" placeholder="Montant" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
@@ -174,7 +174,7 @@
 							 <fieldset>
 								 <legend>Information Bénéficiaire</legend>
 							  <div class="form-group row">
-								
+
 								<div class="col-sm-8 form-group">
 								  <label style="text-align:left;">Prenom</label>
 								  <input type="text" [(ngModel)]="this.prenomBeneficiaire"   name="prenom" id="telephonerechargementespece" class="form-control" placeholder="Prenom" required>
@@ -191,7 +191,7 @@
 							 </fieldset>
 							</form>
                     </div>
-                    
+
                    </div>
                    <div class="row text-center">
 								<input type="submit" (click)="showmodalenvoi()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
@@ -199,7 +199,7 @@
 					 </div>
                 </div>
              <div class="tab-pane fade col-sm-12 col-xs-12" id="vendreizi">
-      
+
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
                         <h2>Vente IZI</h2>
                     </fieldset>
@@ -222,7 +222,7 @@
                         <input [disabled]="!izi.form.valid" type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
                       </div>
                     </form>
- 
+
                 </div>
              <div class="tab-pane fade col-sm-12 col-xs-12" id="inscription">
                     <fieldset style="margin-top: 2rem;margin-bottom: 2rem;">
@@ -230,7 +230,7 @@
                     </fieldset>
                     <form (ngSubmit)="showmodalinscription()" #rechargementespece="ngForm" autocomplete="on">
                       <div class="form-group row">
-                        
+
                         <div class="col-sm-8">
 						 							<label style="text-align:left;">Numero client</label>
                           <input type="number" [(ngModel)]="this.telephoneBeneficiaire"   name="telephone"  class="form-control" placeholder="téléphone client" required style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
@@ -262,7 +262,7 @@
 													<input type="reset" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
                       </div>
                     </form>
-                    
+
                 </div>
 
 
@@ -290,7 +290,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -300,14 +300,14 @@
 							 <label >montant : {{this.montant}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="depot()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
 				  <input type="button" value="fermer" (click)="hidemodaldepot()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 </div>
 <!-- Modal retrait -->
@@ -322,7 +322,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -332,14 +332,14 @@
 							 <label >montant : {{this.montant}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="retrait()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem" />
 				  <input type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 </div>
 <div bsModal #modalinscription="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -353,7 +353,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 							Code de retrait
@@ -376,14 +376,14 @@
 							 <label >Numero piece : {{this.numeropiece}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="inscription()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;" />
 				  <input type="button" value="fermer" (click)="hidemodalinscription()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 </div>
 <!-- Modal payer un transfert -->
@@ -398,7 +398,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 								<div class="form-group">
@@ -417,14 +417,14 @@
 									<label >Montant : {{this.mnt}}</label>
 								</div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="payerTransfer()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 				  <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 </div>
 <div bsModal #modalvendreizi="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -438,7 +438,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -447,23 +447,23 @@
 						 <div class="form-group">
 							 <label >Montant  : {{this.montant}}</label>
 						 </div>
-						 
+
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
 				  <input type="button" value="valider" (click)="izi()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 				  <input type="button" value="fermer" (click)="hidemodalvendreizi()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 </div>
 <div bsModal #modalenvoi="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
 		 <div class="modal-dialog modal-lg">
 		    <div class="modal-content" >
-		      
+
 		     <div class="modal-body">
 		       <div>
 				 <div class="col-lg-4">
@@ -484,13 +484,13 @@
 							 </div>
 						 </fieldset>
 					 </form>
-					
+
 				 </div>
 				 <div class="col-lg-offset-2 col-lg-4">
 					  <form class="form">
 						 <fieldset>
 							 <legend>Beneficiaire</legend>
-							
+
 							 <div class="form-group">
 								 <label >prenom : {{this.prenomBeneficiaire}}</label>
 							 </div>
@@ -508,7 +508,7 @@
 				  <input type="button" value="valider" (click)="envoiyerargent()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 				  <input type="button" value="fermer" (click)="hidemodalenvoi()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 </div>
 
