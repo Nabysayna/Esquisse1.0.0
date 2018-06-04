@@ -72,11 +72,18 @@ export class AdminpdvMonitoringComponent implements OnInit {
         this.ibanExcessif = true ;
         return 1 ;
       }
-      this._adminpdvService.demandeRetrait({montant:this.montant.toString()}).subscribe(
-        data => this.montant = undefined,
-        error => alert(error),
-        () => this.loading = false
-      )
+      else{
+        console.log(this.montant.toString())
+        this._adminpdvService.demandeRetrait({montant:this.montant.toString()}).subscribe(
+         data => {
+           console.log("********************************")
+           console.log(data)
+           this.montant = undefined
+         },
+         error => console.log(error),
+         () => this.loading = false
+         )
+      }
     } else{
       console.log("Je ne confirme pas")
     }

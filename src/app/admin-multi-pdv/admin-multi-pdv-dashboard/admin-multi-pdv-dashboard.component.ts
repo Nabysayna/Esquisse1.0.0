@@ -498,12 +498,10 @@ export class AdminmultipdvDashboardComponent implements OnInit {
       if(type.service == 'wizall'){
         if(type.produit.match('retrait')){
           this.bilantouslescommissions[2].cashin+=type.montant;
-
           this.bilantouslescommissions[6].cashin+=type.montant;
         }
         else{
           this.bilantouslescommissions[2].cashout+=type.montant;
-
           this.bilantouslescommissions[6].cashout+=type.montant;
         }
         this.bilantouslescommissions[2].liste.push(type);
@@ -511,11 +509,18 @@ export class AdminmultipdvDashboardComponent implements OnInit {
       }
 
       if(type.service == 'tigocash'){
-        this.bilantouslescommissions[5].liste.push(type);
-        this.bilantouslescommissions[5].cashout+=type.montant;
-        this.bilantouslescommissions[5].commission+=type.commission;
 
-        this.bilantouslescommissions[6].cashout+=type.montant;
+        if(type.produit.match('retrait')){
+          this.bilantouslescommissions[5].cashin+=type.montant;
+          this.bilantouslescommissions[6].cashin+=type.montant;
+        }
+        else{
+          this.bilantouslescommissions[5].cashout+=type.montant;
+          this.bilantouslescommissions[6].cashout+=type.montant;
+        }
+
+        this.bilantouslescommissions[5].liste.push(type);
+        this.bilantouslescommissions[5].commission+=type.commission;
       }
       if(type.service == 'emoney'){
         if(type.produit.match('retrait')){
