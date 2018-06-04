@@ -412,7 +412,7 @@ geolocaliser(){
                           objet.etats.errorCode=donnee;
                           clearInterval(periodicVerifierOMDepot) ;
                         }
-                        if(donnee=='-1' && objet.etats.nbtour>=70){
+                        if(donnee=='-1' && objet.etats.nbtour>=75){
                           this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                             let donnee=rep._body.trim().toString();
                             console.log("demanderAnnulationOM : "+donnee) ;
@@ -514,7 +514,7 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierOMRetirer) ;
                           }
-                            if(donnee=='-1' && objet.etats.nbtour>=70){
+                            if(donnee=='-1' && objet.etats.nbtour>=75){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -606,7 +606,7 @@ geolocaliser(){
                       objet.etats.errorCode=donnee;
                       clearInterval(periodicVerifierOMRetraitCode) ;
                     }
-                    if(donnee=='-1' && objet.etats.nbtour>=70){
+                    if(donnee=='-1' && objet.etats.nbtour>=75){
                       this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                         let donnee=rep._body.trim().toString();
                         if(donnee=="c"){
@@ -723,7 +723,7 @@ geolocaliser(){
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifierOMAcheterCredit) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=70){
+                            if(donnee=='-1' && objet.etats.nbtour>=75){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -1447,7 +1447,7 @@ geolocaliser(){
                           objet.etats.errorCode=donnee;
                           clearInterval(periodicVerifierTCDepot) ;
                         }
-                        if(donnee=='-1' && objet.etats.nbtour>=50){
+                        if(donnee=='-1' && objet.etats.nbtour>=100){
                           this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                             console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                             let donnee=rep._body.trim().toString();
@@ -1548,7 +1548,7 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRetirer) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=50){
+                          if(donnee=='-1' && objet.etats.nbtour>=100){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -1647,7 +1647,7 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRetraitCode) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=50){
+                          if(donnee=='-1' && objet.etats.nbtour>=100){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -1738,7 +1738,7 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRechargeIZI) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=50){
+                          if(donnee=='-1' && objet.etats.nbtour>=100){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
