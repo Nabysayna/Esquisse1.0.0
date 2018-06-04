@@ -1868,10 +1868,10 @@ geolocaliser(){
   /***************************Debut FACTURIERS ******************************/
 
   paiemantsde(objet){
-    console.log(objet)
     this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
       console.log("********************************************************")
       console.log(resp) ;
+
 
       if(typeof resp !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -1907,8 +1907,7 @@ geolocaliser(){
         objet.etats.color='red';
       }
     }).catch(response => {
-      console.log(response);
-      objet.etats.errorCode == response;
+      objet.etats.errorCode = response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
@@ -1937,7 +1936,7 @@ geolocaliser(){
       }
     }).catch(response => {
       console.log(response);
-      objet.etats.errorCode == response;
+      objet.etats.errorCode = response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
@@ -2000,7 +1999,7 @@ geolocaliser(){
       }
     }).catch(response => {
       console.log(response);
-      objet.etats.errorCode == response;
+      objet.etats.errorCode = response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
@@ -2048,7 +2047,7 @@ geolocaliser(){
       }
     }).catch(response => {
       console.log(response);
-      objet.etats.errorCode == response;
+      objet.etats.errorCode = response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
