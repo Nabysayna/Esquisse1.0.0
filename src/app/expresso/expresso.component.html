@@ -21,7 +21,7 @@
                     <form name="transnat" (ngSubmit)="showmodaldepot()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
                         <div class="row">
                               <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 labs">
-                                <label>Numéro du client  :</label>
+                                <label style="margin-top:1.5rem">Numéro du client  :</label>
                               </div>
                               <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                                   <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text" (keyup)="reinitialiserbool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient" name="verifiernuminput" id="numclientdepot"  class="form-control" placeholder="Numéro du client" autofocus>
@@ -29,15 +29,15 @@
                           <p *ngIf="mag1" class="alert alert-danger">Numero Incorrect</p>
                         </div>
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 col-sm-4 labs">
-                              <label>Montant dépot :</label>
+                            <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3  labs">
+                              <label style="margin-top:1.5rem">Montant dépot :</label>
                             </div>
                             <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
                               <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="mnt" name="verifiernuminput" id="mnttransdepot"  class="form-control" placeholder="Montant du transfert" required autofocus>
                             </div>
                             <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
                         </div>
-                        <input style="margin-top: 1rem;"   type="submit" class="btn btn-success" [disabled]="numclient==undefined || mnt<1"/>
+                        <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"   type="submit" class="btn btn-success" [disabled]="numclient==undefined || mnt<1"/>
                     </form>
                 </div>
 
@@ -46,24 +46,24 @@
                       <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
                       <form name="transnat" (ngSubmit)="showmodalretrait()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
                           <div class="row">
-                              <div  class="col-lg-4 col-md-4 col-xs-4 col-sm-4 labs" >
-                                    <label>Numéro du Client :</label>
+                              <div  class="col-lg-3 col-md-3 col-xs-3 col-sm-3 labs"  style="padding-top:1.5rem">
+                                    <label >Numéro du Client :</label>
                               </div >
-                              <div  class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                                <input  style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="reinitialiserbool()" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="input" placeholder="Numéro du client" required autofocus>
+                              <div  class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                <input  style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="reinitialiserbool()" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
                               </div>
                               <p *ngIf="errornumeroretraitsimple" class="alert alert-danger">Numero Incorrect</p>
                           </div>
                           <div class="row">
-                              <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 labs">
+                              <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 labs"  style="padding-top:1.5rem">
                                 <label>Montant à Retirer :</label>
                               </div>
-                              <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                                  <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="reinitialiserbool()"  [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="input" placeholder="Montant du transfert" required autofocus>
+                              <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                  <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="reinitialiserbool()"  [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
                               </div> 
                               <p *ngIf="errormontantretraitsimple" class="alert alert-danger">Montant Incorrect</p>    
                           </div>
-                          <input style="margin-top: 1rem;"  type="submit" class="btn btn-success" />
+                          <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success" />
                     </form>
                 </div>
 
@@ -72,52 +72,52 @@
                     <h3 *ngIf="retraitcodereussi" class="alert alert-success">Retrait avec code reussi!</h3>
                     <form name="transnat" (ngSubmit)="showmodalretraitcode()" #formretraitcode="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;" class="">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 labs">
+                            <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 labs"  style="padding-top:1.5rem">
                               <label>Code de Retrait :</label>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                                <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="this.coderetrait" autocomplete="off" (keyup)="verifcode($event)" id="numclientretraitcode" name="coderetrait"  class="input" placeholder="Code de retrait" required >
+                            <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                                <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="this.coderetrait" autocomplete="off" (keyup)="verifcode($event)" id="numclientretraitcode" name="coderetrait"  class="form-control" placeholder="Code de retrait" required >
                             </div>
                         </div>
-                        <button style="margin: 1rem;" type="submit" class="btn btn-success" [disabled]="coderetrait==undefined">Valider</button>
+                        <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="coderetrait==undefined" />
                     </form>
                 </div>
                 <div style="width:50%;margin-left:auto;margin-right:auto" class="tab-pane fade" id="inscription" >
 					      <h2>Inscription Client</h2>
                 <form>
                   <div class="row">
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+                    <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 align"  style="padding-top:1.5rem">
                       <label class="label" >Numero Telephone :</label>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  (keyup)="reinitialiserbool()" class="input" type="text" name="msisdn" [(ngModel)]="msisdn" />
+                    <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  (keyup)="reinitialiserbool()" class="form-control" type="text" name="msisdn" [(ngModel)]="msisdn" />
                     </div>
                     <p *ngIf="errormsisdn" class="alert alert-danger">Veuillez Verifier Ce Champ</p>
                   </div>
                   <div class="row">
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+                    <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 align"  style="padding-top:1.5rem" >
                       <label class="label">Numero Carte D'identite :</label>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" (keyup)="reinitialiserbool()" class="input" type="text" name="id" [(ngModel)]="id" />
+                    <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" (keyup)="reinitialiserbool()" class="form-control" type="text" name="id" [(ngModel)]="id" />
                     </div>
                     <p *ngIf="errorid" class="alert alert-danger">Veuillez Verifier Ce Champ</p>
                   </div>
                   <div class="row">
-                    <div  class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+                    <div  class="col-lg-3 col-md-3 col-xs-3 col-sm-3 align"  style="padding-top:1.5rem">
                       <label class="label" style="text-align:left;">Nom :</label>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" (keyup)="reinitialiserbool()" class="input"  type="text" name="lastname" [(ngModel)]="lastname" />
+                    <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" (keyup)="reinitialiserbool()" class="form-control"  type="text" name="lastname" [(ngModel)]="lastname" />
                     </div>
                     <p *ngIf="errorfirstname" class="alert alert-danger">Champ Requis</p>
                   </div>
                   <div class="row">
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4 align">
+                    <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3 align"  style="padding-top:1.5rem">
                       <label class="label">Prenom :</label>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
-                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" (keyup)="reinitialiserbool()" class="input" type="text" name="firstname" [(ngModel)]="firstname" />
+                    <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" (keyup)="reinitialiserbool()" class="form-control" type="text" name="firstname" [(ngModel)]="firstname" />
                     </div>
                     <p *ngIf="errorlastname" class="alert alert-danger">Champ Requis</p>
                   </div>
@@ -139,8 +139,8 @@
                     </div>
                     <p *ngIf="errorclientPassword" class="alert alert-danger">Champ Requis</p>
                   </div>-->
-                  <input (click)="showmodalinscription()" class="btn btn success" value="valider" />
-                  <input (click)="reinitialiseRcode();reinitialiserbool()" class="btn btn-danger" value="réinitialiser" />
+                  <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" (click)="showmodalinscription()" class="btn btn success" value="valider"/>
+                  <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" (click)="reinitialiseRcode();reinitialiserbool()" class="btn btn-danger" value="réinitialiser" />
                 </form>
                 </div>
 

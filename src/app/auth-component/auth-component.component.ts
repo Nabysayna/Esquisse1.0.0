@@ -30,7 +30,8 @@ export class AuthComponentComponent implements OnInit {
   public issouszones:boolean;
   public isadresse : boolean  ;
   usedLogin = false ;
-
+  codevalidation:any;
+  errorSouscription:boolean=false;
   region : any ;
   zone : any ;
   souszone : any ;
@@ -161,15 +162,21 @@ export class AuthComponentComponent implements OnInit {
   }
 
   inscrire(){
-    let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.telephone, 'nometps':this.nometps, 'nomshop':this.nomshop, adresse : JSON.stringify({'region':this.region, 'zone':this.zone, 'souszone':this.souszone, 'address':this.adresse}), 'idcommercial':3 } ;
+    let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.telephone+"#"+this.codevalidation, 'nometps':this.nometps, 'nomshop':this.nomshop, adresse : JSON.stringify({'region':this.region, 'zone':this.zone, 'souszone':this.souszone, 'address':this.adresse}), 'idcommercial':3 } ;
     this.loading = true ;
+    this.errorSouscription = false;
     console.log( "Nouvel Inscrit : "+JSON.stringify(paramInscrpt) ) ;
     this.authenticationService.inscrire(paramInscrpt).then( retourserveur => {
       this.loading = false ;
       console.log(retourserveur);
-
+      
+      if(retourserveur=="n-a"){
+        this.usedLogin=true ;
+        this.errorSouscription = true;
+      }
       if(retourserveur=="bad"){
           this.usedLogin=true ;
+          this.errorSouscription = true;
       }
       if(retourserveur=="ok"){
         this.endRegisterdModal.show() ;
@@ -185,7 +192,7 @@ export class AuthComponentComponent implements OnInit {
         this.souszone=undefined ;
         this.adresse=undefined ;
       }
-    }) ;
+    });
   }
 
 }
