@@ -260,10 +260,12 @@ export class GestionreportingComponent implements OnInit {
   }
 
   reimprimerhistop(operation){
+    console.log(operation)
     this._gestionreportingService.reimpression({idpdv:10, operation:JSON.stringify(operation), infooperation:operation.operateur})
       .subscribe(gestreportserviceList => {
           let getdataimpression = gestreportserviceList;
           console.log("***************************************")
+          console.log(getdataimpression)
           let dataImpression = null;
           let infos = JSON.parse(getdataimpression.infosoperation);
           if(operation.operateur.toUpperCase()=="TNT"){

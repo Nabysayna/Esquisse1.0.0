@@ -1872,14 +1872,13 @@ geolocaliser(){
       console.log("********************************************************")
       console.log(resp) ;
 
-
-      if(typeof resp !== 'object') {
+      if( (typeof resp !== 'object') && (typeof resp !== 'number') && (typeof resp === 'string') && !resp.match("transactionid")) {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='red';
       }
-      else if( typeof resp.transactionid != "undefined" ){
+      else if( ( typeof resp.transactionid != "undefined" ) ||  ((typeof resp === 'string') && resp.match("transactionid"))){
         objet.dataI = {
           apiservice:'facturier',
           service:'sde',
