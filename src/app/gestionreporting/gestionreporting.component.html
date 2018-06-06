@@ -31,14 +31,14 @@
                             <div class="col-sm-4">
                               <label class="label-control" for="datejour">Date par jour:</label>
                               <div class="row">
-                                <input type="date" id="datejour" name="datejour" [(ngModel)]="selectionjour" />
+                                <input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="date" id="datejour" name="datejour" [(ngModel)]="selectionjour" />
                                 <button type="button" class="btn btn-primary btn-sm" (click)="historiquejour()" [disabled]="selectionjour==undefined" >Chercher</button>
                               </div>
                             </div>
                             <div class="col-sm-8">
                               <label class="label-control">Date par intervalle:</label>
                               <div class="row">
-                                <input type="date" name="intervalledateinit" [(ngModel)]="selectionintervalledateinit" /> à <input type="date" name="intervalleddatefinal" [(ngModel)]="selectionintervalleddatefinal"  />
+                                <input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="date" name="intervalledateinit" [(ngModel)]="selectionintervalledateinit" /> à <input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="date" name="intervalleddatefinal" [(ngModel)]="selectionintervalleddatefinal"  />
                                 <button type="button" class="btn btn-primary btn-sm" (click)="historiqueintervalle()" [disabled]="selectionintervalledateinit>selectionintervalleddatefinal || selectionintervalledateinit==undefined || selectionintervalleddatefinal==undefined " >Chercher</button>
                               </div>
                             </div>
@@ -55,7 +55,7 @@
                                     <tr>
                                       <th colspan="4">
                                         <label class="label-control">Recherche:</label>
-                                        <input class="form-control" [(ngModel)]="filtre" placeholder="Recherche"/>
+                                        <input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control" [(ngModel)]="filtre" placeholder="Recherche"/>
                                       </th>
                                     </tr>
                                 </thead>
@@ -94,11 +94,11 @@
                             <h2>Enregistrer une dépense</h2>
                         </fieldset>
 
-                         <div class="col-sm-12 col-xs-12" >
-                                           <div class="col-sm-3 col-xs-12"><input type="text" [(ngModel)]="libelleCharge"   name="libelle" id="libelle" class="form-control"  placeholder="Libelle charge" required></div>
-                                            <div class="col-sm-3 col-xs-12"><input type="number" [(ngModel)]="montantCharge"   name="montant" id="montant" class="form-control" placeholder="Montant de la dépense" required></div>
+                         <div class="col-sm-12 col-xs-12" style="margin-left: 14%;width: 68%;">
+                                           <div class="col-sm-3 col-xs-12"><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="libelleCharge"   name="libelle" id="libelle" class="form-control"  placeholder="Libelle charge" required></div>
+                                            <div class="col-sm-3 col-xs-12"><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="montantCharge"   name="montant" id="montant" class="form-control" placeholder="Montant de la dépense" required></div>
                                            <div class="col-sm-3 col-xs-12">
-                                            <select class="form-control input-sm" [(ngModel)]="service" style="margin-top: 1rem;" >
+                                            <select style="margin-top: 1rem;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control input-sm" [(ngModel)]="service"  >
                                             <option>--Choisir le service concerné--</option>
                                             <option  *ngFor="let service of servicepoint">{{service.nom}}</option>
                                             </select>
@@ -116,20 +116,20 @@
                             <h2>Enregistrer une Recette</h2>
                         </fieldset>
 
-                        <div class="col-sm-12 col-xs-12" style="margin-top: 4rem ;">
+                        <div class="col-sm-12 col-xs-12"style="margin-left: 14%;width: 68%; margin-top: 4rem ;">
 
-                               <div  class="col-sm-3 col-xs-12" style="margin-top: -1rem;"> <label>Service </label><select class="form-control input-sm" [(ngModel)]="servicevente" >
+                               <div  class="col-sm-3 col-xs-12" style="margin-top: -1rem;"> <label>Service </label><select style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control input-sm" [(ngModel)]="servicevente" >
                                <option>---Faites un choix---</option>
                                 <option  *ngFor="let srv of servicepoint">{{srv.nom}}</option>
                                 </select>
                                 </div>
                                 <div  class="col-sm-3 col-xs-12" style="margin-top: -1rem;"> <label>Désignation
-                                </label><select class="form-control input-sm" [(ngModel)]="designation" >
+                                </label><select style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control input-sm" [(ngModel)]="designation" >
                                 <option>---Faites un choix---</option>
                                 <option  *ngFor="let designation of getDesignations()">{{ designation }}</option>
                                 </select>
                                 </div>
-                               <div class="col-sm-3 col-xs-12" style="margin-top: -2rem;"> <label>Quantité</label><input type="number" [(ngModel)]="quantite"   name="qte" id="qte" class="form-control" placeholder="quantité" required></div>
+                               <div class="col-sm-3 col-xs-12" style="margin-top: -2rem;"> <label>Quantité</label><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="quantite"   name="qte" id="qte" class="form-control" placeholder="quantité" required></div>
 
                                 <div class="col-sm-3 col-xs-12" style="margin-top: 1rem;" *ngIf="servicevente.toLowerCase()!='assurance'"><button id="validcharge" class="btn  btn-primary btn-block" type="submit" (click)="validvente()">Valider</button>
                                 </div>
@@ -139,12 +139,12 @@
                                             <label style="margin-left: 2rem;"></label><input type="text" [(ngModel)]="prenoma"   name="prenoma" id="prenoma" class="form-control" placeholder="Prénom du client ..." required>
                                             <div><label style="margin-left: 2rem;">Date fin assurance </label><input type="date" [(ngModel)]="datefin"   name="datefin" id="datefin" class="form-control" placeholder="date fin assurance" required></div></div>
                                            <div class="col-sm-3 col-xs-12"><label style="margin-left: 2rem;">
-                                           </label><input type="text" [(ngModel)]="noma"   name="noma" id="noma" class="form-control" placeholder="Nom du client ..." required>
+                                           </label><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="noma"   name="noma" id="noma" class="form-control" placeholder="Nom du client ..." required>
                                            <div>
-                                           <label style="margin-left: 2rem;">Date début assurance </label><input type="date" [(ngModel)]="datedebut"   name="datedebut" id="datedebut" class="form-control"  placeholder="date début assurance" required>
+                                           <label style="margin-left: 2rem;">Date début assurance </label><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="date" [(ngModel)]="datedebut"   name="datedebut" id="datedebut" class="form-control"  placeholder="date début assurance" required>
                                            </div></div>
                                             <div class="col-sm-3 col-xs-12"><label style="margin-left: 2rem;">
-                                            </label><input type="string" [(ngModel)]="telephonea"   name="telephonea" id="telephonea" class="form-control" placeholder="Téléphone du client ..." required>
+                                            </label><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="string" [(ngModel)]="telephonea"   name="telephonea" id="telephonea" class="form-control" placeholder="Téléphone du client ..." required>
                                             <div><button style="margin-top: 4.5rem; margin-left: 1rem;" (click)="validvente()" id="enregistrerassurance" class="btn btn-primary btn-block" >Enregistrer</button></div></div>
 
                     </div>
@@ -156,10 +156,10 @@
                         <fieldset >
                             <h2>Réclamation</h2>
                         </fieldset>
-                        <div class="col-sm-12 col-xs-12" >
-                                           <div class="col-sm-3 col-xs-12" style="margin-left: -2rem;"><input type="text" [(ngModel)]="sujet"   name="sujet" id="sujet" class="form-control"  placeholder="Motif réclamation" required></div>
+                        <div class="col-sm-12 col-xs-12" style="margin-left: 18%;width: 62%;">
+                                           <div class="col-sm-3 col-xs-12" style="margin-left: -2rem;"><input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="sujet"   name="sujet" id="sujet" class="form-control"  placeholder="Motif réclamation" required></div>
                                            <div class="col-sm-3 col-xs-12">
-                                            <select class="form-control input-sm" [(ngModel)]="nomservice" style="margin-top: 1rem;" >
+                                            <select style="margin-top: 1rem;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control input-sm" [(ngModel)]="nomservice"  >
                                             <option>--Choisir le service concerné--</option>
                                             <option  *ngFor="let nomservice of servicepoint">{{nomservice.nom}}</option>
 
@@ -167,8 +167,7 @@
                                             </div>
                                             <textarea type="text" [(ngModel)]="message"  rows="5" name="descrip" id="descrip" class="form-control" placeholder="description de votre réclamation" required></textarea>
                                             <div class="col-sm-3 col-xs-12"><button style="margin-top: 2rem;" (click)="validreclamation()" id="validerreclamation" class="btn btn-primary btn-block" >Envoyer</button></div>
-
-                    </div>
+                        </div>
 
                     </div>
                 </div>
