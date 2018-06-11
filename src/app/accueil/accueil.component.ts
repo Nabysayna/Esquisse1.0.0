@@ -423,13 +423,6 @@ geolocaliser(){
                               objet.etats.errorCode="c";
                               clearInterval(periodicVerifierOMDepot) ;
                             }
-                            else {
-                              objet.etats.etat=true;
-                              objet.etats.load='terminated';
-                              objet.etats.color='red';
-                              objet.etats.errorCode="bad";
-                              clearInterval(periodicVerifierOMDepot) ;
-                            }
                           }) ;
                         }
                       }
@@ -524,13 +517,6 @@ geolocaliser(){
                                    objet.etats.errorCode="c";
                                    clearInterval(periodicVerifierOMRetirer) ;
                                  }
-                                else {
-                                  objet.etats.etat=true;
-                                  objet.etats.load='terminated';
-                                  objet.etats.color='red';
-                                  objet.etats.errorCode="bad";
-                                  clearInterval(periodicVerifierOMRetirer) ;
-                                }
                               });
                             }
                         }
@@ -614,13 +600,6 @@ geolocaliser(){
                           objet.etats.load='terminated';
                           objet.etats.color='red';
                           objet.etats.errorCode="c";
-                          clearInterval(periodicVerifierOMRetraitCode) ;
-                        }
-                        else {
-                          objet.etats.etat=true;
-                          objet.etats.load='terminated';
-                          objet.etats.color='red';
-                          objet.etats.errorCode="bad";
                           clearInterval(periodicVerifierOMRetraitCode) ;
                         }
                       }) ;
@@ -733,13 +712,6 @@ geolocaliser(){
                                    objet.etats.errorCode="c";
                                    clearInterval(periodicVerifierOMAcheterCredit) ;
                                    }
-                                else{
-                                  objet.etats.etat=true;
-                                  objet.etats.load='terminated';
-                                  objet.etats.color='red';
-                                  objet.etats.errorCode="bad";
-                                  clearInterval(periodicVerifierOMAcheterCredit) ;
-                                }
                               }) ;
                             }
                           }
@@ -1458,13 +1430,6 @@ geolocaliser(){
                               objet.etats.errorCode="c";
                               clearInterval(periodicVerifierTCDepot) ;
                             }
-                            else {
-                              objet.etats.etat=true;
-                              objet.etats.load='terminated';
-                              objet.etats.color='red';
-                              objet.etats.errorCode="bad";
-                              clearInterval(periodicVerifierTCDepot) ;
-                            }
                           }) ;
                         }
                       }
@@ -1559,13 +1524,6 @@ geolocaliser(){
                                 objet.etats.errorCode="c";
                                 clearInterval(periodicVerifierTCRetirer) ;
                               }
-                              else {
-                                objet.etats.etat=true;
-                                objet.etats.load='terminated';
-                                objet.etats.color='red';
-                                objet.etats.errorCode="bad";
-                                clearInterval(periodicVerifierTCRetirer) ;
-                              }
                             }) ;
                           }
                         }
@@ -1658,13 +1616,6 @@ geolocaliser(){
                                 objet.etats.errorCode="c";
                                 clearInterval(periodicVerifierTCRetraitCode) ;
                               }
-                              else {
-                                objet.etats.etat=true;
-                                objet.etats.load='terminated';
-                                objet.etats.color='red';
-                                objet.etats.errorCode="bad";
-                                clearInterval(periodicVerifierTCRetraitCode) ;
-                              }
                             }) ;
                           }
                         }
@@ -1747,13 +1698,6 @@ geolocaliser(){
                                 objet.etats.load='terminated';
                                 objet.etats.color='red';
                                 objet.etats.errorCode="c";
-                                clearInterval(periodicVerifierTCRechargeIZI) ;
-                              }
-                              else {
-                                objet.etats.etat=true;
-                                objet.etats.load='terminated';
-                                objet.etats.color='red';
-                                objet.etats.errorCode="bad";
                                 clearInterval(periodicVerifierTCRechargeIZI) ;
                               }
                             }) ;

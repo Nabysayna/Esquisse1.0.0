@@ -28,7 +28,7 @@ export class AdminmultipdvDemandeRetraitComponent implements OnInit {
           return {
             adresse:JSON.parse(elt.adresse).address,
             agent:elt.agent,
-            datedemanderetrait:elt.datedemanderetrait,
+            datedemanderetrait:elt.datedemanderetrait.split(".")[0],
             etatdemande:elt.etatdemande,
             iddemanderetrait:elt.iddemanderetrait,
             montantdemande:elt.montantdemande,
