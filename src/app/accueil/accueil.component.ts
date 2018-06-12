@@ -10,7 +10,6 @@ import {FacturierService} from "../services/facturier.service";
 import {UtilsService} from "../services/utils.service";
 import {TarifsService} from "../services/tarifs.service";
 
-
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
 
@@ -39,7 +38,7 @@ export class AccueilComponent implements OnInit,AfterViewInit {
   latitude : any ;
   longitude :any ;
   accuracy :any ;
-
+  processLength:number=0;
 
   @ViewChild('newoperation') public newOperation:ElementRef;
 
@@ -119,33 +118,36 @@ geolocaliser(){
   processus(){
 
     setInterval(()=>{
-
-    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
-      let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
-      let infoOperation:any;
-     if(mag==5){
-          infoOperation={'etat':false,'id':this.process.length,'load':'fa fa-shopping-cart fa-2x pull-left','color':'', 'errorCode':'*'};
-      }
-     else{
-           infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
-      }
-      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
-     // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
-
-     if(sesion.data.operateur==5){
-        this.articles.push(sesion);
-        sessionStorage.setItem('panier',JSON.stringify(this.articles));
-        if(this.articles.length==1){
-          this.process.push(sesion);
+      
+      if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+        let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
+        let infoOperation:any;
+        let sesion:any;
+        if(mag==5){
+            infoOperation={'etat':false,'id':this.process.length,'load':'fa fa-shopping-cart fa-2x pull-left','color':'', 'errorCode':'*'};
+            sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+            sessionStorage.removeItem('curentProcess');
         }
-      }
-      else{
+        else{
+            infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+            sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+            sessionStorage.removeItem('curentProcess');
+        }
+     // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
+        console.log("session======>"+JSON.stringify(sesion));
+        if(sesion.data.operateur==5){
+          this.articles.push(sesion);
+          sessionStorage.setItem('panier',JSON.stringify(this.articles));
+          if(this.articles.length==1){
+            this.process.push(sesion);
+          }
+        }
+        else{
            this.process.push(sesion);
-      }
-
+           
+        }
      // console.log(sesion.etats.id);
-      sessionStorage.removeItem('curentProcess');
-      let operateur=sesion.data.operateur;
+        let operateur=sesion.data.operateur;
       switch(operateur){
         case 1:{
                 let operation=sesion.data.operation;
@@ -169,9 +171,8 @@ geolocaliser(){
                   default:break;
                 }
                    break ;
-        }
-
-        case 2:{
+          }
+          case 2:{
              let operation=sesion.data.operation;
 
               switch(operation){
@@ -199,7 +200,6 @@ geolocaliser(){
               }
                break ;
         }
-
         case 3:{
              let operation=sesion.data.operation;
 
@@ -225,8 +225,6 @@ geolocaliser(){
               }
                break ;
         }
-
-
        case 4:{
              let operation=sesion.data.operation;
              console.log("here we go ...") ;
@@ -248,7 +246,6 @@ geolocaliser(){
              }
              break ;
        }
-
        case 6:{
              let operation=sesion.data.operation;
              switch(operation){
@@ -276,7 +273,6 @@ geolocaliser(){
              }
            break ;
        }
-
        case 7:{
              let operation=sesion.data.operation;
                  console.log(sesion);
@@ -298,11 +294,9 @@ geolocaliser(){
              }
              break;
        }
-
        case 8:{
          let operation=sesion.data.operation;
          console.log('FACTURIER');
-
          switch(operation){
               case 1:{
                    this.paiemantsde(sesion);
@@ -321,14 +315,12 @@ geolocaliser(){
                   break;
               }
               case 5:{
-
                   this.payeroolusolar(sesion);
                   break;
               }
               default : break;
           }
        }
-
         default:break;
       }
     }
