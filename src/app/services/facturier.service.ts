@@ -95,6 +95,7 @@ export class FacturierService {
     return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
         data =>{
+          console.log("**WOYOFAL**")
           console.log(data)
           if(typeof data === 'boolean') reject(JSON.parse("-11"))
           else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))

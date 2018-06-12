@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
@@ -28,15 +28,13 @@ class Article {
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css']
 })
-export class AccueilComponent implements OnInit {
+export class AccueilComponent implements OnInit,AfterViewInit {
   articles=[];
   process=[];
    quinzeMinutes = 900000;
   registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
 
-  authorisedToUseCRM = false ;
   load="loader";
-  actif = -1 ;
   dataImpression:any;
   latitude : any ;
   longitude :any ;
@@ -65,6 +63,11 @@ export class AccueilComponent implements OnInit {
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
     this.processus();
+  }
+
+  ngAfterViewInit(){
+    localStorage.setItem("auredemarrage","yesca")
+    console.log("**YES CA**")
   }
 
 /*******************************************************************************************************/
