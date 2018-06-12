@@ -1,4 +1,4 @@
-import { Component, OnInit, Compiler, ViewChild } from '@angular/core';
+import { Component, OnInit, Compiler, ViewChild,AfterViewInit } from '@angular/core';
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
@@ -13,7 +13,7 @@ import {UtilsService} from "../services/utils.service";
   templateUrl: './auth-component.component.html',
   styleUrls: ['./auth-component.component.css']
 })
-export class AuthComponentComponent implements OnInit {
+export class AuthComponentComponent implements OnInit,AfterViewInit {
 
   userName = ''  ;
   userPwd  = '' ;
@@ -59,6 +59,11 @@ export class AuthComponentComponent implements OnInit {
     sessionStorage.clear() ;
     this.authenticationService.logout();
     this.getRegionNewCaissier();
+  }
+
+  ngAfterViewInit(){
+    localStorage.setItem("auredemarrage","yesca")
+    console.log("**YES CA**")
   }
 
   authentificate() {
@@ -169,7 +174,7 @@ export class AuthComponentComponent implements OnInit {
     this.authenticationService.inscrire(paramInscrpt).then( retourserveur => {
       this.loading = false ;
       console.log(retourserveur);
-      
+
       if(retourserveur=="n-a"){
         this.usedLogin=true ;
         this.errorSouscription = true;
