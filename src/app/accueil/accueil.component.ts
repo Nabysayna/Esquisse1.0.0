@@ -118,7 +118,7 @@ geolocaliser(){
   processus(){
 
     setInterval(()=>{
-      
+
       if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
         let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
         let infoOperation:any;
@@ -133,7 +133,6 @@ geolocaliser(){
             sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
             sessionStorage.removeItem('curentProcess');
         }
-     // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
         console.log("session======>"+JSON.stringify(sesion));
         if(sesion.data.operateur==5){
           this.articles.push(sesion);
@@ -144,7 +143,7 @@ geolocaliser(){
         }
         else{
            this.process.push(sesion);
-           
+
         }
      // console.log(sesion.etats.id);
         let operateur=sesion.data.operateur;

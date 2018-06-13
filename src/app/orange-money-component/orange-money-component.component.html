@@ -12,15 +12,15 @@
             <!-- Nav tabs -->
             <div id="om-options">
                 <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Depôt</a>
-                
+
                 <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()" data-toggle="tab">Retrait </a>
-                
+
                 <a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
 
 <!--                 <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
-                
+
                 <a href="#achatcred" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Vente crédit</a>
-                
+
             </div>
 
             <!-- Tab panes -->
@@ -29,7 +29,7 @@
                         <h2>Dépôt</h2>
                         <h3 *ngIf="depotreussi"  class="alert alert-success">Depot reussi!</h3>
                         <h3 *ngIf="echecdepot" class="alert alert-danger">Echec de l'operation reessayer plus tard SVP!</h3>
-                        
+
                         <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 							<div class="form-inline" style="width: 54%;">
                                 <label style="margin-top:1.5rem;" class="col-lg-3 col-md-3">Numéro du client  :</label>
@@ -133,14 +133,14 @@
                             <div class="form-inline" style="width:57%; text-align:center;">
                                 <input style="margin-top: 1rem;border-radius: 2rem 0rem 2rem 2rem;"   type="submit" class="btn btn-success" [disabled]="!buttondepot2"/>
                             </div>
-                        </form> 
+                        </form>
                 </div>
 
                 <div class="tab-pane fade col-sm-12 col-xs-12" id="retraitinter">
 
                         <h2>Retrait sur compte de Reception</h2>
 
-                        <h4>Le retrait sur compte de reception international sera bientôt disponible.</h4> 
+                        <h4>Le retrait sur compte de reception international sera bientôt disponible.</h4>
 
 <!--                         <form name="transnat" (ngSubmit)="showmodalretraitinter()" #formachatcred="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
                             <input type="text" [(ngModel)]="this.numclient" autocomplete="off" (keyup)="verifNumber($event)" id="numclient" name="this.numclient" class="form-control" placeholder="Numéro du client" required autofocus>
@@ -149,7 +149,7 @@
 
                             <button style="margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!buttondepot2">Valider</button>
                         </form>
- -->                
+ -->
                 </div>
 
 
@@ -160,7 +160,7 @@
 
                           <h3 *ngIf="retraitcodereussi" class="alert alert-success">Retrait reussi!</h3>
                         <form name="transnat" (ngSubmit)="showmodalretraitcode()" #formretraitcode="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;" class="">
-                           
+
                            <div class="form-inline row">
                                 <label style="padding:1.5em" class="col-lg-3">Code de retrait :</label>
                                 <input style=" width:59%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="col-lg-8" type="text" [(ngModel)]="this.coderetrait" autocomplete="off" (keyup)="verifcode($event)" id="numclient" name="coderetrait"  class="form-control col-lg-5" placeholder="Code de retrait" required >
@@ -194,7 +194,7 @@
                             <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="submit" class="btn btn-success" [disabled]="!buttondepot3||!formretraitcode.form.valid" />
                             <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="reset" (click)="reinitialiserformRcode()" class="btn btn-danger" />
                         </form>
- 
+
 
                 </div>
 
@@ -214,7 +214,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -224,16 +224,16 @@
 							 <label >montant : {{this.mnt}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="deposer()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;deposer()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hideAddChildModal()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
-	  
+
 
 <!--
   <div class="modal-dialog">
@@ -243,8 +243,8 @@
         <h4 class="modal-title" id="myModalLabelCodeValidation">Code de validation</h4>
       </div>
       <div class="modal-body">
-       
-       
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="idmodalfermeCodeValidation" data-dismiss="modal" #closeBtnModalCodeValidation>Annuler</button>
@@ -253,7 +253,7 @@
     </div>
   </div>
   -->
-  
+
 </div>
 <div bsModal #modalretraitcode="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -266,7 +266,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -291,17 +291,17 @@
                <label >Montant : {{this.mnt}}</label>
              </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="retraitAvecCode()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;retraitAvecCode()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="annuler" (click)="hidemodalretraitcode()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 
-  
+
 </div>
 <div bsModal #modalretrait="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -314,7 +314,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -324,17 +324,17 @@
 							 <label >montant : {{this.mnt}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="retirer()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;retirer()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 
-  
+
 </div>
 <div bsModal #modalretraitinter="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -347,7 +347,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -357,17 +357,17 @@
 							 <label >montant : {{this.mnt}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="retraitCpteRecep()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;retraitCpteRecep()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hidemodalretraitinter()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 
-  
+
 </div>
 <div bsModal #modalventecredit="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -380,7 +380,7 @@
 	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
 		     </div>
 		     <div class="modal-body">
-		
+
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -390,19 +390,19 @@
 							 <label >Montant : {{this.mnt}}</label>
 						 </div>
 					 </form>
-					
+
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="acheterCredit();hidemodalventecredit()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;acheterCredit();hidemodalventecredit()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hidemodalventecredit()" class="btn btn-danger" />
 		     </div>
-		  </div> 
+		  </div>
 	    </div>
 
-  
+
 </div>
 
 <div *ngIf="this.loading">
-    <app-loader></app-loader>    
+    <app-loader></app-loader>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 import { TigocashService } from '../services/tigocash.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { TigocashService } from '../services/tigocash.service';
   providers: [TigocashService]
 })
 export class TigoCashComponentComponent implements OnInit {
-
+  adejaclick:boolean = false;
    telephoneBeneficiaire: any;
    telephoneExpediteur: any;
    telephone:number;
@@ -157,37 +157,43 @@ export class TigoCashComponentComponent implements OnInit {
   /**********************************/
   /**********les modals***************/
 	  showmodaldepot(){
-	   this.modaldepot.show();
+      this.adejaclick = false;
+      this.modaldepot.show();
 	  }
 	  hidemodaldepot(){
-	   this.modaldepot.hide()
+      this.modaldepot.hide()
 	  }
 	  showmodalretrait(){
-	   this.modalretrait.show();
+      this.adejaclick = false;
+      this.modalretrait.show();
 	  }
 	  hidemodalretrait(){
 	   this.modalretrait.hide()
 	  }
 	  showmodalpaiment(){
-	   this.modalpaiment.show();
+      this.adejaclick = false;
+      this.modalpaiment.show();
 	  }
 	  hidemodalpaiment(){
 	   this.modalpaiment.hide()
 	  }
 	  showmodalenvoi(){
-	   this.modalenvoi.show();
+      this.adejaclick = false;
+      this.modalenvoi.show();
 	  }
 	  hidemodalenvoi(){
 	   this.modalenvoi.hide();
 	  }
 	  showmodalvendreizi(){
-	   this.modalvendreizi.show();
+      this.adejaclick = false;
+      this.modalvendreizi.show();
 	  }
 	  hidemodalvendreizi(){
 	   this.modalvendreizi.hide();
 	  }
 	  showmodalinscription(){
-	   this.modalinscription.show();
+      this.adejaclick = false;
+      this.modalinscription.show();
 	  }
 	  hidemodalinscription(){
 	   this.modalinscription.hide();

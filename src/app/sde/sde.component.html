@@ -45,7 +45,7 @@
         </div>
       </div>
        <div class="modal-footer">
-        <input type="button" *ngIf="etat2" value="valider" (click)=" paimantsde()" class="btn btn-success" />
+        <input type="button" *ngIf="etat2" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true; paimantsde()" class="btn btn-success" />
         <input type="button" value="annuler" (click)="hidemodalsde()" class="btn btn-danger" />
        </div>
     </div>

@@ -16,6 +16,8 @@ export class OoluComponent implements OnInit {
   errornumero:boolean;
   errormontant:boolean=false;
   errorcompte:boolean=false;
+  adejaclick:boolean = false;
+
 
   /******************************************************************************************************/
   constructor(){}
@@ -24,7 +26,8 @@ export class OoluComponent implements OnInit {
    }
   @ViewChild('modaloolu') public modaloolu:ModalDirective;
   showmodaloolu(){
-  if(this.telephone!="" && this.telephone!=undefined && this.montant!="" && this.montant!=undefined && this.compte!="" && this.compte!=undefined){
+    this.adejaclick = false;
+    if(this.telephone!="" && this.telephone!=undefined && this.montant!="" && this.montant!=undefined && this.compte!="" && this.compte!=undefined){
         let tab=this.telephone.split("");
 		if(this.isNumber(this.telephone) && this.isNumber(this.montant) && parseInt(this.montant)>0 && tab.length==9 && tab[0]=="7" && (tab[1]=="7" || tab[1]=="8" || tab[1]=="0")){
 		    this.modaloolu.show();

@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" *ngIf="etat2" value="valider" (click)="validerpaimentsenelec()" class="btn btn-success" />
+        <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" *ngIf="etat2" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;validerpaimentsenelec()" class="btn btn-success" />
         <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="annuler" (click)="hidemodalsenelec()" class="btn btn-danger" />
       </div>
     </div>

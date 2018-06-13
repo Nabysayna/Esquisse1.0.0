@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 import { ExpressocashService } from "../services/expressocash.service";
@@ -10,6 +10,8 @@ import { ExpressocashService } from "../services/expressocash.service";
   styleUrls: ['./expresso.component.css']
 })
 export class ExpressoComponent implements OnInit {
+
+  adejaclick:boolean = false;
 
   numclient :  string ;
   mnt : string ;
@@ -22,10 +24,7 @@ export class ExpressoComponent implements OnInit {
   keycode=[{'code':97,'value':1},{'code':98,'value':2},{'code':99,'value':3},{'code':100,'value':4},{'code':101,'value':5},{'code':102,'value':6},{'code':103,'value':7},{'code':104,'value':8},{'code':105,'value':9},{'code':96,'value':0},{'code':48,'value':0},{'code':49,'value':1},{'code':50,'value':2},{'code':51,'value':3},{'code':52,'value':4},{'code':53,'value':5},{'code':54,'value':6},{'code':55,'value':7},{'code':56,'value':8},{'code':57,'value':9}];
   nombre=["0","1","2","3","4","5","6","7","8","9"];
   loading = false ;
-  depotreussi=false;
   echecdepot=false;
-  transintreussi=false;
-  echectransint=false;
   retraitreussi=false;
   echecretrait=false;
   retraitcodereussi=false;
@@ -33,7 +32,6 @@ export class ExpressoComponent implements OnInit {
   mag1=false;
   mag2=false;
   style:any;
-  nbchiffres:any=0;
   numero:any;
   coderetrait:string;
   prenom:string="";
@@ -51,8 +49,6 @@ export class ExpressoComponent implements OnInit {
   errorid:boolean=false;
   errorfirstname:boolean=false;
   errorlastname:boolean=false;
-  errorclientID:boolean=false;
-  errorclientPassword:boolean=false;
   positiveresponseregistration:boolean=false;
   negativeresponseregistration:boolean=false;
   errornumeroretraitsimple:boolean=false;
@@ -67,14 +63,11 @@ export class ExpressoComponent implements OnInit {
   @ViewChild('modalretraitcode') public modalretraitcode:ModalDirective;
   @ViewChild('modalretraitcodeConfirm') public modalretraitcodeConfirm:ModalDirective;
   @ViewChild('modalinscription') public modalinscription:ModalDirective;
-  
-  
-  public testtab=[];
+
+
   ngOnInit() { }
 
-  // retrait simple
-  infoDepot:any;
-  
+
 /*******************************  DEPOT *****************************************/
 
   public fairedepot(){
@@ -89,7 +82,6 @@ export class ExpressoComponent implements OnInit {
 
   // retrait simple
   infoRetraitsimple:any;
-  infoRetraitsimpleconfirm:any;
 
   public faireretraitsimple(){
     this.hidemodalretrait();
@@ -125,7 +117,6 @@ export class ExpressoComponent implements OnInit {
 /************************************************************************/
   // retrait avec code
   infoRetraitaveccode:any;
-  infoRetraitaveccodeconfirm:any;
   public faireretraitaveccode(){
     this.pin = this.coderetrait;
     this.hidemodalretraitcode();
@@ -281,7 +272,7 @@ export class ExpressoComponent implements OnInit {
 					   if(response.status==1006){
 						  console.log("numero incorrect");
 						  this.negativeresponseregistration=true;
-					   } 
+					   }
 					}
          }
          else{
@@ -289,7 +280,7 @@ export class ExpressoComponent implements OnInit {
              this.retraitcodereussi = false;
              console.log("probleme au niveau du serveur");
         }
-    });  
+    });
   }
     isNumber(tel:string):boolean{
       let tab=tel.split("");
@@ -298,7 +289,7 @@ export class ExpressoComponent implements OnInit {
             return false;
          }
       }
-      
+
         return true;
     }
     ischiffre(c:string):boolean{
@@ -347,7 +338,7 @@ export class ExpressoComponent implements OnInit {
       this.mag2=false;
       this.errornumeroretraitsimple=false;
       this.errormontantretraitsimple=false;
-      
+
     }
   /*************************************************/
   /************verif code***************************/
@@ -432,8 +423,9 @@ export class ExpressoComponent implements OnInit {
 
 
   public showmodaldepot():void {
-   let tab=this.numclient.split("");
-   
+    this.adejaclick = false;
+    let tab=this.numclient.split("");
+
    if(this.isNumber(this.numclient) && tab.length==9 && tab[0]=="7" && (tab[1]=="0") && this.isNumber(this.mnt) && parseInt(this.mnt)>0){
        this.modaldepot.show();
     }
@@ -444,7 +436,7 @@ export class ExpressoComponent implements OnInit {
         if(!this.isNumber(this.mnt) || parseInt(this.mnt)<=0){
             this.mag2=true;
         }
-      
+
     }
   }
   public hidemodaldepot():void {
@@ -452,7 +444,8 @@ export class ExpressoComponent implements OnInit {
   }
 
   public showmodalretrait():void{
-   let tab=this.numclient.split("");
+    this.adejaclick = false;
+    let tab=this.numclient.split("");
     if(this.isNumber(this.mnt) && tab.length==9 && tab[0]=="7" && (tab[1]=="0") && this.isNumber(this.mnt) && parseInt(this.mnt)>0){
         this.modalretrait.show();
     }
@@ -463,7 +456,7 @@ export class ExpressoComponent implements OnInit {
         if(!this.isNumber(this.mnt) || parseInt(this.mnt)<=0){
             this.errormontantretraitsimple=true;
         }
-         
+
     }
   }
   public hidemodalretrait():void{
@@ -471,6 +464,7 @@ export class ExpressoComponent implements OnInit {
   }
 
   public showmodalretraitConfirm():void{
+    this.adejaclick = false;
     this.modalretraitConfirm.show();
   }
   public hidemodalretraitConfirm():void{
@@ -478,6 +472,7 @@ export class ExpressoComponent implements OnInit {
   }
 
   public showmodalretraitcode(){
+    this.adejaclick = false;
     this.modalretraitcode.show();
   }
   public hidemodalretraitcode(){
@@ -485,18 +480,20 @@ export class ExpressoComponent implements OnInit {
   }
 
   public showmodalretraitcodeConfirm(){
+    this.adejaclick = false;
     this.modalretraitcodeConfirm.show();
   }
   public hidemodalretraitcodeConfirm(){
     this.modalretraitcodeConfirm.hide();
   }
   public showmodalinscription(){
-   if(this.verifData()){
-       this.modalinscription.show(); 
+    this.adejaclick = false;
+    if(this.verifData()){
+       this.modalinscription.show();
     }
   }
   public hidemodalinscription(){
-     this.modalinscription.hide(); 
+     this.modalinscription.hide();
   }
 
 }

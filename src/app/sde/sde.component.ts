@@ -16,6 +16,8 @@ export class SdeComponent implements OnInit {
   message:boolean=false;
   detailfacturesde:any={errorCode:0,reference_client:"",reference_facture:"",client:'nom du client',montant:1,dateecheance:"12/3/2018",service:"wizall"};
   errorMessage : any ;
+  adejaclick:boolean = false;
+
 
   constructor(private _facturierService : FacturierService) {}
 
@@ -76,6 +78,7 @@ export class SdeComponent implements OnInit {
   }
 
   showmodalsde(){
+    this.adejaclick = false;
     this.modalsde.show();
     this.detailfactursde();
   }

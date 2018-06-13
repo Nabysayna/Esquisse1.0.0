@@ -57,7 +57,7 @@
 			    </form>
 		   </div>
 		   <div class="modal-footer">
-				<input style="border-radius: 2rem 0rem 2rem 2rem;" type="button"  (click)="validerrapido()" value="valider" class="btn btn-success" />
+				<input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" [disabled]="adejaclick==true"  (click)="adejaclick=true;validerrapido()" value="valider" class="btn btn-success" />
 				<input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hidemodalrapido()"  class="btn btn-danger" />
 		   </div>
 	  </div>

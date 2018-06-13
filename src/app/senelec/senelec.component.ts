@@ -13,6 +13,8 @@ export class SenelecComponent implements OnInit {
   etat1:boolean=false;
   etat2:boolean=false;
   etat3:boolean=false;
+  adejaclick:boolean = false;
+
 
   message:boolean=false;
   errorMessage : any ;
@@ -35,6 +37,7 @@ export class SenelecComponent implements OnInit {
   @ViewChild('modalsenelec') public modalsenelec:ModalDirective;
   /******************************************************************************************************/
   showmodalsenelec(){
+    this.adejaclick = false;
     this.detailfactsenelec();
   }
   hidemodalsenelec(){
