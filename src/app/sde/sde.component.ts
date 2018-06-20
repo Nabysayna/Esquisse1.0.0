@@ -12,7 +12,7 @@ export class SdeComponent implements OnInit {
   etat1:boolean=false;
   etat2:boolean=false;
   etat3:boolean=false;
-  refClientSDE:any;
+  refClientSDE:string;
   message:boolean=false;
   detailfacturesde:any={errorCode:0,reference_client:"",reference_facture:"",client:'nom du client',montant:1,dateecheance:"12/3/2018",service:"wizall"};
   errorMessage : any ;

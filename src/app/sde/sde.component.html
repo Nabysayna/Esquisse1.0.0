@@ -10,7 +10,7 @@
             <form name="transnat" #formsde="ngForm" (ngSubmit)="showmodalsde()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
               <div class="form-inline">
                 <label>Réfèrence client :</label>
-                <input style="width:33%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                <input style="width:33%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
                 <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsde.form.valid" />
               </div>
             </form>

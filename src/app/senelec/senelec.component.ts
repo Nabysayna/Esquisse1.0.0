@@ -1,6 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { Router, CanActivate } from '@angular/router';
+import { ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 import {FacturierService} from "../services/facturier.service";
 
 
@@ -20,11 +19,11 @@ export class SenelecComponent implements OnInit {
   errorMessage : any ;
 
   service:string;
-  detailfacturesenelec:any={errorCode:0,police:12545555,numeroFacture:156665,nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
+  detailfacturesenelec:any={errorCode:0,police:"12545555",numeroFacture:"156665",nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
   police:string;
   num_facture:string;
   dataImpression:any;
-  constructor(private router: Router, private _facturierService : FacturierService) { }
+  constructor(private _facturierService : FacturierService) { }
 
   /******************************************************************************************************/
 
@@ -46,7 +45,7 @@ export class SenelecComponent implements OnInit {
     this.num_facture = undefined;
   }
   detailfactsenelec(){
-    this.detailfacturesenelec={errorCode:0,police:5,numeroFacture:5,nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
+    this.detailfacturesenelec={errorCode:0,police:"5",numeroFacture:"5",nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
     this.etat1=false;
     this.etat2=false;
     this.etat3=false;

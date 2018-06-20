@@ -25,7 +25,7 @@ export class FacturierService {
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
-  public paimentsde(montant : number, reference_client : number,reference_facture :number ,service :string) : Promise<any> {
+  public paimentsde(montant : number, reference_client : string,reference_facture :string ,service :string) : Promise<any> {
     let reEspParams = {token:this.token, reference_client:reference_client,reference_facture:reference_facture, service:service, montant : montant} ;
     let url=this.link+"/facturier-sen/reglementsde";
     let params="params="+JSON.stringify(reEspParams);
@@ -46,7 +46,7 @@ export class FacturierService {
     });
   }
 
-  public detailreglementsde(reference_client:number):Promise<any>{
+  public detailreglementsde(reference_client:string):Promise<any>{
     let reEspParams={token:this.token,reference_client:reference_client};
     let url=this.link+"/facturier-sen/detailreglementsde";
     let params="params="+JSON.stringify(reEspParams);
