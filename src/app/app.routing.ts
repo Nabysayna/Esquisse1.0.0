@@ -59,7 +59,7 @@ import {GuideUserSuperviseurComponent} from "./guideusersuperviseur/guideusersup
 import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminpdv.component";
 import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi-pdv-creditation-cc/admin-multi-pdv-creditation-cc.component";
 import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
-
+import { WariComponent } from './wari/wari.component';
 
 const appRoutes: Routes = [
     { path: '', component: AuthComponentComponent },
@@ -76,6 +76,7 @@ const appRoutes: Routes = [
                 {path: 'CRM', component: CrmComponent},
                 {path: 'DASHBOARD', component: DashboardComponent},
                 {path: 'E-COMMERCE', component: ECommerceComponent},
+                {path: 'WARI', component: WariComponent},
                 {path: 'DEMANDEPRET', component: DemandepretComponent},
                 {path: 'GESTIONREPORTING', component: GestionreportingComponent},
                 {path: 'E-MONEY', component: ExpressoComponent},

@@ -1,5 +1,4 @@
 <div id="wrapper" style="font-family:'caviar dreams bold';">
-
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color: transparent !important; border-style: hidden; font-family:'caviar dreams bold';" role="navigation">
 
         <div  id="navbHead" ><app-navbar-top></app-navbar-top></div>
@@ -18,7 +17,7 @@
                 <ul id="gauche" class="nav in" id="side-menu">
                   <li role="presentation" style="background-color: #f39200; color: white; cursor: pointer;" (click)="geolocaliser()"><a style="color: white;" >GEOLOCALISER LE POINT</a></li>
                   <li *ngFor="let api of registredAPIs; let i = index" ><a [routerLink]="['/accueil', api]"> <img src="assets/icoservice-{{i+1}}.png" /><b>{{api}}</b> </a></li>
-                  <li role="presentation"><a [routerLink]="['/accueil', 'E-COMMERCE']"> <i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>
+                  <li role="presentation"><a [routerLink]="['/accueil', 'WARI']"> <img src="assets/warilogo.png" /> <b>WARI</b> </a></li>
                   <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
                 </ul>           
                 <h3 style="color: orange ; font-weight: 600 ; background-color: white ;margin-top: 0px;">Vos opèrations</h3>

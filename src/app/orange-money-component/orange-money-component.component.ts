@@ -11,6 +11,8 @@
 })
 export class OrangeMoneyComponentComponent implements OnInit {
 
+  adejaclick:boolean = false;
+
   numclient :  string ;
   mnt : string ;
   services = ['Sonatel', 'Orange Teranga', 'Energie Renouvelable', 'Senelec et Woyofal', 'Canal+', 'SDE', 'Education', 'Transport Rapido', 'Paiements Internet', 'Assurances'] ;
@@ -632,6 +634,7 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
 
   public showAddChildModal():void {
+    this.adejaclick = false;
     this.addChildModal.show();
   }
 
@@ -639,12 +642,14 @@ export class OrangeMoneyComponentComponent implements OnInit {
     this.addChildModal.hide();
   }
   public showmodalretrait():void{
+    this.adejaclick = false;
     this.modalretrait.show();
   }
   public hidemodalretrait():void{
     this.modalretrait.hide();
   }
   public showmodalretraitcode(){
+    this.adejaclick = false;
     this.modalretraitcode.show();
   }
   public hidemodalretraitcode(){
@@ -654,9 +659,11 @@ export class OrangeMoneyComponentComponent implements OnInit {
     this.modalretraitinter.hide();
   }
   public showmodalretraitinter(){
+    this.adejaclick = false;
     this.modalretraitinter.show();
   }
   public showmodalventecredit(){
+    this.adejaclick = false;
     this.modalventecredit.show();
   }
   public hidemodalventecredit(){

@@ -97,11 +97,11 @@
 							   <label>{{this.montant}}</label>
                            </div>
                        </div>
-                    <input type="button" (click)="payeroolusolar()" value="valider"  class="btn btn-success" />
+                    <input type="button" [disabled]="adejaclick==true" (click)="adejaclick=true;payeroolusolar()" value="valider"  class="btn btn-success" />
                     <input type="button" value="annuler" (click)="hidemodaloolu()" class="btn btn-danger" />
                 </div>
                 <div class="modal-footer">
-                    
+
                 </div>
         </div>
     </div>

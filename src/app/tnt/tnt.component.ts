@@ -54,6 +54,9 @@ export class TntComponent implements OnInit {
   filtreDeco = "" ;
   filtreCarte = "" ;
   dataImpression:any;
+
+  adejaclick:boolean = false;
+
   @ViewChild('modalabonnement') modalabonnement: ModalDirective;
   @ViewChild('modaldecodeur') modaldecodeur: ModalDirective;
   @ViewChild('modalcarte') modalcarte: ModalDirective;
@@ -178,17 +181,20 @@ export class TntComponent implements OnInit {
 
 
  public showmodalabonnement(){
-    this.modalabonnement.show();
+   this.adejaclick = false;
+   this.modalabonnement.show();
   }
 
  public showmodaldecodeur(){
-    this.modaldecodeur.show();
+   this.adejaclick = false;
+   this.modaldecodeur.show();
   }
   public hidemodaldecodeur(){
     this.modaldecodeur.hide();
   }
  public showmodalcarte(){
-    this.modalcarte.show();
+   this.adejaclick = false;
+   this.modalcarte.show();
   }
   public hidemodalcarte(){
     this.modalcarte.hide();

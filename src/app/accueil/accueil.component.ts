@@ -10,7 +10,6 @@ import {FacturierService} from "../services/facturier.service";
 import {UtilsService} from "../services/utils.service";
 import {TarifsService} from "../services/tarifs.service";
 
-
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { ZoningComponent } from 'app/zoning/zoning.component';
 
@@ -29,20 +28,19 @@ class Article {
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css']
 })
-export class AccueilComponent implements OnInit{
+
+export class AccueilComponent implements OnInit,AfterViewInit {
   articles=[];
   process=[];
    quinzeMinutes = 900000;
   registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
 
-  authorisedToUseCRM = false ;
   load="loader";
-  actif = -1 ;
   dataImpression:any;
   latitude : any ;
   longitude :any ;
   accuracy :any ;
-
+  processLength:number=0;
 
   @ViewChild('newoperation') public newOperation:ElementRef;
 
@@ -67,9 +65,12 @@ export class AccueilComponent implements OnInit{
        this.router.navigate(['']);
   }
 
-  ngAfterViewInit (){
-    this.processus();
+
+  ngAfterViewInit(){
+    localStorage.setItem("auredemarrage","yesca")
+    console.log("**YES CA**")
   }
+
 /*******************************************************************************************************/
 
 geolocaliser(){
@@ -119,36 +120,210 @@ geolocaliser(){
   processus(){
    
     setInterval(()=>{
-    
-    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
-      let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
-      let infoOperation:any;
-     if(mag==5){
-          infoOperation={'etat':false,'id':this.process.length,'load':'fa fa-shopping-cart fa-2x pull-left','color':'', 'errorCode':'*'};
-      }
-     else{
-           infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
-      }
-      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
-     // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
-  
 
-     if(sesion.data.operateur==5){
-        this.articles.push(sesion);
-        sessionStorage.setItem('panier',JSON.stringify(this.articles));
-        if(this.articles.length==1){
-            this.process.push(sesion);
+      if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+        let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
+        let infoOperation:any;
+        let sesion:any;
+        if(mag==5){
+            infoOperation={'etat':false,'id':this.process.length,'load':'fa fa-shopping-cart fa-2x pull-left','color':'', 'errorCode':'*'};
+            sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+            sessionStorage.removeItem('curentProcess');
         }
-      }
-      else{
-            
+        else{
+            infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+            sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+            sessionStorage.removeItem('curentProcess');
+        }
+        console.log("session======>"+JSON.stringify(sesion));
+        if(sesion.data.operateur==5){
+          this.articles.push(sesion);
+          sessionStorage.setItem('panier',JSON.stringify(this.articles));
+          if(this.articles.length==1){
             this.process.push(sesion);
-      }
-
+          }
+        }
+        else{
+           this.process.push(sesion);
+        }
      // console.log(sesion.etats.id);
-      sessionStorage.removeItem('curentProcess');
-      this.addComponent(this.process[this.process.length - 1]);
 
+        let operateur=sesion.data.operateur;
+      switch(operateur){
+        case 1:{
+                let operation=sesion.data.operation;
+                switch(operation){
+                  case 1:{
+                        this.validrechargementespece(sesion);
+                        break;
+                  }
+                  case 2:{
+                        this.validateachatjula(sesion);
+                        break;
+                  }
+                  case 3:{
+                        this.validatedetailfacturesenelec(sesion);
+                        break;
+                  }
+                  case 4:{
+                        this.validateachatcodewoyofal(sesion);
+                        break;
+                  }
+                  default:break;
+                }
+                   break ;
+          }
+          case 2:{
+             let operation=sesion.data.operation;
+
+              switch(operation){
+                case 1:{
+                       this.deposer(sesion);
+                       break;
+                       }
+                case 2:{
+                       this.retirer(sesion);
+                       break;
+                }
+                case 3:{
+                       this.retraitAvecCode(sesion);
+                       break;
+                }
+                case 4:{
+                       this.retraitCpteRecep(sesion);
+                       break;
+                }
+                case 5:{
+                       this.acheterCredit(sesion);
+                       break;
+                }
+                default :break;
+              }
+               break ;
+        }
+        case 3:{
+             let operation=sesion.data.operation;
+
+              switch(operation){
+                case 1:{
+                       this.deposertc(sesion);
+                       break;
+                       }
+                case 2:{
+                       this.retirertc(sesion);
+                       break;
+                }
+                case 5:{
+                        this.creditIZItc(sesion) ;
+                        break ;
+                      }
+                case 6:{
+                      console.log(sesion);
+                      this.retraitaveccodetc(sesion) ;
+                      break ;
+                      }
+                default :break;
+              }
+               break ;
+        }
+       case 4:{
+             let operation=sesion.data.operation;
+             console.log("here we go ...") ;
+            // console.log(sesion) ;
+             switch(operation){
+              case 1:{
+                   this.validnabon(sesion);
+                   break;
+              }
+              case 2:{
+                  this.vendreDecodeur(sesion);
+                  break;
+              }
+              case 3:{
+                  this.vendreCarte(sesion);
+                  break;
+              }
+              default : break;
+             }
+             break ;
+       }
+       case 6:{
+             let operation=sesion.data.operation;
+             switch(operation){
+               case 1:{
+                 this.cashInWizall(sesion);
+                 break;
+               }
+               case 2:{
+                 this.cashOutWizall(sesion);
+                 break;
+               }
+               case 5:{
+                 this.validationretraitbon(sesion);
+                 break;
+               }
+               case 6:{
+                 this.validerenvoibon(sesion);
+                 break;
+               }
+               case 7:{
+                 this.validerbonachat(sesion);
+                 break;
+               }
+              default : break;
+             }
+           break ;
+       }
+       case 7:{
+             let operation=sesion.data.operation;
+                 console.log(sesion);
+                 console.log('E-money');
+             switch(operation){
+              case 1:{
+                   this.cashInEmoney(sesion);
+                   break;
+              }
+              case 2:{
+                  this.cashOutEmoney(sesion);
+                  break;
+              }
+              case 3:{
+                  this.cashOutPIN(sesion);
+                  break;
+              }
+              default : break;
+             }
+             break;
+       }
+       case 8:{
+         let operation=sesion.data.operation;
+         console.log('FACTURIER');
+         switch(operation){
+              case 1:{
+                   this.paiemantsde(sesion);
+                   break;
+              }
+              case 2:{
+                  this.validerrapido(sesion);
+                  break;
+              }
+              case 3:{
+                  this.validerwoyofal(sesion);
+                  break;
+              }
+              case 4:{
+                  this.validerpaimentsenelec(sesion);
+                  break;
+              }
+              case 5:{
+                  this.payeroolusolar(sesion);
+                  break;
+              }
+              default : break;
+          }
+       }
+        default:break;
+      }
     }
     else{
      console.log('not nice');
@@ -242,13 +417,6 @@ geolocaliser(){
                               objet.etats.load='terminated';
                               objet.etats.color='red';
                               objet.etats.errorCode="c";
-                              clearInterval(periodicVerifierOMDepot) ;
-                            }
-                            else {
-                              objet.etats.etat=true;
-                              objet.etats.load='terminated';
-                              objet.etats.color='red';
-                              objet.etats.errorCode="bad";
                               clearInterval(periodicVerifierOMDepot) ;
                             }
                           }) ;
@@ -345,13 +513,6 @@ geolocaliser(){
                                    objet.etats.errorCode="c";
                                    clearInterval(periodicVerifierOMRetirer) ;
                                  }
-                                else {
-                                  objet.etats.etat=true;
-                                  objet.etats.load='terminated';
-                                  objet.etats.color='red';
-                                  objet.etats.errorCode="bad";
-                                  clearInterval(periodicVerifierOMRetirer) ;
-                                }
                               });
                             }
                         }
@@ -435,13 +596,6 @@ geolocaliser(){
                           objet.etats.load='terminated';
                           objet.etats.color='red';
                           objet.etats.errorCode="c";
-                          clearInterval(periodicVerifierOMRetraitCode) ;
-                        }
-                        else {
-                          objet.etats.etat=true;
-                          objet.etats.load='terminated';
-                          objet.etats.color='red';
-                          objet.etats.errorCode="bad";
                           clearInterval(periodicVerifierOMRetraitCode) ;
                         }
                       }) ;
@@ -554,13 +708,6 @@ geolocaliser(){
                                    objet.etats.errorCode="c";
                                    clearInterval(periodicVerifierOMAcheterCredit) ;
                                    }
-                                else{
-                                  objet.etats.etat=true;
-                                  objet.etats.load='terminated';
-                                  objet.etats.color='red';
-                                  objet.etats.errorCode="bad";
-                                  clearInterval(periodicVerifierOMAcheterCredit) ;
-                                }
                               }) ;
                             }
                           }
@@ -1279,13 +1426,6 @@ retrieveOperationInfo(item : any) : string{
                               objet.etats.errorCode="c";
                               clearInterval(periodicVerifierTCDepot) ;
                             }
-                            else {
-                              objet.etats.etat=true;
-                              objet.etats.load='terminated';
-                              objet.etats.color='red';
-                              objet.etats.errorCode="bad";
-                              clearInterval(periodicVerifierTCDepot) ;
-                            }
                           }) ;
                         }
                       }
@@ -1380,13 +1520,6 @@ retrieveOperationInfo(item : any) : string{
                                 objet.etats.errorCode="c";
                                 clearInterval(periodicVerifierTCRetirer) ;
                               }
-                              else {
-                                objet.etats.etat=true;
-                                objet.etats.load='terminated';
-                                objet.etats.color='red';
-                                objet.etats.errorCode="bad";
-                                clearInterval(periodicVerifierTCRetirer) ;
-                              }
                             }) ;
                           }
                         }
@@ -1479,13 +1612,6 @@ retrieveOperationInfo(item : any) : string{
                                 objet.etats.errorCode="c";
                                 clearInterval(periodicVerifierTCRetraitCode) ;
                               }
-                              else {
-                                objet.etats.etat=true;
-                                objet.etats.load='terminated';
-                                objet.etats.color='red';
-                                objet.etats.errorCode="bad";
-                                clearInterval(periodicVerifierTCRetraitCode) ;
-                              }
                             }) ;
                           }
                         }
@@ -1568,13 +1694,6 @@ retrieveOperationInfo(item : any) : string{
                                 objet.etats.load='terminated';
                                 objet.etats.color='red';
                                 objet.etats.errorCode="c";
-                                clearInterval(periodicVerifierTCRechargeIZI) ;
-                              }
-                              else {
-                                objet.etats.etat=true;
-                                objet.etats.load='terminated';
-                                objet.etats.color='red';
-                                objet.etats.errorCode="bad";
                                 clearInterval(periodicVerifierTCRechargeIZI) ;
                               }
                             }) ;

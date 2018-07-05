@@ -9,8 +9,8 @@ import {PostCashService} from "../services/postcash.service";
   styleUrls: ['./postcash.component.css'],
 })
 export class PostcashComponent implements OnInit {
-    formvisible='';
-    telephone:number;
+  adejaclick:boolean = false;
+  telephone:number;
     tel:number;
     montant:number;
     compte: string;
@@ -261,10 +261,10 @@ export class PostcashComponent implements OnInit {
         this.erreur = true ;
         this.errorMessage = postcashwebserviceList.errorMessage;
       }
-      
+
     });
   }
-  
+
   validationretraitespece(){
     console.log("validationretraitespeceaveccarte");
     this.errorMessage =  undefined;
