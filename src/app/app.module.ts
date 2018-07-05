@@ -184,6 +184,7 @@ import {OrangemoneyService} from "./services/orangemoney.service";
 import {ExpressocashService} from "./services/expressocash.service";
 import {MapsService} from "./services/maps.service";
 import {TarifsService} from "./services/tarifs.service";
+import { NewAnfantComponent } from './new-anfant/new-anfant.component';
 
 
 
@@ -295,6 +296,7 @@ import {TarifsService} from "./services/tarifs.service";
     ZoningComponent,
     AnnoncesComponent,
     AnnoncesuperviseurComponent,
+    NewAnfantComponent,
   ],
   imports: [
     BrowserModule,

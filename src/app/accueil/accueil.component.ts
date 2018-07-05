@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,ViewContainerRef,ComponentFactoryResolver } from '@angular/core';
 import { Router } from '@angular/router';
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
@@ -12,6 +12,7 @@ import {TarifsService} from "../services/tarifs.service";
 
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
+import { ZoningComponent } from 'app/zoning/zoning.component';
 
 
 class Article {
@@ -28,7 +29,7 @@ class Article {
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css']
 })
-export class AccueilComponent implements OnInit {
+export class AccueilComponent implements OnInit{
   articles=[];
   process=[];
    quinzeMinutes = 900000;
@@ -48,9 +49,9 @@ export class AccueilComponent implements OnInit {
 
   localisation : any ;
   messageGeolocation : any ;
+  sessionGlob:any;
 
-
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
 
 /******************************************************************************************************/
 
@@ -64,9 +65,11 @@ export class AccueilComponent implements OnInit {
 
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
-    this.processus();
   }
 
+  ngAfterViewInit (){
+    this.processus();
+  }
 /*******************************************************************************************************/
 
 geolocaliser(){
@@ -114,9 +117,9 @@ geolocaliser(){
 /******************************************************************************************************/
 
   processus(){
-
+   
     setInterval(()=>{
-
+    
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
       let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
       let infoOperation:any;
@@ -128,212 +131,30 @@ geolocaliser(){
       }
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
      // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
+  
 
      if(sesion.data.operateur==5){
         this.articles.push(sesion);
         sessionStorage.setItem('panier',JSON.stringify(this.articles));
         if(this.articles.length==1){
-          this.process.push(sesion);
+            this.process.push(sesion);
         }
       }
       else{
-           this.process.push(sesion);
+            
+            this.process.push(sesion);
       }
 
      // console.log(sesion.etats.id);
       sessionStorage.removeItem('curentProcess');
-      let operateur=sesion.data.operateur;
-      switch(operateur){
-        case 1:{
-                let operation=sesion.data.operation;
-                switch(operation){
-                  case 1:{
-                        this.validrechargementespece(sesion);
-                        break;
-                  }
-                  case 2:{
-                        this.validateachatjula(sesion);
-                        break;
-                  }
-                  case 3:{
-                        this.validatedetailfacturesenelec(sesion);
-                        break;
-                  }
-                  case 4:{
-                        this.validateachatcodewoyofal(sesion);
-                        break;
-                  }
-                  default:break;
-                }
-                   break ;
-        }
+      this.addComponent(this.process[this.process.length - 1]);
 
-        case 2:{
-             let operation=sesion.data.operation;
-
-              switch(operation){
-                case 1:{
-                       this.deposer(sesion);
-                       break;
-                       }
-                case 2:{
-                       this.retirer(sesion);
-                       break;
-                }
-                case 3:{
-                       this.retraitAvecCode(sesion);
-                       break;
-                }
-                case 4:{
-                       this.retraitCpteRecep(sesion);
-                       break;
-                }
-                case 5:{
-                       this.acheterCredit(sesion);
-                       break;
-                }
-                default :break;
-              }
-               break ;
-        }
-
-        case 3:{
-             let operation=sesion.data.operation;
-
-              switch(operation){
-                case 1:{
-                       this.deposertc(sesion);
-                       break;
-                       }
-                case 2:{
-                       this.retirertc(sesion);
-                       break;
-                }
-                case 5:{
-                        this.creditIZItc(sesion) ;
-                        break ;
-                      }
-                case 6:{
-                      console.log(sesion);
-                      this.retraitaveccodetc(sesion) ;
-                      break ;
-                      }
-                default :break;
-              }
-               break ;
-        }
-
-
-       case 4:{
-             let operation=sesion.data.operation;
-             console.log("here we go ...") ;
-            // console.log(sesion) ;
-             switch(operation){
-              case 1:{
-                   this.validnabon(sesion);
-                   break;
-              }
-              case 2:{
-                  this.vendreDecodeur(sesion);
-                  break;
-              }
-              case 3:{
-                  this.vendreCarte(sesion);
-                  break;
-              }
-              default : break;
-             }
-             break ;
-       }
-
-       case 6:{
-             let operation=sesion.data.operation;
-             switch(operation){
-               case 1:{
-                 this.cashInWizall(sesion);
-                 break;
-               }
-               case 2:{
-                 this.cashOutWizall(sesion);
-                 break;
-               }
-               case 5:{
-                 this.validationretraitbon(sesion);
-                 break;
-               }
-               case 6:{
-                 this.validerenvoibon(sesion);
-                 break;
-               }
-               case 7:{
-                 this.validerbonachat(sesion);
-                 break;
-               }
-              default : break;
-             }
-           break ;
-       }
-
-       case 7:{
-             let operation=sesion.data.operation;
-                 console.log(sesion);
-                 console.log('E-money');
-             switch(operation){
-              case 1:{
-                   this.cashInEmoney(sesion);
-                   break;
-              }
-              case 2:{
-                  this.cashOutEmoney(sesion);
-                  break;
-              }
-              case 3:{
-                  this.cashOutPIN(sesion);
-                  break;
-              }
-              default : break;
-             }
-             break;
-       }
-
-       case 8:{
-         let operation=sesion.data.operation;
-         console.log('FACTURIER');
-
-         switch(operation){
-              case 1:{
-                   this.paiemantsde(sesion);
-                   break;
-              }
-              case 2:{
-                  this.validerrapido(sesion);
-                  break;
-              }
-              case 3:{
-                  this.validerwoyofal(sesion);
-                  break;
-              }
-              case 4:{
-                  this.validerpaimentsenelec(sesion);
-                  break;
-              }
-              case 5:{
-
-                  this.payeroolusolar(sesion);
-                  break;
-              }
-              default : break;
-          }
-       }
-
-        default:break;
-      }
     }
     else{
      console.log('not nice');
     }
   },3000);
-
+  
   }
 
 
@@ -1235,7 +1056,7 @@ geolocaliser(){
 /****************************************************************************************************/
 
 
-  retrieveOperationInfo(item : any) : string{
+retrieveOperationInfo(item : any) : string{
 
 /* OM */
      if(item.data.operateur==2 ){
@@ -2087,6 +1908,44 @@ geolocaliser(){
    return Number(prix).toLocaleString();
   }
 
+  /**************************************** */
+  /*--------------Encoures------------------*/ 
+
+  @ViewChild('containerEncour', {read: ViewContainerRef}) containerEncour: ViewContainerRef;
+
+  // Keep track of list of generated components for removal purposes
+  components = [];
+
+
+  draggableComponentClass = ZoningComponent;
+  n:number=0;
+  
+  addComponent(sesion) {
+
+   // let infoOperation={'etat':false,'id':1,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+   // let pocess = {'data':{'nom':'Tigo cash depot','operateur':3,'operation':1,'num':this.n,'montant':200},'etats':infoOperation,'dataI':''};
+    sessionStorage.setItem('curent',JSON.stringify(sesion));
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.draggableComponentClass);
+    const component = this.containerEncour.createComponent(componentFactory);
+  
+    // Push the component so that we can keep track of which components are created
+    this.components.push(component);
+    console.log(this.components.length);
+    this.n = this.n +1;
+  }
+
+  removeComponent() {
+    // Find the component
+    const component = this.components.find((component) => component.instance instanceof this.draggableComponentClass);
+    const componentIndex = this.components.indexOf(component);
+
+    if (componentIndex !== -1) {
+      // Remove component from both view and array
+      this.containerEncour.remove(this.containerEncour.indexOf(component));
+      this.components.splice(componentIndex, 1);
+    }
+  }
 
 }
 
