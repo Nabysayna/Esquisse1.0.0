@@ -28,11 +28,11 @@
                           <form style="width: 100%;">
                           <div class="form-inline" style="width: 100%;">
                               <div class="form-check form-check-inline">
-                                  <input  [(ngModel)]="this.codewariRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Code Wari" checked >
+                                  <input  [(ngModel)]="this.codewariRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Code Wari" checked>
                                   <label class="form-check-label" for="exampleRadios1">
                                     Code Wari
                                   </label>
-                                  <input [(ngModel)]="this.moyenpayementRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value=" retrait avec moyen de paiement">
+                                  <input [(ngModel)]="this.moyenpayementRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="retrait avec moyen de paiement">
                                   <label class="form-check-label" for="exampleRadios2">
                                     Retrait avec moyen de paiement (carte, voucher , wari pass ect.)
                                   </label>
@@ -68,7 +68,7 @@
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                         <form>
                             <fieldset>
-                              <legend>Retrait</legend>
+                              <legend>Envoyeur</legend>
                               <div class="row">
                                 <div class="col-lg-3 col-md-3">
                                   <label style="margin-top:1.5rem">prenom</label>
@@ -192,6 +192,16 @@
                       <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
                       <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
                       <div class="row" style="width:60%">
+                          <div class="row" style="text-align:center;">
+                              <div class="col-lg-3 col-md-3">
+                                <label style="margin-top:1.5rem">choisir un pays de destination</label>
+                              </div>
+                              <div class="col-lg-8 col-md-8">
+                                  <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.paysdestination" name="paysdestination">
+                                      <option value="idcard">Sénégal</option>
+                                  </select>                                 
+                               </div>
+                          </div>
                           <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                               <form>
                                   <fieldset>

@@ -33,7 +33,9 @@ export class WariComponent implements OnInit {
     compte:any;
     carte:any;
     motif:any;
-
+    loading= false ;
+    erreur= false ;
+    paysdestination:any;
     token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
     
     constructor(public _wariservice:WariService) { }
@@ -43,28 +45,45 @@ export class WariComponent implements OnInit {
     }
 
     retraitrecherche () {
-      this.retraitcodeconfirme = true;
-
       let moyenpaiement = this.codewariRadio || this.moyenpayementRadio;
       let type = this.wariRadio || this.rembourchementRadio;
 
-      let datas = "2"+ "/" + moyenpaiement+ "/" +this.code+ "/" + type;
+      // let datas = "0"+ "/" + moyenpaiement+ "/" +this.code+ "/" + type;
+      let datas = this.code;
+      this.loading = true ;
+      this.erreur = false ;
+      this._wariservice.retaitrerecherche(this.token,datas).then( response => {
+          console.log(response)
+          this.loading = false ;
+          this.retraitcodeconfirme = true;
+      });
 
-      console.log("datas: "+ datas);
-      this.reinitialise();
     }
 
     retraitconfirmer () {
         let datas = "2"+ "/" + this.prenomA + "/" +this.nomA+ "/" +this.adresseA + "/" +this.cellulaireA+ "/" +this.montant+ "/" +this.prenomB + "/" +this.nomB+ "/" +this.typepiece+"/"+this.numero+ "/" +this.pays+ "/" +this.datededelivrance+ "/" +this.datedevalidite ;
-        console.log("datas :" +datas);
-        this.reinitialise();
+        //let datas ="2"+ "/" + this.prenomEnvoyeur + "/" +this.nomEnvoyeur+ "/" +this.adresseEnvoyeur + "/" +this.cellulaireEnvoyeur+ "/" + "/" +this.montant+ "/" +this.prenomBeneficiaire + "/" +this.nomBeneficiaire+ "/" +this.typepieceBeneficiaire+"/"+this.numeroPieceBeneficiaire+ "/" +this.paysBeneficiaire+ "/" +this.datededelivranceBeneficiaire+ "/" +this.datedevaliditeBeneficiaire;
+        this.loading = true ;
+        this.erreur = false ;
+        this._wariservice.retaitconfirmer(this.token,datas).then( response => {
+            console.log(response);
+            this.loading = false ;
+            this.reinitialise();
+        });
     }
 
     envoyer () {
-      let modereception = this.espece || this.wallet || this.compte || this.carte;
-      let datas = "1"+ "/" + this.prenomA + "/" +this.nomA+ "/" +this.adresseA + "/" +this.cellulaireA+ "/" +this.montant+ "/" +this.motif+"/"+this.numero+ "/" +this.pays+ "/" +this.datededelivrance+ "/" +this.datedevalidite + "/" + this.prenomB + "/" +this.nomB+ "/" +this.adresseB + "/" +this.cellulaireB+ "/" +  modereception;
-      console.log("datas :" +datas);
-      this.reinitialise();
+        let modereception = this.espece || this.wallet || this.compte || this.carte;
+        let datas = "1"+ "/" + this.prenomA + "/" +this.nomA+ "/" +this.adresseA + "/" +this.cellulaireA+ "/" +this.montant+ "/" +this.motif+ "/" +this.typepiece + "/"+this.numero+ "/" +this.pays+ "/" +this.datededelivrance+ "/" +this.datedevalidite + "/" + this.prenomB + "/" +this.nomB+ "/" +this.adresseB + "/" +this.cellulaireB+ "/" +  modereception;
+
+        //let datas = "1"+ "/" + this.prenomEnvoyeur + "/" +this.nomEnvoyeur+ "/" +this.adresseEnvoyeur + "/" +this.cellulaireEnvoyeur+ "/" +this.montantEnvoyeur+ "/" +this.motifEnvoyeur+ "/" +this.typepieceEnvoyeur + "/"+this.numeroPieceEnvoyeur+ "/" +this.paysEnvoyeur+ "/" +this.datededelivranceEnvoyeur+ "/" +this.datedevaliditeEnvoyeur + "/" + this.prenomBeneficiaire + "/" +this.nomBeneficiaire+ "/" +this.adresseBeneficiaire + "/" +this.cellulaireBeneficiaire+ "/" +  modereceptionBeneficiaire;
+        this.loading = true ;
+        this.erreur = false ;
+        this._wariservice.envoi(this.token,datas).then( response => {
+            console.log(response);
+            this.loading = false ;
+            this.reinitialise();
+        });
     }
 
     reinitialise(){

@@ -23,36 +23,38 @@ export class WariService {
   }
 
   public envoi(token:string,data:string) : Promise<{}[]> {
-    let link=this.link+"/wari/envoi";
+    let link=this.link+"/wari-sen/requerirControllerWari";
     console.log(link);
-    let params="params="+JSON.stringify({token:data,requete:data});
+    let params="params="+JSON.stringify({token:token,requete:data});
     return new Promise( (resolve, reject) => {
       this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-       resolve(JSON.parse(data));
+          console.log(data)
+          resolve(data);
       });
     });
   }
 
   public retaitrerecherche(token:string,data:string) : Promise<{}[]> {
-    let link=this.link+"/wari/envoi";
+    let link=this.link+"/wari-sen/infocode";
     console.log(link);
-    let params="params="+JSON.stringify({token:data,requete:data});
+    let params="params="+ JSON.stringify({token:token, code:data});
+      // let params = JSON.stringify({token:"azerty", code:data});
       return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-          console.log(JSON.parse(data))
-          resolve(JSON.parse(data));
+            console.log(data);
+            resolve(data);
         });
       });
   }
 
   public retaitconfirmer(token:string,data:string) : Promise<{}[]> {
-    let link=this.link+"/wari/envoi";
+    let link=this.link+"/wari-sen/requerirControllerWari";
     console.log(link);
-    let params="params="+JSON.stringify({token:data,requete:data});
+    let params="params="+JSON.stringify({token:token,requete:data});
       return new Promise( (resolve, reject) => {
         this.http.post(link,params,{headers:this.headers}).map(res =>res.json()).subscribe(data =>{
-          console.log(JSON.parse(data))
-          resolve(JSON.parse(data));
+            console.log(data)
+            resolve(data);
         });
       });
   }
