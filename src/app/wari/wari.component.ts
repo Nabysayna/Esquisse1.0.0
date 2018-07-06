@@ -63,6 +63,7 @@ export class WariComponent implements OnInit {
     retraitconfirmer () {
         let datas = "2"+ "/" + this.prenomA + "/" +this.nomA+ "/" +this.adresseA + "/" +this.cellulaireA+ "/" +this.montant+ "/" +this.prenomB + "/" +this.nomB+ "/" +this.typepiece+"/"+this.numero+ "/" +this.pays+ "/" +this.datededelivrance+ "/" +this.datedevalidite ;
         //let datas ="2"+ "/" + this.prenomEnvoyeur + "/" +this.nomEnvoyeur+ "/" +this.adresseEnvoyeur + "/" +this.cellulaireEnvoyeur+ "/" + "/" +this.montant+ "/" +this.prenomBeneficiaire + "/" +this.nomBeneficiaire+ "/" +this.typepieceBeneficiaire+"/"+this.numeroPieceBeneficiaire+ "/" +this.paysBeneficiaire+ "/" +this.datededelivranceBeneficiaire+ "/" +this.datedevaliditeBeneficiaire;
+        console.log(datas);
         this.loading = true ;
         this.erreur = false ;
         this._wariservice.retaitconfirmer(this.token,datas).then( response => {
@@ -75,7 +76,7 @@ export class WariComponent implements OnInit {
     envoyer () {
         let modereception = this.espece || this.wallet || this.compte || this.carte;
         let datas = "1"+ "/" + this.prenomA + "/" +this.nomA+ "/" +this.adresseA + "/" +this.cellulaireA+ "/" +this.montant+ "/" +this.motif+ "/" +this.typepiece + "/"+this.numero+ "/" +this.pays+ "/" +this.datededelivrance+ "/" +this.datedevalidite + "/" + this.prenomB + "/" +this.nomB+ "/" +this.adresseB + "/" +this.cellulaireB+ "/" +  modereception;
-
+        console.log(datas);
         //let datas = "1"+ "/" + this.prenomEnvoyeur + "/" +this.nomEnvoyeur+ "/" +this.adresseEnvoyeur + "/" +this.cellulaireEnvoyeur+ "/" +this.montantEnvoyeur+ "/" +this.motifEnvoyeur+ "/" +this.typepieceEnvoyeur + "/"+this.numeroPieceEnvoyeur+ "/" +this.paysEnvoyeur+ "/" +this.datededelivranceEnvoyeur+ "/" +this.datedevaliditeEnvoyeur + "/" + this.prenomBeneficiaire + "/" +this.nomBeneficiaire+ "/" +this.adresseBeneficiaire + "/" +this.cellulaireBeneficiaire+ "/" +  modereceptionBeneficiaire;
         this.loading = true ;
         this.erreur = false ;
