@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Input,Output,EventEmitter } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router, CanActivate } from '@angular/router';
 import {FacturierService} from "../services/facturier.service";
@@ -33,6 +33,12 @@ export class SenelecComponent implements OnInit {
   }
 
   @ViewChild('modalsenelec') public modalsenelec:ModalDirective;
+  @Input() bbssenelec:number=0;
+  @Output() changementSenelec=new EventEmitter();
+  increment(){
+    this.bbssenelec++;
+    this.changementSenelec.emit(this.bbssenelec);
+  }
   /******************************************************************************************************/
   showmodalsenelec(){
     this.detailfactsenelec();
@@ -88,6 +94,7 @@ export class SenelecComponent implements OnInit {
 
   validerpaimentsenelec(){
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service}));
+    this.increment();
     this.hidemodalsenelec();
   }
 

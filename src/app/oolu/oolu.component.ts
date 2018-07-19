@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef,Input,Output,EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 
@@ -23,6 +23,12 @@ export class OoluComponent implements OnInit {
   ngOnInit() {
    }
   @ViewChild('modaloolu') public modaloolu:ModalDirective;
+  @Input() bbsoolu:number=0;
+  @Output() changementOolu=new EventEmitter();
+  increment(){
+    this.bbsoolu++;
+    this.changementOolu.emit(this.bbsoolu);
+  }
   showmodaloolu(){
   if(this.telephone!="" && this.telephone!=undefined && this.montant!="" && this.montant!=undefined && this.compte!="" && this.compte!=undefined){
         let tab=this.telephone.split("");
@@ -62,6 +68,7 @@ export class OoluComponent implements OnInit {
 
   payeroolusolar(){
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'OOLU SOLAR','operateur':8,'operation':5,'telephone':this.telephone.toString(), 'compte':this.compte, 'montant':this.montant}));
+    this.increment();
     this.montant=undefined;
     this.compte=undefined;
     this.telephone=undefined;

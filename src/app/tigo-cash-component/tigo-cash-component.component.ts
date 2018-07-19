@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Input,Output,EventEmitter } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TigocashService } from '../services/tigocash.service';
 
@@ -64,13 +64,20 @@ export class TigoCashComponentComponent implements OnInit {
    this.coderetrait=undefined;
    this.mnt=undefined;
   }
+  @Input() bbstc:number=0;
+  @Output() changementTc=new EventEmitter();
+  increment(){
+    this.bbstc++;
+    this.changementTc.emit(this.bbstc);
+  }
+
   /***********************************/
   /********depot**********************/
       depot(){
-
-
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash depot','operateur':3,'operation':1,'num':this.telephone,'montant':this.montant}));
-    this.hidemodaldepot();
+        // console.log("anvant incremente");
+         //this.increment();
+         this.hidemodaldepot();
 //         this.reinitialiser();
       }
   /***********************************/
@@ -80,7 +87,7 @@ export class TigoCashComponentComponent implements OnInit {
          console.log({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant});
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant}));
          this.reinitialiser();
-    this.hidemodalretrait();
+         this.hidemodalretrait();
       }
   /***********************************/
   /********retrait**********************/
@@ -156,6 +163,7 @@ export class TigoCashComponentComponent implements OnInit {
   /**********************************/
   /**********les modals***************/
 	  showmodaldepot(){
+     this.depot();
 	   this.modaldepot.show();
 	  }
 	  hidemodaldepot(){

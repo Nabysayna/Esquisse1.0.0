@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild,Input,Output,EventEmitter} from '@angular/core';
 import { ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 import {WizallService} from "../services/wizall.service";
 
@@ -47,6 +47,12 @@ export class WizallComponent implements OnInit {
     this.messageretraitcasherror=false;
     this.errorverifcode=false;
     this.messagesecondcode=false;
+  }
+  @Input() bbswizall:number=0;
+  @Output() changementWizall=new EventEmitter();
+  increment(){
+    this.bbswizall++;
+    this.changementWizall.emit(this.bbswizall);
   }
 
   @ViewChild('modaldepot') public modaldepot:ModalDirective;
@@ -133,6 +139,7 @@ export class WizallComponent implements OnInit {
   public validerenvoibon(){
     console.log({'nom':'Wizall envoi de bon','operateur':6,'operation':6,prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB})
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall envoi de bon','operateur':6,'operation':6,prenomE:this.prenomE,nomE:this.nomE,telE:this.telE,nationalite:this.nationalite,type_piece:this.type_piece,num_card:this.num_card,montant:this.montant,prenomB:this.prenomB,nomB:this.nomB,telB:this.telB}));
+    this.increment();
     this.hidemodalenvoiboncash();
     this.reinitialiser();
   }
@@ -231,17 +238,20 @@ export class WizallComponent implements OnInit {
     let montantRetrait = Number(this.montant) ;
     let data={'nom':'Wizall retrait de bon','operateur':6,'operation':5, 'nationalite':this.nationalite,'num_card':this.num_card,'type_carte':this.type_piece,'codebon':this.secondcode,'code_validation':this.codebon, 'montant':montantRetrait };
     sessionStorage.setItem('curentProcess',JSON.stringify(data) ) ;
+    this.increment();
     this.hidemodalretraitbon();
   }
 
   deposer(){
     this.mnt = Number(this.mnt) + Number(this.fraisDepot)+"" ;
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall depot','operateur':6,'operation':1,'montant':this.mnt,'num':this.numclient}));
+    this.increment();
     this.fermermodaldepot() ;
   }
 
   retirer(){
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wizall retrait','operateur':6,'operation':2,'montant':this.mnt,'num':this.numclient}));
+    this.increment();
     this.fermermodalretrait() ;
   }
 

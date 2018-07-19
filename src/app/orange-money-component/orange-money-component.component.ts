@@ -1,5 +1,5 @@
   import { PatternValidator } from '@angular/forms';
-  import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+  import {Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
   import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
   import {OrangemoneyService} from "../services/orangemoney.service";
 
@@ -40,6 +40,19 @@ export class OrangeMoneyComponentComponent implements OnInit {
   cni:string;
   date:string;
   verifretraitcode=[false,false,false,false];
+  @Input() bbs:number=0;
+  @Output() changementOm=new EventEmitter();
+  increment() {
+    this.bbs++;
+    console.log("si incremente bi"+this.bbs);
+    this.changementOm.emit(this.bbs);
+  }
+
+  decrement() {
+    this.bbs--;
+    this.changementOm.emit(this.bbs);
+  }
+
 
   constructor(private _omService:OrangemoneyService) {
   }
@@ -464,7 +477,8 @@ export class OrangeMoneyComponentComponent implements OnInit {
   deposer(){
 
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money depot','operateur':2,'operation':1,'montant':this.mnt,'num':this.numclient}));
-
+           this.increment();
+          // console.log("changement cote om "+this.bbs);
          // this.loading = false ;
          // this.depotreussi=true;
           this.numclient = undefined ;
@@ -501,12 +515,12 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
   retirer(){
 
-          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':2,'montant':this.mnt,'numclient':this.numclient}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':2,'montant':this.mnt,'numclient':this.numclient}));
 
-
+    this.increment();
     this.modalretrait.hide();
-          this.numclient = undefined ;
-          this.mnt = undefined;
+    this.numclient = undefined ;
+    this.mnt = undefined;
     /*let requete = "2/"+this.numclient+"/"+this.mnt ;
     this.loading = true ;
     this.omService.requerirControllerOM(requete).then( resp => {
@@ -535,7 +549,7 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':this.prenom,'nomclient':this.nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
 //    let requete = "3/"+this.coderetrait+"/"+this.prenom+"/"+this.nom+"/"+this.date+"/"+this.cni+"/"+this.numclient;
-
+    this.increment();
     this.hidemodalretraitcode() ;
 
     this.numclient = undefined ;
@@ -617,7 +631,7 @@ export class OrangeMoneyComponentComponent implements OnInit {
   acheterCredit(){
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'OrangeMoney Vente Crédit','operateur':2,'operation':5,'numclient':this.numclient,'montant':this.mnt}));
     this.hidemodalventecredit() ;
-
+    this.increment();
     this.loading = false ;
     this.numclient = undefined ;
     this.mnt = undefined;

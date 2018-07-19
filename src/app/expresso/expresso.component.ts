@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,Input,Output,EventEmitter } from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
@@ -60,7 +60,8 @@ export class ExpressoComponent implements OnInit {
 
   constructor(private expressocashwebservice : ExpressocashService) {
   }
-
+  @Input() bbsem:number=0;
+  @Output() changementEm=new EventEmitter();
   @ViewChild('modaldepot') public modaldepot:ModalDirective;
   @ViewChild('modalretrait') public modalretrait:ModalDirective;
   @ViewChild('modalretraitConfirm') public modalretraitConfirm:ModalDirective;
@@ -71,7 +72,10 @@ export class ExpressoComponent implements OnInit {
   
   public testtab=[];
   ngOnInit() { }
-
+  increment(){
+    this.bbsem++;
+    this.changementEm.emit(this.bbsem);
+  }
   // retrait simple
   infoDepot:any;
   
@@ -82,6 +86,7 @@ export class ExpressoComponent implements OnInit {
     this.hidemodaldepot();
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':1,'numclient':this.numclient,'mnt':this.mnt}));
+    this.increment();
   }
 
 /************************************************************************/
@@ -118,8 +123,8 @@ export class ExpressoComponent implements OnInit {
   public faireretraitsimpleConfirm(){
 
       this.hidemodalretraitConfirm();
-
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':2,'transactionReference':this.transactionReference,'OTP':this.OTP,montant:this.mnt,tel:this.numclient}));
+      this.increment();
   }
 
 /************************************************************************/
@@ -153,9 +158,10 @@ export class ExpressoComponent implements OnInit {
 
   public faireretraitaveccodeConfirm(){
 
-      this.hidemodalretraitcodeConfirm();
+    this.hidemodalretraitcodeConfirm();
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money retrait avec code','operateur':7,'operation':3,'pin':this.pin,'cni':this.cni,montant:parseInt(this.infoRetraitaveccode.amount),tel:this.infoRetraitaveccode.receiver}));
+    this.increment();
   }
 /************************************************************************/
 

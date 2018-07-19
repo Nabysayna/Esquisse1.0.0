@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Input,Output,EventEmitter} from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 import {FacturierService} from "../services/facturier.service";
 
@@ -24,6 +24,12 @@ export class SdeComponent implements OnInit {
 
   ngOnInit() {
     console.log("sde")
+  }
+  @Input() bbssde:number=0;
+  @Output() changementSde=new EventEmitter();
+  increment(){
+    this.bbssde++;
+    this.changementSde.emit(this.bbssde);
   }
 
   @ViewChild('modalsde') public modalsde:ModalDirective;
@@ -82,6 +88,7 @@ export class SdeComponent implements OnInit {
 
   paimantsde(){
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'montant':this.detailfacturesde.montant, 'reference_client':this.detailfacturesde.reference_client, 'reference_facture':this.detailfacturesde.reference_facture,'service':this.detailfacturesde.service}));
+    this.increment();
     this.hidemodalsde();
   }
 

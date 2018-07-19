@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Input,Output,EventEmitter} from '@angular/core';
 import { Router} from '@angular/router';
 import { ModalDirective} from 'ng2-bootstrap/ng2-bootstrap';
 import {FacturierService} from "../services/facturier.service";
@@ -22,6 +22,12 @@ export class RapidoComponent implements OnInit {
 
 
   constructor(private router: Router, private _facturierService : FacturierService) { }
+  @Input() bbsrapido:number=0;
+  @Output() changementRapido=new EventEmitter();
+  increment(){
+    this.bbsrapido++;
+    this.changementRapido.emit(this.bbsrapido);
+  }
 
   @ViewChild('modalrapido') public modalrapido:ModalDirective;
 
@@ -37,7 +43,10 @@ export class RapidoComponent implements OnInit {
   }
 
   validerrapido(){
-    this._facturierService.validerrapido(this.numclient+"",this.montant+"",this.badge+"").then(response =>{
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'rapido','operateur':8,'operation':2,'montant':this.montant,'badge':this.badge,'numclient':this.numclient}));
+    this.increment();
+    this.hidemodalrapido();
+    /* this._facturierService.validerrapido(this.numclient+"",this.montant+"",this.badge+"").then(response =>{
       console.log(response) ;
       if(typeof response !== 'object') {
         this.message = true ;
@@ -60,6 +69,7 @@ export class RapidoComponent implements OnInit {
           },
         }
         sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+        
         this.router.navigate(['accueil/impression']);
         this.hidemodalrapido();
       }else {
@@ -87,7 +97,7 @@ export class RapidoComponent implements OnInit {
       }
       this.message = true ;
       this.hidemodalrapido();
-    });
+    });*/
   }
 
 

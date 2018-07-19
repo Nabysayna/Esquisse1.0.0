@@ -1,0 +1,126 @@
+<div class="col-sm-12">
+    <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
+        <div class="panel-heading">
+            <h2>TigoCash</h2>
+
+        </div>
+        <!-- /.panel-heading -->
+
+        <div class="cover"></div>
+
+        <div class="panel-body">
+            <!-- Nav tabs -->
+            <div id="om-options">
+                <a href="#depot" (click)="reinitialiser()" style="padding-left: 4rem; padding-right: 4rem;"   data-toggle="tab">Depôt</a>
+                
+                <a href="#retrait" (click)="reinitialiser()" style="padding-left: 4rem; padding-right: 4rem;"  data-toggle="tab">Retrait </a>
+                
+                <a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
+
+<!--                 <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
+                
+                <a href="#achatcred" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Vente crédit</a>
+                
+            </div>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade col-sm-12 col-xs-12 in" id="depot">
+                        <h2>Dépôt TigoCash</h2>
+                        <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+							<div class="form-inline">
+								 <label>Numéro du client  :</label>
+								 <input autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
+                            </div>
+                            <div class="form-inline">
+								 <label>Montant transfert :</label>
+								 <input type="text" autocomplete="off"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
+                            </div>
+                            <button style="margin-top: 1rem;"   type="submit" class="btn btn-success" >Valider</button>
+                        </form>
+				</div>
+				<div class="tab-pane fade col-sm-12 col-xs-12 in" id="retrait">
+					<h2>Retrait TigoCash</h2>
+					<form  (ngSubmit)="retirermodal()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+						<div class="form-inline">
+							 <label>Numéro du client  :</label>
+							 <input autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
+						</div>
+						<div class="form-inline">
+							 <label>Montant  :</label>
+							 <input type="text" autocomplete="off"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
+						</div>
+						<button style="margin-top: 1rem;"   type="submit" class="btn btn-success" >Valider</button>
+					</form>
+			</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #addChildModal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+		<div class="modal-dialog modal-sm">
+		    <div class="modal-content" >
+		      <div class="modal-header">
+				<button type="button" class="close pull-right" aria-label="Close" (click)="hideAddChildModal()">
+				    <span aria-hidden="true">&times;</span>
+		        </button>
+	            <h4 class="modal-title" id="myModalLabel">{{labelModal}}.</h4>
+		      </div>
+		      <div class="modal-body">
+		
+				 <div>
+					 <form class="form">
+						 <div class="form-group">
+							 <label >numero client : {{numclient}}</label>
+						 </div>
+						 <div class="form-group">
+							 <label >montant : {{mnt}}</label>
+						 </div>
+					 </form>
+					
+				 </div>
+		      </div>
+		      <div class="modal-footer">
+				  <input type="button" *ngIf="b1" value="valider"  (click)="tigo('1')" class="btn btn-success" />
+				  <input type="button" *ngIf="b2" value="valider"  (click)="tigo('2')" class="btn btn-success" />
+				  <input type="button" *ngIf="b3" value="valider"  (click)="tigo('3')" class="btn btn-success" />
+				  <input type="button" value="fermer" (click)="hideAddChildModal()" class="btn btn-danger" />
+		      </div>
+		</div> 
+</div>
+<div bsModal #modalretrait="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" >
+		    <div class="modal-header">
+				<button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalretrait()">
+				    <span aria-hidden="true">&times;</span>
+		        </button>
+	            <h4 class="modal-title" id="myModalLabel">Retrait TigoCash.</h4>
+		    </div>
+		    <div class="modal-body">
+		
+				 <div>
+					 <form class="form">
+						 <div class="form-group">
+							 <label >numero client : {{numclient}}</label>
+						 </div>
+						 <div class="form-group">
+							 <label >montant : {{mnt}}</label>
+						 </div>
+					 </form>
+					
+				 </div>
+		    </div>
+		    <div class="modal-footer">
+				  <input type="button" value="valider"  (click)="deposer()" class="btn btn-success" />
+				  <input type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" />
+			</div>
+		</div>
+	</div> 
+</div>
+
+<div *ngIf="this.loading">
+    <app-loader></app-loader>    
+</div>

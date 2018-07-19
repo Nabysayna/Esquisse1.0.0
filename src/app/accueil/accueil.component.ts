@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import {TntService} from "../services/tnt.service";
 import {PostCashService} from "../services/postcash.service";
@@ -29,9 +29,29 @@ class Article {
 export class AccueilComponent implements OnInit {
   articles=[];
   process=[];
-   quinzeMinutes = 900000;
+  om:boolean=false;
+  tc:boolean=false;
+  em:boolean=false;
+  pc:boolean=false;
+  wizall:boolean=false;
+  Tnt:boolean=false;
+  Sde:boolean=false;
+  rapido:boolean=false;
+  woyofal:boolean=false;
+  senelec:boolean=false;
+  oolu:boolean=false;
+  gestionReporting:boolean=false;
+  guide:boolean=false;
+  pret:boolean=false;
+  ecom:boolean=false;
+  quinzeMinutes = 900000;
   registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
-
+  oms=[
+       {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"col-xs-2 col-sm-2 loader","etat":0},
+       {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"row loader","etat":0},
+       {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"row loader","etat":0},
+       {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"row loader","etat":0}
+      ];
   authorisedToUseCRM = false ;
   load="loader";
   actif = -1 ;
@@ -62,7 +82,299 @@ export class AccueilComponent implements OnInit {
 
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
-    this.processus();
+      // this.processus();
+   /* for(let i=0;i<this.om.length;i++){
+      this.om[i].style["display"]='none';
+      this.om[i].style["background-color"]='blue';
+      this.om[i].style["visibility"]='hidden';
+
+    }*/
+    
+  }
+  afficheApi(api:string){
+      if(api=='ORANGEMONEY'){
+          this.om=true;
+          this.tc=false;
+          this.em=false;
+          this.pc=false;
+          this.wizall=false;
+          this.Tnt=false;
+          this.Sde=false;
+          this.rapido=false;
+          this.woyofal=false;
+          this.senelec=false;
+          this.oolu=false;
+          this.gestionReporting=false;
+          this.pret=false;
+          this.guide=false;
+          this.ecom=false;
+
+      }
+      if(api=="TIGOCASH"){
+          this.tc=true;
+          this.om=false;
+          this.em=false;
+          this.pc=false;
+          this.wizall=false;
+          this.Tnt=false;
+          this.Sde=false;
+          this.rapido=false;
+          this.woyofal=false;
+          this.senelec=false;
+          this.oolu=false;
+          this.gestionReporting=false;
+          this.pret=false;
+          this.guide=false;
+          this.ecom=false;
+
+      }
+      if(api=="POSTECASH"){
+          this.pc=true;
+          this.tc=false;
+          this.om=false;
+          this.em=false
+          this.wizall=false;
+          this.Tnt=false;
+          this.Sde=false;
+          this.rapido=false;
+          this.woyofal=false;
+          this.senelec=false;
+          this.oolu=false;
+          this.gestionReporting=false;
+          this.pret=false;
+          this.guide=false;
+          this.ecom=false;
+      }
+      if(api=="E-MONEY"){
+        this.em=true;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.wizall=false;
+        this.Tnt=false;
+        this.Sde=false;
+        this.rapido=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+      if(api=="WIZALL"){
+        this.wizall=true;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.Tnt=false;
+        this.Sde=false;
+        this.rapido=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+      }
+      if(api=="TNT"){
+        this.Tnt=true;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.Sde=false;
+        this.rapido=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+      if(api=="SDE"){
+        this.Sde=true;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.rapido=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+      if(api=="RAPIDO"){
+        this.rapido=true;
+        this.Sde=false;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+      if(api=="WOYOFAL"){
+        this.woyofal=true;
+        this.rapido=false;
+        this.Sde=false;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+      if(api=="SENELEC"){
+        this.senelec=true;
+        this.woyofal=false;
+        this.rapido=false;
+        this.Sde=false;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+      if(api=="OOLU"){
+        this.oolu=true;
+        this.senelec=false;
+        this.woyofal=false;
+        this.rapido=false;
+        this.Sde=false;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+      }
+    if(api=="GESTIONREPORTING"){
+        this.gestionReporting=true;
+        this.oolu=false;
+        this.senelec=false;
+        this.woyofal=false;
+        this.rapido=false;
+        this.Sde=false;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+
+    }
+    if(api=="DEMANDEPRET"){
+        this.pret=true;
+        this.gestionReporting=false;
+        this.oolu=false;
+        this.senelec=false;
+        this.woyofal=false;
+        this.rapido=false;
+        this.Sde=false;
+        this.Tnt=false;
+        this.wizall=false;
+        this.em=false;
+        this.pc=false;
+        this.tc=false;
+        this.om=false;
+        this.guide=false;
+        this.ecom=false;
+
+    }
+    if(api=="GUIDEUTILISATION"){
+      this.guide=true;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+      this.ecom=false;
+
+    }
+    if(api=="ECOMMERCE"){
+      this.ecom=true;
+      this.guide=false;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+
+    }
+  }
+  beus(){
+     
+     // this.om[0].style.visibility='visible';
+      this.om[0].style["background-color"]='green';
+      this.om[0].style["display"]='block';
+      this.om[1].style.visibility='visible';
+      this.om[1].style["background-color"]='green';
+      this.om[1].style["display"]='block';
+      this.om[2].style.visibility='visible';
+      this.om[2].style["background-color"]='green';
+      this.om[2].style["display"]='block';
+      this.om[3].style.visibility='visible';
+      this.om[3].style["background-color"]='green';
+      this.om[3].style["display"]='block';
   }
 
 /*******************************************************************************************************/
@@ -108,6 +420,248 @@ geolocaliser(){
   closeModal(){
       this.successModal.hide() ;
   }
+  orangeMoney($event){
+      console.log("fila wara change");
+      console.log($event);
+      
+        let infoOperation:any;
+        if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+          infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+          let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+          let operateur=sesion.data.operateur;
+          if(operateur==2){
+          let operation=sesion.data.operation;
+          this.process.push(sesion);
+              switch(operation){
+                case 1:{
+                       this.deposer(sesion);
+                       break;
+                       }
+                case 2:{
+                       this.retirer(sesion);
+                       break;
+                }
+                case 3:{
+                       this.retraitAvecCode(sesion);
+                       break;
+                }
+                case 4:{
+                       this.retraitCpteRecep(sesion);
+                       break;
+                }
+                case 5:{
+                       this.acheterCredit(sesion);
+                       break;
+                }
+                default :break;
+              }
+              sessionStorage.removeItem('curentProcess');
+            }
+        }
+      console.log("youpi");
+    
+  }
+  tigocash($event){
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      console.log("ok na");
+      this.process.push(sesion);
+      if(operateur==3){
+        let operation=sesion.data.operation;
+        switch(operation){
+          case 1:{
+                this.deposertc(sesion);
+                break;
+                }
+          case 2:{
+                this.retirertc(sesion);
+                break;
+          }
+          case 5:{
+                  this.creditIZItc(sesion) ;
+                  break ;
+                }
+          case 6:{
+                console.log(sesion);
+                this.retraitaveccodetc(sesion) ;
+                break ;
+                }
+          default :break;
+        }
+      }
+    }
+
+  }
+  expresso($event){
+    console.log($event);
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      this.process.push(sesion);
+      if(operateur==7){
+          let operation=sesion.data.operation;
+          switch(operation){
+          case 1:{
+                this.cashInEmoney(sesion);
+                break;
+          }
+          case 2:{
+              this.cashOutEmoney(sesion);
+              break;
+          }
+          case 3:{
+              this.cashOutPIN(sesion);
+              break;
+          }
+          default : break;
+          }
+      }
+   }
+  }
+  postcash($event){
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      this.process.push(sesion);
+      if(operateur==1){
+        let operation=sesion.data.operation;
+        switch(operation){
+          case 1:{
+                this.validrechargementespece(sesion);
+                break;
+          }
+          case 2:{
+                this.validateachatjula(sesion);
+                break;
+          }
+          case 3:{
+                this.validatedetailfacturesenelec(sesion);
+                break;
+          }
+          case 4:{
+                this.validateachatcodewoyofal(sesion);
+                break;
+          }
+          default:break;
+        }
+        
+
+      }
+    }
+
+  }
+  Wizall($event){
+    console.log("bakh na");
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      this.process.push(sesion);
+      if(operateur==6){
+          let operation=sesion.data.operation;
+          switch(operation){
+            case 1:{
+              this.cashInWizall(sesion);
+              break;
+            }
+            case 2:{
+              this.cashOutWizall(sesion);
+              break;
+            }
+            case 5:{
+              this.validationretraitbon(sesion);
+              break;
+            }
+            case 6:{
+              this.validerenvoibon(sesion);
+              break;
+            }
+            case 7:{
+              this.validerbonachat(sesion);
+              break;
+            }
+           default : break;
+          }
+      }
+   }
+  }
+  tnt($event){
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      this.process.push(sesion);
+      let operation=sesion.data.operation;
+             console.log("here we go ...") ;
+            // console.log(sesion) ;
+             switch(operation){
+              case 1:{
+                   this.validnabon(sesion);
+                   break;
+              }
+              case 2:{
+                  this.vendreDecodeur(sesion);
+                  break;
+              }
+              case 3:{
+                  this.vendreCarte(sesion);
+                  break;
+              }
+              default : break;
+             }
+    }
+
+  }
+  facturier(){
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      this.process.push(sesion);
+      let operation=sesion.data.operation;
+      if(operateur==8){
+        let operation=sesion.data.operation;
+        console.log('FACTURIER');
+
+        switch(operation){
+             case 1:{
+                  this.paiemantsde(sesion);
+                  break;
+             }
+             case 2:{
+                 this.validerrapido(sesion);
+                 break;
+             }
+             case 3:{
+                 this.validerwoyofal(sesion);
+                 break;
+             }
+             case 4:{
+                 this.validerpaimentsenelec(sesion);
+                 break;
+             }
+             case 5:{
+
+                 this.payeroolusolar(sesion);
+                 break;
+             }
+             default : break;
+         }
+
+      }
+    }
+
+  }
 
 /******************************************************************************************************/
 
@@ -118,16 +672,25 @@ geolocaliser(){
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
       let mag=JSON.parse(sessionStorage.getItem('curentProcess')).operateur;
       let infoOperation:any;
-     if(mag==5){
+     if(mag=='5'){
           infoOperation={'etat':false,'id':this.process.length,'load':'fa fa-shopping-cart fa-2x pull-left','color':'', 'errorCode':'*'};
-      }
+          console.log("mag = "+mag);
+        }
      else{
+          
+           console.log(this.om[0].style);
+           this.om[0].style["background-color"]='blue';
+           console.log(this.om[0].style);
+           console.log('doug na..........');
            infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+           console.log("mag = infoOperation");
+           //this.beus();
+           console.log(this.om);
       }
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
      // var newprocess={'operation':sesion.operation,'montant':sesion.montant,'num':sesion.num};
 
-     if(sesion.data.operateur==5){
+    /* if(sesion.data.operateur==5){
         this.articles.push(sesion);
         sessionStorage.setItem('panier',JSON.stringify(this.articles));
         if(this.articles.length==1){
@@ -136,7 +699,7 @@ geolocaliser(){
       }
       else{
            this.process.push(sesion);
-      }
+      }*/
 
      // console.log(sesion.etats.id);
       sessionStorage.removeItem('curentProcess');
@@ -154,7 +717,7 @@ geolocaliser(){
                         break;
                   }
                   case 3:{
-                        this.validatedetailfacturesenelec(sesion);
+                        this.validationretraitespece(sesion);
                         break;
                   }
                   case 4:{
@@ -367,12 +930,16 @@ geolocaliser(){
           objet.etats.load='terminated';
           objet.etats.color='red';
           objet.etats.errorCode='0';
+          //this.om[0].style["background-color"]='red';
+         // this.om[0].class='row fa fa-exclamation-triangle fa-2x';
         }else
         if(resp._body.match('-12')){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
           objet.etats.errorCode='-12';
+         //this.om[0].style["background-color"]='red';
+         //this.om[0].class='row fa fa-exclamation-triangle fa-2x';
         }
         else
             this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
@@ -382,6 +949,8 @@ geolocaliser(){
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='green';
+               // this.om[0].style["background-color"]='green';
+                //this.om[0].class='row fa fa-check fa-2x';
               }
               else{
                 if(donnee!='-1'){
@@ -389,10 +958,12 @@ geolocaliser(){
                   objet.etats.load='terminated';
                   objet.etats.color='red';
                   objet.etats.errorCode=donnee;
+                 // this.om[0].style["background-color"]='red';
+                //  this.om[0].class='row fa fa-exclamation-triangle fa-2x';
                 }else{
                   let periodicVerifierOMDepot = setInterval(()=>{
-                    console.log("periodicVerifierTCDepot : "+objet.etats.nbtour) ;
-                    objet.etats.nbtour = objet.etats.nbtour + 1 ;
+                    //console.log("periodicVerifierTCDepot : "+objet.etats.nbtour) ;
+                   // objet.etats.nbtour = objet.etats.nbtour + 1 ;
                     this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                       let donnee=rep._body.trim().toString();
                       console.log("verifierReponseOM 1 : "+donnee) ;
@@ -400,7 +971,9 @@ geolocaliser(){
                         objet.etats.etat=true;
                         objet.etats.load='terminated';
                         objet.etats.color='green';
-                        clearInterval(periodicVerifierOMDepot) ;
+                        //this.om[0].style["background-color"]='green';
+                       // this.om[0].class='row fa fa-check fa-2x';
+                       // clearInterval(periodicVerifierOMDepot) ;
                       }
                       else{
                         if(donnee!='-1'){
@@ -408,9 +981,12 @@ geolocaliser(){
                           objet.etats.load='terminated';
                           objet.etats.color='red';
                           objet.etats.errorCode=donnee;
-                          clearInterval(periodicVerifierOMDepot) ;
+                          //this.om[0].style["background-color"]='red';
+                         // this.om[0].class='row fa fa-exclamation-triangle fa-2x';
+                         // clearInterval(periodicVerifierOMDepot) ;
                         }
-                        if(donnee=='-1' && objet.etats.nbtour>=70){
+                        if(donnee=='-1'){
+                          if(donnee=='-1' && objet.etats.nbtour>=70)
                           this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                             let donnee=rep._body.trim().toString();
                             console.log("demanderAnnulationOM : "+donnee) ;
@@ -419,14 +995,18 @@ geolocaliser(){
                               objet.etats.load='terminated';
                               objet.etats.color='red';
                               objet.etats.errorCode="c";
-                              clearInterval(periodicVerifierOMDepot) ;
+                              this.om[0].style["background-color"]='red';
+                           //   this.om[0].class='row fa fa-exclamation-triangle fa-2x';
+                           //   clearInterval(periodicVerifierOMDepot) ;
                             }
                             else {
                               objet.etats.etat=true;
                               objet.etats.load='terminated';
                               objet.etats.color='red';
                               objet.etats.errorCode="bad";
-                              clearInterval(periodicVerifierOMDepot) ;
+                              this.om[0].style["background-color"]='red';
+                             // this.om[0].class='row fa fa-exclamation-triangle fa-2x';
+                             // clearInterval(periodicVerifierOMDepot) ;
                             }
                           }) ;
                         }
@@ -786,6 +1366,41 @@ geolocaliser(){
       }
     });
 
+  }
+
+  validationretraitespece(objet:any){
+    console.log("validationretraitespeceaveccarte");
+    objet.etats.etat=true;
+    objet.etats.load='terminated';
+    objet.etats.color='green';
+    /*this._postCashService.retraitespece('00221'+objet.data.telephone+'',''+objet.data.montant).then(postcashwebserviceList => {
+      postcashwebserviceList = JSON.parse(postcashwebserviceList) ;
+      console.log(postcashwebserviceList);
+      if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+        this.dataImpression = {
+          apiservice:'postecash',
+          service:'retraitaveccarte',
+          infotransaction:{
+            client:{
+              transactionPostCash: postcashwebserviceList.transactionId,
+              transactionBBS: 'Id BBS',
+              telephone:'00221'+objet.data.telephone,
+              montant:objet.data.montant,
+            },
+
+          },
+        }
+        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+       // this.router.navigate(['accueil/impression']);
+      }else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
+    });*/
   }
 
 
@@ -1939,6 +2554,21 @@ geolocaliser(){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.dataImpression = {
+          apiservice:'facturier',
+          service:'rapido',
+          infotransaction:{
+            client:{
+              transactionBBS: 'x-x-x-x',
+              badge: objet.data.badge,
+              numclient: objet.data.numclient,
+              montant: objet.data.montant,
+              transactionID:response.transactionid
+            },
+
+          },
+        }
+        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
       }else{
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;

@@ -100,6 +100,7 @@ import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { panierComponent } from './panier/panier.component';
 import { SenelecComponent } from './senelec/senelec.component';
 import { OoluComponent } from './oolu/oolu.component';
+import { TigoComponent } from './tigo/tigo-component.component';
 
 
 /*-----------------*/
@@ -199,6 +200,7 @@ import {MapsService} from "./services/maps.service";
     AccueilComponent,
     OrangeMoneyComponentComponent,
     TigoCashComponentComponent,
+    TigoComponent,
     CrmComponent,
     DashboardComponent,
     ECommerceComponent,

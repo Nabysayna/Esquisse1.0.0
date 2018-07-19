@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform,Input,Output,EventEmitter } from '@angular/core';
 import { ViewChild, ElementRef} from '@angular/core';
 import { ModalDirective,ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Router } from '@angular/router';
@@ -117,7 +117,12 @@ export class TntComponent implements OnInit {
     });
 
   }
-
+@Input() bbstnt:number=0;
+@Output() changementTnt=new EventEmitter();
+increment(){
+  this.bbstnt++;
+  this.changementTnt.emit(this.bbstnt);
+}
   validVerifierNum(){
     this.loading = true ;
     this.erreur = false ;
@@ -164,7 +169,7 @@ export class TntComponent implements OnInit {
 //    this.hidemodaldecodeur(); 
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
-
+    this.increment();
     this.reinitialiserVariables();
  
   }
@@ -224,6 +229,7 @@ export class TntComponent implements OnInit {
       prix = 28000 ;
     }
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt vente decodeur','operateur':4,'operation':2,'prenom':this.prenomNewClient,'tel':this.telNewClient,adresse:this.adresseNewClient, region:this.regionNewClient, cni:this.cniNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'nomclient':this.nomNewClient,'typedebouquet':typedebouquet,'montant':prix}));
+    this.increment();
     this.hidemodaldecodeur();
     this.reinitialiserVariables() ;
 
@@ -231,6 +237,7 @@ export class TntComponent implements OnInit {
 
   vendreCarte(){
        sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tnt vente carte','operateur':4,'operation':3,'prenom':this.prenomNewClient,'tel':this.telNewClient,adresse:this.adresseNewClient, region:this.regionNewClient, cni:this.cniNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'nomclient':this.nomNewClient}));
+       this.increment();
        this.modalcarte.hide();
        this.reinitialiserVariables() ;
   
