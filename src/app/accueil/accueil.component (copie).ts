@@ -944,8 +944,7 @@ geolocaliser(){
           objet.etats.errorCode='-12';
          
         }
-        else{
-          setTimeout(()=>{
+        else
             this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
               let donnee=rep._body.trim().toString();
               console.log("verifierReponseOM : "+donnee) ;
@@ -1011,21 +1010,16 @@ geolocaliser(){
                         }
                       }
                     });
-                  },10000);
+                  },2000);
                 }
               }
             });
-          },30000);
-          }
       }
       else{
         console.log("error") ;
 
       }
     });
-
-  }
- recupOmResponse(){
 
   }
 

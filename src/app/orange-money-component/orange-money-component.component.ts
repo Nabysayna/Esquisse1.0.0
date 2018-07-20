@@ -41,6 +41,13 @@ export class OrangeMoneyComponentComponent implements OnInit {
   nom:string="";
   cni:string;
   date:string;
+  bcode:boolean=false;
+  bprenom:boolean=false;
+  bnom:boolean=false;
+  bdate:boolean=false;
+  bpiece:boolean=false;
+  bnumclient:boolean=false;
+  bmnt:boolean=false;
   verifretraitcode=[false,false,false,false];
   @Input() bbs:number=0;
   @Output() changementOm=new EventEmitter();
@@ -62,10 +69,35 @@ export class OrangeMoneyComponentComponent implements OnInit {
   @ViewChild('modalretrait') public modalretrait:ModalDirective;
   @ViewChild('modalretraitcode') public modalretraitcode:ModalDirective;
    public ajout(){
+    let tab1="mmodou".split(" ");
+    let prenom="";
+    for(let i=0;i<tab1.length;i++){
+      prenom+=tab1[i].trim();
+    }
+    console.log(prenom);
+     if(this.verif_phone_number(this.numclient)==true &&  this.numclient!="" && this.verif_montant(this.mnt)==true && this.mnt!=""){
        this.showAddChildModal();
+      }else{
+        if(this.verif_phone_number(this.numclient)!=true || this.numclient==""){
+             this.mag1=true;
+         }
+         if(this.verif_montant(this.mnt)!=true || this.mnt==""){
+             this.mag2=true;
+         }
+      }
     }
    public retirermodal(){
-       this.modalretrait.show();
+       
+       if(this.verif_phone_number(this.numclient)==true &&  this.numclient!="" && this.verif_montant(this.mnt)==true && this.mnt!=""){
+         this.modalretrait.show();
+       }else{
+         if(this.verif_phone_number(this.numclient)!=true || this.numclient==""){
+              this.mag1=true;
+          }
+          if(this.verif_montant(this.mnt)!=true || this.mnt==""){
+              this.mag2=true;
+          }
+       }
     }
     fermermodal(){
       this.hideAddChildModal();
@@ -74,141 +106,41 @@ export class OrangeMoneyComponentComponent implements OnInit {
 
   ngOnInit() { }
   /******************verif numero***********************/
-   verifNumber(event:any){
-    if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
-    //console.log(event);
-     var nb=event.target.value.length;
-     var val=event.target.value.split('');
-     var j=0,k=0;
-     for(j=0;j<this.nombre.length;j++){
-       if(val[event.target.value.length-1]==this.nombre[j]){
-         k=1;
-       }
-     }
-    if(k==0 && event.target.value!=""){
-        this.mag1=true;
-        this.numclient=undefined;
+  isNumber(num:string):boolean{
+    let tab=["0","1","2","3","4","5","6","7","8","9"];
+    for(let i=0;i<tab.length;i++){
+      if(num===tab[i]){
+        return true;
+      }
     }
-    // console.log(val);
-     if(nb==2){
-       if(event.target.value!=77 && event.target.value!=78){
-           this.numclient=undefined;
-       }
+    return false;
+  }
 
-     }
-
-     else{
-        this.buttondepot1=false;
-     }
-     var i=0,v=0;
-     for(i=0;i<this.keycode.length;i++){
-        if(event.keyCode==this.keycode[i].code){
-            this.mag1=false;
-            v=1;
-        }
-     }
-     if(v==0 && event.keyCode!=8 && event.keyCode!=16 && event.target.value!=""){
-        this.mag1=true;
-        this.numclient=undefined;
-     }
-     if(nb==9){
-        this.buttondepot1=true;
-     }
-     else{
-        this.buttondepot1=false;
-        this.buttondepot2=false;
-     }
+  verif_phone_number(number:string):boolean{
+    let numero=number.split("");
+    console.log(numero.length);
+    if(numero.length!=parseInt("9")){
+      return false;
     }
-
-   }
-   veriftel(event:any){
-    if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
-    //console.log(event);
-     var nb=event.target.value.length;
-     var val=event.target.value.split('');
-     var j=0,k=0;
-     for(j=0;j<this.nombre.length;j++){
-       if(val[event.target.value.length-1]==this.nombre[j]){
-         k=1;
-       }
-     }
-    if(k==0 && event.target.value!=""){
-        this.mag1=true;
-        this.numclient=undefined;
+    for(let i=0;i<numero.length;i++){
+      if(!this.isNumber(numero[i])){
+        return false;
+      }
     }
-    // console.log(val);
-     if(nb==2){
-       if(event.target.value!=77 && event.target.value!=78){
-           this.numclient=undefined;
-       }
+    return true;
+  }
 
-     }
-
-     else{
-        this.buttondepot1=false;
-     }
-     var i=0,v=0;
-     for(i=0;i<this.keycode.length;i++){
-        if(event.keyCode==this.keycode[i].code){
-            this.mag1=false;
-            v=1;
-        }
-     }
-     if(v==0 && event.keyCode!=8 && event.keyCode!=16 && event.target.value!=""){
-        this.mag1=true;
-        this.numclient=undefined;
-     }
-     if(nb==9){
-        this.verifretraitcode[1]=true;
-        this.controlretraitcode();
-     }
-     else{
-        this.verifretraitcode[1]=false;
-     }
+  verif_montant(mnt:string):boolean{
+    if(parseInt(mnt)>=1){
+      return true;
+    }else{
+      return false;
     }
-   }
+  }
+  
   /*****************************************************/
   /*************verif montant**************************/
-   verifMontant(event:any){
-
-	  //console.log(event.target.value);
-      if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
-
-		 var nb=event.target.value.length;
-		 var val=event.target.value.split('');
-		 var j=0,k=0;
-		 for(j=0;j<this.nombre.length;j++){
-		   if(val[event.target.value.length-1]==this.nombre[j]){
-			 k=1;
-		   }
-		 }
-		if(k==0 && event.target.value!=""){
-			this.mag2=true;
-			this.mnt=undefined;
-			return ;
-		}
-		 //console.log(val);
-		 var i=0,v=0;
-		 for(i=0;i<this.keycode.length;i++){
-			if(event.keyCode==this.keycode[i].code){
-				this.mag2=false;
-				v=1;
-			}
-		 }
-		 if(v==0 && event.keyCode!=8 && event.keyCode!=16 && event.target.value!=""){
-			this.mag2=true;
-			this.mnt=undefined;
-			return  ;
-		 }
-
-		 if(this.buttondepot1==true && parseInt(val[0])>=1){
-           this.buttondepot2=true;
-           }
-         else{
-            this.buttondepot2=false;
-         }
-     }
-   }
+   
   /****************************************************/
  /* verifMontanretraitcode(event:any){
     if(event.keyCode!=16 && event.keyCode!=20 && event.keyCode!=9 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40){
@@ -253,6 +185,12 @@ export class OrangeMoneyComponentComponent implements OnInit {
        this.numclient=undefined;
        this.buttondepot1=false;
        this.buttondepot2=false;
+       this.mag1=false;
+       this.mag2=false;
+  }
+  Reinitialise(){
+    this.mag1=false;
+    this.mag2=false;
   }
   reinitialiseRcode(){
        this.date=undefined;
@@ -548,8 +486,18 @@ export class OrangeMoneyComponentComponent implements OnInit {
 /***********************************************************/
 
   retraitAvecCode(){
-
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':this.prenom,'nomclient':this.nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
+    let tab1=this.prenom.split(" ");
+    let prenom="";
+    let tab2=this.nom.split(" ");
+    let nom="";
+    for(let i=0;i<tab1.length;i++){
+      prenom+=tab1[i].trim();
+    }
+    for(let j=0;j<tab2.length;j++){
+      nom+=tab2[j].trim();
+    }
+    
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':prenom,'nomclient':nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
 //    let requete = "3/"+this.coderetrait+"/"+this.prenom+"/"+this.nom+"/"+this.date+"/"+this.cni+"/"+this.numclient;
     this.increment();
     this.hidemodalretraitcode() ;
@@ -663,11 +611,41 @@ export class OrangeMoneyComponentComponent implements OnInit {
     this.modalretrait.hide();
   }
   public showmodalretraitcode(){
-    this.adejaclick = false;
-    this.modalretraitcode.show();
+    console.log("showmodal retrait code");
+    if(this.prenom!="" && this.prenom!=undefined && this.coderetrait!="" && this.coderetrait!=undefined && this.nom!="" && this.nom!=undefined && this.date!="" && this.date!=undefined && this.cni!="" && this.cni!=undefined && this.numclient!="" && this.numclient!=undefined && this.mnt!="" && this.mnt!=undefined && this.verif_montant(this.mnt)==true){
+      this.adejaclick= false;
+      this.modalretraitcode.show();
+      console.log("prenom "+this.prenom+" code ="+this.coderetrait);
+    }else{
+      if(this.prenom=="" || this.prenom==undefined){
+        this.bprenom=true;
+      }
+      if(this.coderetrait=="" || this.coderetrait==undefined){
+        this.bcode=true;
+      }
+      if(this.nom=="" || this.nom==undefined){
+        this.bnom=true;
+
+      }
+      if(this.date=="" || this.date==undefined){
+        this.bdate=true;
+
+      }
+      if(this.cni=="" || this.cni==undefined){
+        this.bpiece=true;
+
+      }
+      if(this.numclient=="" || this.numclient==undefined){
+          this.bnumclient=true;
+      }
+      if(this.mnt=="" || this.mnt==undefined || this.verif_montant(this.mnt)!=true){
+          this.bmnt=true;
+
+      }
+    }
   }
   public hidemodalretraitcode(){
-    this.modalretraitcode.hide();
+      this.modalretraitcode.hide();
   }
   public hidemodalretraitinter(){
     this.modalretraitinter.hide();
@@ -677,11 +655,31 @@ export class OrangeMoneyComponentComponent implements OnInit {
     this.modalretraitinter.show();
   }
   public showmodalventecredit(){
-    this.adejaclick = false;
-    this.modalventecredit.show();
+    
+    if(this.verif_phone_number(this.numclient)==true &&  this.numclient!="" && this.verif_montant(this.mnt)==true && this.mnt!=""){
+      this.adejaclick = false;
+      this.modalventecredit.show();
+    }else{
+      if(this.verif_phone_number(this.numclient)!=true || this.numclient==""){
+           this.mag1=true;
+       }
+       if(this.verif_montant(this.mnt)!=true || this.mnt==""){
+           this.mag2=true;
+       }
+    }
   }
   public hidemodalventecredit(){
     this.modalventecredit.hide();
+  }
+  public reinitialisebool(){
+    this.bcode=false;
+    this.bprenom=false;
+    this.bnom=false;
+    this.bdate=false;
+    this.bpiece=false;
+    this.bnumclient=false;
+    this.bmnt=false;
+
   }
 
 }
