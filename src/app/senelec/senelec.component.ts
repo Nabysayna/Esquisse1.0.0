@@ -13,16 +13,18 @@ export class SenelecComponent implements OnInit {
   etat1:boolean=false;
   etat2:boolean=false;
   etat3:boolean=false;
+  adejaclick:boolean = false;
+
 
   message:boolean=false;
   errorMessage : any ;
 
   service:string;
-  detailfacturesenelec:any={errorCode:0,police:12545555,numeroFacture:156665,nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
+  detailfacturesenelec:any={errorCode:0,police:"12545555",numeroFacture:"156665",nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
   police:string;
   num_facture:string;
   dataImpression:any;
-  constructor(private router: Router, private _facturierService : FacturierService) { }
+  constructor(private _facturierService : FacturierService) { }
 
   /******************************************************************************************************/
 
@@ -41,6 +43,7 @@ export class SenelecComponent implements OnInit {
   }
   /******************************************************************************************************/
   showmodalsenelec(){
+    this.adejaclick = false;
     this.detailfactsenelec();
   }
   hidemodalsenelec(){
@@ -49,7 +52,7 @@ export class SenelecComponent implements OnInit {
     this.num_facture = undefined;
   }
   detailfactsenelec(){
-    this.detailfacturesenelec={errorCode:0,police:5,numeroFacture:5,nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
+    this.detailfacturesenelec={errorCode:0,police:"5",numeroFacture:"5",nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
     this.etat1=false;
     this.etat2=false;
     this.etat3=false;

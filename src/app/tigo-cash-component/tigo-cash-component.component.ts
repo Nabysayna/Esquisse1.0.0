@@ -9,7 +9,7 @@ import { TigocashService } from '../services/tigocash.service';
   providers: [TigocashService]
 })
 export class TigoCashComponentComponent implements OnInit {
-
+  adejaclick:boolean = false;
    telephoneBeneficiaire: any;
    telephoneExpediteur: any;
    telephone:number;
@@ -83,6 +83,8 @@ export class TigoCashComponentComponent implements OnInit {
   /***********************************/
   /********retrait**********************/
       retrait(){
+        console.log({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant})
+    this.hidemodalretrait();
 
          console.log({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant});
          sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash retrait','operateur':3,'operation':2,'num':this.telephone,'montant':this.montant}));
@@ -94,8 +96,8 @@ export class TigoCashComponentComponent implements OnInit {
   payerTransfer(){
 
     this.hidemodalpaiment();
-    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt});
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt}));
+    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt,'num':this.numclient});
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt,'num':this.numclient}));
     this.reinitialiser();
     return false;
  }
@@ -154,7 +156,7 @@ export class TigoCashComponentComponent implements OnInit {
 	    }
 	    else{
 	    }
-   })
+    });
 
   }
   validerpayertansfert(){
@@ -167,34 +169,39 @@ export class TigoCashComponentComponent implements OnInit {
 	   this.modaldepot.show();
 	  }
 	  hidemodaldepot(){
-	   this.modaldepot.hide()
+      this.modaldepot.hide()
 	  }
 	  showmodalretrait(){
-	   this.modalretrait.show();
+      this.adejaclick = false;
+      this.modalretrait.show();
 	  }
 	  hidemodalretrait(){
 	   this.modalretrait.hide()
 	  }
 	  showmodalpaiment(){
-	   this.modalpaiment.show();
+      this.adejaclick = false;
+      this.modalpaiment.show();
 	  }
 	  hidemodalpaiment(){
 	   this.modalpaiment.hide()
 	  }
 	  showmodalenvoi(){
-	   this.modalenvoi.show();
+      this.adejaclick = false;
+      this.modalenvoi.show();
 	  }
 	  hidemodalenvoi(){
 	   this.modalenvoi.hide();
 	  }
 	  showmodalvendreizi(){
-	   this.modalvendreizi.show();
+      this.adejaclick = false;
+      this.modalvendreizi.show();
 	  }
 	  hidemodalvendreizi(){
 	   this.modalvendreizi.hide();
 	  }
 	  showmodalinscription(){
-	   this.modalinscription.show();
+      this.adejaclick = false;
+      this.modalinscription.show();
 	  }
 	  hidemodalinscription(){
 	   this.modalinscription.hide();

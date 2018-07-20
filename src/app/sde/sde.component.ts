@@ -12,10 +12,12 @@ export class SdeComponent implements OnInit {
   etat1:boolean=false;
   etat2:boolean=false;
   etat3:boolean=false;
-  refClientSDE:any;
+  refClientSDE:string;
   message:boolean=false;
   detailfacturesde:any={errorCode:0,reference_client:"",reference_facture:"",client:'nom du client',montant:1,dateecheance:"12/3/2018",service:"wizall"};
   errorMessage : any ;
+  adejaclick:boolean = false;
+
 
   constructor(private _facturierService : FacturierService) {}
 
@@ -82,11 +84,13 @@ export class SdeComponent implements OnInit {
   }
 
   showmodalsde(){
+    this.adejaclick = false;
     this.modalsde.show();
     this.detailfactursde();
   }
 
   paimantsde(){
+    //console.log({'nom':'SDE','operateur':8,'operation':1, 'montant':this.detailfacturesde.montant, 'reference_client':this.detailfacturesde.reference_client, 'reference_facture':this.detailfacturesde.reference_facture,'service':this.detailfacturesde.service})
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'SDE','operateur':8,'operation':1, 'montant':this.detailfacturesde.montant, 'reference_client':this.detailfacturesde.reference_client, 'reference_facture':this.detailfacturesde.reference_facture,'service':this.detailfacturesde.service}));
     this.increment();
     this.hidemodalsde();

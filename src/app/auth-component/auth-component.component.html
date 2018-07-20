@@ -2,7 +2,6 @@
 <div>
     <nav id="nav" class="nav navbar-default"  style="font-family:'caviar dreams bold'">
         <img src="assets/head.png" style="position: absolute; z-index: -1; width: -webkit-fill-available;"/>
-        <img src="assets/logo-sentool.png" style="max-height: 7rem ;" />
         <form class="form form-inline pull-right" style="position: relative;z-index: 1;" (ngSubmit)="authentificate()" #loginForm="ngForm" *ngIf="phase1">
         <div class="form-group" style="color: white ;" *ngIf="!this.fakevalues">Login ou Mot de pass invalide! Veuillez reprendre la saisie.</div>
             <input class="form-group form-control" type="text" [(ngModel)]="this.userName" required autofocus id="userName" name="userName"  placeholder="identifiant"/>
@@ -19,7 +18,7 @@
         </form>
 
 <!--             <div class="col-sm-6 col-md-6 col-xs-12">
-                <video style="width: 100%" controls autoplay>                    
+                <video style="width: 100%" controls autoplay>
                       <source src="sentool_annonce.mp4" type="video/mp4">
                       Your browser does not support the video tag.
                 </video>
@@ -27,8 +26,8 @@
  -->
         <div class="col-sm-12 col-md-12 col-xs-12" id="sentooler">
             <h1 style="color: white ; text-align: center ; margin-top: 7rem ; font-size: 10rem ;">SENTOOL</h1>
-            <h4 style="color: white ; text-align: center ; font-size: 3rem ;"> 
-                <a style="color: white ; cursor: pointer ;" (click)="diagnostiquer()">REINITIALISER <i class="fa fa-refresh" aria-hidden="true"></i> </a> 
+            <h4 style="color: white ; text-align: center ; font-size: 3rem ;">
+                <a style="color: white ; cursor: pointer ;" (click)="diagnostiquer()">REINITIALISER <i class="fa fa-refresh" aria-hidden="true"></i> </a>
             </h4>
             <h2 style="color: white ; text-align: center ;">Souscrivez à la plateforme Sentool</h2>
             <div class="row mafleche" style="text-align:center">
@@ -42,6 +41,20 @@
                 <form #suscriptionForm="ngForm" (ngSubmit)="inscrire()" name="form">
                     <i class="fa fa-arrow-alt-down"></i>
                     <div  class="form-inline form-group row">
+                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12" >
+                        <span *ngIf="this.errorSouscription" style="color:red">Les informations fournies sont érronés</span>
+                        <span *ngIf="usedLogin==true" style="color:red">Login déjà utilisé. Veuillez en choisir un nouveau.</span>
+                    </div>
+                    <div class="row">
+                        <div class="row" style="    width: 97%;margin-left: 1.6rem;">
+                            <div class="col-md-2 col-lg-2 col-sm-2" style="text-align:left;">
+                                <label style="color: #36a9e0 ; margin-top:1.4rem;">Code</label>
+                            </div>
+                            <div class="col-md-9 col-lg-9 col-sm-9" style="width: 79%;margin-left: 3rem;">
+                                <input style=" border: 1px solid #36a9e0;width: 100%; border-radius: 2rem 0rem 2rem 2rem;" type="text" id="code" required [(ngModel)]="codevalidation" name="codevalidation" placeholder="code de validation" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-sm-6 col-xs-12">
                         <div class="row">
                             <div class="col-md-5 col-lg-5 col-sm-5" style="text-align:left;">
@@ -67,7 +80,7 @@
                     <div class="col-sm-6 col-xs-12">
                         <div class="row">
                             <div class="col-lg-12 col-md-12" >
-                                <b *ngIf="usedLogin==true" style="color:red">Login déjà utilisé. Veuillez en choisir un nouveau.</b>
+
                             </div>
                             <div class="col-md-5 col-lg-5 col-sm-5" style="text-align:left;">
                                 <label style="color: #36a9e0 ; margin-top:1.4rem;">Email</label>

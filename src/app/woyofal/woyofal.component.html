@@ -55,7 +55,7 @@
         <div class="form-group"><label >Montant : {{montant}}</label></div>
       </div>
       <div class="modal-footer">
-        <input type="button" value="valider" [disabled]="compteur==undefined || montant==undefined" (click)="validerwoyofal()" class="btn btn-success" />
+        <input type="button" value="valider" [disabled]="adejaclick==true || compteur==undefined || montant==undefined" (click)="adejaclick=true;validerwoyofal()" class="btn btn-success" />
         <input type="button" value="annuler" (click)="hidemodalwoyofal()" class="btn btn-danger" />
       </div>
     </div>

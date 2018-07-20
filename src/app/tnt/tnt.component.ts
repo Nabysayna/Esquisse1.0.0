@@ -12,7 +12,6 @@ import {LAbonnement} from '../tnt/tntmodels';
 import {EFinancierService} from '../tnt/tntservices';
 import {EFinancier} from '../tnt/tntmodels';
 import {TntService, TntResponse} from "../services/tnt.service";
-import {UtilsService} from "../services/utils.service";
 
 @Pipe({name: 'dataToArray'})
 export class DataToArray implements PipeTransform{
@@ -49,39 +48,13 @@ export class TntComponent implements OnInit {
   nbmNewClient: number;
   tbouquetNewClient : string = 'Sans Abonnement';
 
-  formvisible='';
   noma:string;
   prenoma:string;
-  tela:number;
   cni : any  = '';
-  nchip:number;
-  ncarte:any;
   nbm:number;
   tbouquet:string;
-  nAbonnement:NAbonnement;
-  lAbonnement:LAbonnement;
-  eFinancier:EFinancier;
   public retourTntWS: {}[] ;
   private singleTntWS: TntResponse ;
-
-  listeregion:string[] = [
-    'Diourbel',
-    'Dakar',
-    'Fatick',
-    'Kaffrine',
-    'Kaolack',
-    'Kedougou',
-    'Kolda',
-    'Louga',
-    'Matam',
-    'Rufisque',
-    'Saint-Louis',
-    'Sebikhotane',
-    'Sedhiou',
-    'Tambacounda',
-    'Thies',
-    'Ziguinchor',
-  ];
   rowsOnPage = 7 ;
   sortBy = "prenom";
   orderByDate = 'date_abonnement' ;
@@ -91,21 +64,15 @@ export class TntComponent implements OnInit {
   filtreDeco = "" ;
   filtreCarte = "" ;
   dataImpression:any;
+
+  adejaclick:boolean = false;
+
   @ViewChild('modalabonnement') modalabonnement: ModalDirective;
   @ViewChild('modaldecodeur') modaldecodeur: ModalDirective;
   @ViewChild('modalcarte') modalcarte: ModalDirective;
-  constructor(
-         private eFinancierService:EFinancierService,
-         private lAbonnementService: LAbonnementService,
-         private nAbonnementService: NAbonnementService,
-         private location: Location,
-         private route:ActivatedRoute,
-         private tntCaller:TntService,
-         private utilService : UtilsService,
-         private router: Router) { }
 
-  ngOnInit():void {
-
+  constructor(private tntCaller:TntService) { 
+  /*
     this.route.params.subscribe( (params : Params) => {
       this.nAbonnement = this.nAbonnementService.getNAbonnement(5);
     });
@@ -114,9 +81,10 @@ export class TntComponent implements OnInit {
     });
       this.route.params.subscribe( (params : Params) => {
       this.eFinancier = this.eFinancierService.getEFinancier(5);
-    });
+    });*/
 
   }
+  ngOnInit() { }
 @Input() bbstnt:number=0;
 @Output() changementTnt=new EventEmitter();
 increment(){
@@ -152,8 +120,7 @@ increment(){
   }
 
   validnabon(){
-   
-    this.modalabonnement.hide(); 
+    this.modalabonnement.hide();
     var typedebouquet : number ;
     if(this.tbouquet == "Maanaa")
       typedebouquet=1;
@@ -161,57 +128,41 @@ increment(){
       typedebouquet=2;
     if(this.tbouquet == "Maanaa + Boul khool")
       typedebouquet=3;
-
-    /*this.singleTntWS.tel = this.telNewClient.toString() ;
-    this.singleTntWS.nchipNewClient = this.nchipNewClient.toString();
-    this.singleTntWS.ncarteNewClient = this.ncarteNewClient.toString() ;*/
-
-//    this.hidemodaldecodeur(); 
-
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'Tnt nouvel abonnement','operateur':4,'operation':1,'typedebouquet':typedebouquet,'tel':this.telNewClient,'chip':this.nchipNewClient,'carte':this.ncarteNewClient,'prenom':this.prenoma,'nomclient':this.noma,'duree':this.nbm,'cni':''}));
     this.increment();
     this.reinitialiserVariables();
- 
   }
 
 
   listerAbonnements(){
       this.loading = true ;
       this.erreur = false ;
-
       this.tntCaller.listAbonnement(this.token).then( response =>
         {
           this.retourTntWS = response ;
           this.loading = false ;
-          //console.log("response "+this.retourTntWS) ;
         }) ;
   }
 
   listerVenteDeco(){
       this.loading = true ;
       this.erreur = false ;
-
       this.tntCaller.listeVenteDecods(this.token).then( response =>
         {
           this.retourTntWS = response.reverse() ;
           this.loading = false ;
-          //console.log("response "+this.retourTntWS) ;
         }) ;
   }
 
   listerVenteCarte(){
       this.loading = true ;
       this.erreur = false ;
-
       this.tntCaller.listerVenteCartes(this.token).then( response =>
         {
           this.retourTntWS = response.reverse() ;
           this.loading = false ;
-          //console.log("response "+this.retourTntWS) ;
         }) ;
   }
-
-
 
   vendreDecodeur(){
      var typedebouquet : number ;
@@ -240,9 +191,7 @@ increment(){
        this.increment();
        this.modalcarte.hide();
        this.reinitialiserVariables() ;
-  
   }
-
 
   reinitialiserVariables(){
       this.erreur = false ;
@@ -259,43 +208,25 @@ increment(){
       this.tbouquetNewClient=undefined ;
   }
 
-  print(idrecuimpression:string): void {
-    let printContents, popupWin;
-    printContents = document.getElementById(idrecuimpression).innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
-    popupWin.document.write(`
-          <html>
-              <head>
-                  <title>BBS INVEST - SENTOOL</title>
-                  <style>
-                      //........Customized style.......
-                  </style>
-              </head>
-              <body onload="window.print();window.close()">${printContents}
-              </body>
-          </html>`
-    );
-    popupWin.document.close();
-  }
+
  public showmodalabonnement(){
-    this.modalabonnement.show();
+   this.adejaclick = false;
+   this.modalabonnement.show();
   }
-  public hidemodalcodewoyofal(){
-    this.modalabonnement.hide();
-  }
+
  public showmodaldecodeur(){
-    this.modaldecodeur.show();
+   this.adejaclick = false;
+   this.modaldecodeur.show();
   }
   public hidemodaldecodeur(){
     this.modaldecodeur.hide();
   }
  public showmodalcarte(){
-    this.modalcarte.show();
+   this.adejaclick = false;
+   this.modalcarte.show();
   }
   public hidemodalcarte(){
     this.modalcarte.hide();
   }
 
 }
-

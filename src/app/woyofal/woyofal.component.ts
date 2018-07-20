@@ -9,6 +9,7 @@ import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 export class WoyofalComponent implements OnInit {
   compteur:string;
   montant:number;
+  adejaclick:boolean = false;
 
   constructor() {}
 
@@ -23,6 +24,7 @@ export class WoyofalComponent implements OnInit {
   }
 
   showmodalwoyofal(){
+    this.adejaclick = false;
     this.modalwoyofal.show();
   }
 
@@ -38,4 +40,3 @@ export class WoyofalComponent implements OnInit {
   }
 
 }
-

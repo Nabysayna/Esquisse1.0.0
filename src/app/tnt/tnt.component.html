@@ -246,7 +246,7 @@
                       </div>
                 </form>
                 </div>
-              
+
 
                 <div class="tab-pane fade col-sm-offset-2 col-xs-offset-2 col-sm-7 col-xs-7"  id="vente-deco-liste">
 
@@ -383,7 +383,7 @@
          </div>
          </div>
          <div class="modal-footer">
-          <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="valider" (click)="validnabon()" class="btn btn-success" />
+          <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;validnabon()" class="btn btn-success" />
           <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="fermer" (click)="modalabonnement.hide();" class="btn btn-danger" />
          </div>
       </div>
@@ -433,7 +433,7 @@
          </div>
          </div>
          <div class="modal-footer">
-          <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" (click)="vendreDecodeur()" class="btn btn-success" />
+          <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;vendreDecodeur()" class="btn btn-success" />
           <input style="border-radius: 2rem 0rem 2rem 2rem;"  type="button" value="fermer" (click)="modaldecodeur.hide();" class="btn btn-danger" />
          </div>
       </div>
@@ -479,7 +479,7 @@
          </div>
          </div>
          <div class="modal-footer">
-          <input type="button" value="valider" (click)="vendreCarte()" class="btn btn-success" />
+          <input type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;vendreCarte()" class="btn btn-success" />
           <input type="button" value="fermer" (click)="modalcarte.hide();" class="btn btn-danger" />
          </div>
       </div>

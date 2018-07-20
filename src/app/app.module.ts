@@ -184,6 +184,13 @@ import {FacturierService} from "./services/facturier.service";
 import {OrangemoneyService} from "./services/orangemoney.service";
 import {ExpressocashService} from "./services/expressocash.service";
 import {MapsService} from "./services/maps.service";
+import {TarifsService} from "./services/tarifs.service";
+import {WariService} from "./services/wari.service";
+
+import { NewAnfantComponent } from './new-anfant/new-anfant.component';
+
+import { EncoureComponent } from './encoure/encoure.component';
+import { WariComponent } from './wari/wari.component';
 
 
 
@@ -296,6 +303,9 @@ import {MapsService} from "./services/maps.service";
     ZoningComponent,
     AnnoncesComponent,
     AnnoncesuperviseurComponent,
+    NewAnfantComponent,
+    EncoureComponent,
+    WariComponent,
   ],
   imports: [
     BrowserModule,
@@ -334,6 +344,7 @@ import {MapsService} from "./services/maps.service";
       AuthGuard,
       AuthGuardcais,
       AuthGuardsup,
+    
 
     AuthenticationService,
     AdminpdvService,
@@ -353,6 +364,8 @@ import {MapsService} from "./services/maps.service";
     TigocashService,
     ExpressocashService,
     MapsService,
+    WariService,
+    TarifsService,
   ],
   bootstrap: [AppComponent]
 })

@@ -19,6 +19,7 @@ export class RapidoComponent implements OnInit {
   message:boolean;
   errorMessage : any ;
   dataImpression:any;
+  adejaclick:boolean = false;
 
 
   constructor(private router: Router, private _facturierService : FacturierService) { }
@@ -32,6 +33,7 @@ export class RapidoComponent implements OnInit {
   @ViewChild('modalrapido') public modalrapido:ModalDirective;
 
   showmodalrapido(){
+    this.adejaclick = false;
     this.modalrapido.show();
   }
 

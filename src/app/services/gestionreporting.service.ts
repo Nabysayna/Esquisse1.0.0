@@ -47,8 +47,7 @@ export class GestionreportingService {
     let url = this.link+"/gestionreporting-sen/reimpression";
     let datas = JSON.stringify({token:this.basetoken, idpdv:data.idpdv, operation:data.operation, infooperation:data.infooperation});
     let params = 'params='+datas;
-    return this._http.post(url, params, {headers:this.headers})
-      .map(res => res.json());
+    return this._http.post(url, params, {headers:this.headers}).map(res => res.json());
   }
 
   gestionreporting(){

@@ -54,11 +54,48 @@
     <script src="./assets/dist/js/sb-admin-2.js"></script>
 
     <script src="./assets/dist/js/Chart.bundle.min.js"></script>
+  <script !src="">
+    localStorage.removeItem("auredemarrage");
+  </script>
 </head>
 <body class="bg" style="padding-top: 4rem;">
-  <app-root>Loading team...</app-root>
+  <div id="auredemarrage" style="margin: 0 auto; text-align: center; position:absolute;top: 0;right: 0;bottom: 0;left: 0;width:100%;height:inherit;background-color: white; z-index: 100">
+    <div id="auredemarragelogo" style="margin: 0 auto; text-align: center; position:absolute;top: 0;right: 0;bottom: 0;left: 0;width:100%;height:inherit;background-color: white; z-index: 102">
+      <img src="./assets/blancheneige.jpg" border="0" style="width:75%;">
+    </div>
+    <div style="margin: 0 auto; text-align: center; position:absolute;top: 0;right: 0;bottom: 0;left: 0;width:100%;height:inherit;background-color: white; z-index: 110">
+      <div style="margin: 0 auto; text-align: center; margin-top: 3rem">
+        <img src="./assets/logo-sentool.png">
+        <br>
+        <img src="./assets/loading_outil.gif">
+      </div>
+    </div>
+  </div>
 
+  <app-root></app-root>
 
+  <script>
+    var body_height = $(window).height();
+    var body_width = $(window).width()
+    var testauredemarrage =  setInterval(function () {
+      console.log("**********************")
+      if(localStorage.getItem("auredemarrage") && localStorage.getItem("auredemarrage")=="yesca") {
+          clearInterval(testauredemarrage)
+          setTimeout(function(){
+              $("#auredemarrage").css("display","none");
+          },1000);
+      }
+    },1000)
+
+    $(document).ready(function(){
+      $('#auredemarrage').css({'background-color': 'white','height': body_height + 'px','left': '0px','top': '0px','width': body_width+'px'});
+
+      $(window).resize(function(){
+        body_height = $(window).height();
+        $('#auredemarrage').css({'background-color': 'white','height': body_height + 'px','left': '0px','top': '0px','width': body_width+'px'});
+      });
+    });
+  </script>
     <!-- Metis Menu Plugin JavaScript -->
 
 <script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>

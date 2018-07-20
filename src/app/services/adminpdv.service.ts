@@ -93,37 +93,4 @@ export class AdminpdvService {
       .map(res => res.json());
   }
 
-
-
-
-
-
-
-  /*
-    detailperformancepdv(data:any){
-      let url = this.link+"/admindpv-sen/detailperformancepdv";
-      let datas = JSON.stringify({token:this.basetoken, data:data});
-      let params = 'params='+datas;
-      return this._http.post(url, params, {headers:this.headers})
-        .map(res => res.json());
-    }
-
-    performancepdv(data:any){
-      let url = this.link+"/admindpv-sen/performancepdv";
-      let datas = JSON.stringify({token:this.basetoken, data:data});
-      let params = 'params='+datas;
-      return this._http.post(url, params, {headers:this.headers})
-        .map(res => res.json());
-    }
-
-    notifications(data:any){
-      let url = this.link+"/admindpv-sen/notifications";
-      let datas = JSON.stringify({token:this.basetoken, data:data});
-      let params = 'params='+datas;
-      return this._http.post(url, params, {headers:this.headers})
-        .map(res => res.json());
-    }
-
-  */
-
 }

@@ -13,7 +13,6 @@ export class WizallComponent implements OnInit {
   mnt : string;
   numclient : string;
   echeance : string ;
-  refclient : string ;
   nomclient : string ;
   etat: Boolean=false;
   fraisDepot: Number = 0 ;
@@ -40,6 +39,9 @@ export class WizallComponent implements OnInit {
   errormontant:boolean=false;
   errornumero:boolean=false;
   errorenvoi:boolean=false;
+  adejaclick:boolean = false;
+
+
   constructor(private _wizallService : WizallService) { }
 
   ngOnInit() {
@@ -68,6 +70,7 @@ export class WizallComponent implements OnInit {
 
 
   public showmodalfraisEnvoieBon(){
+    this.adejaclick = false;
     this.modalfraisEnvoieBon.show() ;
   }
   public fermermodalfraisEnvoieBon(){
@@ -75,6 +78,7 @@ export class WizallComponent implements OnInit {
   }
 
   public showmodalfraiscashin(){
+    this.adejaclick = false;
     this.modalfraiscashin.show();
   }
   public fermermodalfraiscashin(){
@@ -86,6 +90,7 @@ export class WizallComponent implements OnInit {
   }
 
   public showmodalenvoiboncash(){
+    this.adejaclick = false;
     this.errorenvoi=false;
     if(this.prenomE!=undefined && this.nomE!=undefined && this.verif_phone_number(this.telE)==true && this.verif_montant(this.montant)==true && this.nationalite!=undefined && this.type_piece!=undefined && this.num_card!=undefined && this.prenomB!=undefined && this.nomB!=undefined && this.verif_phone_number(this.telB)==true){
       this.modalenvoiboncash.show();
@@ -103,7 +108,7 @@ export class WizallComponent implements OnInit {
   }
 
   public showmodalretraitbonachat(){
-    console.log(this.donneeretraitbon);
+    this.adejaclick = false;
     this.modalretraitbonachat.show();
   }
 
@@ -150,6 +155,7 @@ export class WizallComponent implements OnInit {
   }
 
   public showmodalretraitbon(){
+    this.adejaclick = false;
     this.messageretraitcash=false;
     this.messageretraitcasherror=false;
     this.errorverifcode=false;
