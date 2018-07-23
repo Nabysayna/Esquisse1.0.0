@@ -1025,11 +1025,7 @@ geolocaliser(){
     });
 
   }
- recupOmResponse(){
-
-  }
-
-
+ 
 /******************************************************************************************************/
 
    retirer(objet:any){
@@ -1061,8 +1057,9 @@ geolocaliser(){
                objet.etats.color='red';
                objet.etats.errorCode='-12';
             }
-            else
-              this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+            else{
+              setTimeout(()=>{
+                this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 let donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
                 if(donnee=='1'){
@@ -1077,9 +1074,9 @@ geolocaliser(){
                    objet.etats.color='red';
                    objet.etats.errorCode=donnee;
                   }else{
-                      let periodicVerifierOMRetirer = setInterval(()=>{
+                        let periodicVerifierOMRetirer = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
-                      this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+                        this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                         let donnee=rep._body.trim().toString();
                         console.log("Inside verifier retrait: "+donnee) ;
                         if(donnee=='1'){
@@ -1110,10 +1107,13 @@ geolocaliser(){
                             }
                         }
                       });
-                      },2000);
+                      },10000);
+                    
                   }
                 }
               });
+             },60000);
+            }
       }
       else{
         console.log("error") ;
@@ -1146,8 +1146,9 @@ geolocaliser(){
                objet.etats.color='red';
                objet.etats.errorCode='-12';
             }
-        else
-          this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
+        else{
+          setTimeout(()=>{
+            this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
             let donnee=rep._body.trim().toString();
             console.log("Inside verifier retrait: "+donnee) ;
             if(donnee=='1'){
@@ -1194,10 +1195,13 @@ geolocaliser(){
                       }) ;
                     }
                   });
-                },2000);
+                },10000);
               }
+            
             }
           });
+        },30000);
+       }
       }
       else{
         console.log("error") ;
@@ -1256,7 +1260,8 @@ geolocaliser(){
                objet.etats.color='red';
                objet.etats.errorCode='-12';
             }
-            else
+            else{
+              setTimeout(()=>{
               this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
                 let donnee=rep._body.trim().toString();
                 console.log("Inside verifier depot : "+donnee) ;
@@ -1305,10 +1310,12 @@ geolocaliser(){
                             }
                           }
                         });
-                        },2000);
+                        },10000);
                    }
                 }
               });
+            },30000);
+          }
       }
       else{
         console.log("error") ;
@@ -2007,7 +2014,8 @@ retrieveOperationInfo(item : any) : string{
           objet.etats.color='red';
           objet.etats.errorCode='-12';
         }
-        else
+        else{
+          setTimeout(()=>{
             this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
               let donnee=rep._body.trim().toString();
               console.log("verifierReponseTC : "+donnee) ;
@@ -2058,10 +2066,12 @@ retrieveOperationInfo(item : any) : string{
                         }
                       }
                     });
-                  },2000);
+                  },10000);
                 }
               }
             });
+          },30000);
+        }
       }
       else{
         console.log("error") ;
@@ -2101,7 +2111,8 @@ retrieveOperationInfo(item : any) : string{
                objet.etats.color='red';
                objet.etats.errorCode='-12';
             }
-            else
+            else{
+              setTimeout(()=>{
               this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                 let donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
@@ -2152,10 +2163,12 @@ retrieveOperationInfo(item : any) : string{
                           }
                         }
                       });
-                      },2000);
+                      },10000);
                   }
                 }
               });
+            },60000);
+          }
       }
       else{
         console.log("error") ;
@@ -2193,7 +2206,8 @@ retrieveOperationInfo(item : any) : string{
                objet.etats.color='red';
                objet.etats.errorCode='-12';
             }
-            else
+            else{
+              setTimeout(()=>{
               this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                 let donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
@@ -2244,10 +2258,12 @@ retrieveOperationInfo(item : any) : string{
                           }
                         }
                       });
-                      },2000);
+                      },10000);
                   }
                 }
               });
+            },30000);
+          }
            }
       else{
         console.log("error") ;
@@ -2277,7 +2293,8 @@ retrieveOperationInfo(item : any) : string{
                objet.etats.color='red';
                objet.etats.errorCode='-12';
             }
-            else
+            else{
+              setTimeout(()=>{
               this._tcService.verifierReponseTC(resp._body.trim().toString()).then(rep =>{
                 let donnee=rep._body.trim().toString();
                 console.log("Inside verifier retrait: "+donnee) ;
@@ -2328,10 +2345,12 @@ retrieveOperationInfo(item : any) : string{
                           }
                         }
                       });
-                      },2000);
+                      },10000);
                   }
                 }
               });
+            },30000);
+          }
       }
       else{
         console.log("error") ;

@@ -425,7 +425,7 @@ export class OrangeMoneyComponentComponent implements OnInit {
           this.mnt = undefined;
 
 
-    this.addChildModal.hide();
+           this.addChildModal.hide();
 
   /*  let requete = "1/"+this.mnt+"/"+this.numclient ;
     this.loading = true ;
