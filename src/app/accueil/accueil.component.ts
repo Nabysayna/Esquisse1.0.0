@@ -426,6 +426,7 @@ geolocaliser(){
           infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
           let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
           let operateur=sesion.data.operateur;
+          sessionStorage.removeItem('curentProcess');
           if(operateur==2){
           let operation=sesion.data.operation;
           this.process.push(sesion);
@@ -466,6 +467,7 @@ geolocaliser(){
       let operateur=sesion.data.operateur;
       console.log("ok na");
       this.process.push(sesion);
+      sessionStorage.removeItem('curentProcess');
       if(operateur==3){
         let operation=sesion.data.operation;
         switch(operation){
@@ -500,6 +502,7 @@ geolocaliser(){
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       let operateur=sesion.data.operateur;
       this.process.push(sesion);
+      sessionStorage.removeItem('curentProcess');
       if(operateur==7){
           let operation=sesion.data.operation;
           switch(operation){
@@ -527,6 +530,7 @@ geolocaliser(){
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       let operateur=sesion.data.operateur;
       this.process.push(sesion);
+      sessionStorage.removeItem('curentProcess');
       if(operateur==1){
         let operation=sesion.data.operation;
         switch(operation){
@@ -564,6 +568,7 @@ geolocaliser(){
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       let operateur=sesion.data.operateur;
       this.process.push(sesion);
+      sessionStorage.removeItem('curentProcess');
       if(operateur==6){
           let operation=sesion.data.operation;
           switch(operation){
@@ -599,6 +604,7 @@ geolocaliser(){
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       let operateur=sesion.data.operateur;
       this.process.push(sesion);
+      sessionStorage.removeItem('curentProcess');
       let operation=sesion.data.operation;
              console.log("here we go ...") ;
             // console.log(sesion) ;
@@ -628,6 +634,7 @@ geolocaliser(){
       let operateur=sesion.data.operateur;
       this.process.push(sesion);
       let operation=sesion.data.operation;
+      sessionStorage.removeItem('curentProcess');
       if(operateur==8){
         let operation=sesion.data.operation;
         console.log('FACTURIER');
@@ -981,7 +988,7 @@ geolocaliser(){
                           clearInterval(periodicVerifierOMDepot) ;
                         }
                         if(donnee=='-1'){
-                          if(donnee=='-1' && objet.etats.nbtour>=70)
+                          if(donnee=='-1' && objet.etats.nbtour>=6)
                           this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                             let donnee=rep._body.trim().toString();
                             console.log("demanderAnnulationOM : "+donnee) ;
@@ -1089,7 +1096,7 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierOMRetirer) ;
                           }
-                            if(donnee=='-1' && objet.etats.nbtour>=75){
+                            if(donnee=='-1' && objet.etats.nbtour>=6){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -1178,7 +1185,7 @@ geolocaliser(){
                       objet.etats.errorCode=donnee;
                       clearInterval(periodicVerifierOMRetraitCode) ;
                     }
-                    if(donnee=='-1' && objet.etats.nbtour>=75){
+                    if(donnee=='-1' && objet.etats.nbtour>=6){
                       this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                         let donnee=rep._body.trim().toString();
                         if(donnee=="c"){
@@ -1292,7 +1299,7 @@ geolocaliser(){
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifierOMAcheterCredit) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=75){
+                            if(donnee=='-1' && objet.etats.nbtour>=6){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
