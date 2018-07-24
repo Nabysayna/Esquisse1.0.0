@@ -137,6 +137,34 @@ export class OrangeMoneyComponentComponent implements OnInit {
       return false;
     }
   }
+  verif_date(date:string):boolean{
+    let dat=date.split("");
+    if(date.length==8){
+      for(let i=0;i<date.length;i++){
+        if(!this.isNumber(date[i])){
+          return false;
+        }
+      }
+      return true;
+    }else{
+      return false;
+    }
+  }
+  verif_cni(cni:string):boolean{
+    let Cni=cni.split("");
+    if(Cni.length==13 && (Cni[0]=="1" || Cni[0]=="2") ){
+      for(let i=0;i<Cni.length;i++){
+        if(!this.isNumber(Cni[i])){
+          return false;
+        }
+      }
+      return true;
+
+    }else{
+      return false;
+    }
+
+  }
   
   /*****************************************************/
   /*************verif montant**************************/
@@ -187,6 +215,12 @@ export class OrangeMoneyComponentComponent implements OnInit {
        this.buttondepot2=false;
        this.mag1=false;
        this.mag2=false;
+       this.date=undefined;
+       this.prenom=undefined;
+       this.nom=undefined;
+       this.cni=undefined;
+       this.numclient=undefined;
+       this.reinitialisebool();
   }
   Reinitialise(){
     this.mag1=false;
@@ -417,38 +451,10 @@ export class OrangeMoneyComponentComponent implements OnInit {
   deposer(){
 
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money depot','operateur':2,'operation':1,'montant':this.mnt,'num':this.numclient}));
-           this.increment();
-          // console.log("changement cote om "+this.bbs);
-         // this.loading = false ;
-         // this.depotreussi=true;
+          this.increment();
           this.numclient = undefined ;
           this.mnt = undefined;
-
-
-           this.addChildModal.hide();
-
-  /*  let requete = "1/"+this.mnt+"/"+this.numclient ;
-    this.loading = true ;
-    //console.log("We just say : "+requete) ;
-    this.omService.requerirControllerOM(requete).then( resp => {
-      if (resp.status==200){
-        console.log("We just say : "+resp._body) ;
-        if (resp._body.trim().toString()=='1'){
-          this.loading = false ;
           this.addChildModal.hide();
-          this.depotreussi=true;
-          this.numclient = undefined ;
-          this.mnt = undefined;
-          setTimeout(()=>{this.depotreussi=false;},5000);
-        }
-        else{
-          this.echecdepot=true;
-          setTimeout(()=>{this.echecdepot=false;},5000);
-        }
-      }
-      else
-        console.log("error") ;
-    });*/
   }
 
 /*********************************************************/
@@ -456,30 +462,9 @@ export class OrangeMoneyComponentComponent implements OnInit {
   retirer(){
 
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':2,'montant':this.mnt,'numclient':this.numclient}));
-
     this.increment();
     this.modalretrait.hide();
-    this.numclient = undefined ;
-    this.mnt = undefined;
-    /*let requete = "2/"+this.numclient+"/"+this.mnt ;
-    this.loading = true ;
-    this.omService.requerirControllerOM(requete).then( resp => {
-      if (resp.status==200){
-        if (resp._body.trim().toString()=='1'){
-          this.loading = false ;
-          this.modalretrait.hide();
-          this.numclient = undefined ;
-          this.mnt = undefined;
-          this.retraitreussi=true;
-          setTimeout(()=>{this.retraitreussi=false;},5000);
-        }
-      }
-      else{
-        console.log("error") ;
-        this.modalretrait.hide();
-        this.echecretrait=false;
-        }
-    }) ;*/
+    this.reinitialise();
   }
 
 
@@ -498,38 +483,9 @@ export class OrangeMoneyComponentComponent implements OnInit {
     }
     
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Orange money retrait','operateur':2,'operation':3,'coderetrait':this.coderetrait,'prenom':prenom,'nomclient':nom,'num':this.numclient,'date':this.date,'cni':this.cni,'montant':this.mnt}));
-//    let requete = "3/"+this.coderetrait+"/"+this.prenom+"/"+this.nom+"/"+this.date+"/"+this.cni+"/"+this.numclient;
     this.increment();
     this.hidemodalretraitcode() ;
-
-    this.numclient = undefined ;
-    this.mnt = undefined;
-    this.coderetrait=undefined;
-    this.nom=undefined;
-    this.prenom=undefined;
-    this.date=undefined;
-    this.cni=undefined;
-    this.mnt=undefined;
-
-   /* console.log(requete);
-    this.omService.requerirControllerOM(requete).then( resp => {
-      if (resp.status==200){
-        console.log(resp._body);
-        if (resp._body.trim().toString()=='1'){
-          this.loading = false ;
-          this.retraitcodereussi=true;
-          this.numclient = undefined ;
-          this.mnt = undefined;
-          this.coderetrait=undefined;
-          this.nom=undefined;
-          this.prenom=undefined;
-          this.cni=undefined;
-          setTimeout(()=>{this.retraitcodereussi=false;},5000);
-        }
-      }
-      else
-        console.log("error") ;
-    });*/
+    this.reinitialise();
   }
 
 
@@ -612,7 +568,7 @@ export class OrangeMoneyComponentComponent implements OnInit {
   }
   public showmodalretraitcode(){
     console.log("showmodal retrait code");
-    if(this.prenom!="" && this.prenom!=undefined && this.coderetrait!="" && this.coderetrait!=undefined && this.nom!="" && this.nom!=undefined && this.date!="" && this.date!=undefined && this.cni!="" && this.cni!=undefined && this.numclient!="" && this.numclient!=undefined && this.mnt!="" && this.mnt!=undefined && this.verif_montant(this.mnt)==true){
+    if(this.prenom!="" && this.prenom!=undefined && this.coderetrait!="" && this.coderetrait!=undefined && this.nom!="" && this.nom!=undefined && this.date!="" && this.date!=undefined && this.verif_date(this.date)==true && this.cni!="" && this.cni!=undefined && this.verif_cni(this.cni)==true && this.numclient!="" && this.numclient!=undefined && this.verif_phone_number(this.numclient)==true && this.mnt!="" && this.mnt!=undefined && this.verif_montant(this.mnt)==true){
       this.adejaclick= false;
       this.modalretraitcode.show();
       console.log("prenom "+this.prenom+" code ="+this.coderetrait);
@@ -627,15 +583,15 @@ export class OrangeMoneyComponentComponent implements OnInit {
         this.bnom=true;
 
       }
-      if(this.date=="" || this.date==undefined){
+      if(this.date=="" || this.date==undefined || this.verif_date(this.date)==false){
         this.bdate=true;
 
       }
-      if(this.cni=="" || this.cni==undefined){
+      if(this.cni=="" || this.cni==undefined || this.verif_cni(this.cni)==false){
         this.bpiece=true;
 
       }
-      if(this.numclient=="" || this.numclient==undefined){
+      if(this.numclient=="" || this.numclient==undefined || this.verif_phone_number(this.numclient)==false){
           this.bnumclient=true;
       }
       if(this.mnt=="" || this.mnt==undefined || this.verif_montant(this.mnt)!=true){

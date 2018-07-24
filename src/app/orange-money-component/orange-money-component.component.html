@@ -15,7 +15,7 @@
 
                 <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()" data-toggle="tab">Retrait </a>
 
-                <a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
+                <a href="#retraitcode" (click)="reinitialise()" data-toggle="tab">Retrait avec code</a>
 
 <!--                 <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
 
@@ -49,8 +49,7 @@
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
-                                    </div>
-                                    
+                                    </div>   
                                 </div>
                                 <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
                             </div>
@@ -248,7 +247,7 @@
 				<button type="button" class="close pull-right" aria-label="Close" (click)="hideAddChildModal()">
 				    <span aria-hidden="true">&times;</span>
 		        </button>
-	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
+	            <h4 class="modal-title" id="myModalLabel">Depot OrangeMoney.</h4>
 		     </div>
 		     <div class="modal-body">
 
@@ -300,7 +299,7 @@
 				<button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalretraitcode()">
 				    <span aria-hidden="true">&times;</span>
 		        </button>
-	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
+	            <h4 class="modal-title" id="myModalLabel">Retrait Avec Code OrangeMoney.</h4>
 		     </div>
 		     <div class="modal-body">
 
@@ -348,7 +347,7 @@
 				<button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalretrait()">
 				    <span aria-hidden="true">&times;</span>
 		        </button>
-	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
+	            <h4 class="modal-title" id="myModalLabel">Retrait OrangeMoney.</h4>
 		     </div>
 		     <div class="modal-body">
 
@@ -414,7 +413,7 @@
 				<button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalventecredit()">
 				    <span aria-hidden="true">&times;</span>
 		        </button>
-	            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
+	            <h4 class="modal-title" id="myModalLabel">Vente De credit Telephonique Orange.</h4>
 		     </div>
 		     <div class="modal-body">
 

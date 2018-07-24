@@ -181,6 +181,11 @@
                       <div>Montant : {{item.data.montant}}</div><br>
                       <div>Numéro Client :{{item.data.num}}</div><br>
                     </div>
+                    <div *ngIf="item.data.operation==6">
+                      <div>Code : {{item.data.coderetrait}}</div><br>
+                      <div>Prenom :{{item.data.prenom}}</div><br>
+                      <div>Nom :{{item.data.nom}}</div><br>
+                    </div>
 
                   </div>
                   <!-- wizall -->

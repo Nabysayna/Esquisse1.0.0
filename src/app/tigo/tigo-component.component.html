@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<div style="width:50%;margin-left: auto;margin-right: auto">
     <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
         <div class="panel-heading">
             <h2>TigoCash</h2>
@@ -13,29 +13,42 @@
             <div id="om-options">
                 <a href="#depot" (click)="reinitialiser()" style="padding-left: 4rem; padding-right: 4rem;"   data-toggle="tab">Depôt</a>
                 
-                <a href="#retrait" (click)="reinitialiser()" style="padding-left: 4rem; padding-right: 4rem;"  data-toggle="tab">Retrait </a>
-                
-                <a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
+				<a href="#retrait" (click)="reinitialiser()" style="padding-left: 4rem; padding-right: 4rem;"  data-toggle="tab">Retrait </a>
+				
+				<a href="#payertranfert" (click)="reinitialiser()" data-toggle="tab">Payer un transfert</a>
+				
+                <!--<a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
 
-<!--                 <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
+               <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
                 
                 <a href="#achatcred" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Vente crédit</a>
                 
             </div>
 
             <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane fade col-sm-12 col-xs-12 in" id="depot">
+            <div class="tab-content" style="width:100%">
+                <div class="tab-pane fade  in" id="depot" >
                         <h2>Dépôt TigoCash</h2>
                         <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
-							<div class="form-inline">
-								 <label>Numéro du client  :</label>
-								 <input autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
-                            </div>
-                            <div class="form-inline">
-								 <label>Montant transfert :</label>
-								 <input type="text" autocomplete="off"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
-                            </div>
+							<div>
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+										<label>Numéro du client  :</label>
+									</div>
+									<div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+										<input autocomplete="off" type="text" (keyup)="reinitialisebool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
+									</div>
+								</div>
+								<p class="alert alert-danger " *ngIf="numclientbool">numero incorrect</p>
+							</div>
+							<div>
+								<div class="form-inline">
+									<label>Montant transfert :</label>
+									<input type="text" autocomplete="off" (keyup)="reinitialisebool()"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
+									
+								</div>
+								<p class="alert alert-danger col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="mntbool">Montant incorrect</p>
+							</div>
                             <button style="margin-top: 1rem;"   type="submit" class="btn btn-success" >Valider</button>
                         </form>
 				</div>
@@ -44,15 +57,71 @@
 					<form  (ngSubmit)="retirermodal()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 						<div class="form-inline">
 							 <label>Numéro du client  :</label>
-							 <input autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
-						</div>
+							 <input autocomplete="off" type="text" (keyup)="reinitialisebool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
+							 <p class="alert alert-danger col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="mntbool">Montant incorrect</p>
+							</div>
 						<div class="form-inline">
 							 <label>Montant  :</label>
-							 <input type="text" autocomplete="off"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
-						</div>
+							 <input type="text" autocomplete="off" (keyup)="reinitialisebool()"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
+							 <p class="alert alert-danger col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="mntbool">Numero incorrect</p>
+							</div>
 						<button style="margin-top: 1rem;"   type="submit" class="btn btn-success" >Valider</button>
 					</form>
-			</div>
+				</div>
+				<div class="tab-pane fade col-sm-12 col-xs-12" id="payertranfert">
+                    <fieldset style="margin-top: 2rem;margin-bottom: 2rem;"><h2>Payer un transfert</h2> </fieldset>
+                    <form (ngSubmit)="showmodalpaiment()" #payertransfer="ngForm" autocomplete="on">
+											  <div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Code de retrait :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.coderetrait" autocomplete="off"  id="coderetrait" name="coderetrait"  class="form-control" placeholder="Code de retrait" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											  </div>
+											  <div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Prénom :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.prenom" autocomplete="off"  name="prenom"  id="prenom"  class="form-control col-lg-5" placeholder="Prenom du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
+													</div>
+											  </div>
+											  <div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Nom :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.nom"  id="nom" name="nom"  class="form-control col-lg-5 " placeholder="Nom du Client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											  </div>
+											  <div class="form-group row ">
+													<label class="col-lg-3" style="text-align:left;">type de piece</label>
+													<div class="form-inline col-sm-8">
+															<select class="form-control" [(ngModel)]="this.typepiece" name="typepiece" style="margin-left:1rem; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" >
+																<option value="2">carte national d'identite</option>
+																<option value="1">passport</option>
+															</select>
+													</div>
+											  </div>
+											  <div class="form-group row">
+													<label  class="col-lg-3" style="text-align:left;">Numéro  piece  :</label>
+													<div class="form-inline col-sm-8">
+															<input type="text" [(ngModel)]="this.numeropiece"  autocomplete="off" name="cni"  id="mnttrans"  class="form-control col-lg-5" placeholder="Numero d'identite du client" required style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											  </div>
+											  <div class="form-group row">
+													<label class="col-lg-3" style="text-align:left;">Numéro Client</label>
+													<div class="form-inline col-sm-8">
+															<input type="string"  autocomplete="off" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control col-lg-5" placeholder="Numéro du client" required autofocus style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											  </div>
+											  <div class="form-group row">
+													<label  class="col-lg-3" style="text-align:left;">Montant retrait</label>
+													<div class="form-inline col-sm-8">
+															<input type="number" autocomplete="off" [(ngModel)]="this.mnt" name="montantretrait" id="montantretrait"  class="form-control col-lg-5" placeholder="Montant à retirer" required autofocus style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;">
+													</div>
+											  </div>
+											  <div class="row text-center">
+													<input [disabled]="!payertransfer.form.valid" type="submit" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+													<input [disabled]="!payertransfer.form.valid" type="reset" class="btn btn-danger"  style="border-radius: 2rem 0rem 2rem 2rem;"/>
+											  </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -68,7 +137,6 @@
 	            <h4 class="modal-title" id="myModalLabel">{{labelModal}}.</h4>
 		      </div>
 		      <div class="modal-body">
-		
 				 <div>
 					 <form class="form">
 						 <div class="form-group">
@@ -78,7 +146,6 @@
 							 <label >montant : {{mnt}}</label>
 						 </div>
 					 </form>
-					
 				 </div>
 		      </div>
 		      <div class="modal-footer">
@@ -87,7 +154,8 @@
 				  <input type="button" *ngIf="b3" value="valider"  (click)="tigo('3')" class="btn btn-success" />
 				  <input type="button" value="fermer" (click)="hideAddChildModal()" class="btn btn-danger" />
 		      </div>
-		</div> 
+		    </div> 
+	    </div>
 </div>
 <div bsModal #modalretrait="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -119,6 +187,46 @@
 			</div>
 		</div>
 	</div> 
+</div>
+<div bsModal #modalpaiment="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+	<div class="modal-dialog modal-sm">
+	   <div class="modal-content" >
+		 <div class="modal-header">
+		   <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalpaiment()">
+			   <span aria-hidden="true">&times;</span>
+		   </button>
+		   <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
+		</div>
+		<div class="modal-body">
+
+			<div>
+				<form class="form">
+						   <div class="form-group">
+							   <label >Code Retrait : {{this.coderetrait}}</label>
+						   </div>
+						   <div class="form-group">
+							   <label >Nom du cient : {{this.nom}}</label>
+						   </div>
+						   <div class="form-group">
+							   <label >Prenom du client : {{this.prenom}}</label>
+						   </div>
+						   <div class="form-group">
+							   <label >Numero piece: {{this.numeropiece}}</label>
+						   </div>
+						   <div class="form-group">
+							   <label >Montant : {{this.mnt}}</label>
+						   </div>
+				</form>
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			 <input type="button" value="valider" [disabled]="adejaclick==true" (click)="payerTransfer()" class="btn btn-success" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+			 <input type="button" value="fermer" (click)="hidemodalpaiment()" class="btn btn-danger" style="border-radius: 2rem 0rem 2rem 2rem;"/>
+		</div>
+	 </div>
+   </div>
 </div>
 
 <div *ngIf="this.loading">

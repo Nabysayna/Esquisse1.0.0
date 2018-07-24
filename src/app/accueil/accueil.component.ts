@@ -86,12 +86,6 @@ export class AccueilComponent implements OnInit {
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
       // this.processus();
-   /* for(let i=0;i<this.om.length;i++){
-      this.om[i].style["display"]='none';
-      this.om[i].style["background-color"]='blue';
-      this.om[i].style["visibility"]='hidden';
-
-    }*/
     
   }
   afficheApi(api:string){
@@ -545,11 +539,13 @@ geolocaliser(){
                 break;
           }
           case 3:{
-                this.validatedetailfacturesenelec(sesion);
+               // this.validatedetailfacturesenelec(sesion);
+                this.validationretraitespece(sesion);
                 break;
           }
           case 4:{
-                this.validateachatcodewoyofal(sesion);
+                //this.validateachatcodewoyofal(sesion);
+                this.validatedebitercarte(sesion);
                 break;
           }
           default:break;
@@ -1360,10 +1356,10 @@ geolocaliser(){
 
   validationretraitespece(objet:any){
     console.log("validationretraitespeceaveccarte");
-    objet.etats.etat=true;
-    objet.etats.load='terminated';
-    objet.etats.color='green';
-    /*this._postCashService.retraitespece('00221'+objet.data.telephone+'',''+objet.data.montant).then(postcashwebserviceList => {
+   // objet.etats.etat=true;
+   // objet.etats.load='terminated';
+   // objet.etats.color='green';
+    this._postCashService.retraitespece('00221'+objet.data.telephone+'',''+objet.data.montant).then(postcashwebserviceList => {
       postcashwebserviceList = JSON.parse(postcashwebserviceList) ;
       console.log(postcashwebserviceList);
       if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
@@ -1390,7 +1386,7 @@ geolocaliser(){
         objet.etats.load='terminated';
         objet.etats.color='red';
       }
-    });*/
+    });
   }
 
 
@@ -2051,7 +2047,7 @@ retrieveOperationInfo(item : any) : string{
                           objet.etats.errorCode=donnee;
                           clearInterval(periodicVerifierTCDepot) ;
                         }
-                        if(donnee=='-1' && objet.etats.nbtour>=100){
+                        if(donnee=='-1' && objet.etats.nbtour>=6){
                           this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                             console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                             let donnee=rep._body.trim().toString();
@@ -2148,7 +2144,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRetirer) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=100){
+                          if(donnee=='-1' && objet.etats.nbtour>=6){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2243,7 +2239,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRetraitCode) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=100){
+                          if(donnee=='-1' && objet.etats.nbtour>=6){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2330,7 +2326,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRechargeIZI) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=100){
+                          if(donnee=='-1' && objet.etats.nbtour>=6){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2652,6 +2648,39 @@ retrieveOperationInfo(item : any) : string{
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
+    });
+  }
+  validatedebitercarte(objet:any){
+    console.log("validateretraitespecesanscarte");
+    this._postCashService.debitercarte('00221'+objet.data.telephone+'',''+objet.data.montant,''+ objet.data.codevalidation).then(postcashwebserviceList => {
+      postcashwebserviceList = JSON.parse(postcashwebserviceList) ;
+      console.log(postcashwebserviceList) ;
+      if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
+        this.dataImpression = {
+          apiservice:'postecash',
+          service:'retraitsanscarte',
+          infotransaction:{
+            client:{
+              transactionPostCash: postcashwebserviceList.transactionId,
+              transactionBBS: 'Id BBS',
+              telephone:'00221'+objet.data.telephone,
+              montant:objet.data.montant,
+              code:objet.data.codevalidation,
+            },
+
+          },
+        }
+        
+        sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+       // this.router.navigate(['accueil/impression']);
+      }else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+      }
     });
   }
 
