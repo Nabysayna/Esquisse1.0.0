@@ -13,6 +13,7 @@ export class NavbarTopComponent implements OnInit {
   message : string  ;
   autorisedUser = 0 ;
   solde : number ;
+  s:number=0;
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
   constructor(private _authService:AuthService, private router: Router, private _utilsService:UtilsService){ }

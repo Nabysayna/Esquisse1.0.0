@@ -8,6 +8,7 @@ import {TigocashService} from "../services/tigocash.service";
 import { ExpressocashService } from "../services/expressocash.service";
 import {FacturierService} from "../services/facturier.service";
 import {UtilsService} from "../services/utils.service";
+import {AuthService} from "../services/auth.service";
 import {TarifsService} from "../services/tarifs.service";
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
@@ -26,7 +27,8 @@ class Article {
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
-  styleUrls: ['./accueil.component.css']
+  styleUrls: ['./accueil.component.css'],
+
 })
 
 export class AccueilComponent implements OnInit {
@@ -63,6 +65,57 @@ export class AccueilComponent implements OnInit {
   longitude :any ;
   accuracy :any ;
   processLength:number=0;
+  /*nav bar top*/
+  message : string  ;
+  autorisedUser = 0 ;
+  solde : number ;
+  s:number=0;
+  currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  
+  retrieveAlerteMessage(){
+    var periodicVerifier = setInterval(()=>{
+      this._utilsService.consulterLanceurDalerte().subscribe(
+        data => {
+          this.message=data.message;
+        },
+        error => alert(error),
+        () => {
+          console.log(3)
+        }
+      )
+    },60000);
+  }
+
+  updateCaution(){
+    console.log("updateCaution 1");
+    if ( this.autorisedUser == 1)
+      this._utilsService.checkCaution().subscribe(
+        data => {
+          this.solde = data ;
+          console.log("Le solde vaut "+data) ;
+        },
+        error => alert(error),
+        () => {
+          console.log(3)
+        }
+      )
+  }
+  deconnexion(){
+    console.log("deconnexion ----------")
+    this._authService.deconnexion().subscribe(
+      response => {
+        if (response==1){
+          sessionStorage.removeItem('currentUser');
+          sessionStorage.clear();
+          this.router.navigate(['']);
+        } else
+          console.log("Echec deconnexion!") ;
+      },
+      error => console.log(error),
+      () => console.log("Here Dashboard deconnexion")
+    )
+  }
+  /**/
 
   @ViewChild('newoperation') public newOperation:ElementRef;
 
@@ -72,7 +125,7 @@ export class AccueilComponent implements OnInit {
   sessionGlob:any;
 
   //constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService){}
 /******************************************************************************************************/
 
 
@@ -82,12 +135,25 @@ export class AccueilComponent implements OnInit {
 
     localStorage.removeItem('tc-depot') ;
     localStorage.removeItem('tc-retrait') ;
+    this.ecom=true;
 
     if (!sessionStorage.getItem('currentUser'))
        this.router.navigate(['']);
       // this.processus();
+      this._utilsService.isDepotCheckAuthorized().subscribe(
+        data => {
+          data = JSON.parse(data)
+          if(data.estautorise==1) this.autorisedUser = data.estautorise ;
+          this.retrieveAlerteMessage() ;
+        },
+        error => alert(error),
+        () => {
+          this.updateCaution() ;
+        }
+      )
     
   }
+  getSold(){}
   afficheApi(api:string){
       if(api=='ORANGEMONEY'){
           this.om=true;
@@ -956,6 +1022,8 @@ geolocaliser(){
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='green';
+                this.addOpInLastedFifteen('om-depot',requete);
+                this.updateCaution();
               
               }
               else{
@@ -976,6 +1044,8 @@ geolocaliser(){
                         objet.etats.etat=true;
                         objet.etats.load='terminated';
                         objet.etats.color='green';
+                        this.updateCaution();
+                        this.addOpInLastedFifteen('om-depot',requete);
                         clearInterval(periodicVerifierOMDepot) ;
                       }
                       else{
@@ -988,7 +1058,7 @@ geolocaliser(){
                           clearInterval(periodicVerifierOMDepot) ;
                         }
                         if(donnee=='-1'){
-                          if(donnee=='-1' && objet.etats.nbtour>=6)
+                          if(donnee=='-1' && objet.etats.nbtour>=9)
                           this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                             let donnee=rep._body.trim().toString();
                             console.log("demanderAnnulationOM : "+donnee) ;
@@ -1069,6 +1139,7 @@ geolocaliser(){
                    objet.etats.etat=true;
                    objet.etats.load='terminated';
                    objet.etats.color='green';
+                   this.updateCaution();
                 }
                 else{
                   if(donnee!='-1'){
@@ -1086,6 +1157,7 @@ geolocaliser(){
                            objet.etats.etat=true;
                            objet.etats.load='terminated';
                            objet.etats.color='green';
+                           this.updateCaution();
                            clearInterval(periodicVerifierOMRetirer) ;
                         }
                         else{
@@ -1096,7 +1168,7 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierOMRetirer) ;
                           }
-                            if(donnee=='-1' && objet.etats.nbtour>=6){
+                            if(donnee=='-1' && objet.etats.nbtour>=9){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -1158,6 +1230,7 @@ geolocaliser(){
                    objet.etats.etat=true;
                    objet.etats.load='terminated';
                    objet.etats.color='green';
+                   this.updateCaution();
                 }
             else {
               if (donnee != '-1') {
@@ -1176,6 +1249,7 @@ geolocaliser(){
                       objet.etats.etat=true;
                       objet.etats.load='terminated';
                       objet.etats.color='green';
+                      this.updateCaution();
                       clearInterval(periodicVerifierOMRetraitCode) ;
                     }else
                     if(donnee!='-1'){
@@ -1185,7 +1259,7 @@ geolocaliser(){
                       objet.etats.errorCode=donnee;
                       clearInterval(periodicVerifierOMRetraitCode) ;
                     }
-                    if(donnee=='-1' && objet.etats.nbtour>=6){
+                    if(donnee=='-1' && objet.etats.nbtour>=9){
                       this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                         let donnee=rep._body.trim().toString();
                         if(donnee=="c"){
@@ -1229,6 +1303,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
+          this.updateCaution();
           //this.etats.process[objet.id]=objet;
         }
       }
@@ -1272,6 +1347,7 @@ geolocaliser(){
                    objet.etats.etat=true;
                    objet.etats.load='terminated';
                    objet.etats.color='green';
+                   this.updateCaution();
                 }
                 else{
                   if(donnee!='-1'){
@@ -1289,6 +1365,7 @@ geolocaliser(){
                              objet.etats.etat=true;
                              objet.etats.load='terminated';
                              objet.etats.color='green';
+                             this.updateCaution();
                              clearInterval(periodicVerifierOMAcheterCredit) ;
                           }
                           else{
@@ -1299,7 +1376,7 @@ geolocaliser(){
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifierOMAcheterCredit) ;
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=6){
+                            if(donnee=='-1' && objet.etats.nbtour>=9){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  if(donnee=="c"){
@@ -1352,6 +1429,7 @@ geolocaliser(){
 
             },
           } ;
+          this.updateCaution();
       }else{
             objet.etats.etat=true;
             objet.etats.load='terminated';
@@ -1373,6 +1451,7 @@ geolocaliser(){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
         this.dataImpression = {
           apiservice:'postecash',
           service:'retraitaveccarte',
@@ -1418,6 +1497,7 @@ geolocaliser(){
 
               },
             }
+         this.updateCaution();
          objet.etats.etat=true;
          objet.etats.load='terminated';
          objet.etats.color='green';
@@ -1452,6 +1532,7 @@ geolocaliser(){
      objet.etats.etat=true;
      objet.etats.load='terminated';
      objet.etats.color='green';
+     this.updateCaution();
       /*this.detailfacturepostcash = null;
       console.log('Police et Numero Facture : '+objet.data.police+'-'+objet.data.numfacture);
       this.postcashwebservice.detailfacturesenelec(objet.data.police,objet.data.numfacture.toString()).then(postcashwebserviceList => {
@@ -1485,6 +1566,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
+          this.updateCaution();
 
         }else{
           objet.etats.etat=true;
@@ -1540,7 +1622,7 @@ geolocaliser(){
            objet.etats.etat=true;
            objet.etats.load='terminated';
            objet.etats.color='green';
-
+           this.updateCaution();
           this._tarifsService.getTarifTntAbon({typedemande:'abonne',typedebouquet:Number(objet.data.typedebouquet),duree:Number(objet.data.duree)})
             .subscribe(
               data => {
@@ -1618,7 +1700,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
-
+          this.updateCaution();
         }else{
            objet.etats.etat=true;
            objet.etats.load='terminated';
@@ -1654,6 +1736,7 @@ geolocaliser(){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
+          this.updateCaution();
         }
         else{
            objet.etats.etat=true;
@@ -1681,6 +1764,7 @@ geolocaliser(){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
       }
       else{
         objet.etats.etat=true;
@@ -1710,6 +1794,7 @@ geolocaliser(){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
       }
       else{
         objet.etats.etat=true;
@@ -1738,11 +1823,13 @@ geolocaliser(){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
       }
       else if(response.code !== undefined && JSON.parse(response.code).status && JSON.parse(response.code).status=="valid"){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
       }
       else if(response.code !== undefined && JSON.parse(response.code).code && JSON.parse(response.code).code==500){
         objet.etats.etat=true;
@@ -1776,6 +1863,7 @@ geolocaliser(){
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
       }else{
         objet.etats.etat=true;
         objet.etats.load='terminated';
@@ -1797,6 +1885,7 @@ geolocaliser(){
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='green';
+      this.updateCaution();
     });
   }
 
@@ -1804,14 +1893,15 @@ geolocaliser(){
 
 /******************************************************************************************************/
 
-  repeatedInLastFifteen(operation : any, incomingRequest : any) : number{
+ /* repeatedInLastFifteen(operation : any, incomingRequest : any) : number{
 
     let today = Number( Date.now() ) ;
     let omOps = [] ;
     console.log(localStorage.getItem(operation)) ;
 
     if (localStorage.getItem(operation)==null ){
-      localStorage.setItem(operation, JSON.stringify([{requete:incomingRequest, tstamp:today}]) );
+      localStorage.setItem(operation, JSON.stringify([{requete:incomingRequest, tstamp:today,bool:true}]) );
+      this.indexOp=0;
       return 0 ;
     }else{
       omOps = JSON.parse( localStorage.getItem(operation) ) ;
@@ -1823,6 +1913,33 @@ geolocaliser(){
 
 //          console.log("Diff vaut "+diff) ;
 
+          if (  diff < this.quinzeMinutes && omOps[i].bool==false ){
+            return 1 ;
+          }else{
+            if(omOps[i].bool==true || diff > this.quinzeMinutes){
+              omOps[i].tstamp = today ;
+              localStorage.setItem(operation, JSON.stringify(omOps) );
+              return 0;
+            }
+          }
+        }
+      }
+      omOps.push({requete:incomingRequest, tstamp:today}) ;
+      localStorage.setItem(operation, JSON.stringify(omOps) );
+      return 0 ;
+    }
+  }*/
+  repeatedInLastFifteen(operation : any, incomingRequest : any) : number{
+    let today = Number( Date.now() ) ;
+    let omOps = [] ;
+    console.log(localStorage.getItem(operation)) ;
+      omOps = JSON.parse( localStorage.getItem(operation) ) ;
+      if(omOps!=null && omOps!=undefined){
+      for (let i=0 ; i<omOps.length ; i++){
+        if (omOps[i].requete==incomingRequest){
+          let ilYa15Minutes = today - this.quinzeMinutes;
+          let diff =  today - omOps[i].tstamp  ;
+//          console.log("Diff vaut "+diff) ;
           if (  diff < this.quinzeMinutes ){
             return 1 ;
           }else{
@@ -1832,10 +1949,29 @@ geolocaliser(){
           }
         }
       }
-      omOps.push({requete:incomingRequest, tstamp:today}) ;
-      localStorage.setItem(operation, JSON.stringify(omOps) );
+     // omOps[0]={requete:incomingRequest, tstamp:today}
+     // let newop=[{requete:incomingRequest, tstamp:today}]
+     // localStorage.setItem(operation, JSON.stringify(newop) );
+      return 0 ;
+    }else{
+     // omOps.push({requete:incomingRequest, tstamp:today}) ;
+     // let newop=[{requete:incomingRequest, tstamp:today}];
+     // localStorage.setItem(operation, JSON.stringify(newop) );
       return 0 ;
     }
+  }
+  addOpInLastedFifteen(operation:any,request:any){
+    let today = Number( Date.now() ) ;
+    let omOps=[];
+    if (localStorage.getItem(operation)==null ){
+      localStorage.setItem(operation, JSON.stringify([{requete:request, tstamp:today}]) );
+    }else{
+      omOps = JSON.parse( localStorage.getItem(operation) ) ;
+      let lastOp={requete:request,stamp:today};
+      omOps.push(lastOp);
+      localStorage.setItem(operation, JSON.stringify(omOps) );
+    }
+
   }
 
 /****************************************************************************************************/
@@ -2026,6 +2162,7 @@ retrieveOperationInfo(item : any) : string{
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='green';
+                this.updateCaution();
               }
               else{
                 if(donnee!='-1'){
@@ -2044,6 +2181,7 @@ retrieveOperationInfo(item : any) : string{
                         objet.etats.etat=true;
                         objet.etats.load='terminated';
                         objet.etats.color='green';
+                        this.updateCaution();
                         clearInterval(periodicVerifierTCDepot) ;
                       }
                       else{
@@ -2054,7 +2192,7 @@ retrieveOperationInfo(item : any) : string{
                           objet.etats.errorCode=donnee;
                           clearInterval(periodicVerifierTCDepot) ;
                         }
-                        if(donnee=='-1' && objet.etats.nbtour>=6){
+                        if(donnee=='-1' && objet.etats.nbtour>=9){
                           this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                             console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                             let donnee=rep._body.trim().toString();
@@ -2151,7 +2289,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRetirer) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=6){
+                          if(donnee=='-1' && objet.etats.nbtour>=9){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2218,6 +2356,7 @@ retrieveOperationInfo(item : any) : string{
                    objet.etats.etat=true;
                    objet.etats.load='terminated';
                    objet.etats.color='green';
+                   this.updateCaution();
                 }
                 else{
                   if(donnee!='-1'){
@@ -2236,6 +2375,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.etat=true;
                            objet.etats.load='terminated';
                            objet.etats.color='green';
+                           this.updateCaution();
                            clearInterval(periodicVerifierTCRetraitCode) ;
                         }
                         else{
@@ -2246,7 +2386,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRetraitCode) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=6){
+                          if(donnee=='-1' && objet.etats.nbtour>=9){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2333,7 +2473,7 @@ retrieveOperationInfo(item : any) : string{
                            objet.etats.errorCode=donnee;
                            clearInterval(periodicVerifierTCRechargeIZI) ;
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=6){
+                          if(donnee=='-1' && objet.etats.nbtour>=9){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2342,6 +2482,7 @@ retrieveOperationInfo(item : any) : string{
                                 objet.etats.load='terminated';
                                 objet.etats.color='red';
                                 objet.etats.errorCode="c";
+                                this.updateCaution();
                                 clearInterval(periodicVerifierTCRechargeIZI) ;
                               }
                             }) ;
@@ -2375,6 +2516,7 @@ retrieveOperationInfo(item : any) : string{
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
+          this.updateCaution();
         }
         else{
           objet.etats.etat=true;
@@ -2402,7 +2544,8 @@ retrieveOperationInfo(item : any) : string{
 				if(infoRetraitsimpleconfirm.status==0){
 				  objet.etats.etat=true;
 				  objet.etats.load='terminated';
-				  objet.etats.color='green';
+          objet.etats.color='green';
+          this.updateCaution();
 				}
 				else{
 				  objet.etats.etat=true;
@@ -2433,6 +2576,7 @@ retrieveOperationInfo(item : any) : string{
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
+          this.updateCaution();
         }
         else{
           objet.etats.etat=true;
@@ -2488,6 +2632,7 @@ retrieveOperationInfo(item : any) : string{
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
 
       }else{
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -2517,6 +2662,7 @@ retrieveOperationInfo(item : any) : string{
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
         this.dataImpression = {
           apiservice:'facturier',
           service:'rapido',
@@ -2557,6 +2703,7 @@ retrieveOperationInfo(item : any) : string{
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='green';
+          this.updateCaution();
       }else{
           objet.etats.etat=true;
           objet.etats.load='terminated';
@@ -2594,6 +2741,7 @@ retrieveOperationInfo(item : any) : string{
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
 
       }else{
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -2636,6 +2784,7 @@ retrieveOperationInfo(item : any) : string{
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
       }
       else if(typeof response.errorMessage == "string"){
         objet.etats.errorCode = response.errorMessage
@@ -2682,6 +2831,7 @@ retrieveOperationInfo(item : any) : string{
         objet.etats.etat=true;
         objet.etats.load='terminated';
         objet.etats.color='green';
+        this.updateCaution();
        // this.router.navigate(['accueil/impression']);
       }else{
         objet.etats.etat=true;

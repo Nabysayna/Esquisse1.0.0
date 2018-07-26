@@ -1,7 +1,21 @@
 <div id="wrapper" style="font-family:'caviar dreams bold';">
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color: transparent !important; border-style: hidden; font-family:'caviar dreams bold';" role="navigation">
 
-        <div  id="navbHead" ><app-navbar-top></app-navbar-top></div>
+       <!-- <div  id="navbHead" ><app-navbar-top></app-navbar-top></div>-->
+       <div class="row" id="navbHead" >
+         <div style="color:white" class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+              <marquee style="color:white">
+                  {{message}}
+              </marquee>
+          </div>
+         <div style=" cursor:pointer" (click)="updateCaution()" class="col-lg-2 col-md-2 col-xs-2 col-sm-2"><i class="fa fa-refresh"></i>Solde Déposit  : {{solde}} Fcfa</div>
+         <div style="cursor:pointer" class="col-lg-2 col-md-2 col-xs-2 col-sm-2" (click)="deconnexion()" ><i class="fa fa-sign-out fa-fw"></i>{{currentUser.username}}-se deconnecter</div>
+         <!-- <ul id="myul">
+            <li>the message here {{message}}</li>
+            <li>my sold</li>
+            <li>Se déconnecter</li>
+          </ul>-->
+       </div>
 
         <div id="horizontalcenter">
           <ul>
@@ -10,7 +24,6 @@
             <li class="cursor" role="presentation" (click)="afficheApi('GUIDEUTILISATION')"><a><b>Guide d'utilisation</b> </a></li>
           </ul>
         </div>
-
         <div class="navbar-inverse sidebar" role="navigation" id="leftsidemenu" style="background-color: transparent !important;">
             <div class="sidebar-nav navbar-collapse" style="margin-top : -11rem ;background-color: transparent ;">
                 <img src="assets/mobmoney.png" style="margin-bottom: 1rem; margin-left: 1rem ;" /><b style="font-size: 2.3rem; color: #F39200;">Mobile Money</b>
