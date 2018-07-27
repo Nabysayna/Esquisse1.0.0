@@ -20,14 +20,14 @@
                 <!--<a href="#retraitcode" (click)="reinitialiseRcode()" data-toggle="tab">Retrait avec code</a>
 
                <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
-                
+               <!-- 
                 <a href="#achatcred" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Vente crédit</a>
-                
+			   -->
             </div>
 
             <!-- Tab panes -->
             <div class="tab-content" style="width:100%">
-                <div class="tab-pane fade  in" id="depot" >
+                <div class="tab-pane fade  in" style="width:100%" id="depot" >
                         <h2>Dépôt TigoCash</h2>
                         <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
 							<div>
@@ -36,18 +36,23 @@
 										<label>Numéro du client  :</label>
 									</div>
 									<div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-										<input autocomplete="off" type="text" (keyup)="reinitialisebool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
+										<input autocomplete="off" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" (keyup)="reinitialisebool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
 									</div>
+									<p class="alert alert-danger " *ngIf="numclientbool">numero incorrect</p>
 								</div>
-								<p class="alert alert-danger " *ngIf="numclientbool">numero incorrect</p>
+								
 							</div>
 							<div>
-								<div class="form-inline">
-									<label>Montant transfert :</label>
-									<input type="text" autocomplete="off" (keyup)="reinitialisebool()"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
-									
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+										<label>Montant transfert :</label>
+									</div>
+									<div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+										<input type="text" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" (keyup)="reinitialisebool()"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
+									</div>
+									<p class="alert alert-danger" *ngIf="mntbool">Montant incorrect</p>
 								</div>
-								<p class="alert alert-danger col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="mntbool">Montant incorrect</p>
+								
 							</div>
                             <button style="margin-top: 1rem;"   type="submit" class="btn btn-success" >Valider</button>
                         </form>
@@ -55,16 +60,28 @@
 				<div class="tab-pane fade col-sm-12 col-xs-12 in" id="retrait">
 					<h2>Retrait TigoCash</h2>
 					<form  (ngSubmit)="retirermodal()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
-						<div class="form-inline">
-							 <label>Numéro du client  :</label>
-							 <input autocomplete="off" type="text" (keyup)="reinitialisebool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
-							 <p class="alert alert-danger col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="mntbool">Montant incorrect</p>
+						<div>
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+									<label>Numéro du client  :</label>
+								</div>
+								<div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+									<input autocomplete="off" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" (keyup)="reinitialisebool()"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="numclient"  name="numclient" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus />	 
+								</div>
+								<p class="alert alert-danger" *ngIf="numclientbool">Numero incorrect</p>
 							</div>
-						<div class="form-inline">
-							 <label>Montant  :</label>
-							 <input type="text" autocomplete="off" (keyup)="reinitialisebool()"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
-							 <p class="alert alert-danger col-lg-4 col-md-4 col-xs-4 col-sm-4" *ngIf="mntbool">Numero incorrect</p>
+						</div>
+						<div>
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+									<label>Montant  :</label>
+								</div>
+								<div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+									<input type="text" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" (keyup)="reinitialisebool()"  autocomplete="off"  name="mnt" id="mnt" [(ngModel)]="mnt"  class="form-control" placeholder="Montant du transfert" required  />
+								</div>
+								<p class="alert alert-danger" *ngIf="mntbool">Montant incorrect</p>
 							</div>
+						</div>
 						<button style="margin-top: 1rem;"   type="submit" class="btn btn-success" >Valider</button>
 					</form>
 				</div>

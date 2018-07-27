@@ -53,7 +53,7 @@ export class TigoComponent implements OnInit {
        this.showAddChildModal();
        this.labelModal="Depot TigoCash";
      }else{
-       if(this.numclient=="" || this.numclient==undefined || this.verif_phone_number(this.numclient)==false && num[0]!="7" && num[1]!="6"){
+       if(this.numclient=="" || this.numclient==undefined || this.verif_phone_number(this.numclient)==false || num[0]!="7" || num[1]!="6"){
           this.numclientbool=true;
        }
        if(this.mnt=="" || this.mnt==undefined || this.verif_montant(this.mnt)==false){

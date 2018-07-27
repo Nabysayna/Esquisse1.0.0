@@ -39,8 +39,9 @@
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
                                     </div>
+                                    <p *ngIf="mag1" class="alert alert-danger">numero incorrect</p>
                                 </div>
-                                <p *ngIf="mag1" class="alert alert-danger">numero incorrect</p>
+                               
                             </div>
                             <div>
                                 <div class="row" >
@@ -50,8 +51,9 @@
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
                                     </div>   
+                                    <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
                                 </div>
-                                <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
+                                
                             </div>
                             <div class="form-inline" style="text-align:center" >
                                 <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn btn-success"  />
@@ -364,7 +366,7 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;retirer()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider"  (click)="retirer()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hidemodalretrait()" class="btn btn-danger" />
 		     </div>
 		  </div>
@@ -430,7 +432,7 @@
 				 </div>
 		     </div>
 		     <div class="modal-footer">
-				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;acheterCredit();hidemodalventecredit()" class="btn btn-success" />
+				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider"  (click)="acheterCredit();hidemodalventecredit()" class="btn btn-success" />
 				  <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hidemodalventecredit()" class="btn btn-danger" />
 		     </div>
 		  </div>
