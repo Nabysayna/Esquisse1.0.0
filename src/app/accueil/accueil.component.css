@@ -143,6 +143,7 @@ body {
     border-color: #0F70B7;
     color : white;
     width : 100%;
+    margin-top: 5px;
 }
 
 #navbHead a{
@@ -243,10 +244,11 @@ body {
 }
 
 #navbHead{
-    background-color: #337ab7 !important ;
+    background-color: #36A9E0 !important ;
     border-color: #0F70B7;
     color : white;
     width : 100%;
+    
 }
 
 #navbHead a{
@@ -344,7 +346,8 @@ body {
 #horizontalcenter {
     position: relative;
     z-index: -10 ;
-    top: -2rem;
+    /*top: -2rem;*/
+    top: 1rem;
     left: 5rem;
 }
 
@@ -401,6 +404,55 @@ body {
 .cursor{
     cursor: pointer;
 }
+/* css navbar-top*/
+marquee{
+    color: black;
+    width: 70rem !important;
+}
+
+#currentUser {
+/*    background-color: transparent !important ;*/
+    background-color: white !important ;
+    border-color: transparent !important;
+    color : #337ab7 !important;
+    font-weight: bolder;
+    cursor: pointer;
+    position: relative;
+    z-index: 1000000 ;
+}
+
+.dropdown-menu{
+    position: relative;
+    z-index: 1000000 ;
+
+}
+
+#currentUser:hover{  
+    border-color: transparent !important;
+    color : orange !important ;
+}
+
+
+#disconnect-btn{
+	background-color: transparent;
+}
+
+#disconnect-btn:hover{
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+#disconnect-btn:active{
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+#myul li{
+    display: inline;
+}
+
+/*  fin css navbar-top*/
 
 
 

@@ -18,6 +18,13 @@ export class TigoComponent implements OnInit {
   b1:boolean=false;
   b2:boolean=false;
   b3:boolean=false;
+  numclientbool:boolean=false;
+  mntbool:boolean=false;
+  typepiece: any;
+  prenom: string;
+  nom: string;
+  coderetrait:any;
+  numeropiece: any;
   @Input() bbs:number=0;
   @Output() changementTc=new EventEmitter();
   increment() {
@@ -36,16 +43,42 @@ export class TigoComponent implements OnInit {
   }
   
    public ajout(){
+     let num=[];
+     if(this.numclient!="" && this.numclient!=undefined){
+       num=this.numclient.split("");
+     }
+     if(this.numclient!="" && this.numclient!=undefined && num[0]=="7" && num[1]=="6" && this.verif_phone_number(this.numclient)==true && this.mnt!="" && this.mnt!=undefined && this.verif_montant(this.mnt)==true){
        this.b1=true;
        this.type='1';
        this.showAddChildModal();
        this.labelModal="Depot TigoCash";
+     }else{
+       if(this.numclient=="" || this.numclient==undefined || this.verif_phone_number(this.numclient)==false || num[0]!="7" || num[1]!="6"){
+          this.numclientbool=true;
+       }
+       if(this.mnt=="" || this.mnt==undefined || this.verif_montant(this.mnt)==false){
+          this.mntbool=true;
+       }
+     }
     }
    public retirermodal(){
-        this.b2=true;
-        this.type='2';
-        this.showAddChildModal();
-        this.labelModal="Retrait TigoCash";
+       let num=[];
+        if(this.numclient!="" && this.numclient!=undefined){
+             num=this.numclient.split("");
+          }
+        if(this.numclient!="" && this.numclient!=undefined && num[0]=="7" && num[1]=="6" && this.verif_phone_number(this.numclient)==true && this.mnt!="" && this.mnt!=undefined && this.verif_montant(this.mnt)==true){
+          this.b2=true;
+          this.type='2';
+          this.showAddChildModal();
+          this.labelModal="Retrait TigoCash";
+        }else{
+          if(this.numclient=="" || this.numclient==undefined || this.verif_phone_number(this.numclient)==false && num[0]!="7" && num[1]!="6"){
+             this.numclientbool=true;
+          }
+          if(this.mnt=="" || this.mnt==undefined || this.verif_montant(this.mnt)==false){
+             this.mntbool=true;
+          }
+        }
     }
     fermermodal(){
       this.hideAddChildModal();
@@ -59,12 +92,13 @@ export class TigoComponent implements OnInit {
     sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash depot','operateur':3,'operation':1,'num':this.numclient,'montant':this.mnt}));
     this.increment();
     this.fermermodal();
+    this.reinitialiser();
   }
   depot(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash depot','operateur':3,'operation':1,'num':this.numclient,'montant':this.mnt}));
+   /* sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash depot','operateur':3,'operation':1,'num':this.numclient,'montant':this.mnt}));
     this.increment();
     this.fermermodal();
-    this.reinitialiser();
+    this.reinitialiser();*/
 
  }
  retrait(){
@@ -101,38 +135,57 @@ reinitialiser(){
     this.b1=false;
     this.b2=false;
     this.b3=false;
+    this.mntbool=false;
+    this.numclientbool=false;
+}
+reinitialisebool(){
+  this.mntbool=false;
+  this.numclientbool=false;
 }
  /* ajout(){
     ths.showAddChildModal();
   }*/
-  /******************verif numero***********************/
-   
+  /******************Structure De Control***********************/
+  isNumber(num:string):boolean{
+    let tab=["0","1","2","3","4","5","6","7","8","9"];
+    for(let i=0;i<tab.length;i++){
+      if(num===tab[i]){
+        return true;
+      }
+    }
+    return false;
+  }
 
-  
-  /*****************************************************/
-  /*************verif montant**************************/
-  
-  /****************reinitialise***********************/
- 
-  /*************************************************/
-  /*****************verif cni***********************/
- 
-  /*********************************************************/
-/*******************************************************/
-  
+  verif_phone_number(number:string):boolean{
+    let numero=number.split("");
+    console.log(numero.length);
+    if(numero.length!=parseInt("9")){
+      return false;
+    }
+    for(let i=0;i<numero.length;i++){
+      if(!this.isNumber(numero[i])){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  verif_montant(mnt:string):boolean{
+    if(parseInt(mnt)>=1){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  payerTransfer(){
+    this.hidemodalpaiment();
+    console.log({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt,'num':this.numclient});
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Tigo cash payer un transfer','operateur':3,'operation':6,'coderetrait':this.coderetrait,'nomCient':this.nom,'prenomClient':this.prenom,'typepiece':this.typepiece,'numeropiece':this.numeropiece,'montant':this.mnt,'num':this.numclient}));
+    this.reinitialiser();
+    this.increment();
+ }
 
 /*********************************************************/
-
-
-/***********************************************************/
-
- 
-/*********************************************************/
-
- 
-
-/*********************************************************/
-
  
   @ViewChild('addChildModal') public addChildModal:ModalDirective;
   @ViewChild('modalretraitinter') public modalretraitinter:ModalDirective;
@@ -140,6 +193,15 @@ reinitialiser(){
   @ViewChild('modaldepot') public modal:ModalDirective;
   @ViewChild('modalretrait') public modalretrait:ModalDirective;
   @ViewChild('modalretraitcode') public modalretraitcode:ModalDirective;
+  @ViewChild('modalpaiment') modalpaiment: ModalDirective;
+
+  showmodalpaiment(){
+   // this.adejaclick = false;
+    this.modalpaiment.show();
+  }
+  hidemodalpaiment(){
+   this.modalpaiment.hide()
+  }
 
   public showAddChildModal():void {
     this.addChildModal.show();
