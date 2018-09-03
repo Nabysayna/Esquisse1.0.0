@@ -9,6 +9,7 @@ import { ExpressocashService } from "../services/expressocash.service";
 import {FacturierService} from "../services/facturier.service";
 import {UtilsService} from "../services/utils.service";
 import {TarifsService} from "../services/tarifs.service";
+import { AirtimeService } from "../services/airtime.service";
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { ZoningComponent } from 'app/zoning/zoning.component';
@@ -48,6 +49,7 @@ export class AccueilComponent implements OnInit {
   guide:boolean=false;
   pret:boolean=false;
   ecom:boolean=false;
+  airtime:boolean=false;
   quinzeMinutes = 900000;
   registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
   oms=[
@@ -71,8 +73,8 @@ export class AccueilComponent implements OnInit {
   messageGeolocation : any ;
   sessionGlob:any;
 
-  //constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
+  //constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private airtimeService:AirtimeService){}
+  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private airtimeService:AirtimeService){}
 /******************************************************************************************************/
 
 
@@ -111,6 +113,7 @@ export class AccueilComponent implements OnInit {
           this.pret=false;
           this.guide=false;
           this.ecom=false;
+          this.airtime=false;
 
       }
       if(api=="TIGOCASH"){
@@ -129,6 +132,7 @@ export class AccueilComponent implements OnInit {
           this.pret=false;
           this.guide=false;
           this.ecom=false;
+          this.airtime=false;
 
       }
       if(api=="POSTECASH"){
@@ -147,6 +151,7 @@ export class AccueilComponent implements OnInit {
           this.pret=false;
           this.guide=false;
           this.ecom=false;
+          this.airtime=false;
       }
       if(api=="E-MONEY"){
         this.em=true;
@@ -164,6 +169,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
       if(api=="WIZALL"){
@@ -182,6 +188,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
       }
       if(api=="TNT"){
         this.Tnt=true;
@@ -199,6 +206,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
       if(api=="SDE"){
@@ -217,6 +225,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
       if(api=="RAPIDO"){
@@ -235,6 +244,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
       if(api=="WOYOFAL"){
@@ -253,6 +263,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
       if(api=="SENELEC"){
@@ -271,6 +282,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
       if(api=="OOLU"){
@@ -289,6 +301,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
       }
     if(api=="GESTIONREPORTING"){
@@ -307,6 +320,7 @@ export class AccueilComponent implements OnInit {
         this.pret=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
     }
     if(api=="DEMANDEPRET"){
@@ -325,6 +339,7 @@ export class AccueilComponent implements OnInit {
         this.om=false;
         this.guide=false;
         this.ecom=false;
+        this.airtime=false;
 
     }
     if(api=="GUIDEUTILISATION"){
@@ -343,10 +358,32 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.ecom=false;
+      this.airtime=false;
 
     }
     if(api=="ECOMMERCE"){
       this.ecom=true;
+      this.guide=false;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+      this.airtime=false;
+
+    }
+    if(api=="AIRTIME"){
+      console.log("airtime");
+      this.airtime=true;
+      this.ecom=false;
       this.guide=false;
       this.pret=false;
       this.gestionReporting=false;
@@ -664,6 +701,21 @@ geolocaliser(){
       }
     }
 
+  }
+  Airtime($event){
+     let infoOperation:any;
+     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+		  infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+		  let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+		  let operateur=sesion.data.operateur;
+		  this.process.push(sesion);
+		  let operation=sesion.data.operation;
+		  if(operateur==9){
+		     if(sesion.data.operation==1){
+		        this.validerAirtime(sesion);
+			  }
+		  }
+	  }
   }
 
 /******************************************************************************************************/
@@ -1459,6 +1511,7 @@ geolocaliser(){
 
       this._postCashService.achatcodewoyofal(objet.data.montant+'',objet.data.compteur+'').then(postcashwebserviceList => {
         if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
+        
         objet.dataI = {
             apiservice:'postecash',
             service:'achatcodewayafal',
@@ -1971,6 +2024,15 @@ retrieveOperationInfo(item : any) : string{
         return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
       else if (item.etats.errorCode && (typeof item.etats.errorCode == 'string')) return item.etats.errorCode;
       return "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client." ;
+    }
+    if(item.data.operateur==9){
+		if(item.etats.errorCode=='-3' || item.etats.errorCode==-3){
+			return "Service Indisponible Veuillez Reessayer Plus Tard";
+		}
+		if(item.etats.errorCode=="-7" || item.etats.errorCode==-3){
+			return "Service Indisponible Veuillez Reessayer Plus Tard";
+		}
+    
     }
 
 
@@ -2589,6 +2651,7 @@ retrieveOperationInfo(item : any) : string{
   }
 
   validerwoyofal(objet){
+   console.log('nns');
     this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
       console.log(response) ;
       if(typeof response !== 'object') {
@@ -2708,6 +2771,85 @@ retrieveOperationInfo(item : any) : string{
       this.components.splice(componentIndex, 1);
     }
   }*/
+  validerAirtime(objet:any){
+		this.airtimeService.Airtime(objet.data.nom,objet.data.numero,objet.data.montant).then(reponse =>{
+		     console.log(typeof reponse);
+		 if (reponse.status==200){
+              console.log(reponse);
+              console.log(reponse._body);
+            if(reponse._body.trim()=='0'){
+               console.log(reponse);
+               objet.etats.etat=true;
+               objet.etats.load='terminated';
+               objet.etats.color='red';
+               objet.etats.errorCode='0';
+            }else
+            if(reponse._body.trim()=='-12'){
+               objet.etats.etat=true;
+               objet.etats.load='terminated';
+               objet.etats.color='red';
+               objet.etats.errorCode='-12';
+            }
+            else
+              setTimeout(()=>{
+              this.airtimeService.verifierReponse(reponse._body.trim().toString()).then(rep =>{
+                console.log(rep);
+                let donnee=rep._body.trim().toString();
+                console.log("Inside verifier depot : "+donnee) ;
+                if(donnee=='1'){
+                   objet.etats.etat=true;
+                   objet.etats.load='terminated';
+                   objet.etats.color='green';
+                }
+                else{
+                  if(donnee!='-1'){
+                     objet.etats.etat=true;
+                     objet.etats.load='terminated';
+                     objet.etats.color='red';
+                     objet.etats.errorCode=donnee;
+                   }else{
+                        let periodicVerifierOMAcheterCredit = setInterval(()=>{
+                        objet.etats.nbtour = objet.etats.nbtour + 1 ;
+                        this.airtimeService.verifierReponse(reponse._body.trim().toString()).then(rep =>{
+                          let donnee=rep._body.trim().toString();
+                          console.log("Inside verifier depot : "+donnee) ;
+                          if(donnee=='1'){
+                             objet.etats.etat=true;
+                             objet.etats.load='terminated';
+                             objet.etats.color='green';
+                             clearInterval(periodicVerifierOMAcheterCredit) ;
+                          }
+                          else{
+                            if(donnee!='-1'){
+                             objet.etats.etat=true;
+                             objet.etats.load='terminated';
+                             objet.etats.color='red';
+                             objet.etats.errorCode=donnee;
+                             clearInterval(periodicVerifierOMAcheterCredit) ;
+                            }
+                            if(donnee=='-1' && objet.etats.nbtour>=6){
+                              this.airtimeService.demanderAnnulation(reponse._body.trim().toString()).then(rep =>{
+                                let donnee=rep._body.trim().toString();
+                                 if(donnee=="c"){
+                                   objet.etats.etat=true;
+                                   objet.etats.load='terminated';
+                                   objet.etats.color='red';
+                                   objet.etats.errorCode="c";
+                                   clearInterval(periodicVerifierOMAcheterCredit) ;
+                                   }
+                              }) ;
+                            }
+                          }
+                        });
+                        },10000);
+                   }
+                }
+              });
+              },30000);
+      }
+		});
+  
+  }
 
 }
 

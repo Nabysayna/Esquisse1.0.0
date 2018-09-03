@@ -37,7 +37,8 @@ import { NAbonnementService} from './tnt/tntservices';
 import { LAbonnementService} from './tnt/tntservices';
 import { EFinancierService} from './tnt/tntservices';
 
-import {TigocashService} from './services/tigocash.service';
+import { TigocashService } from './services/tigocash.service';
+import { AirtimeService } from './services/airtime.service';
 
 
 
@@ -191,6 +192,7 @@ import { NewAnfantComponent } from './new-anfant/new-anfant.component';
 
 import { EncoureComponent } from './encoure/encoure.component';
 import { WariComponent } from './wari/wari.component';
+import { AirtimeComponent } from './airtime/airtime/airtime.component';
 
 
 
@@ -306,6 +308,7 @@ import { WariComponent } from './wari/wari.component';
     NewAnfantComponent,
     EncoureComponent,
     WariComponent,
+    AirtimeComponent,
   ],
   imports: [
     BrowserModule,
@@ -366,6 +369,7 @@ import { WariComponent } from './wari/wari.component';
     MapsService,
     WariService,
     TarifsService,
+    AirtimeService,
   ],
   bootstrap: [AppComponent]
 })

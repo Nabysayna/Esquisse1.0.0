@@ -50,6 +50,7 @@ import { SdeComponent } from './sde/sde.component';
 import { WoyofalComponent } from './woyofal/woyofal.component';
 import { SenelecComponent } from './senelec/senelec.component';
 import { OoluComponent } from './oolu/oolu.component';
+import { AirtimeComponent } from './airtime/airtime/airtime.component';
 
 
 import { AdminpdvparametrecompteComponent } from './adminpdv/adminpdv-parametre-compte/adminpdv-parametre-compte.component';
@@ -91,7 +92,8 @@ const appRoutes: Routes = [
                 {path: 'sde',component:SdeComponent},
                 {path: 'woyofal',component:WoyofalComponent},
                 {path: 'senelec',component:SenelecComponent},
-                {path: 'oolu',component:OoluComponent}
+                {path: 'oolu',component:OoluComponent},
+                {path: 'airtime',component:AirtimeComponent}
     		]
     },
     { path: 'accueiladmmpdv', component: AccueilAdminMultiPdvComponent, canActivate: [AuthGuard],
