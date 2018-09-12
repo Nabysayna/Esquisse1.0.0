@@ -50,6 +50,7 @@
                     <div  class="{{item.etats.load}}" style="text-align: end ;">
                       <i *ngIf="item.etats.etat&&item.etats.color=='green'" class="fa fa-check fa-2x" aria-hidden="true"></i>
                       <i *ngIf="item.etats.etat&&item.etats.color=='red'" class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+                      <i *ngIf="item.etats.etat&&item.etats.color=='yellow'" class="fa fa-refresh fa-2x" aria-hidden="true"></i>
                     </div>
                     <div>{{item.data.nom}}</div>
                   </div>
@@ -356,6 +357,23 @@
     </div>
   </div>
 </div>
+
+<div style="font-family:'caviar dreams bold';" bsModal #waitingmodal="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: #f39200; color: white;">
+        <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="this.waitingmodal.hide();">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="text-align: center ;">
+            <h1>Faites patienter le client ; Votre requete est en cours de traitement.</h1> 
+            <button style="border-radius:#ffff;color:#ffff" type="button" class="pull-center" aria-label="Close" (click)="this.waitingmodal.hide();">OK</button>
+        
+          </div>
+      </div>
+    </div>
+  </div>
 
 
 
