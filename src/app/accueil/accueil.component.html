@@ -36,7 +36,7 @@
             </div>
             <!-- /.sidebar-collapse -->
             <div id="encours" >
-              <h3 style="color: orange ; font-weight: 600 ; background-color: white ;">Vos opèrations</h3>
+              <h3   style="color: orange ; font-weight: 600 ; background-color: white ;">Vos opèrations</h3>
              <!-- <div>
                 <div  class="om[0].class" [ngStyle]="om[0].style">operation1</div>
                 <div class="om[1].class" [ngStyle]="om[1].style" >operation2</div>
@@ -368,7 +368,7 @@
         </div>
         <div class="modal-body" style="text-align: center ;">
             <h1>Faites patienter le client ; Votre requete est en cours de traitement.</h1> 
-            <button style="border-radius:#ffff;color:#ffff" type="button" class="pull-center" aria-label="Close" (click)="this.waitingmodal.hide();">OK</button>
+            <input style="border: 1px solid #ffff; color:#ffff;padding:2rem; " type="button" class="btn btn-success" (click)="this.waitingmodal.hide();" value="OK" />
         
           </div>
       </div>
