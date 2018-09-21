@@ -55,7 +55,7 @@ export class AccueilComponent implements OnInit {
 
   indexOp:number=0;
   quinzeMinutes = 900000;
-  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
+  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL','WARI'] ;
   oms=[
        {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"col-xs-2 col-sm-2 loader","etat":0},
        {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"row loader","etat":0},

@@ -193,6 +193,8 @@ import { NewAnfantComponent } from './new-anfant/new-anfant.component';
 import { EncoureComponent } from './encoure/encoure.component';
 import { WariComponent } from './wari/wari.component';
 import { AirtimeComponent } from './airtime/airtime/airtime.component';
+import { CanalComponent } from './canal/canal.component';
+import { AssuranceComponent } from './assurance/assurance.component';
 
 
 
@@ -309,6 +311,8 @@ import { AirtimeComponent } from './airtime/airtime/airtime.component';
     EncoureComponent,
     WariComponent,
     AirtimeComponent,
+    CanalComponent,
+    AssuranceComponent,
   ],
   imports: [
     BrowserModule,

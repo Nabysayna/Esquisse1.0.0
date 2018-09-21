@@ -30,7 +30,7 @@
                 <ul id="gauche" class="nav in" id="side-menu">
                   <li role="presentation" style="background-color: #f39200; color: white; cursor: pointer;" (click)="geolocaliser()"><a style="color: white;" >GEOLOCALISER LE POINT</a></li>
                   <li class="cursor" *ngFor="let api of registredAPIs; let i = index" (click)="afficheApi(api)" ><a > <img src="assets/icoservice-{{i+1}}.png" /><b>{{api}}</b> </a></li>
-                  <li class="cursor" (click)="afficheApi('ECOMMERCE')" role="presentation"><a><i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>
+                  <!--<li class="cursor" (click)="afficheApi('ECOMMERCE')" role="presentation"><a><i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>-->
                   <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
                 </ul>
             </div>
@@ -302,7 +302,9 @@
     <div id="page-wrapper" class="row" style="padding-top: 3rem; ">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" id="routeContainDisplayer">
            <!-- <router-outlet (change)="changerna($event)"></router-outlet>-->
-           <app-postcash *ngIf="pc" (changementPc)="postcash($event)" ></app-postcash>
+           <router-outlet ></router-outlet>
+
+         <!-- <app-postcash *ngIf="pc" (changementPc)="postcash($event)" ></app-postcash>
            <app-orange-money-component *ngIf="om" (changementOm)="orangeMoney($event)" ></app-orange-money-component>
            <app-expresso *ngIf="em" (changementEm)="expresso($event)"></app-expresso>
            <app-tigo-component *ngIf="tc" (changementTc)="tigocash($event)" ></app-tigo-component>
@@ -317,7 +319,7 @@
            <app-demandepret *ngIf="pret"></app-demandepret>
            <app-guideusercaisse *ngIf="guide"></app-guideusercaisse>
            <app-e-commerce *ngIf="ecom"></app-e-commerce>
-           <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>
+           <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>-->
            
           </div> 
     </div>
@@ -331,6 +333,7 @@
           <li class="cursor" role="presentation" (click)="afficheApi('WOYOFAL')" ><a> <img src="assets/icoservice-woyofal.png" /> Recharge <b>WOYOFAL</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('SENELEC')" ><a><img src="assets/icoservice-senelec.png" />Paiement <b>SENELEC</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('AIRTIME')" ><a><img src="assets/airtime.jpg" />Paiement <b>AIRTIME</b> </a></li>
+          <li class="cursor" role="presentation" (click)="afficheApi('CANAL')" ><a><img src="assets/canal.png" />Paiement <b>CANAL</b> </a></li>
 
           <li class="cursor" role="presentation" (click)="afficheApi('OOLU')" ><a><img src="assets/icoservice-oolu.png" />Paiement <b>Oolu Solar</b> </a></li>
           <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>

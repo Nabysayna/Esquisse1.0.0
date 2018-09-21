@@ -61,6 +61,8 @@ import {ImpressionadminpdvComponent} from "./impressionadminpdv/impressionadminp
 import {AdminmultipdvCreditationCCComponent} from "./admin-multi-pdv/admin-multi-pdv-creditation-cc/admin-multi-pdv-creditation-cc.component";
 import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pdv-suivipoint/admin-multi-pdv-suivipoint.component";
 import { WariComponent } from './wari/wari.component';
+import { CanalComponent } from './canal/canal.component';
+import { AssuranceComponent } from './assurance/assurance.component';
 
 const appRoutes: Routes = [
     { path: '', component: AuthComponentComponent },
@@ -93,7 +95,9 @@ const appRoutes: Routes = [
                 {path: 'woyofal',component:WoyofalComponent},
                 {path: 'senelec',component:SenelecComponent},
                 {path: 'oolu',component:OoluComponent},
-                {path: 'airtime',component:AirtimeComponent}
+                {path: 'airtime',component:AirtimeComponent},
+                {path: 'canal', component:CanalComponent},
+                {path: 'assurance', component:AssuranceComponent}
     		]
     },
     { path: 'accueiladmmpdv', component: AccueilAdminMultiPdvComponent, canActivate: [AuthGuard],

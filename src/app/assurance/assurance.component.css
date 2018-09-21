@@ -2,6 +2,7 @@
 label{
     color : #36A9E0;
     text-transform : capitalize ;
+   
 }
 
 
@@ -49,7 +50,13 @@ label{
 fieldset h2{
     margin-top: -3rem;
 }
-
+.fieldset1
+{
+    border:2px solid green;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
 .cover{
     border : 2px solid #36A9E0 ;
     z-index: 0 ;
