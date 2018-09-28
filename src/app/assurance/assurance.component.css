@@ -119,3 +119,93 @@ fieldset h2{
         width: max-content !important;
     }
 }  
+a:active {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c
+}
+.mybtn{
+    color: #fff;
+    background-color: #337ab7 !important;
+    border-color: #337ab7 !important
+}
+.myheading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.mypanel {
+    margin-bottom: 20px;
+    background-color:#337ab7;
+    
+
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.mylabel {
+    color : black;
+    
+}
+/*input[type='radio']:checked:after{
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #5cb85c;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}*/
+a +td :checked:after{
+    background: #5cb85c;
+}
+td :checked:after {
+    background: #5cb85c;
+  }
+  .mybtnClicked{
+    color: #fff;
+    background-color: #5cb85c !important;
+    border-color: #5cb85c !important
+}
+.inputWithIcon input[type=text]{
+    padding-left: 35px; 
+}
+.inputWithIcon select[type=text]{
+    padding-left: 35px; 
+}
+.inputWithIcon {
+    position: relative;
+}
+.inputWithIcon i{
+    position: absolute;
+    top: 0px;
+    padding: 7px 8px;
+    color: #aaa;
+    transition: 3s;
+    left: 1rem;
+}
+.inputWithIcon input [type=text] + i{
+    color: dodgerblue;
+}
+.radiobtn:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+.lineClick {
+    color: #fff;
+    background-color: #5cb85c !important;
+    border-color: #5cb85c !important
+}
+.lineNotClick {
+    color: #fff;
+    background-color: #337ab7 !important;
+    border-color: #337ab7 !important
+}

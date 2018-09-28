@@ -50,6 +50,7 @@ export class AssuranceComponent implements OnInit {
  //affichage des etapes
  etap:number=1;
  assuraneEnCours:any;
+ lineClick:any;
  suivant(){
     this.etap = this.etap+1;
  }
@@ -64,8 +65,23 @@ dureeAssurance(){
     
   }
 }
-detail(i:number){
+getClassCSS(i){
+  if(this.lineClick == i){
+    return  { 'lineClick': true,'lineNotClick':false};
+  }else{
+    return  { 'lineClick': false,'lineNotClick':true};
+  }
+}
+getAssurane(i:number){
   this.assuraneEnCours = this.Assurance[i];
+  console.log(this.assuraneEnCours);
+  this.lineClick = i;
+  /*if(i != undefined){
+      alert("ok");
+      this.getColor.lineClick=true;
+      this.getColor.lineNotClick=false;
+  }*/
+  console.log( this.getColor.lineClick);
 }
  
   @ViewChild('modalAssurer') modalAssurer: ModalDirective;
@@ -84,8 +100,10 @@ detail(i:number){
     {assurance: 'Assurance 5',tarif: '9500',monaie:'FCFA',duree:'6 mois'},
     {assurance: 'Assurance 4',tarif: '10000',monaie:'FCFA',duree:'12 mois'}
   ]
-  getAssurane(i:number){
 
+  getColor = {
+    'lineClick': false,
+    'lineNotClick':true
   }
   constructor() { }
 
