@@ -50,26 +50,26 @@
                                <p style="color: black;margin-top: -1rem; ">Genre</p> 
                               <div class="row">
                                     <label class="control-label" for="" style=" color: black;">
-                                        <input  type="radio" name="monsieur" id="monsieur" [(ngModel)]="monsieur">Monsieur
+                                        <input  type="radio" name="monsieur" id="monsieur" (click)="getGenre()" value="1" [(ngModel)]="genre">Monsieur
                                     </label>
                                     
                                     <label class="control-label" for="" style=" color: black;">
-                                       <input  type="radio" name="madame" id="madame" [(ngModel)]="madame">Madame
+                                       <input  type="radio" name="madame" id="madame" (click)="getGenre()" value="2" [(ngModel)]="genre">Madame
                                     </label>
                                     <label class="control-label" for="" style=" color: black;">
-                                        <input type="radio" name="mademoiselle" id="mademoiselle"  [(ngModel)]="mademoiselle">Mademoiselle
+                                        <input type="radio" name="mademoiselle" id="mademoiselle" (click)="getGenre()" value="3"  [(ngModel)]="genre">Mademoiselle
                                     </label>
                               </div>
                               <div class="row">
                                 <div class="col-md-6"  style="width: 48% ;margin-top: -1rem;">
                                     <div class="inputWithIcon">
-                                        <input  class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="nom" id="nom" placeholder="nom" [(ngModel)]="nomClient">
+                                        <input  class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="nom" id="nom" placeholder="nom" [(ngModel)]="InfoClient.nom">
                                         <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                     <div  class="inputWithIcon">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="prenom" id="prenom" placeholder="prenom" [(ngModel)]="prenomClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="prenom" id="prenom" placeholder="prenom" [(ngModel)]="InfoClient.prenom">
                                         <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
@@ -77,13 +77,13 @@
                               <div class="row">
                                 <div class="col-md-8" style="width: 95%;">
                                     <div  class="inputWithIcon" style="margin-top: -1rem;">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="rue" id="rue" placeholder="rue" [(ngModel)]="rueClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="rue" id="rue" placeholder="rue" [(ngModel)]="InfoClient.rue">
                                         <i class="fa fa-road fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8" style="width: 95%">
                                     <div  class="inputWithIcon" style="margin-top: -1rem;">
-                                      <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="Cadresse" id="Cadresse" placeholder="Complement d'adresse" [(ngModel)]="adesseClient">
+                                      <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="Cadresse" id="Cadresse" placeholder="Complement d'adresse" [(ngModel)]="InfoClient.adresse">
                                       <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
@@ -91,13 +91,13 @@
                               <div class="row">
                                 <div class="col-md-6" style="width: 48%">
                                     <div class="inputWithIcon" style="margin-top: -1rem;">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="ville" id="ville" placeholder="Ville" [(ngModel)]="villeClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="ville" id="ville" placeholder="Ville" [(ngModel)]="InfoClient.ville">
                                         <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div  class="col-md-6" style="width: 48%">
                                     <div class="inputWithIcon" style="margin-top: -1rem;">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="region" id="region" placeholder="Région" [(ngModel)]="regionClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="region" id="region" placeholder="Région" [(ngModel)]="InfoClient.region">
                                         <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
@@ -105,13 +105,13 @@
                               <div class="row">
                                 <div  class="col-md-6" style="width: 48%">
                                     <div class="inputWithIcon" style="margin-top: -1rem;">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="bp" id="bp" placeholder="Boite postatl" [(ngModel)]="bpClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="bp" id="bp" placeholder="Boite postatl" [(ngModel)]="InfoClient.bp">
                                         <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="width: 48%">
                                     <div class="inputWithIcon" style="margin-top: -1rem;">
-                                        <select class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="pays" id="pays" [(ngModel)]="paysClient">
+                                        <select class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="pays" id="pays" [(ngModel)]="InfoClient.pays">
                                             <option value=""> --Pays--</option>
                                             <option value="senegal">sénégal</option>
                                       </select>
@@ -122,13 +122,13 @@
                               <div class="row">
                                   <div class="col-md-8" style="width: 95%">
                                     <div class="inputWithIcon" style="margin-top: -1rem;">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="telephone" id="telephone" placeholder="telephone" [(ngModel)]="telClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="telephone" id="telephone" placeholder="telephone" [(ngModel)]="InfoClient.telephone">
                                         <i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                   </div>
                                   <div class="col-md-8" style="width: 95%">
                                     <div class="inputWithIcon" style="margin-top: -1rem;">
-                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="mail" id="mail" placeholder="Adresse mail" [(ngModel)]="mailClient">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="mail" id="mail" placeholder="Adresse mail" [(ngModel)]="InfoClient.mail">
                                         <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
                                     </div>
                                   </div>
@@ -144,50 +144,50 @@
                             <div style="padding: 15px;background-color: white;">
                                
                             <div class="row" style="width: 95%;padding: 0%">
-                                <div class="inputWithIcon" style="margin-top: -2rem;">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numcarte" id="numcarte" placeholder="Numéro de carte grise" [(ngModel)]="numCarteGrise">
+                                <div class="inputWithIcon" >
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numcarte" id="numcarte" placeholder="Numéro de carte grise" [(ngModel)]="CarteGrise.numero">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style="margin-top: -1rem;">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numMat" id="numMat" placeholder="Numéro d'immatriculation" [(ngModel)]="numMatriculation">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numMat" id="numMat" placeholder="Numéro d'immatriculation" [(ngModel)]="CarteGrise.matricule">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style="margin-top: -1rem;">
-                                  <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="nomCarte" id="nomCarte" placeholder="nom" [(ngModel)]="nomProprio">
+                                  <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="nomCarte" id="nomCarte" placeholder="nom" [(ngModel)]="CarteGrise.nom">
                                   <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div  class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style="margin-top: -1rem;">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="prenomCarte" id="prenoCartem" placeholder="prenom" [(ngModel)]="prenomProprio">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="prenomCarte" id="prenoCartem" placeholder="prenom" [(ngModel)]="CarteGrise.prenom">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                  <div class="inputWithIcon" style="margin-top: -1rem;">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="marqueV" id="marqueV" placeholder="Marque vehicule" [(ngModel)]="marqueVehicule">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="marqueV" id="marqueV" placeholder="Marque vehicule" [(ngModel)]="CarteGrise.marque">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style="margin-top: -1rem;">
-                                   <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="model" id="model" placeholder="Modél" [(ngModel)]="modelVehicule">
+                                   <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="model" id="model" placeholder="Modél" [(ngModel)]="CarteGrise.model">
                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style="margin-top: -1rem;">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="annee" id="annee" placeholder="Année" [(ngModel)]="anneeFabrication">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="annee" id="annee" placeholder="Année" [(ngModel)]="CarteGrise.annee">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                  <div class="inputWithIcon" style="margin-top: -1rem;">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="puissance" id="puissance" placeholder="puissance (cv)" [(ngModel)]="puissanceVehicule">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="puissance" id="puissance" placeholder="puissance (cv)" [(ngModel)]="CarteGrise.puissance">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -204,37 +204,37 @@
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;"  class="control-label" for="" style=" color: black;float: left">
-                                <input style="float: left;"   type="checkbox" name="automobile" id="automobile" value="automibile"  [(ngModel)]="automibile">
+                                <input style="float: left;"   type="checkbox" name="automobile" id="automobile" value="automibile" (clikc)="getType()"  [(ngModel)]="automibile">
                             Automobile </label><img style="max-width: 5rem ; float: right ;" src="assets/automobile.png" />
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
-                                <input style="float: left;"  type="checkbox" name="motoScoter" id="motoScoter" value="moto/scoter"  [(ngModel)]="motoScoter">
+                                <input style="float: left;"  type="checkbox" name="motoScoter" id="motoScoter" value="moto/scoter" (clikc)="getType()"  [(ngModel)]="motoScoter">
                             Moto/scooter < 125 cc</label><img style="max-width: 5rem ; float: right ;" src="assets/scooter.png" />
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
-                                <input style="float: left;"  type="checkbox" name="taxi" id="taxi" value="taxi"  [(ngModel)]="taxi">
+                                <input style="float: left;"  type="checkbox" name="taxi" id="taxi" value="taxi" (clikc)="getType()" [(ngModel)]="taxi">
                             Taxi</label><img style="max-width: 5rem ; float: right ;" src="assets/taxi.png"/>
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
-                                <input style="float: left;"  type="checkbox" name="moto" id="moto" value="moto"  [(ngModel)]="moto">
+                                <input style="float: left;"  type="checkbox" name="moto" id="moto" value="moto" (clikc)="getType()" [(ngModel)]="moto">
                             Moto > 125 cc</label><img style="max-width: 5rem ; float: right ;" src="assets/moto.png" />
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
-                                <input style="float: left;"  type="checkbox" name="canion" id="canion" value="canion"  [(ngModel)]="canion">
+                                <input style="float: left;"  type="checkbox" name="canion" id="canion" value="canion" (clikc)="getType()" [(ngModel)]="canion">
                             Canion/utilitaire</label><img style="max-width: 5rem ; float: right ;" src="assets/camionUtilitaire.png" />
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
-                                <input style="float: left;"  type="checkbox" name="vehiculeChantier" id="vehiculeChantier" value="vehicule Chantier"  [(ngModel)]="vehiculeChantier">
+                                <input style="float: left;"  type="checkbox" name="vehiculeChantier" id="vehiculeChantier" value="vehiculeChantier" (clikc)="getType()" [(ngModel)]="vehiculeChantier">
                             Véhicule/chantier</label><img style="max-width: 5rem ; float: right ;" src="assets/voitureChantier.png" />
                         </div>
                         <div class="row" style="width: 95%">
                           <label style="float: left;" class="control-label" for=""style=" color: black;float: left">
-                                <input style="float: left;"  type="checkbox" name="vehiculeAgricole" id="vehiculeAgricole" value="vehicule Agricole"  [(ngModel)]="vehiculeAgricole">
+                                <input style="float: left;"  type="checkbox" name="vehiculeAgricole" id="vehiculeAgricole" value="vehiculeAgricole" (clikc)="getType()" [(ngModel)]="vehiculeAgricole">
                             Véhicule/Agricole</label><img style="max-width: 5rem ; float: right ;" src="assets/tracteur.jpeg" />
                         </div>
                        </div>
@@ -248,19 +248,19 @@
                         <div  style="padding: 15px;background-color: white;height: 153px;">
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style="margin-top: -2rem; ">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numPermi" id="numPermi" placeholder="Numéro de permis de conduire"  [(ngModel)]="numPermi">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numPermi" id="numPermi" placeholder="Numéro de permis de conduire"  [(ngModel)]="Permis.numero">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="date" name="dateDelivrance" id="dateDelivrance" placeholder="Date délivrance" [(ngModel)]="dateDelivrance">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateDelivrance" id="dateDelivrance" placeholder="Date délivrance" [(ngModel)]="Permis.dateDelivrance">
                                     <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="etc" id="etc" placeholder="etc..." [(ngModel)]="infoSupPermis">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="etc" id="etc" placeholder="etc..." [(ngModel)]="Permis.infoSup">
                                     <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -275,13 +275,13 @@
                       <div  style="padding: 15px;background-color: white;height: 191px;">
                         <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon" style=" margin-top: -2rem; ">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateDebut" id="dateDebut" value="{{dateDebut}}" placeholder="Date début assurance" [(ngModel)]="dateDebut">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateDebut" readonly id="dateDebut" value="{{dateDebut}}" placeholder="Date début assurance" [(ngModel)]="DureeAssurance.dateDebut">
                                     <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
                         </div>
                         <div class="row" style="width: 95%;padding: 0%">
                                 <div class="inputWithIcon">
-                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateFin" id="dateFin" value="{{dateFin}}" placeholder="Date fin assurance" [(ngModel)]="dateFin">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateFin" id="dateFin" readonly value="{{dateFin}}" placeholder="Date fin assurance" [(ngModel)]="DureeAssurance.dateFin">
                                     <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
                                 </div>
     
@@ -290,35 +290,35 @@
                         <div class="row">
                             <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                 <label style="float: left; color: black;">
-                                        <input style="float: left;"  type="radio" name="semaine" id="semaine" value="semaine" (click)="dureeAssurance()" [(ngModel)]="duree">
+                                        <input style="float: left;"  type="radio" name="semaine" id="semaine" value="semaine" (click)="dureeSemaine()" [(ngModel)]="duree">
                                     1 semaine</label>
                             </div>
                             <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                 <label style="float: left;color: black;">
-                                        <input style="float: left;" type="radio" name="deuxSemaine" id="deuxSemaine" value="DeuxSemaine"  [(ngModel)]="duree">
+                                        <input style="float: left;" type="radio" name="deuxSemaine" id="deuxSemaine" value="duree2Semaine" (click)="duree2Semaine()"  [(ngModel)]="duree">
                                     2 semaine</label>
                             </div>
                         
                             <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                 <label style="float: left;color: black;">
-                                        <input style="float: left;"  type="radio" name="mois" id="mois" value="mois"  [(ngModel)]="duree">
+                                        <input style="float: left;"  type="radio" name="mois" id="mois" value="mois" (click)="dureeMois()" [(ngModel)]="duree">
                                     1 mois</label>
                             </div>
                                 
                             <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                 <label style="float: left;color: black;">
-                                        <input style="float: left;" type="radio" name="troisMois" id="troisMois"value="troisMois"  [(ngModel)]="duree">
+                                        <input style="float: left;" type="radio" name="troisMois" id="troisMois"value="troisMois" (click)="duree3Mois()" [(ngModel)]="duree">
                                     3 mois</label>
                             </div>
                             
                             <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                 <label style="float: left;color: black;">
-                                        <input style="float: left;" type="radio" name="sixMois" id="sixMois" value="sixMois"  [(ngModel)]="duree">
+                                        <input style="float: left;" type="radio" name="sixMois" id="sixMois" value="sixMois" (click)="duree6Mois()"  [(ngModel)]="duree">
                                     6 mois</label>
                             </div>
                             <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
                                 <label style="float: left;color: black;">
-                                        <input style="float: left;" type="radio" name="douzeMois" id="douze" value="douzeMois"  [(ngModel)]="duree">
+                                        <input style="float: left;" type="radio" name="douzeMois" id="douze" value="douzeMois" (click)="duree12Mois()"  [(ngModel)]="duree">
                                     12 mois </label>
                             </div>
                         </div>
@@ -363,6 +363,7 @@
                         <h3>Informations spécifiques</h3>
                         <h3>Informations spécifiques</h3>
                         <h3>Informations spécifiques</h3>
+                        <h3>Informations spécifiques</h3>
        
                     </div>
                   </div>
@@ -404,6 +405,7 @@
                             <div class="alert alert-info" style="height: 9rem;">
                                 <div class="row">
                                     <label class="control-label" for="" style=" color: black;float: left;">Option diveses</label>
+                                    <i class="fa fa-remove"style="margin-top: -1rem;float: right;"></i>
                                 </div>
                                 <div class="row">
                                     <div style="float: left">
@@ -529,10 +531,15 @@
              
           </div>
          
-        <div *ngIf="etap == 3">
-            <div class="row">
-                <div class="col-md-6">
-                    <button class="alert mybtn" style="margin-left: 200px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 20px;">
+        <div *ngIf="etap == 3" style=" margin-top: 19rem; position: relative; top: -62px; ">
+            <div class="row" >
+                <div *ngIf="etapPaiement == 1" class="col-md-6">
+                    <button  class="alert mybtn" (click)="etapPaiement1()" style="margin-left: 200px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 20px;">
+                            PAIEMENT
+                    </button>
+                </div>
+                <div  *ngIf="etapPaiement == 2" class="col-md-6">
+                    <button  class="alert mybtn" disabled="true" style="margin-left: 200px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 20px;">
                             PAIEMENT
                     </button>
                 </div>

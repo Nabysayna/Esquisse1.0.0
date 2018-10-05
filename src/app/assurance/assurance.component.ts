@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective, DateFormatter } from 'ng2-bootstrap';
 
 @Component({
   selector: 'app-assurance',
@@ -9,46 +9,95 @@ import { ModalDirective } from 'ng2-bootstrap';
 export class AssuranceComponent implements OnInit {
 
   //information client
-  monsieur:string='M.';
-  madame: string = 'Mme.';
-  mademoiselle: string = 'Mlle.';
-  nomClient: string;
-  prenomClient: string;
-  rueClient: string;
-  adesseClient: string;
-  villeClient: string;
-  regionClient: string;
-  bpClient: string;
-  paysClient: string;
-  telClient: string;
-  mailClient: string;
+  genre:string;
+  getGenre(){
+    if(this.genre == '1'){
+      this.InfoClient.genre ='M.';
+      console.log(this.InfoClient.genre);
+    }
+    if(this.genre == '2'){
+      this.InfoClient.genre ='Mme';
+      console.log(this.InfoClient.genre);
+    }
+    if(this.genre == '3'){
+      this.InfoClient.genre ='Mlle';
+      console.log(this.InfoClient.genre);
+    }
+    console.log(this.InfoClient,this.CarteGrise);
+    
+  }
+  InfoClient = { genre:'',nom:'',prenom:'',rue:'',adresse:'',ville:'',region:'',bp:'',pays:'',telephone:'',mail:''}
  //carte grise
- numCarteGrise: string;
- numMatriculation: string;
- nomProprio: string;
- prenomProprio: string;
- marqueVehicule: string;
- modelVehicule: string;
- anneeFabrication: string;
- puissanceVehicule: string;
+ CarteGrise = { numero:'',matricule:'',nom:'',prenom:'',marque:'',model:'',annee:'',puissance:''}
  //type vehicule
  automibile:string;
  motoScoter:string;
- taxi:string;
  moto:string;
  canion:string;
+ taxi:string;
  vehiculeChantier:string;
  vehiculeAgricole:string;
+ getType(){
+  console.log('==>'+this.typeVehicule.nom);
+   if(this.automibile =='automibile'){
+    this.typeVehicule.nom = 'automibile';
+    console.log(this.typeVehicule.nom);
+   }
+   if(this.taxi !=''){
+    this.typeVehicule.nom = 'taxi';
+    console.log(this.typeVehicule.nom);
+   }
+   if(this.motoScoter !=''){
+    this.typeVehicule.nom = 'moto/scoter';
+    console.log(this.typeVehicule.nom);
+   }
+   if(this.moto !=''){
+    this.typeVehicule.nom = 'moto';
+    console.log(this.typeVehicule.nom);
+   }
+   if(this.canion ==''){
+    this.typeVehicule.nom = 'canion';
+    console.log(this.typeVehicule.nom);
+   }
+   if(this.vehiculeChantier !=''){
+    this.typeVehicule.nom = 'vehicule Chantier';
+    console.log(this.typeVehicule.nom);
+   }
+   if(this.vehiculeAgricole !=''){
+    this.typeVehicule.nom = 'vehicule Agricole';
+    console.log(this.typeVehicule.nom);
+   }
+
+   console.log(this.InfoClient,this.CarteGrise);
+   
+
+ }
+ typeVehicule = { nom :''}
  //permis de conduire
- numPermi:string;
- dateDelivrance:string;
- infoSupPermis:string;
+ 
+ Permis ={ numero:'',dateDelivrance:'',infoSup:''}
  //duree de l'assurance
  dateDebut:any;
  dateFin:any;
- duree:any;
+ DureeAssurance ={ dateDebut:'', dateFin:''}
  //affichage des etapes
  etap:number=1;
+ etapPaiement:number = 1;
+ etapPaiement1(){
+  console.log(this.etapPaiement);
+  this.etapPaiement =this.etapPaiement+1;
+  console.log(this.etapPaiement);
+}
+ etapPaiement2(){
+  this.etapPaiement = this.etapPaiement+1;
+ }
+ etapPaiemen31(){
+  this.etapPaiement = this.etapPaiement+1;
+ }
+ etapPaiement4(){
+  this.etapPaiement = this.etapPaiement+1;
+ }
+
  assuraneEnCours:any;
  lineClick:any;
  suivant(){
@@ -57,14 +106,61 @@ export class AssuranceComponent implements OnInit {
  precedent(){
   this.etap = this.etap-1;
  }
-dureeAssurance(){
-  if(this.duree == 'semaine'){
-    this.dateDebut = new Date().toJSON();
-    this.dateFin = new Date().getDay() + 7;
-    console.log("=>"+this.dateDebut+" "+this.dateFin);
-    
-  }
-}
+ dureeSemaine(){
+  this.dateDebut = new Date().toLocaleDateString();
+  this.dateFin = new Date();
+  this.dateFin.setDate(this.dateFin.getDate()+7);
+  this.dateFin = this.dateFin.toLocaleDateString();
+  this.DureeAssurance.dateDebut = this.dateDebut;
+  this.DureeAssurance.dateFin = this.dateFin;
+  console.log(this.DureeAssurance); 
+ }
+ duree2Semaine(){
+  this.dateDebut = new Date().toLocaleDateString();
+  this.dateFin = new Date();
+  this.dateFin.setDate(this.dateFin.getDate()+14);
+  this.dateFin = this.dateFin.toLocaleDateString();
+  this.DureeAssurance.dateDebut = this.dateDebut;
+  this.DureeAssurance.dateFin = this.dateFin;
+  console.log(this.DureeAssurance); 
+ }
+ dureeMois(){
+  this.dateDebut = new Date().toLocaleDateString();
+  this.dateFin = new Date();
+  this.dateFin.setMonth(this.dateFin.getMonth() +1);
+  this.dateFin = this.dateFin.toLocaleDateString();
+  this.DureeAssurance.dateDebut = this.dateDebut;
+  this.DureeAssurance.dateFin = this.dateFin;
+  console.log(this.DureeAssurance); 
+ }
+ duree3Mois(){
+  this.dateDebut = new Date().toLocaleDateString();
+  this.dateFin = new Date();
+  this.dateFin.setMonth(this.dateFin.getMonth() +3);
+  this.dateFin = this.dateFin.toLocaleDateString();
+  this.DureeAssurance.dateDebut = this.dateDebut;
+  this.DureeAssurance.dateFin = this.dateFin;
+  console.log(this.DureeAssurance); 
+ }
+ duree6Mois(){
+  this.dateDebut = new Date().toLocaleDateString();
+  this.dateFin = new Date();
+  this.dateFin.setMonth(this.dateFin.getMonth() +6) ;
+  this.dateFin=this.dateFin.toLocaleDateString();
+  this.DureeAssurance.dateDebut = this.dateDebut;
+  this.DureeAssurance.dateFin = this.dateFin;
+  console.log(this.DureeAssurance); 
+ }
+ duree12Mois(){
+  this.dateDebut = new Date().toLocaleDateString();
+  this.dateFin = new Date();
+  this.dateFin.setMonth(this.dateFin.getMonth() +12) ;
+  this.dateFin=this.dateFin.toLocaleDateString();
+  this.DureeAssurance.dateDebut = this.dateDebut;
+  this.DureeAssurance.dateFin = this.dateFin;
+  console.log(this.DureeAssurance); 
+ }
+
 getClassCSS(i){
   if(this.lineClick == i){
     return  { 'lineClick': true,'lineNotClick':false};
