@@ -52,6 +52,8 @@ export class AccueilComponent implements OnInit {
   pret:boolean=false;
   ecom:boolean=false;
   airtime:boolean=false;
+  wari:boolean=false;
+  
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -181,6 +183,7 @@ export class AccueilComponent implements OnInit {
           this.guide=false;
           this.ecom=false;
           this.airtime=false;
+          this.wari=false;
 
       }
       if(api=="TIGOCASH"){
@@ -200,6 +203,7 @@ export class AccueilComponent implements OnInit {
           this.guide=false;
           this.ecom=false;
           this.airtime=false;
+          this.wari=false;
 
       }
       if(api=="POSTECASH"){
@@ -219,6 +223,7 @@ export class AccueilComponent implements OnInit {
           this.guide=false;
           this.ecom=false;
           this.airtime=false;
+          this.wari=false;
       }
       if(api=="E-MONEY"){
         this.em=true;
@@ -237,6 +242,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
       if(api=="WIZALL"){
@@ -256,6 +262,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
       }
       if(api=="TNT"){
         this.Tnt=true;
@@ -274,6 +281,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
       if(api=="SDE"){
@@ -293,6 +301,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
       if(api=="RAPIDO"){
@@ -312,6 +321,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
       if(api=="WOYOFAL"){
@@ -331,6 +341,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
       if(api=="SENELEC"){
@@ -350,6 +361,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
       if(api=="OOLU"){
@@ -369,6 +381,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
       }
     if(api=="GESTIONREPORTING"){
@@ -388,6 +401,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
     }
     if(api=="DEMANDEPRET"){
@@ -407,6 +421,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.wari=false;
 
     }
     if(api=="GUIDEUTILISATION"){
@@ -426,6 +441,7 @@ export class AccueilComponent implements OnInit {
       this.om=false;
       this.ecom=false;
       this.airtime=false;
+      this.wari=false;
 
     }
     if(api=="ECOMMERCE"){
@@ -445,11 +461,34 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.airtime=false;
+       this.wari=false;
 
     }
     if(api=="AIRTIME"){
       console.log("airtime");
       this.airtime=true;
+      this.ecom=false;
+      this.guide=false;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+      this.wari=false;
+
+    }
+    if(api=="WARI"){
+      console.log("wari");
+      this.wari=true;
+      this.airtime=false;
       this.ecom=false;
       this.guide=false;
       this.pret=false;
@@ -1680,22 +1719,22 @@ geolocaliser(){
         }
      if(etat.etats.etat==true){
 
-     if(etat.etats.etat==true){
+		 if(etat.etats.etat==true){
 
-       if(etat.data.operateur!=2 && etat.data.operateur!=6 && etat.data.operateur!=3 && etat.data.operateur!=1 && etat.etats.color=='green'){
+			   if(etat.data.operateur!=2 && etat.data.operateur!=6 && etat.data.operateur!=3 && etat.data.operateur!=1 && etat.etats.color=='green'){
 
-  			 sessionStorage.setItem('dataImpression', JSON.stringify(imprime));
-  			 this.router.navigate(['accueil']);
-  			 setTimeout(()=>this.router.navigate(['accueil/impression']),100);
-        }
+					 sessionStorage.setItem('dataImpression', JSON.stringify(imprime));
+					 this.router.navigate(['accueil']);
+					 setTimeout(()=>this.router.navigate(['accueil/impression']),100);
+				}
 
-     	   this.process.splice(etat.etats.id,1);
-         for (let i=0 ; i<this.process.length ; i++){
-          if(this.process[i].etats.id > etat.etats.id)
-            this.process[i].etats.id = this.process[i].etats.id - 1 ;
-         }
-    	   console.log(etat.etats.id);
-    }
+				   this.process.splice(etat.etats.id,1);
+				 for (let i=0 ; i<this.process.length ; i++){
+				  if(this.process[i].etats.id > etat.etats.id)
+					this.process[i].etats.id = this.process[i].etats.id - 1 ;
+				 }
+				   console.log(etat.etats.id);
+		}
   }
 }
 
@@ -2228,8 +2267,14 @@ retrieveOperationInfo(item : any) : string{
 		if(item.etats.errorCode=='-3' || item.etats.errorCode==-3){
 			return "Service Indisponible Veuillez Reessayer Plus Tard";
 		}
-		if(item.etats.errorCode=="-7" || item.etats.errorCode==-3){
+		if(item.etats.errorCode=="-7" || item.etats.errorCode==-7){
 			return "Service Indisponible Veuillez Reessayer Plus Tard";
+		}
+		if(item.etats.errorCode=="2" || item.etats.errorCode==2){
+			return "Votre requete est en cour de traitement";
+		}
+		if(item.etats.errorCode=="1" || item.etats.errorCode==1){
+			return "Operation Reussie";
 		}
     
     }
@@ -2984,6 +3029,7 @@ retrieveOperationInfo(item : any) : string{
 
 /*********************************/
 /*********************************/
+ 
 
   annulerOperation(){
     console.log("Opèration annulée ...") ;
@@ -3076,14 +3122,22 @@ retrieveOperationInfo(item : any) : string{
                    objet.etats.etat=true;
                    objet.etats.load='terminated';
                    objet.etats.color='green';
+                   objet.etats.errorCode=donnee;
                 }
                 else{
-                  if(donnee!='-1'){
+                  if(donnee!='-1' && donnee!='2'){
                      objet.etats.etat=true;
                      objet.etats.load='terminated';
                      objet.etats.color='red';
                      objet.etats.errorCode=donnee;
                    }else{
+                        if(donnee=='2' || donnee==2){
+							// objet.etats.etat=true;
+							 objet.etats.load='loader';
+							 objet.etats.color='orange';
+							 objet.etats.errorCode=donnee;
+                        
+                        }
                         let periodicVerifierOMAcheterCredit = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
                         this.airtimeService.verifierReponse(reponse._body.trim().toString()).then(rep =>{
@@ -3093,15 +3147,23 @@ retrieveOperationInfo(item : any) : string{
                              objet.etats.etat=true;
                              objet.etats.load='terminated';
                              objet.etats.color='green';
+                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifierOMAcheterCredit) ;
                           }
                           else{
-                            if(donnee!='-1'){
+                            if(donnee!='-1' && donnee!='2'){
                              objet.etats.etat=true;
                              objet.etats.load='terminated';
                              objet.etats.color='red';
                              objet.etats.errorCode=donnee;
                              clearInterval(periodicVerifierOMAcheterCredit) ;
+                            }
+                            if(donnee=='2'){
+                             //objet.etats.etat=true;
+                             objet.etats.load='loader';
+                             objet.etats.color='orange';
+                             objet.etats.errorCode=donnee;
+                            // clearInterval(periodicVerifierOMAcheterCredit) ;
                             }
                             if(donnee=='-1' && objet.etats.nbtour>=6){
                               this.airtimeService.demanderAnnulation(reponse._body.trim().toString()).then(rep =>{
