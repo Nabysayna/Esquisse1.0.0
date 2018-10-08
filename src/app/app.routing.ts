@@ -63,6 +63,7 @@ import {AdminmultipdvSuivipointComponent} from "./admin-multi-pdv/admin-multi-pd
 import { WariComponent } from './wari/wari.component';
 import { CanalComponent } from './canal/canal.component';
 import { AssuranceComponent } from './assurance/assurance.component';
+import { ZuuluComponent } from './zuulu/zuulu.component';
 
 const appRoutes: Routes = [
     { path: '', component: AuthComponentComponent },
@@ -72,7 +73,7 @@ const appRoutes: Routes = [
                 {path: '', component: ECommerceComponent},
                 {path: 'commissionnement', component: CommissionnementComponent},
                 {path: 'challenge', component: ChallengeresultsComponent },
-    			      {path: 'ORANGEMONEY', component: OrangeMoneyComponentComponent},
+                {path: 'ORANGEMONEY', component: OrangeMoneyComponentComponent},
                 {path: 'POSTECASH', component: PostcashComponent},
                 {path: 'TIGOCASH', component: TigoCashComponentComponent},
                 {path: 'WIZALL', component: WizallComponent},
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
                 {path: 'oolu',component:OoluComponent},
                 {path: 'airtime',component:AirtimeComponent},
                 {path: 'canal', component:CanalComponent},
-                {path: 'assurance', component:AssuranceComponent}
+                {path: 'assurance', component:AssuranceComponent},
+                {path: 'zuulu', component:ZuuluComponent}
     		]
     },
     { path: 'accueiladmmpdv', component: AccueilAdminMultiPdvComponent, canActivate: [AuthGuard],

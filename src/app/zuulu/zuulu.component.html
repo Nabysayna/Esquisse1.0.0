@@ -1,0 +1,315 @@
+<div class="" style="width:50%;margin-left: auto;margin-right: auto">
+  <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
+      <div class="panel-heading">
+          <h2>Zuulu</h2>
+
+      </div>
+      <!-- /.panel-heading -->
+
+      <div class="cover"></div>
+
+      <div class="panel-body">
+          <!-- Nav tabs -->
+          <div id="om-options">
+              <a href="#depot" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Depot Agent</a>
+
+              <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()" data-toggle="tab">Depot client </a>
+
+              <a href="#retraitcode" (click)="reinitialise()" data-toggle="tab">Transfert par Code</a>
+
+<!--                 <a href="#retraitinter" (click)="reinitialise()" data-toggle="tab">Retrait sur compte </a> -->
+
+              <a href="#achatcred" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Retrait</a>
+
+          </div>
+
+          <!-- Tab panes -->
+          <div class="tab-content" style="width:100%">
+              <div class="tab-pane fade in" style="width:100%" id="depot">
+                      <h2>Depot Agent</h2>
+                      <h3 *ngIf="depotreussi"  class="alert alert-success">Depot reussi!</h3>
+                      <h3 *ngIf="echecdepot" class="alert alert-danger">Echec de l'operation reessayer plus tard SVP!</h3>
+
+                      <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                          <div>
+                              <div class="row">
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient)  :</label>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                  </div>
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -135px;">Name (recipient) :</label>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                  </div>
+                                  <p *ngIf="mag1" class="alert alert-danger">numero incorrect</p>
+                              </div>
+                             
+                          </div>
+                          <div>
+                              <div class="row" >
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -171px;">Description:</label>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                  </div>
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -186px;">Amount:</label>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                  </div>   
+                                  <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
+                              </div>
+                              
+                          </div>
+                          <div class="form-inline" style="float: right" >
+                              <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
+                          </div>
+                      </form>
+              </div>
+
+              <div class="tab-pane" style="width:100%" id="retrait">
+                      <h2>Depot client</h2>
+                      <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
+                      <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
+                      <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                          <div>
+                              <div class="row">
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient)  :</label>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                  </div>
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -135px;">Name (recipient) :</label>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                  </div>
+                                  <p *ngIf="mag1" class="alert alert-danger">numero incorrect</p>
+                              </div>
+                             
+                          </div>
+                          <div>
+                              <div class="row" >
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -171px;">Description:</label>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                  </div>
+                                  <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                      <label style="margin-top:1.5rem;margin-left: -186px;">Amount:</label>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                  </div>   
+                                  <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                  <label style="margin-top:1.5rem;margin-left: -171px;">Payment Method:</label>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                  <input type="radio" name="wallet">
+                                  <label style="color: black">Wallet</label>
+                                  <input type="radio" name="wallet">
+                                  <label style="color: black">Card</label>
+                                </div>  
+                              </div>
+                          </div>
+                          <div class="form-inline" style="float: right" >
+                              <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
+                          </div>
+                      </form>
+              </div>
+              <div class="tab-pane fade col-sm-12 col-xs-12" id="transnat">
+                      <h2>Transfert National</h2>
+                      <h3 *ngIf="transintreussi" class="alert alert-success">Operation reussi!</h3>
+                      <h3 *ngIf="echectransint" class="alert alert-success">Echec de l'operation reussi!</h3>
+                      <form name="transnat" (ngSubmit)="transferer('national')" #formtransnat="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                          <div class="form-inline" style="width: 100%;">
+                              <label style="margin-top:1.5rem;" class="col-lg-3 col-md-3">Numéro du client</label>
+                              <div class="form-group col-lg-8 col-md-8">
+                                  <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="verifNumber($event)" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                              </div>
+                          </div>
+                              <div class="form-inline" style="width: 100%;">
+                                  <label style="margin-top:1.5rem;" class="col-lg-3 col-md-3">Montant du transefert</label>
+                                  <div class="form-group col-lg-8 col-md-8">
+                                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  type="text" autocomplete="off" (keyup)="verifMontant($event)" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                  </div>
+                              </div>
+                              <div class="form-inline" style="width: 100%; text-align:center" >
+                                      <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!buttondepot2"/>
+                              </div>
+                      </form>
+              </div>
+
+              <div class="tab-pane fade col-sm-12 col-xs-12" id="transint">
+                    <h2>Transfert International</h2>
+                    <h3 *ngIf="transintreussi" class="alert alert-success">Operation reussi!</h3>
+                    <h3 *ngIf="echectransint" class="alert alert-success">Echec de l'operation reussi!</h3>
+                    <form name="transnat" (ngSubmit)="transferer('international')" #formtransint="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                    <div class="form-inline">
+                    <label>Numéro Client</label>
+                    <input type="text" autocomplete="off" (keyup)="verifNumber($event)" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
+                    </div>
+                    <div class="form-inline">
+                    <label>Montant du tranfert</label>
+                    <input type="text" autocomplete="off" (keyup)="verifMontant($event)" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                    </div>
+                    <button style="margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!buttondepot2">Valider</button>
+                      </form>
+              </div>
+
+
+              <div class="tab-pane fade" id="achatcred">
+                  <div  id="om-options" style=" top: 0rem;">
+                      <a href="#" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()"  data-toggle="tab">Rembourser transfert</a>
+                      <a href="#" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Retrait Agent </a>
+                      <a href="#" style="padding-left: 1rem; padding-right: 1rem;" (click)="reinitialise()" data-toggle="tab">Retrait Client</a>
+                      <a href="#" class="btn .mybtn" (click)="reinitialise()" data-toggle="tab">Retrait Marchand</a>
+                      <a href="#" (click)="reinitialise()" data-toggle="tab">Retrait par code</a>
+                        
+                  </div>
+                </div>
+              <!--  <form name="transnat" (ngSubmit)="showmodalventecredit()" #formachatcred="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                    <div>
+                        <div class="row" >
+                            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" >
+                                <label style="margin-top: 1.5rem;" >Numéro du client  :</label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                <input class="col-lg-8" style=" width:59%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text" (keyup)="Reinitialise()" autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                            </div>
+                            <p *ngIf="mag1" style="color:red">numero incorrect</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row" >
+                            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" >
+                                <label style="margin-top: 1.5rem;" >Montant du crédit:</label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                <input class="col-lg-8" style=" width:59%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="Reinitialise()" autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                            </div>
+                        </div>
+                        <p *ngIf="mag2" style="color:red">montant incorrect</p>
+                    </div>
+                    <div class="form-inline" style="width:57%; text-align:center;">
+                        <input style="margin-top: 1rem;border-radius: 2rem 0rem 2rem 2rem;"   type="submit" class="btn btn-success" />
+                    </div>
+                </form>-->
+              <div class="tab-pane fade col-sm-12 col-xs-12" id="retraitinter">
+
+                      <h2>Retrait sur compte de Reception</h2>
+
+                      <h4>Le retrait sur compte de reception international sera bientôt disponible.</h4>
+
+<!--                         <form name="transnat" (ngSubmit)="showmodalretraitinter()" #formachatcred="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                          <input type="text" [(ngModel)]="this.numclient" autocomplete="off" (keyup)="verifNumber($event)" id="numclient" name="this.numclient" class="form-control" placeholder="Numéro du client" required autofocus>
+
+                          <input type="text" [(ngModel)]="this.mnt" autocomplete="off" (keyup)="verifMontant($event)" id="mnttrans" name="this.mnt"  class="form-control" placeholder="Montant du transfert" required autofocus>
+
+                          <button style="margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!buttondepot2">Valider</button>
+                      </form>
+-->
+              </div>
+
+
+              <div class="tab-pane fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id="retraitcode">
+
+
+                      <h2>Transfert par Code</h2>
+
+                        <h3 *ngIf="retraitcodereussi" class="alert alert-success">Retrait reussi!</h3>
+                      <form name="transnat" (ngSubmit)="showmodalretraitcode()" #formretraitcode="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;" class="">
+
+                         <div >
+                             <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -79px;">No de portable Envoyeur :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro de portable Envoyeur" autofocus>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -135px;">Prenom Envoyeur:</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Prenom Envoyeur" autofocus>
+                                </div>
+                             </div>
+                             
+                             <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -16rem;">Nom Envoyeur :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Nom Envoyeur" autofocus>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -7rem;">No de portable Beneficiaire :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No de portable Beneficiaire" autofocus>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -12rem;">Prenom Beneficiaire :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Prenom Beneficiaire" autofocus>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -135px;">Nom Beneficiaire :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Nom Beneficiaire" autofocus>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -12rem;">Adresse Beneficiaire :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Adresse Beneficiaire" autofocus>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -7rem;">Ville/Commune Beneficiaire :</label>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                        <option value="">Please select...</option>
+                                    </select>
+                                </div>
+                            </div>
+                                
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -14rem;">Pays Beneficiaire :</label>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                        <option value="senegal">senegal</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -8rem;">No Piece identite Envoyeur :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -5rem;">Type de Piece identite Envoyeur :</label>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                        <option value="">please select...</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -135px;">Purpose of Transfer :</label>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control"  autofocus>
+                                        <option value="">please select...</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <label style="margin-top:1.5rem;margin-left: -79px;">Amount :</label>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="montant" autofocus>
+                                </div>
+                            </div> 
+                         </div>
+                         <div class="form-inline" style="float: right" >
+                            <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
+                        </div>
+                      </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="this.loading">
+  <app-loader></app-loader>
+</div>

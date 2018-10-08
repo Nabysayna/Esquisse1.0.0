@@ -195,6 +195,7 @@ import { WariComponent } from './wari/wari.component';
 import { AirtimeComponent } from './airtime/airtime/airtime.component';
 import { CanalComponent } from './canal/canal.component';
 import { AssuranceComponent } from './assurance/assurance.component';
+import { ZuuluComponent } from './zuulu/zuulu.component';
 
 
 
@@ -313,6 +314,7 @@ import { AssuranceComponent } from './assurance/assurance.component';
     AirtimeComponent,
     CanalComponent,
     AssuranceComponent,
+    ZuuluComponent,
   ],
   imports: [
     BrowserModule,

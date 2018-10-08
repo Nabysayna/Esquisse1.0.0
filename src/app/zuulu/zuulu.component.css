@@ -100,9 +100,9 @@ fieldset h2{
     text-decoration: none ;
 }
 
-/*#om-options li:last-child{*/
+#om-options li:last-child{
 /*	margin-top: 2rem ; */
-/*}*/
+}
 
 #paiefact select{
 	margin-left: 1rem ;
@@ -114,3 +114,8 @@ fieldset h2{
         width: max-content !important;
     }
 }  
+.mybtn{
+    color: #fff;
+    background-color: #337ab7 !important;
+    border-color: #337ab7 !important
+}
