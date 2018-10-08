@@ -1,0 +1,592 @@
+<div class="col-sm-12">
+  <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
+      <div class="panel-heading">
+          <h2>ASSURANCE</h2>
+
+      </div>
+      <!-- /.panel-heading -->
+
+      <div class="cover"></div>
+
+      <div class="panel-body">
+          <!-- Nav tabs -->
+          <div id="om-options">
+              <a href="#envoi" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Assurer</a>
+          </div>
+     </div>
+  </div>
+</div>
+
+<div *ngIf="this.loading">
+  <app-loader></app-loader>
+</div>
+<div bsModal #modalAssurer="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+  <div class="modal-content">
+     <div class="modal-content" >
+       <div class="modal-header">
+     <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddChildModal()">
+         <span aria-hidden="true">&times;</span>
+         </button>
+          <div *ngIf="etap==1">
+              <h2 class="modal-title" id="myModalLabel"><strong>Saisie des Information</strong></h2>
+          </div>
+          <div *ngIf="etap==2">
+              <h2 class="modal-title" id="myModalLabel"><strong>Affichage des tarifs d’assurances</strong></h2>
+          </div>
+          <div *ngIf="etap==3">
+              <h2 class="modal-title" id="myModalLabel"><strong>Paiement de l'assurance</strong></h2>
+          </div>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="etap==1">
+            
+           <div class="row">
+               <div class=" col-md-3">
+                    <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;" >
+                            <div class="myheading" > <strong> Information du client </strong></div>  
+                            <div style="padding: 15px;background-color: white;">
+
+                               <p style="color: black;margin-top: -1rem; ">Genre</p> 
+                              <div class="row">
+                                    <label class="control-label" for="" style=" color: black;">
+                                        <input  type="radio" name="monsieur" id="monsieur" (click)="getGenre()" value="1" [(ngModel)]="genre">Monsieur
+                                    </label>
+                                    
+                                    <label class="control-label" for="" style=" color: black;">
+                                       <input  type="radio" name="madame" id="madame" (click)="getGenre()" value="2" [(ngModel)]="genre">Madame
+                                    </label>
+                                    <label class="control-label" for="" style=" color: black;">
+                                        <input type="radio" name="mademoiselle" id="mademoiselle" (click)="getGenre()" value="3"  [(ngModel)]="genre">Mademoiselle
+                                    </label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6"  style="width: 48% ;margin-top: -1rem;">
+                                    <div class="inputWithIcon">
+                                        <input  class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="nom" id="nom" placeholder="nom" [(ngModel)]="InfoClient.nom">
+                                        <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <div  class="inputWithIcon">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="prenom" id="prenom" placeholder="prenom" [(ngModel)]="InfoClient.prenom">
+                                        <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-8" style="width: 95%;">
+                                    <div  class="inputWithIcon" style="margin-top: -1rem;">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="rue" id="rue" placeholder="rue" [(ngModel)]="InfoClient.rue">
+                                        <i class="fa fa-road fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8" style="width: 95%">
+                                    <div  class="inputWithIcon" style="margin-top: -1rem;">
+                                      <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="Cadresse" id="Cadresse" placeholder="Complement d'adresse" [(ngModel)]="InfoClient.adresse">
+                                      <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6" style="width: 48%">
+                                    <div class="inputWithIcon" style="margin-top: -1rem;">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="ville" id="ville" placeholder="Ville" [(ngModel)]="InfoClient.ville">
+                                        <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div  class="col-md-6" style="width: 48%">
+                                    <div class="inputWithIcon" style="margin-top: -1rem;">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="region" id="region" placeholder="Région" [(ngModel)]="InfoClient.region">
+                                        <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div  class="col-md-6" style="width: 48%">
+                                    <div class="inputWithIcon" style="margin-top: -1rem;">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="bp" id="bp" placeholder="Boite postatl" [(ngModel)]="InfoClient.bp">
+                                        <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="width: 48%">
+                                    <div class="inputWithIcon" style="margin-top: -1rem;">
+                                        <select class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="pays" id="pays" [(ngModel)]="InfoClient.pays">
+                                            <option value=""> --Pays--</option>
+                                            <option value="senegal">sénégal</option>
+                                      </select>
+                                      <i class="fa fa-building-o fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-8" style="width: 95%">
+                                    <div class="inputWithIcon" style="margin-top: -1rem;">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="telephone" id="telephone" placeholder="telephone" [(ngModel)]="InfoClient.telephone">
+                                        <i class="fa fa-phone fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-8" style="width: 95%">
+                                    <div class="inputWithIcon" style="margin-top: -1rem;">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="mail" id="mail" placeholder="Adresse mail" [(ngModel)]="InfoClient.mail">
+                                        <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                            </div>
+                      </div>
+               </div>
+              </div>
+
+           <!--carte grise-->
+               <div class=" col-md-3">
+                    <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;" >
+                            <div class="myheading" > <strong>Carte grise</strong></div>  
+                            <div style="padding: 15px;background-color: white;">
+                               
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" >
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numcarte" id="numcarte" placeholder="Numéro de carte grise" [(ngModel)]="CarteGrise.numero">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style="margin-top: -1rem;">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numMat" id="numMat" placeholder="Numéro d'immatriculation" [(ngModel)]="CarteGrise.matricule">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style="margin-top: -1rem;">
+                                  <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="nomCarte" id="nomCarte" placeholder="nom" [(ngModel)]="CarteGrise.nom">
+                                  <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div  class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style="margin-top: -1rem;">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="prenomCarte" id="prenoCartem" placeholder="prenom" [(ngModel)]="CarteGrise.prenom">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                 <div class="inputWithIcon" style="margin-top: -1rem;">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="marqueV" id="marqueV" placeholder="Marque vehicule" [(ngModel)]="CarteGrise.marque">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style="margin-top: -1rem;">
+                                   <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="model" id="model" placeholder="Modél" [(ngModel)]="CarteGrise.model">
+                                   <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style="margin-top: -1rem;">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="annee" id="annee" placeholder="Année" [(ngModel)]="CarteGrise.annee">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                 <div class="inputWithIcon" style="margin-top: -1rem;">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="puissance" id="puissance" placeholder="puissance (cv)" [(ngModel)]="CarteGrise.puissance">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                      </div>
+                  </div>
+                </div>
+                <!--Type de vehicuke-->
+              <div class="col-md-3" >
+                 <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;">
+                  <div class="myheading"><strong >Type de véhicule</strong> </div>  
+                     <div style="padding: 15px;background-color: white;">
+                       <div class="row" style="width: 95%">
+                          <h3 style="color: black">Catégorie de vehicule</h3>                       
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;"  class="control-label" for="" style=" color: black;float: left">
+                                <input style="float: left;"   type="checkbox" name="automobile" id="automobile" value="automibile" (clikc)="getType()"  [(ngModel)]="automibile">
+                            Automobile </label><img style="max-width: 5rem ; float: right ;" src="assets/automobile.png" />
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
+                                <input style="float: left;"  type="checkbox" name="motoScoter" id="motoScoter" value="moto/scoter" (clikc)="getType()"  [(ngModel)]="motoScoter">
+                            Moto/scooter < 125 cc</label><img style="max-width: 5rem ; float: right ;" src="assets/scooter.png" />
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
+                                <input style="float: left;"  type="checkbox" name="taxi" id="taxi" value="taxi" (clikc)="getType()" [(ngModel)]="taxi">
+                            Taxi</label><img style="max-width: 5rem ; float: right ;" src="assets/taxi.png"/>
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
+                                <input style="float: left;"  type="checkbox" name="moto" id="moto" value="moto" (clikc)="getType()" [(ngModel)]="moto">
+                            Moto > 125 cc</label><img style="max-width: 5rem ; float: right ;" src="assets/moto.png" />
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
+                                <input style="float: left;"  type="checkbox" name="canion" id="canion" value="canion" (clikc)="getType()" [(ngModel)]="canion">
+                            Canion/utilitaire</label><img style="max-width: 5rem ; float: right ;" src="assets/camionUtilitaire.png" />
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;" class="control-label" for="" style=" color: black;float: left">
+                                <input style="float: left;"  type="checkbox" name="vehiculeChantier" id="vehiculeChantier" value="vehiculeChantier" (clikc)="getType()" [(ngModel)]="vehiculeChantier">
+                            Véhicule/chantier</label><img style="max-width: 5rem ; float: right ;" src="assets/voitureChantier.png" />
+                        </div>
+                        <div class="row" style="width: 95%">
+                          <label style="float: left;" class="control-label" for=""style=" color: black;float: left">
+                                <input style="float: left;"  type="checkbox" name="vehiculeAgricole" id="vehiculeAgricole" value="vehiculeAgricole" (clikc)="getType()" [(ngModel)]="vehiculeAgricole">
+                            Véhicule/Agricole</label><img style="max-width: 5rem ; float: right ;" src="assets/tracteur.jpeg" />
+                        </div>
+                       </div>
+                    </div>
+                </div>
+                <!--permis de conduir et duree de l'assurance-->
+                <div class="row">
+                  <div class="col-md-3" >
+                      <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;">
+                        <div class="myheading"><strong >Permis de conduire</strong> </div> 
+                        <div  style="padding: 15px;background-color: white;height: 153px;">
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style="margin-top: -2rem; ">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="numPermi" id="numPermi" placeholder="Numéro de permis de conduire"  [(ngModel)]="Permis.numero">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateDelivrance" id="dateDelivrance" placeholder="Date délivrance" [(ngModel)]="Permis.dateDelivrance">
+                                    <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="etc" id="etc" placeholder="etc..." [(ngModel)]="Permis.infoSup">
+                                    <i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--duree -->
+                    
+                  <div class="col-md-3" >
+                    <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;">
+                     <div class="myheading"><strong >Durée de l'assurance</strong> </div> 
+                      <div  style="padding: 15px;background-color: white;height: 191px;">
+                        <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon" style=" margin-top: -2rem; ">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateDebut" readonly id="dateDebut" value="{{dateDebut}}" placeholder="Date début assurance" [(ngModel)]="DureeAssurance.dateDebut">
+                                    <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+                        </div>
+                        <div class="row" style="width: 95%;padding: 0%">
+                                <div class="inputWithIcon">
+                                    <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateFin" id="dateFin" readonly value="{{dateFin}}" placeholder="Date fin assurance" [(ngModel)]="DureeAssurance.dateFin">
+                                    <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
+                                </div>
+    
+                        </div>
+                        <h5 style="color: #337ab7;margin-top: -1rem;"> ou durée</h5>
+                        <div class="row">
+                            <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                <label style="float: left; color: black;">
+                                        <input style="float: left;"  type="radio" name="semaine" id="semaine" value="semaine" (click)="dureeSemaine()" [(ngModel)]="duree">
+                                    1 semaine</label>
+                            </div>
+                            <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                <label style="float: left;color: black;">
+                                        <input style="float: left;" type="radio" name="deuxSemaine" id="deuxSemaine" value="duree2Semaine" (click)="duree2Semaine()"  [(ngModel)]="duree">
+                                    2 semaine</label>
+                            </div>
+                        
+                            <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                <label style="float: left;color: black;">
+                                        <input style="float: left;"  type="radio" name="mois" id="mois" value="mois" (click)="dureeMois()" [(ngModel)]="duree">
+                                    1 mois</label>
+                            </div>
+                                
+                            <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                <label style="float: left;color: black;">
+                                        <input style="float: left;" type="radio" name="troisMois" id="troisMois"value="troisMois" (click)="duree3Mois()" [(ngModel)]="duree">
+                                    3 mois</label>
+                            </div>
+                            
+                            <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                <label style="float: left;color: black;">
+                                        <input style="float: left;" type="radio" name="sixMois" id="sixMois" value="sixMois" (click)="duree6Mois()"  [(ngModel)]="duree">
+                                    6 mois</label>
+                            </div>
+                            <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                <label style="float: left;color: black;">
+                                        <input style="float: left;" type="radio" name="douzeMois" id="douze" value="douzeMois" (click)="duree12Mois()"  [(ngModel)]="duree">
+                                    12 mois </label>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+           </div>
+        </div>
+        <div *ngIf="etap==2">
+          <div class="row">
+              <div class="col-lg-6" >
+                  <div class="mypanel " style="box-shadow: 1px 1px 8px black;border: 1px solid black">
+                    <div style="padding: 15px;background-color: #F8F8FF;">
+                        <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let a of Assurance; let i=index">
+                                    <td><input type="radio" (click)="getAssurane(i)" name="assurer" id="assurer"> <span class="radiobtn"></span></td>
+                                    <td  [ngClass]='getClassCSS(i)' style="margin-left: 3px;margin-top: 1px;width: 220px;padding: 1rem;"  class="btn "><strong style="font-size: 25px"> {{a.assurance}}</strong></td>
+                                    <td  [ngClass]='getClassCSS(i)' style="margin-left: 3px;margin-top: 1px;width: 220px;padding: 1rem;" class="btn "><strong style="font-size: 25px"> {{a.tarif}}</strong></td>
+                                    <td  [ngClass]='getClassCSS(i)' style="margin-left: 3px;margin-top: 1px;width: 110px;padding: 1rem;" class="btn "><strong style="font-size: 25px"> {{a.monaie}}</strong></td>
+                                </tbody>
+                            </table>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-lg-3" >
+                  <div class="mypanel"  style="box-shadow: 1px 1px 8px black;border: 1px solid black">
+                    <div style="padding: 15px;background-color: #F8F8FF;">
+                        <div *ngIf="assuraneEnCours">
+                                <h2>Assurance Sélectionnée</h2>
+                                <h3>{{assuraneEnCours.assurance}}</h3>
+                                <h3>Trif</h3>
+                                <h3>{{assuraneEnCours.tarif}} {{assuraneEnCours.monaie}}</h3>
+                            </div>
+                        
+                        
+                        <div *ngIf="!assuraneEnCours">
+                            <p class="alert alert-danger">Cliquer sur l'un de ces choix</p>
+                        </div>
+                        
+                        <h3>Informations spécifiques</h3>
+                        <h3>Informations spécifiques</h3>
+                        <h3>Informations spécifiques</h3>
+                        <h3>Informations spécifiques</h3>
+       
+                    </div>
+                  </div>
+              </div>
+            <div class="row">
+                    <div class="col-md-3" >
+                        <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;">
+                          <div class="myheading"><strong >Option</strong> </div> 
+                          <div  style="padding: 15px;background-color: white;height: 214px;">            
+                            <p style="color: black;margin-top: -1rem">Pranchise</p>
+                            <div class="row">
+                                <div style="float: left;margin-top: -1rem">
+                                    <label class="control-label" for="" style=" color: black;">
+                                    <input type="radio" name="pasPranchise" id=""> 0,pas de pranchise</label>
+                                </div> 
+                                <div style="float: right;margin-top: -1rem">
+                                    <label class="control-label" for="" style=" color: black;">
+                                    <input type="radio" name="cinquantMille" id=""> 50 000 FCFA </label>
+                                </div>
+                            </div>
+                            
+                            <div  class="row">
+                                <div style="float: left;margin-top: -1rem">
+                                    <label class="control-label" for="" style=" color: black;">
+                                    <input type="radio" name="centMilles" id=""> 100 000 FCFA</label>
+                                </div> 
+                                <div style="float: right;margin-top: -1rem">
+                                    <label class="control-label" for="" style=" color: black;">
+                                    <input type="radio" name="DeuxCentMilles" id=""> 200 000 FCFA </label>
+                                </div>
+                            </div>
+                            
+                            <div  class="row">
+                                <div style="float: left;margin-top: -1rem">
+                                    <label class="control-label" for="" style=" color: black;">
+                                    <input type="radio" name="pranchiseETC" id="">  ...</label>
+                                </div> 
+                            </div>
+                            <div class="alert alert-info" style="height: 9rem;">
+                                <div class="row">
+                                    <label class="control-label" for="" style=" color: black;float: left;">Option diveses</label>
+                                    <i class="fa fa-remove"style="margin-top: -1rem;float: right;"></i>
+                                </div>
+                                <div class="row">
+                                    <div style="float: left">
+                                      <label class="control-label" for="" style=" color: black;margin-top: -1rem">
+                                        <input type="checkbox" name="" id="">Vol+Autoradio</label>
+                                    </div>
+                                    <div >
+                                            <label class="control-label" for="" style=" color: black;margin-top: -1rem">
+                                            <input type="checkbox" name="" id="">Vandalisme</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div style="float: left">
+                                          <label class="control-label" for="" style=" color: black;margin-top: -1rem">
+                                            <input type="checkbox" name="" id="">Remorquage</label>
+    
+                                        </div>
+                                        <div style="float: right">
+                                                <label class="control-label" for="" style=" color: black;margin-top: -1rem">
+                                                <input type="checkbox" name="" id="">Prét de véhicule</label>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                      <!-- type d'assurance-->
+                      
+                    <div class="col-md-3" >
+                            <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;">
+                              <div class="myheading"><strong >Type d'assurance</strong> </div> 
+                              <div  style="padding: 15px;background-color: white;height: 85px;">            
+                             
+                                <div class="alert alert-info" style="margin-top: -1rem; height: 7rem; ">
+                                    <div class="row">
+                                        <label class="control-label" for="" style=" color: black;float: left;margin-top: -2rem;">Catégorie</label>
+                                    </div>
+                                    <div class="row">
+                                        <div style="float: left;margin-top: -1rem;">
+                                          <label class="control-label" for="" style=" color: black;">
+                                            <input type="radio" name="" id="">Tout risque</label>
+                                        </div>
+                                        <div >
+                                                <label class="control-label" for="" style="color: black;margin-right: -33px;margin-top: -1rem;">
+                                                <input type="radio" name="" id="">Tiers</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div style="float: left;margin-top: -1rem;">
+                                              <label class="control-label" for="" style=" color: black;">
+                                                <input type="radio" name="" id="">Tiers + bris de glace</label>
+        
+                                            </div>
+                                            <div >
+                                                    <label class="control-label" for="" style=" color: black;margin-top: -1rem;">
+                                                    <input type="radio" name="" id="">Parking</label>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                          </div>
+                          </div>
+                      <!--duree -->
+                      
+                     <!-- <div class="col-md-3" >
+                        <div class="mypanel mybtn" style="box-shadow: 1px 1px 8px black;">
+                         <div class="myheading"><strong >Durée de l'assurance</strong> </div> 
+                          <div  style="padding: 15px;background-color: white;height: 191px;">
+                            <div class="row" style="width: 95%;padding: 0%">
+                                    <div class="inputWithIcon" style=" margin-top: -2rem; ">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateDebut" id="dateDebut" value="{{dateDebut}}" placeholder="Date début assurance" [(ngModel)]="dateDebut">
+                                        <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+                            </div>
+                            <div class="row" style="width: 95%;padding: 0%">
+                                    <div class="inputWithIcon">
+                                        <input class="form-control" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;" type="text" name="dateFin" id="dateFin" value="{{dateFin}}" placeholder="Date fin assurance" [(ngModel)]="dateFin">
+                                        <i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i>
+                                    </div>
+        
+                            </div>
+                            <h5 style="color: #337ab7;margin-top: -1rem;"> ou durée</h5>
+                            <div class="row">
+                                <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <label style="float: left; color: black;">
+                                            <input style="float: left;"  type="radio" name="semaine" id="semaine" value="semaine" (click)="dureeAssurance()" [(ngModel)]="duree">
+                                        1 semaine</label>
+                                </div>
+                                <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <label style="float: left;color: black;">
+                                            <input style="float: left;" type="radio" name="deuxSemaine" id="deuxSemaine" value="DeuxSemaine"  [(ngModel)]="duree">
+                                        2 semaine</label>
+                                </div>
+                            
+                                <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <label style="float: left;color: black;">
+                                            <input style="float: left;"  type="radio" name="mois" id="mois" value="mois"  [(ngModel)]="duree">
+                                        1 mois</label>
+                                </div>
+                                    
+                                <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <label style="float: left;color: black;">
+                                            <input style="float: left;" type="radio" name="troisMois" id="troisMois"value="troisMois"  [(ngModel)]="duree">
+                                        3 mois</label>
+                                </div>
+                                
+                                <div class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <label style="float: left;color: black;">
+                                            <input style="float: left;" type="radio" name="sixMois" id="sixMois" value="sixMois"  [(ngModel)]="duree">
+                                        6 mois</label>
+                                </div>
+                                <div  class="col-md-6" style="width: 48%;margin-top: -1rem;">
+                                    <label style="float: left;color: black;">
+                                            <input style="float: left;" type="radio" name="douzeMois" id="douze" value="douzeMois"  [(ngModel)]="duree">
+                                        12 mois </label>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                     </div>-->
+                  </div>
+            </div>
+             
+          </div>
+         
+        <div *ngIf="etap == 3" style=" margin-top: 19rem; position: relative; top: -62px; ">
+            <div class="row" >
+                <div *ngIf="etapPaiement == 1" class="col-md-6">
+                    <button  class="alert mybtn" (click)="etapPaiement1()" style="margin-left: 200px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 20px;">
+                            PAIEMENT
+                    </button>
+                </div>
+                <div  *ngIf="etapPaiement == 2" class="col-md-6">
+                    <button  class="alert mybtn" disabled="true" style="margin-left: 200px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 20px;">
+                            PAIEMENT
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button class="alert mybtn" style="margin-right: 160px;margin-top: 1px;width: 418px;padding: 2rem;font-size: 20px;">
+                            IMPRIMER LA CARTE D'ASSURANCE
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="alert mybtn" style="margin-left: 200px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 22px;">
+                        Saisie de code de validation de paiement
+                    </button>
+                </div>
+                <div>
+                    <button class="alert mybtn" style="margin-right: 160px;margin-top: 1px;width: 420px;padding: 2rem;font-size: 23px;">
+                        ENVOYER LA CARTE PAR EMAIL
+                    </button>
+                </div>
+                </div>
+        </div>
+       </div>
+      <div class="modal-footer">
+          <div class="row">
+            <div *ngIf="etap < 3" class="col-lg-6" style="float: right;width: 48%" >
+             <button class="btn mybtn" style="width: 120px;position: relative; top: -9rem; padding: 1rem; " (click)="suivant()">Suivant  </button>
+              <i style="size: 10px" class="fa fa-angle-right " style="font-size:100px;color: green;position: relative;left: -6rem;top: -4rem;font-size: 155px;"></i>
+            </div>
+            
+            <div *ngIf="etap == 3" class="col-lg-6" style="float: right;width: 48%" >
+                <button class="btn mybtn" disabled="true" style="width: 120px;position: relative; top: -9rem; padding: 1rem; " (click)="suivant()">Suivant  </button>
+                <i style="size: 10px" class="fa fa-angle-right " style="font-size:100px;color: green;position: relative;left: -6rem;top: -4rem;font-size: 155px;"></i>
+            </div>
+            <div *ngIf="etap > 1" class="col-lg-6" style="float: right;width: 48%">
+             <button class="btn mybtn" style="width: 120px; position: relative; top: -6rem; padding: 1rem;left: -41rem; " (click)="precedent()">  Precedant </button>
+              <i style="size: 10px" class="fa fa-angle-left fa-lg" style="font-size:100px;color: green;position: relative;left: -53rem;top: -3rem;font-size: 155px;"></i>
+            </div>
+            
+            <div *ngIf="etap == 1" class="col-lg-6" style="float: right;width: 48%">
+                <button class="btn mybtn" disabled="true" style="width: 120px; position: relative; top: -6rem; padding: 1rem;left: -41rem; " (click)="precedent()">  Precedant </button>
+                <i style="size: 10px" class="fa fa-angle-left fa-lg" style="font-size:100px;color: green;position: relative;left: -53rem;top: -3rem;font-size: 155px;"></i>
+            </div>
+           </div>
+        </div>
+   </div>
+ </div>
+
+</div>

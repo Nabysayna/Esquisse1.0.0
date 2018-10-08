@@ -57,7 +57,7 @@ export class AccueilComponent implements OnInit {
 
   indexOp:number=0;
   quinzeMinutes = 900000;
-  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL'] ;
+  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL','WARI'] ;
   oms=[
        {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"col-xs-2 col-sm-2 loader","etat":0},
        {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"row loader","etat":0},
@@ -558,6 +558,7 @@ geolocaliser(){
 
 
   @ViewChild('viewMore') public successModal:ModalDirective;
+  @ViewChild('waitingmodal') public waitingmodal:ModalDirective;
 
   ouvrir(){
       this.successModal.show() ;
@@ -1137,7 +1138,8 @@ geolocaliser(){
                   this.updateOpInLastedFifteen('om-depot',id);
                   this.updateOpInLastedFifteen('om-depot',id);
                 
-                }else{
+                }
+                else{
                   let periodicVerifierOMDepot = setInterval(()=>{
                     //console.log("periodicVerifierTCDepot : "+objet.etats.nbtour) ;
                     objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -1162,7 +1164,7 @@ geolocaliser(){
                           clearInterval(periodicVerifierOMDepot) ;
                         }
                         if(donnee=='-1'){
-                          if(donnee=='-1' && objet.etats.nbtour>=9)
+                          if(donnee=='-1' && objet.etats.nbtour>=5)
                           this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                             let donnee=rep._body.trim().toString();
                            // console.log("demanderAnnulationOM : "+donnee) ;
@@ -1172,6 +1174,14 @@ geolocaliser(){
                               objet.etats.color='red';
                               objet.etats.errorCode="c";
                              // this.om[0].style["background-color"]='red';
+                              this.updateOpInLastedFifteen('om-depot',id);
+                              clearInterval(periodicVerifierOMDepot) ;
+                            }
+                            else if(donnee!='w'){
+                              objet.etats.etat=true;
+                              objet.etats.load='wait';
+                              objet.etats.color='yellow';
+                              objet.etats.errorCode=donnee;
                               this.updateOpInLastedFifteen('om-depot',id);
                               clearInterval(periodicVerifierOMDepot) ;
                             }
@@ -1214,6 +1224,7 @@ geolocaliser(){
       objet.etats.load='terminated';
       objet.etats.color='red';
       objet.etats.errorCode='r';
+      this.waitingmodal.hide();
       return 0 ;
     }
    // console.log('avant om service');
@@ -1229,6 +1240,7 @@ geolocaliser(){
            objet.etats.color='red';
            objet.etats.errorCode='0';
            this.updateOpInLastedFifteen('om-retrait',id);
+           this.waitingmodal.hide();
         }else
             if(resp._body.match('-12')){
                objet.etats.etat=true;
@@ -1236,6 +1248,7 @@ geolocaliser(){
                objet.etats.color='red';
                objet.etats.errorCode='-12';
                this.updateOpInLastedFifteen('om-retrait',id);
+               this.waitingmodal.hide();
             }
             else{
               setTimeout(()=>{
@@ -1256,7 +1269,9 @@ geolocaliser(){
                    objet.etats.color='red';
                    objet.etats.errorCode=donnee;
                    this.updateOpInLastedFifteen('om-retrait',id);
-                  }else{
+                   this.waitingmodal.hide();
+                  }
+                  else{
                  //       console.log('avant set interval bi');
                         let periodicVerifierOMRetirer = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -1279,20 +1294,35 @@ geolocaliser(){
                            objet.etats.errorCode=donnee;
                            this.updateOpInLastedFifteen('om-retrait',id);
                            clearInterval(periodicVerifierOMRetirer) ;
+                           this.waitingmodal.hide();
                           }
-                            if(donnee=='-1' && objet.etats.nbtour>=9){
+                            if(donnee=='-1' && objet.etats.nbtour>=1){
                               //console.log('avant demande annulation');
-                              this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
+                              let respo = resp._body.trim().toString();
+                              this._omService.demanderAnnulationOM(respo).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                   console.log('apres demande annulation');
-                               //  if(donnee=="c"){
+                                  console.log(donnee);
+                                  if(donnee=='w'){
+                                    objet.etats.etat=true;
+                                    objet.etats.load='wait';
+                                    objet.etats.color='yellow';
+                                    objet.etats.errorCode=donnee;
+                                    this.updateOpInLastedFifteen('om-retrait',id);
+                                    this.retrieveOperationInfo(objet);
+                                    this.waitingmodal.show();
+                                    clearInterval(periodicVerifierOMRetirer) ;                                    this.postDemanderAnnulationOM(objet,resp._body.trim().toString());
+                                    this.postDemanderAnnulationOM(objet,respo);
+                                  }
+                                  else{
                                    objet.etats.etat=true;
                                    objet.etats.load='terminated';
                                    objet.etats.color='red';
                                    objet.etats.errorCode="c";
                                    this.updateOpInLastedFifteen('om-retrait',id);
                                    clearInterval(periodicVerifierOMRetirer) ;
-                                 //}
+                                   this.waitingmodal.hide();
+                                 }
                               });
                             }
                         }
@@ -1312,6 +1342,33 @@ geolocaliser(){
 
   }
 
+  postDemanderAnnulationOM(objet:any,resp:string){
+      let timerInterval  = setInterval(
+        ()=>{
+          this._omService.postDemanderAnnulationOM(resp).then(rep => {
+            let donnee=rep._body.trim().toString();
+            console.log('apres demande post annulation');
+            console.log(donnee);
+            if(donnee=='1'){
+                clearInterval(timerInterval) ;
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='green';
+                objet.etats.errorCode=donnee;
+                this.retrieveOperationInfo(objet);
+            }
+            else if(donnee!='-1'){
+                clearInterval(timerInterval) ;
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                objet.etats.errorCode=donnee;
+                this.retrieveOperationInfo(objet);
+            }
+
+          });
+        },10000)
+  }
 /******************************************************************************************************/
 
 
@@ -1358,7 +1415,7 @@ geolocaliser(){
                     objet.etats.color = 'red';
                     objet.etats.errorCode = donnee;
                     this.updateOpInLastedFifteen('om-retraitcode',id);
-                  }
+              }
               else {
                 let periodicVerifierOMRetraitCode = setInterval(()=>{
                   objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -1380,17 +1437,24 @@ geolocaliser(){
                       clearInterval(periodicVerifierOMRetraitCode) ;
                       this.updateOpInLastedFifteen('om-retraitcode',id);
                     }
-                    if(donnee=='-1' && objet.etats.nbtour>=9){
+                    if(donnee=='-1' && objet.etats.nbtour>=5){
                       this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                         let donnee=rep._body.trim().toString();
-                       // if(donnee=="c"){
+                        if(donnee!='w'){
+                          objet.etats.etat=true;
+                          objet.etats.load='wait';
+                          objet.etats.color='yellow';
+                          objet.etats.errorCode=donnee;
+                          this.updateOpInLastedFifteen('om-retraitcode',id);
+                        }
+                        else{
                           objet.etats.etat=true;
                           objet.etats.load='terminated';
                           objet.etats.color='red';
                           objet.etats.errorCode="c";
                           clearInterval(periodicVerifierOMRetraitCode) ;
                           this.updateOpInLastedFifteen('om-retraitcode',id);
-                       // }
+                        }
                       }) ;
                     }
                   });
@@ -1483,7 +1547,9 @@ geolocaliser(){
                      objet.etats.color='red';
                      objet.etats.errorCode=donnee;
                      this.updateOpInLastedFifteen('om-vente-credit',id);
-                   }else{
+                   
+                  }
+                  else{
                         let periodicVerifierOMAcheterCredit = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
                         this._omService.verifierReponseOM(resp._body.trim().toString()).then(rep =>{
@@ -1505,12 +1571,20 @@ geolocaliser(){
                              clearInterval(periodicVerifierOMAcheterCredit) ;
                              this.updateOpInLastedFifteen('om-vente-credit',id);
                             }
-                            if(donnee=='-1' && objet.etats.nbtour>=9){
+                            if(donnee=='-1' && objet.etats.nbtour>=5){
                               console.log('avant anulation')
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  console.log('si bir annulation bi');
-                               // if(donnee=="c"){
+                                
+                                if(donnee!='w'){
+                                  objet.etats.etat=true;
+                                  objet.etats.load='wait';
+                                  objet.etats.color='yellow';
+                                  objet.etats.errorCode=donnee;
+                                  this.updateOpInLastedFifteen('om-vente-credit',id);
+                                }
+                                else {
                                    objet.etats.etat=true;
                                    objet.etats.load='terminated';
                                    objet.etats.color='red';
@@ -1518,7 +1592,7 @@ geolocaliser(){
                                    clearInterval(periodicVerifierOMAcheterCredit) ;
                                    this.updateOpInLastedFifteen('om-vente-credit',id);
                                    //929992
-                                // }
+                                }
                               }) ;
                             }
                           }
@@ -2133,6 +2207,9 @@ retrieveOperationInfo(item : any) : string{
         if (item.etats.errorCode=='c')
           return "Opèration annulée. La requête n'est pas parvenue au serveur. Veuillez recommencer." ;
 
+        if (item.etats.errorCode=='w')
+          return "Faites patienter le client ; votre requete est en cours de traitement." ;
+
         if (item.etats.errorCode=='0')
           return "Vous n'êtes pas autorisé à effectuer cette opèration." ;
 
@@ -2176,7 +2253,8 @@ retrieveOperationInfo(item : any) : string{
 
         if (item.etats.errorCode=='0')
           return "Vous n'êtes pas autorisé à effectuer cette opèration." ;
-
+        if (item.etats.errorCode=='w')
+          return "Votre requête est en cour de traitement , merci de faire patienter le client." ;
         if (item.etats.errorCode=='-2')
           return "Numéro Invalide." ;
         if (item.etats.errorCode=='-3')
@@ -2334,7 +2412,7 @@ retrieveOperationInfo(item : any) : string{
                   objet.etats.color='red';
                   objet.etats.errorCode=donnee;
                   this.updateOpInLastedFifteen('tc-depot',id);
-                }else{
+                } else{
                   let periodicVerifierTCDepot = setInterval(()=>{
                     console.log("periodicVerifierTCDepot : "+objet.etats.nbtour) ;
                     objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -2437,7 +2515,8 @@ retrieveOperationInfo(item : any) : string{
                    objet.etats.color='red';
                    objet.etats.errorCode=donnee;
                    this.updateOpInLastedFifteen('tc-retrait',id);
-                  }else{
+                  }
+                  else{
                     let periodicVerifierTCRetirer = setInterval(()=>{
                       console.log("periodicVerifierTCRetirer : "+objet.etats.nbtour) ;
                       objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -2459,7 +2538,7 @@ retrieveOperationInfo(item : any) : string{
                            clearInterval(periodicVerifierTCRetirer) ;
                            this.updateOpInLastedFifteen('tc-retrait',id);
                           }
-                          if(donnee=='-1' && objet.etats.nbtour>=9){
+                          if(donnee=='-1' && objet.etats.nbtour>=5){
                             this._tcService.demanderAnnulationTC(resp._body.trim().toString()).then(rep =>{
                               console.log("demanderAnnulationTC : "+rep._body.trim().toString()) ;
                               let donnee=rep._body.trim().toString();
@@ -2540,7 +2619,8 @@ retrieveOperationInfo(item : any) : string{
                    objet.etats.color='red';
                    objet.etats.errorCode=donnee;
                    this.updateOpInLastedFifteen('tc-retrait',id);
-                  }else{
+                  }
+                  else{
                     let periodicVerifierTCRetraitCode = setInterval(()=>{
                       console.log("periodicVerifierTCRetraitCode : "+objet.etats.nbtour) ;
                       objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -2630,7 +2710,8 @@ retrieveOperationInfo(item : any) : string{
                    objet.etats.load='terminated';
                    objet.etats.color='red';
                    objet.etats.errorCode=donnee;
-                  }else{
+                  }
+                  else{
                     let periodicVerifierTCRechargeIZI = setInterval(()=>{
                       console.log("periodicVerifierTCRechargeIZI : "+objet.etats.nbtour) ;
                       objet.etats.nbtour = objet.etats.nbtour + 1 ;
@@ -3130,7 +3211,8 @@ retrieveOperationInfo(item : any) : string{
                      objet.etats.load='terminated';
                      objet.etats.color='red';
                      objet.etats.errorCode=donnee;
-                   }else{
+
+                   /*}else{
                         if(donnee=='2' || donnee==2){
 							// objet.etats.etat=true;
 							 objet.etats.load='loader';
@@ -3138,6 +3220,9 @@ retrieveOperationInfo(item : any) : string{
 							 objet.etats.errorCode=donnee;
                         
                         }
+                    */
+                  }
+                  else{
                         let periodicVerifierOMAcheterCredit = setInterval(()=>{
                         objet.etats.nbtour = objet.etats.nbtour + 1 ;
                         this.airtimeService.verifierReponse(reponse._body.trim().toString()).then(rep =>{

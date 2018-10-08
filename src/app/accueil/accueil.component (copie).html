@@ -22,15 +22,19 @@
                   <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
                 </ul>
             </div>
+            
             <!-- /.sidebar-collapse -->
             <div id="encours" >
-              <h3 style="color: orange ; font-weight: 600 ; background-color: white ;">Vos opèrations</h3>
+              <h3 style="color: orange ; font-weight: 600 ; background-color: white ;">Vo opèrations</h3>
               <div *ngFor="let item of process">
+                <div *ngIf="(item.etats.errorCode=='w'):(popTemplate.show(); return true;)?(return true;)"></div>
                 <div  (click)="finprocess(item,item.dataI)" [ngStyle]="{'background-color':item.data.operateur==5?'orange':item.etats.color}"
-                      class="row pendingTask" [popover]="popTemplate" popoverTitle="{{item.data.nom}}" triggers="mouseenter:mouseleave">
+                      class="row pendingTask" [popover]="popTemplate" popoverTitle="{{item.data.nom}}" triggers="mouseenter:mouseleave" #pop2="bs-popover">
                   <div  class="{{item.etats.load}}" style="text-align: end ;">
+
                     <i *ngIf="item.etats.etat&&item.etats.color=='green'" class="fa fa-check fa-2x" aria-hidden="true"></i>
                     <i *ngIf="item.etats.etat&&item.etats.color=='red'" class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+                    <i *ngIf="item.etats.etat&&item.etats.color=='yellow'" class="fa fa-check fa-2x" aria-hidden="true"></i>
                   </div>
 
                   <div>{{item.data.nom}}</div>
@@ -128,6 +132,9 @@
                   <div *ngIf="item.data.operateur==5">
 
                     <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">
+                      {{retrieveOperationInfo(item)}}
+                    </div>
+                    <div *ngIf="item.etats.errorCode!='w'" style="color:yellow ; font-weight: bold ;">
                       {{retrieveOperationInfo(item)}}
                     </div>
 
@@ -313,6 +320,21 @@
     </div>
   </div>
 </div>
+
+<div style="font-family:'caviar dreams bold';" bsModal #waitingmodal="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="background-color: #f39200; color: white;">
+        <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)=" this.waitingmodal.show()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="text-align: center ;">
+           Faites patienter le client ; Votre requete est en cours de traitement.
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

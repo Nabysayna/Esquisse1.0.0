@@ -30,13 +30,13 @@
                 <ul id="gauche" class="nav in" id="side-menu">
                   <li role="presentation" style="background-color: #f39200; color: white; cursor: pointer;" (click)="geolocaliser()"><a style="color: white;" >GEOLOCALISER LE POINT</a></li>
                   <li class="cursor" *ngFor="let api of registredAPIs; let i = index" (click)="afficheApi(api)" ><a > <img src="assets/icoservice-{{i+1}}.png" /><b>{{api}}</b> </a></li>
-                  <li class="cursor" (click)="afficheApi('ECOMMERCE')" role="presentation"><a><i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>
+                  <!--<li class="cursor" (click)="afficheApi('ECOMMERCE')" role="presentation"><a><i class="fa fa-shopping-cart fa-2x pull-left"></i> <b>E-COMMERCE</b> </a></li>-->
                   <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
             <div id="encours" >
-              <h3 style="color: orange ; font-weight: 600 ; background-color: white ;">Vos opèrations</h3>
+              <h3   style="color: orange ; font-weight: 600 ; background-color: white ;">Vos opèrations</h3>
              <!-- <div>
                 <div  class="om[0].class" [ngStyle]="om[0].style">operation1</div>
                 <div class="om[1].class" [ngStyle]="om[1].style" >operation2</div>
@@ -50,6 +50,7 @@
                     <div  class="{{item.etats.load}}" style="text-align: end ;">
                       <i *ngIf="item.etats.etat&&item.etats.color=='green'" class="fa fa-check fa-2x" aria-hidden="true"></i>
                       <i *ngIf="item.etats.etat&&item.etats.color=='red'" class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+                      <i *ngIf="item.etats.etat&&item.etats.color=='yellow'" class="fa fa-refresh fa-2x" aria-hidden="true"></i>
                     </div>
                     <div>{{item.data.nom}}</div>
                   </div>
@@ -301,7 +302,9 @@
     <div id="page-wrapper" class="row" style="padding-top: 3rem; ">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" id="routeContainDisplayer">
            <!-- <router-outlet (change)="changerna($event)"></router-outlet>-->
-           <app-postcash *ngIf="pc" (changementPc)="postcash($event)" ></app-postcash>
+           <router-outlet ></router-outlet>
+
+         <!-- <app-postcash *ngIf="pc" (changementPc)="postcash($event)" ></app-postcash>
            <app-orange-money-component *ngIf="om" (changementOm)="orangeMoney($event)" ></app-orange-money-component>
            <app-expresso *ngIf="em" (changementEm)="expresso($event)"></app-expresso>
            <app-tigo-component *ngIf="tc" (changementTc)="tigocash($event)" ></app-tigo-component>
@@ -318,6 +321,9 @@
            <app-e-commerce *ngIf="ecom"></app-e-commerce>
            <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>
            <app-wari *ngIf="wari"></app-wari>
+
+           <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>-->
+
            
           </div> 
     </div>
@@ -332,6 +338,7 @@
           <li class="cursor" role="presentation" (click)="afficheApi('SENELEC')" ><a><img src="assets/icoservice-senelec.png" />Paiement <b>SENELEC</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('AIRTIME')" ><a><img src="assets/airtime.jpg" />Paiement <b>AIRTIME</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('WARI')" ><a><img src="assets/warilogo.png" /><b>Wari</b></a></li>
+          <li class="cursor" role="presentation" (click)="afficheApi('CANAL')" ><a><img src="assets/canal.png" />Paiement <b>CANAL</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('OOLU')" ><a><img src="assets/icoservice-oolu.png" />Paiement <b>Oolu Solar</b> </a></li>
           <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
         </ul>
@@ -357,6 +364,23 @@
     </div>
   </div>
 </div>
+
+<div style="font-family:'caviar dreams bold';" bsModal #waitingmodal="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: #f39200; color: white;">
+        <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="this.waitingmodal.hide();">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" style="text-align: center ;">
+            <h1>Faites patienter le client ; Votre requete est en cours de traitement.</h1> 
+            <input style="border: 1px solid #ffff; color:#ffff;padding:2rem; " type="button" class="btn btn-success" (click)="this.waitingmodal.hide();" value="OK" />
+        
+          </div>
+      </div>
+    </div>
+  </div>
 
 
 

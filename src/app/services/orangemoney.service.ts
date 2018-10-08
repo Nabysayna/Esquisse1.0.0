@@ -1,5 +1,8 @@
 import { Injectable }    from '@angular/core';
 import {Http, Headers} from "@angular/http";
+import { timeInterval } from 'rxjs/operators';
+import { timestamp } from 'rxjs/operator/timestamp';
+import { timer } from 'rxjs/observable/timer';
 
 
 @Injectable()
@@ -39,6 +42,13 @@ export class OrangemoneyService {
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
     let link=this.link+"/om-sen/demanderAnnulationOM";
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
+  }
+
+  public postDemanderAnnulationOM(requete:any): Promise<any>{ 
+    let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token,timestamp: Date.now()});
+    let link=this.link+"/om-sen/verifierAlertOM";
+    return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {console.log(res); return res} ).catch(error => {return 'bad' });
+    //return Promise.resolve("1");
   }
 
   public isDepotCheckAuthorized(): Promise<any>{
