@@ -28,7 +28,7 @@ export class WariComponent implements OnInit {
     pays:any;
     datededelivrance:any;
     datedevalidite:any;
-    espece:any;
+    espece:any="espece";
     wallet:any;
     compte:any;
     carte:any;
@@ -36,6 +36,11 @@ export class WariComponent implements OnInit {
     loading= false ;
     erreur= false ;
     paysdestination:any;
+    infoEnv:boolean=true;
+    infoBen:boolean=false;
+    btnValider:boolean=false;
+    btnPrecedant:boolean=false;
+    btnSuivant:boolean=true;
     token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
     
     constructor(public _wariservice:WariService) { }
@@ -113,4 +118,18 @@ export class WariComponent implements OnInit {
       this.compte=undefined;
       this.carte=undefined;
     }
+  suivant(){
+     this.infoBen=true;
+     this.infoEnv=false;
+     this.btnValider=true;
+     this.btnPrecedant=true;
+     this.btnSuivant=false;
+  }
+  precedant(){
+     this.infoBen=false;
+     this.infoEnv=true;
+     this.btnValider=false;
+     this.btnPrecedant=false;
+     this.btnSuivant=true;
+  }
 }

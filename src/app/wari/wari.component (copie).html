@@ -187,20 +187,21 @@
 
               </div>
 
-              <div style="width:60%;margin-left:auto;margin-right:auto;" class="tab-pane fade" id="envoi">
+              <div class="tab-pane fade col-sm-12 col-xs-12" id="envoi">
                      <!-- <h2>Envoi</h2>-->
                       <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
                       <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
-                      <div class="row" style="width:100%">
-                          <div class="form-inline" style="text-align:center;">
-                              <div class="col-lg-10 col-md-10 col-xs-10 col-sm-10">
-								  <label>choisir un pays de destination</label>
-                                  <select class="input-control" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;margin-left:5em" class="textinput" [(ngModel)]="this.paysdestination" name="paysdestination">
+                      <div class="row" style="width:60%">
+                          <div class="row" style="text-align:center;">
+                              <div class="col-lg-3 col-md-3">
+                                <label style="margin-top:1.5rem">choisir un pays de destination</label>
+                              </div>
+                              <div class="col-lg-8 col-md-8">
+                                  <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.paysdestination" name="paysdestination">
                                       <option value="Sénégal">Sénégal</option>
                                   </select>                                 
                                </div>
                           </div>
-                          <div *ngIf="infoEnv">
                           <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                               <form>
                                   <fieldset>
@@ -245,7 +246,7 @@
                                         <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="montant" name="montant" />
                                       </div>
                                     </div>
-                                    <!--<div class="row">
+                                    <div class="row">
                                         <div class="col-lg-3 col-md-3">
                                           <label style="margin-top:1.5rem">Motif</label>
                                         </div>
@@ -257,7 +258,7 @@
                                                 <option value="Sénégal">Réglement de Bien</option>
                                                 <option value="Sénégal">Réglement de Services</option>
                                                 <option value="Sénégal">Autres</option>
-                                                 <option value="idcard">Pasport</option> 
+                                                <!-- <option value="idcard">Pasport</option> -->
                                             </select>                                   
                                         </div>
                                     </div>
@@ -268,13 +269,13 @@
                                         <div class="col-lg-8 col-md-8">
                                             <select class="input-control" style="margin-top: 12%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
                                                 <option value="CNI">CNI</option>
-                                                <option value="idcard">Pasport</option> 
+                                                <!-- <option value="idcard">Pasport</option> -->
                                             </select>                                   
                                         </div>
-                                    </div>-->
+                                    </div>
                                   </fieldset>
                                 </form>
-                               <!-- <form>
+                                <form>
                                     <fieldset>
                                       <legend style="font-size:small">information sur la piéce d'identification</legend>
                                       <div class="row">
@@ -308,80 +309,14 @@
                                             <label style="margin-top:1.5rem">date de validité</label>
                                           </div>
                                           <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datedevalidite" name="datedevalidite" />
-                                          </div>
-                                      </div>
-                                    </fieldset>
-                                  </form>-->
-                          </div>
-                          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-							      <div class="row">
-                                        <div class="col-lg-3 col-md-3">
-                                          <label style="margin-top:1.5rem">Motif</label>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8">
-                                            <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="motif" name="motif">
-                                                <option value="Sénégal">Aide Scolaire</option>
-                                                <option value="Sénégal">Assistance Familiale</option>
-                                                <option value="Sénégal">Construction Immobiliére</option>
-                                                <option value="Sénégal">Réglement de Bien</option>
-                                                <option value="Sénégal">Réglement de Services</option>
-                                                <option value="Sénégal">Autres</option>
-                                                 <option value="idcard">Pasport</option> 
-                                            </select>                                   
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3">
-                                          <label style="margin-top:1.5rem">Type de piéce</label>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8">
-                                            <select class="input-control" style="margin-top: 12%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
-                                                <option value="CNI">CNI</option>
-                                                <option value="idcard">Pasport</option> 
-                                            </select>                                   
-                                        </div>
-                                    </div>
-                                    <form>
-                                    <fieldset>
-                                      <legend style="font-size:small">information sur la piéce d'identification</legend>
-                                      <div class="row">
-                                          <div class="col-lg-5 col-md-5">
-                                            <label style="margin-top:1.5rem">numero</label>
-                                          </div>
-                                          <div class="col-lg-6 col-md-6">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="numero" name="numero" />
-                                          </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-lg-5 col-md-5">
-                                            <label style="margin-top:1.5rem">pays</label>
-                                          </div>
-                                          <div class="col-lg-6 col-md-6">
-                                              <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
-                                                  <option value="Sénégal">Sénégal</option>
-                                              </select>                                 
-                                           </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-lg-5 col-md-5">
-                                            <label style="margin-top:1.5rem">date de delivrance</label>
-                                          </div>
-                                          <div class="col-lg-6 col-md-6">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datededelivrance" name="datededelivrance" />
-                                          </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-lg-5 col-md-5">
-                                            <label style="margin-top:1.5rem">date de validité</label>
-                                          </div>
-                                          <div class="col-lg-6 col-md-6">
                                             <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datedevalidite" name="datedevalidite" />
                                           </div>
                                       </div>
                                     </fieldset>
                                   </form>
-                             <!-- <form>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                              <form>
                                   <fieldset>
                                     <legend>Beneficiaire</legend>
                                     <div class="row">
@@ -443,81 +378,11 @@
                                             </div>
                                       </div>
                                     </fieldset>
-                                  </form>-->
-                            </div>      
-                         </div>
-                         <div style="width:80%;margin-left:auto;margin-right:auto;" *ngIf="infoBen" class="row">
-						    <form style="width:100%">
-                                  <fieldset style="width:100%">
-                                    <legend>Beneficiaire</legend>
-                                    <div class="row">
-                                      <div class="col-lg-5 col-md-5">
-                                        <label style="margin-top:1.5rem">prenom</label>
-                                      </div>
-                                      <div class="col-lg-6 col-md-6">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="prenomB" name="prenomB" />
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-lg-5 col-md-5">
-                                        <label style="margin-top:1.5rem">nom</label>
-                                      </div>
-                                      <div class="col-lg-6 col-md-6">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="nomB" name="nomB" />
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-5">
-                                          <label style="margin-top:1.5rem">Adresse</label>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                          <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="adresseB" name="adresseB" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-lg-5 col-md-5">
-                                        <label style="margin-top:1.5rem">Cellulaire</label>
-                                      </div>
-                                      <div class="col-lg-6 col-md-6">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="cellulaireB" name="cellulaireB" />
-                                      </div>
-                                    </div>
-
-                                  </fieldset>
-                                </form>
-                                <form>
-                                    <fieldset>
-                                      <legend style="font-size:small">Mode de réception</legend>
-                                      <div class="form-inline" style="width: 100%;">
-                                          <div class="form-check form-check-inline">
-                                              <input  [(ngModel)]="this.espece" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="espece" checked="checked" />
-                                              <label class="form-check-label" for="exampleRadios1">
-                                                Éspece
-                                              </label>
-                                              <input [(ngModel)]="this.wallet" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="wallet" />
-                                              <label class="form-check-label" for="exampleRadios2">
-                                               Wallet
-                                              </label>
-                                              <input [(ngModel)]="this.compte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="compte" />
-                                              <label class="form-check-label" for="exampleRadios2">
-                                                Compte
-                                              </label>
-                                              <input [(ngModel)]="this.carte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="carte" />
-                                              <label class="form-check-label" for="exampleRadios2">
-                                                Carte
-                                              </label>
-                                            </div>
-                                      </div>
-                                    </fieldset>
-                               </form>
-                         </div>
+                                  </form>
+                          </div>      
                       </div>
-                      <div class="row" style="width: 50%; text-align:center" >
-						  <span style="cursor:pointer" *ngIf="btnPrecedant"  (click)="precedant()" ><img height="30px" width="50px" src="assets/fGauche.jpeg" /><b>Precedant</b></span>
-						  <!--<button *ngIf="btnPrecedant" (click)="precedant()" class="btn btn-primary">precedant</button>-->
-						  <span style="cursor:pointer" *ngIf="btnSuivant"  (click)="suivant()" ><img height="30px" width="50px" src="assets/fDroit.jpeg" /><b>Suivant</b></span>
-						  <!--<button *ngIf="btnSuivant" (click)="suivant()" class="btn btn-primary">suivant</button>-->
-                          <input *ngIf="btnValider" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="envoyer()" value="valider"/>
+                      <div class="row" style="width: 100%; text-align:center" >
+                          <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="envoyer()" value="valider"/>
                       </div>  
               </div>
           </div>

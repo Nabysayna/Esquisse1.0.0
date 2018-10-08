@@ -45,6 +45,8 @@ export class AirtimeService {
 	});
   }
   public demanderAnnulation(rep:string):Promise<any>{
+	 let params="requestParam="+JSON.stringify({requestParam : rep, tokenParam : this.token, cacheDisabler : Date.now()});
+     let link=this.link+"/airtime/annulationAirtime";
 	 return new Promise((resolve,reject)=>{
 	   /* this.http.post(link,params,{headers:this.headers}).subscribe(data =>{
 			resolve(data);
