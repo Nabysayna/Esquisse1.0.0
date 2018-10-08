@@ -100,9 +100,9 @@ fieldset h2{
     text-decoration: none ;
 }
 
-#om-options li:last-child{
+/*#om-options li:last-child{
 /*	margin-top: 2rem ; */
-}
+/*}*/
 
 #paiefact select{
 	margin-left: 1rem ;
@@ -111,6 +111,9 @@ fieldset h2{
 
 @media only screen and (max-width: 400px) {
     #om-options{
+        width: max-content !important;
+    }
+    #om-op{
         width: max-content !important;
     }
 }  
