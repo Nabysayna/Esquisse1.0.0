@@ -30,16 +30,16 @@
                       <h3 *ngIf="depotreussi"  class="alert alert-success">Depot reussi!</h3>
                       <h3 *ngIf="echecdepot" class="alert alert-danger">Echec de l'operation reessayer plus tard SVP!</h3>
 
-                      <form name="om-options" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                      <form name="om-options" (ngSubmit)="depotAgent()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
                           <div>
                               <div class="row">
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient)  :</label>
-                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="DepotAgent.telephone" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
                                   </div>
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -135px;">Name (recipient) :</label>
-                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="DepotAgent.nom" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
                                   </div>
                                   <p *ngIf="mag1" class="alert alert-danger">numero incorrect</p>
                               </div>
@@ -49,11 +49,11 @@
                               <div class="row" >
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -171px;">Description:</label>
-                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="DepotAgent.description" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
                                   </div>
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -186px;">Amount:</label>
-                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="DepotAgent.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
                                   </div>   
                                   <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
                               </div>
@@ -69,16 +69,16 @@
                       <h2>Depot client</h2>
                       <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
                       <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
-                      <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                      <form name="transnat" (ngSubmit)="depotClient()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
                           <div>
                               <div class="row">
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient)  :</label>
-                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="DepotClient.telephone" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number" autofocus>
                                   </div>
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -135px;">Name (recipient) :</label>
-                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                      <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="DepotClient.nom" name="verifiernuminput" id="numclient"  class="form-control" placeholder="nom du client" autofocus>
                                   </div>
                                   <p *ngIf="mag1" class="alert alert-danger">numero incorrect</p>
                               </div>
@@ -88,11 +88,11 @@
                               <div class="row" >
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -171px;">Description:</label>
-                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="DepotClient.description" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
                                   </div>
                                   <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                       <label style="margin-top:1.5rem;margin-left: -186px;">Amount:</label>
-                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
+                                      <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="DepotClient.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Montant du transfert" required autofocus>
                                   </div>   
                                   <p *ngIf="mag2" class="alert alert-danger">montant incorrect</p>
                               </div>
@@ -101,10 +101,10 @@
                                   <label style="margin-top:1.5rem;margin-left: -171px;">Payment Method:</label>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                  <input type="radio" name="wallet">
+                                  <input type="radio" name="wallet" (click)="methodWallet()">
                                   <label style="color: black">Wallet</label>
                                   <input type="radio" name="wallet">
-                                  <label style="color: black">Card</label>
+                                  <label style="color: black" (click)="methodCard()">Card</label>
                                 </div>  
                               </div>
                           </div>
@@ -155,17 +155,18 @@
               <div class="tab-pane fade in" style="width:100%" id="RembourserTransfert">
                     <h2>Rembourser transfert</h2>
 
-                    <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                    <form name="transnat" (ngSubmit)="getRembourserTransfert()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
                         <div>
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -79px;">No Piece identite Envoyeur  :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RembourserTransfert.numPieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -92px;">Type de Piece identite Envoyeur :</label>
-                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="this.numclien" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="RembourserTransfert.typePieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
                                         <option value="">please select...</option>
+                                        <option *ngFor="let t of TypePiece">{{t.type}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -175,11 +176,11 @@
                             <div class="row" >
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -108px;">Motif du remboursement:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RembourserTransfert.motifRemboursement" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -160px;">Code de transfert:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RembourserTransfert.codeTransfere" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
                                 </div>   
                             </div>
                         </div>
@@ -187,12 +188,12 @@
                         <div>
                             <div class="row" >
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -108px;">No de portable Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
+                                    <label style="margin-top:1.5rem;margin-left: -108px;">No portable Envoyeur:</label>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RembourserTransfert.phoneSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -150px;">Prenom Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RembourserTransfert.prenomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
                                 </div>   
                             </div>
                         </div>
@@ -201,38 +202,42 @@
                             <div class="row" >
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -171px;">Nom Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RembourserTransfert.nomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RembourserTransfert.amount" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
                                 </div>   
                             </div>
                         </div>
                         <div>
                             <div class="row">
                                 <label style="margin-top:1.5rem;margin-left: -55rem;">Sender ID Verified :</label>
-                                <input type="radio" name="" id="">                           
+                                <input type="checkbox" (click)="IdVerified()" name="" id="">                           
                              </div>
                         </div>
-                        <div class="form-inline" style="float: right" >
+                        <div *ngIf="idVerified == 1" class="form-inline" style="float: right" >
                             <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
+                        </div>
+                        
+                        <div *ngIf="idVerified != 1" class="form-inline" style="float: right" >
+                            <input disabled style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
                         </div>
                     </form>
             </div>
             <div class="tab-pane fade in" style="width:100%" id="retraitAgent">
                 <h2>Retrait Agent</h2>
 
-                <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                <form name="transnat" (ngSubmit)="getRetraitAgent()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
                     <div>
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient) :</label>
-                                <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
+                                <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitAgent.tel" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -79px;">Name (recipient) :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitAgent.nom" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
 
                             </div>
                         </div>
@@ -242,12 +247,13 @@
                         <div class="row" >
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -108px;">No Piece identite Envoyeur:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No Piece identite Envoyeur" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.numPieceSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No Piece identite Envoyeur" required autofocus>
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -90px;">Type de Piece identite Envoyeur:</label>
-                                <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="this.numclien" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
+                                <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="RetraitAgent.typePieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
                                     <option value="">please select...</option>
+                                    <option *ngFor="let t of TypePiece">{{t.type}}</option>
                                 </select>                          
                             </div>   
                         </div>
@@ -257,11 +263,11 @@
                         <div class="row" >
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -108px;">Motif du remboursement:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.motifRemboursement" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -150px;">Code de transfert:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.codeTransfere" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
                             </div>   
                         </div>
                     </div>
@@ -270,11 +276,11 @@
                         <div class="row" >
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -108px;">No  portable Envoyeur:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.telReceiver" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -155px;">Prenom Envoyeur:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.prenomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
                             </div>   
                         </div>
                     </div>
@@ -283,11 +289,11 @@
                         <div class="row" >
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -171px;">Nom Envoyeur:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.nomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
                             </div>
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                 <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
-                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
+                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
                             </div>   
                         </div>
                     </div>
@@ -295,7 +301,7 @@
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -205px;">Description:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
+                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitAgent.description" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
                             </div>
                         </div>
                     </div>
@@ -307,100 +313,16 @@
             <div class="tab-pane fade in" style="width:100%" id="retraitClient">
                     <h2>Retrait Client</h2>
     
-                    <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
-                        <div>
-                            <div class="row">
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient) :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                        <label style="margin-top:1.5rem;margin-left: -79px;">Name (recipient) :</label>
-                                        <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
-    
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div>
-                            <div class="row" >
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -108px;">No Piece identite Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No Piece identite Envoyeur" required autofocus>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -90px;">Type de Piece identite Envoyeur:</label>
-                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="this.numclien" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
-                                        <option value="">please select...</option>
-                                    </select>                          
-                                </div>   
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="row" >
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -108px;">Motif du remboursement:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -150px;">Code de transfert:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
-                                </div>   
-                            </div>
-                        </div>
-    
-                        <div>
-                            <div class="row" >
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -108px;">No  portable Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -155px;">Prenom Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
-                                </div>   
-                            </div>
-                        </div>
-                            
-                        <div>
-                            <div class="row" >
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -171px;">Nom Envoyeur:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
-                                    <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
-                                </div>   
-                            </div>
-                        </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                        <label style="margin-top:1.5rem;margin-left: -205px;">Description:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-inline" style="float: right" >
-                            <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
-                        </div>
-                    </form>
-                </div>
-                <div class="tab-pane fade in" style="width:100%" id="retraitMarchand">
-                        <h2>Retrait Marchand</h2>
-        
-                        <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                    <form name="transnat" (ngSubmit)="getRetraitClient()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
                             <div>
                                 <div class="row">
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient) :</label>
-                                        <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
+                                        <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitClient.tel" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -79px;">Name (recipient) :</label>
-                                            <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
+                                            <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitClient.nom" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
         
                                     </div>
                                 </div>
@@ -410,12 +332,13 @@
                                 <div class="row" >
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -108px;">No Piece identite Envoyeur:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No Piece identite Envoyeur" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.numPieceSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No Piece identite Envoyeur" required autofocus>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -90px;">Type de Piece identite Envoyeur:</label>
-                                        <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="this.numclien" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
-                                            <option value="">please select...</option>
+                                        <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="RetraitClient.typePieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
+                                            <option >please select...</option>
+                                            <option *ngFor="let t of TypePiece">{{t.type}}</option>
                                         </select>                          
                                     </div>   
                                 </div>
@@ -425,11 +348,11 @@
                                 <div class="row" >
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -108px;">Motif du remboursement:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.motifRemboursement" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -150px;">Code de transfert:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.codeTransfere" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
                                     </div>   
                                 </div>
                             </div>
@@ -438,11 +361,11 @@
                                 <div class="row" >
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -108px;">No  portable Envoyeur:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.telReceiver" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -155px;">Prenom Envoyeur:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.prenomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
                                     </div>   
                                 </div>
                             </div>
@@ -451,11 +374,11 @@
                                 <div class="row" >
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -171px;">Nom Envoyeur:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.nomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                         <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
-                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
+                                        <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
                                     </div>   
                                 </div>
                             </div>
@@ -463,7 +386,7 @@
                                 <div class="row">
                                     <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -205px;">Description:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitClient.description" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -471,21 +394,107 @@
                                 <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
                             </div>
                         </form>
+                </div>
+                <div class="tab-pane fade in" style="width:100%" id="retraitMarchand">
+                        <h2>Retrait Marchand</h2>
+        
+                        <form name="transnat" (ngSubmit)="getRetraitMarchand()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -79px;">Mobile Number (recipient) :</label>
+                                            <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitMarchand.tel" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Mobile Number (recipient)" autofocus>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                                <label style="margin-top:1.5rem;margin-left: -79px;">Name (recipient) :</label>
+                                                <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitMarchand.nom" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Name (recipient)" autofocus>
+            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div>
+                                    <div class="row" >
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -108px;">No Piece identite Envoyeur:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.numPieceSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No Piece identite Envoyeur" required autofocus>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -90px;">Type de Piece identite Envoyeur:</label>
+                                            <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="RetraitMarchand.typePieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
+                                                <option value="">please select...</option>
+                                                <option *ngFor="let t of TypePiece">{{t.type}}</option>
+                                            </select>                          
+                                        </div>   
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="row" >
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -108px;">Motif du remboursement:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.motifRemboursement" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -150px;">Code de transfert:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.codeTransfere" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
+                                        </div>   
+                                    </div>
+                                </div>
+            
+                                <div>
+                                    <div class="row" >
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -108px;">No  portable Envoyeur:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.telReceiver" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -155px;">Prenom Envoyeur:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.prenomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
+                                        </div>   
+                                    </div>
+                                </div>
+                                    
+                                <div>
+                                    <div class="row" >
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -171px;">Nom Envoyeur:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.nomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                            <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
+                                        </div>   
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                                                <label style="margin-top:1.5rem;margin-left: -205px;">Description:</label>
+                                                <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitMarchand.description" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Description" required autofocus>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-inline" style="float: right" >
+                                    <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
+                                </div>
+                            </form>
                     </div>
                     <div class="tab-pane fade in" style="width:100%" id="retraitByCode">
                             <h2>Retrait par code</h2>
         
-                            <form name="transnat" (ngSubmit)="ajout()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
+                            <form name="transnat" (ngSubmit)="getRetraitCode()" #formdepot="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width:100%">
                                 <div>
                                     <div class="row">
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -79px;">No Piece identite Envoyeur  :</label>
-                                            <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
+                                            <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="RetraitCode.numPieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
                                         </div>
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -92px;">Type de Piece identite Envoyeur :</label>
-                                            <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="this.numclien" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
+                                            <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" [(ngModel)]="RetraitCode.typePieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Type de Piece identite Envoyeur" autofocus>
                                                 <option value="">please select...</option>
+                                                <option *ngFor="let t of TypePiece">{{t.type}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -495,11 +504,11 @@
                                     <div class="row" >
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -108px;">Motif du remboursement:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.motifRemboursement" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Motif du remboursement" required autofocus>
                                         </div>
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -160px;">Code de transfert:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.codeTransfere" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Code de transfert" required autofocus>
                                         </div>   
                                     </div>
                                 </div>
@@ -508,11 +517,11 @@
                                     <div class="row" >
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -108px;">No de portable Envoyeur:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.telSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="No de portable Envoyeur" required autofocus>
                                         </div>
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -150px;">Prenom Envoyeur:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.prenomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Prenom Envoyeur" required autofocus>
                                         </div>   
                                     </div>
                                 </div>
@@ -521,21 +530,25 @@
                                     <div class="row" >
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -171px;">Nom Envoyeur:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.nomSender" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="Nom Envoyeur" required autofocus>
                                         </div>
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="this.mnt" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
+                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
                                         </div>   
                                     </div>
                                 </div>
                                 <div>
                                     <div class="row">
                                         <label style="margin-top:1.5rem;margin-left: -55rem;">Receiver ID Verified :</label>
-                                        <input type="radio" name="" id="">                           
+                                        <input type="checkbox" name="" id="" (click)="idReciver()">                           
                                      </div>
                                 </div>
-                                <div class="form-inline" style="float: right" >
+                                
+                                <div *ngIf="IdReciver != 1" class="form-inline" style="float: right" >
+                                    <input disabled style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
+                                </div>
+                                <div *ngIf="IdReciver == 1" class="form-inline" style="float: right" >
                                     <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn mybtn btn-sm" value="Initiate payment" />
                                 </div>
                             </form>
@@ -639,51 +652,52 @@
                       <h2>Transfert par Code</h2>
 
                         <h3 *ngIf="retraitcodereussi" class="alert alert-success">Retrait reussi!</h3>
-                      <form name="transnat" (ngSubmit)="showmodalretraitcode()" #formretraitcode="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;" class="">
+                      <form name="transnat" (ngSubmit)="getTransfereWhiteCode()" #formretraitcode="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;" class="">
 
                          <div >
                              <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -79px;">No de portable Envoyeur :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro de portable Envoyeur" autofocus>
+                                    <label style="margin-top:1.5rem;margin-left: -79px;">No portable Envoyeur :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="transfereWhiteCode.telSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro de portable Envoyeur" autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -135px;">Prenom Envoyeur:</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Prenom Envoyeur" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="transfereWhiteCode.prenomSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Prenom Envoyeur" autofocus>
                                 </div>
                              </div>
                              
                              <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -16rem;">Nom Envoyeur :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Nom Envoyeur" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="transfereWhiteCode.nomSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Nom Envoyeur" autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <label style="margin-top:1.5rem;margin-left: -7rem;">No de portable Beneficiaire :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No de portable Beneficiaire" autofocus>
+                                    <label style="margin-top:1.5rem;margin-left: -7rem;">No  portable Beneficiaire :</label>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="transfereWhiteCode.telReceiver" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No de portable Beneficiaire" autofocus>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -12rem;">Prenom Beneficiaire :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Prenom Beneficiaire" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="transfereWhiteCode.prenomReceiver" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Prenom Beneficiaire" autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -135px;">Nom Beneficiaire :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Nom Beneficiaire" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.nomReceiver" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Nom Beneficiaire" autofocus>
                                 </div>
                             </div>
                            
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -12rem;">Adresse Beneficiaire :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Adresse Beneficiaire" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.adressReceiver" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Adresse Beneficiaire" autofocus>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -7rem;">Ville/Commune Beneficiaire :</label>
-                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.villeReceiver" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
                                         <option value="">Please select...</option>
+                                        <option *ngFor="let v of Ville">{{v.ville}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -691,26 +705,29 @@
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -14rem;">Pays Beneficiaire :</label>
-                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
-                                        <option value="senegal">senegal</option>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.contryReceiver" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                        <option>please select ...</option>
+                                        <option *ngFor="let p of Pays">{{p.pays}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -8rem;">No Piece identite Envoyeur :</label>
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.numPieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="No Piece identite Envoyeur" autofocus>
                                 </div>
                             </div> 
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -5rem;">Type de Piece identite Envoyeur :</label>
-                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
-                                        <option value="">please select...</option>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.typePieceSender" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" autofocus>
+                                        <option >please select...</option>
+                                        <option  *ngFor="let t of TypePiece">{{t.type}}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                     <label style="margin-top:1.5rem;margin-left: -135px;">Purpose of Transfer :</label>
-                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control"  autofocus>
+                                    <select  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off"  [(ngModel)]="transfereWhiteCode.purposeTransfere" name="verifiernuminput" id="numclient"  class="form-control"  autofocus>
                                         <option value="">please select...</option>
+                                        <option *ngFor="let p of purposeOfTransfere">{{p.purpose}}</option>
                                     </select>
                                 </div>
                             </div> 
@@ -719,7 +736,7 @@
                                     <label style="margin-top:1.5rem;margin-left: -79px;">Amount :</label>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="this.numclient" name="verifiernuminput" id="numclient"  class="form-control" placeholder="montant" autofocus>
+                                    <input  (keyup)="Reinitialise()"style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" autocomplete="off" type="text"  autocomplete="off" pattern="[0-9]*" [(ngModel)]="transfereWhiteCode.amount" name="verifiernuminput" id="numclient"  class="form-control" placeholder="montant" autofocus>
                                 </div>
                             </div> 
                          </div>
