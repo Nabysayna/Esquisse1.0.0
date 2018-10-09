@@ -103,8 +103,8 @@
                                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                   <input type="radio" name="wallet" (click)="methodWallet()">
                                   <label style="color: black">Wallet</label>
-                                  <input type="radio" name="wallet">
-                                  <label style="color: black" (click)="methodCard()">Card</label>
+                                  <input type="radio" name="wallet"  (click)="methodCard()">
+                                  <label style="color: black">Card</label>
                                 </div>  
                               </div>
                           </div>
@@ -534,7 +534,7 @@
                                         </div>
                                         <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
                                             <label style="margin-top:1.5rem;margin-left: -205px;">Amount:</label>
-                                            <input (keyup)="Reinitialise()" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
+                                            <input (keyup)="Reinitialise()" readonly style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off"  autocomplete="off" [(ngModel)]="RetraitCode.montant" name="verifiernuminput" id="mnttrans"  class="form-control" placeholder="montant" required autofocus>
                                         </div>   
                                     </div>
                                 </div>
