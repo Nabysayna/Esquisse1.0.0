@@ -13,9 +13,11 @@ export class ZuuluComponent implements OnInit {
   }
   methodWallet(){
     this.DepotClient.paiementMethod = 'Wallet';
+    this.paymentMethod = 1;
   }
   methodCard(){
     this.DepotClient.paiementMethod = 'Card';
+    this.paymentMethod = 1;
   }
   DepotClient = {telephone:'',nom:'',description:'',montant:'',paiementMethod:''}
   depotClient(){
@@ -69,20 +71,17 @@ export class ZuuluComponent implements OnInit {
   getRembourserTransfert(){
     console.log(this.RembourserTransfert);
   }
-  RetraitAgent = {tel:'',nom:'',numPieceSender:'',typePieceSender:'',motifRemboursement:'',
-              codeTransfere:'',telReceiver:'',prenomSender:'',nomSender:'',montant:0,description:''}
+  RetraitAgent = {tel:'',nom:'',montant:0,description:''}
   getRetraitAgent(){
     console.log(this.RetraitAgent);
     
   }
-RetraitClient = {tel:'',nom:'',numPieceSender:'',typePieceSender:'',motifRemboursement:'',
-codeTransfere:'',telReceiver:'',prenomSender:'',nomSender:'',montant:0,description:''}
+RetraitClient = {tel:'',nom:'',montant:0,description:''}
 getRetraitClient(){
 console.log(this.RetraitClient);
 }
 
-RetraitMarchand = {tel:'',nom:'',numPieceSender:'',typePieceSender:'',motifRemboursement:'',
-codeTransfere:'',telReceiver:'',prenomSender:'',nomSender:'',montant:0,description:''}
+RetraitMarchand = {tel:'',nom:'',montant:0,description:''}
 getRetraitMarchand(){
 console.log(this.RetraitMarchand);
 }
@@ -100,6 +99,7 @@ RetraitCode = {numPieceSender:'',typePieceSender:'',motifRemboursement:'',codeTr
 getRetraitCode(){
 console.log(this.RetraitCode);
 }
+paymentMethod:number=0;
 
  constructor() { }
 
