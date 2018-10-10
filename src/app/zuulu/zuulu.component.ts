@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ZuuluService } from '../services/zuulu.service';
 
 @Component({
   selector: 'app-zuulu',
@@ -9,7 +10,9 @@ export class ZuuluComponent implements OnInit {
 
   DepotAgent = {telephone:'',nom:'',description:'',montant:''}
   depotAgent(){
-    console.log(this.DepotAgent);
+    let requete = "1/"+this.DepotAgent.telephone+"/"+this.DepotAgent.nom+"/"+this.DepotAgent.description+"/"+this.DepotAgent.montant;
+   let res= this._zuuluService.depotAgent(requete);
+    console.log(res);
   }
   methodWallet(){
     this.DepotClient.paiementMethod = 'Wallet';
@@ -21,6 +24,8 @@ export class ZuuluComponent implements OnInit {
   }
   DepotClient = {telephone:'',nom:'',description:'',montant:'',paiementMethod:''}
   depotClient(){
+    let requete = "2/"+this.DepotClient.telephone+"/"+this.DepotClient.nom+"/"+this.DepotClient.description+"/"+parseInt(this.DepotClient.montant)+"/"+this.DepotClient.paiementMethod;
+    this._zuuluService.depotClient(requete).then();
     console.log(this.DepotClient);
   }
   Ville = [
@@ -53,6 +58,11 @@ export class ZuuluComponent implements OnInit {
     contryReceiver:'',numPieceSender:'',
     typePieceSender:'',purposeTransfere:'',amount:''};
   getTransfereWhiteCode(){
+    let requete = "3"+this.transfereWhiteCode.telReceiver+"/"+this.transfereWhiteCode.prenomSender+"/"+this.transfereWhiteCode.nomSender+
+    "/"+this.transfereWhiteCode.telReceiver+"/"+this.transfereWhiteCode.prenomReceiver+"/"+this.transfereWhiteCode.nomReceiver+
+    "/"+this.transfereWhiteCode.adressReceiver+"/"+this.transfereWhiteCode.villeReceiver+"/"+this.transfereWhiteCode.contryReceiver+
+    "/"+this.transfereWhiteCode.numPieceSender+"/"+this.transfereWhiteCode.typePieceSender+"/"+this.transfereWhiteCode.purposeTransfere+"/"+this.transfereWhiteCode.amount;
+    this._zuuluService.transfereByCode(requete).then();
     console.log(this.transfereWhiteCode);
   }
   RembourserTransfert = { 
@@ -69,20 +79,29 @@ export class ZuuluComponent implements OnInit {
     }
   }
   getRembourserTransfert(){
+    let requete = "4/"+this.RembourserTransfert.numPieceSender+"/"+this.RembourserTransfert.typePieceSender+"/"+this.RembourserTransfert.motifRemboursement+
+        "/"+this.RembourserTransfert.codeTransfere+"/"+this.RembourserTransfert.phoneSender+"/"+this.RembourserTransfert.prenomSender+"/"+this.RembourserTransfert.nomSender+"/"+parseInt(this.RembourserTransfert.amount)+"/"+this.RembourserTransfert.IdVerified;
+    this._zuuluService.remboursementTransfere(requete);
     console.log(this.RembourserTransfert);
   }
-  RetraitAgent = {tel:'',nom:'',montant:0,description:''}
+  RetraitAgent = {tel:'',nom:'',montant:'',description:''}
   getRetraitAgent(){
+    let requete = "5/"+this.RetraitAgent.tel+"/"+this.RetraitAgent.nom+"/"+parseInt(this.RetraitAgent.montant)+"/"+this.RetraitAgent.description;
+    this._zuuluService.retraitAgent(requete);
     console.log(this.RetraitAgent);
     
   }
-RetraitClient = {tel:'',nom:'',montant:0,description:''}
+RetraitClient = {tel:'',nom:'',montant:'',description:''}
 getRetraitClient(){
+  let requete = "6/"+this.RetraitClient.tel+"/"+this.RetraitClient.nom+"/"+parseInt(this.RetraitClient.montant)+"/"+this.RetraitClient.description;
+  this._zuuluService.retraitClient(requete);
 console.log(this.RetraitClient);
 }
 
-RetraitMarchand = {tel:'',nom:'',montant:0,description:''}
+RetraitMarchand = {tel:'',nom:'',montant:'',description:''}
 getRetraitMarchand(){
+  let requete = "7/"+this.RetraitMarchand.tel+"/"+this.RetraitMarchand.nom+"/"+parseInt(this.RetraitMarchand.montant)+"/"+this.RetraitMarchand.description;
+  this._zuuluService.retraitMarchand(requete);
 console.log(this.RetraitMarchand);
 }
 IdReciver:number=0;
@@ -95,13 +114,14 @@ idReciver(){
     this.RetraitCode.IdReceiver ='non';
   }
 }
-RetraitCode = {numPieceSender:'',typePieceSender:'',motifRemboursement:'',codeTransfere:'',telSender:'',prenomSender:'',nomSender:'',montant:'',IdReceiver:''}
+RetraitCode = {codeTransfere:'',typePieceReceiver:'',numPieceReceiver:'', telReceiver:'',prenomReceiver:'',nomReceiver:'',montant:'',IdReceiver:''}
 getRetraitCode(){
+  let requete ="8/"+this.RetraitCode.codeTransfere+"/"+this.RetraitCode.typePieceReceiver+"/"+this.RetraitCode.numPieceReceiver+"/"+this.RetraitCode.telReceiver+"/"+this.RetraitCode.prenomReceiver+"/"+this.RetraitCode.nomReceiver+"/"+this.RetraitCode.montant+"/"+this.RetraitCode.IdReceiver;
 console.log(this.RetraitCode);
 }
 paymentMethod:number=0;
 
- constructor() { }
+ constructor(public _zuuluService:ZuuluService) { }
 
   ngOnInit() {
   }

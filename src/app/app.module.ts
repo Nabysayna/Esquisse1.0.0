@@ -196,6 +196,7 @@ import { AirtimeComponent } from './airtime/airtime/airtime.component';
 import { CanalComponent } from './canal/canal.component';
 import { AssuranceComponent } from './assurance/assurance.component';
 import { ZuuluComponent } from './zuulu/zuulu.component';
+import { ZuuluService } from './services/zuulu.service';
 
 
 
@@ -353,8 +354,6 @@ import { ZuuluComponent } from './zuulu/zuulu.component';
       AuthGuard,
       AuthGuardcais,
       AuthGuardsup,
-    
-
     AuthenticationService,
     AdminpdvService,
     AdminmultipdvService,
@@ -376,6 +375,7 @@ import { ZuuluComponent } from './zuulu/zuulu.component';
     WariService,
     TarifsService,
     AirtimeService,
+    ZuuluService
   ],
   bootstrap: [AppComponent]
 })
