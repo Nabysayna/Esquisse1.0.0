@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from "@angular/http";
 @Injectable()
 export class ZuuluService {
-  private link = "https://mysentool.pro/index.php";
+  private link = "http://192.168.1.115/backendProductiveEsquisse/index.php";
 
   private headers=new Headers();
   private token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
@@ -13,11 +13,10 @@ export class ZuuluService {
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
-  public depotAgent(requete:any)/*: Promise<any>*/{
+  public depotAgent(requete:any): Promise<any>{
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
-    let link=this.link+"/om-sen/requerirControllerOM";
-    //return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
-    return params;
+    let link=this.link+"/zuulu/zuulu";
+    return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {console.log(res);return res} ).catch(error => {console.log(error);return 'bad' });
   }
 
   public depotClient(requete:any): Promise<any>{

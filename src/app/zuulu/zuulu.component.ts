@@ -11,8 +11,10 @@ export class ZuuluComponent implements OnInit {
   DepotAgent = {telephone:'',nom:'',description:'',montant:''}
   depotAgent(){
     let requete = "1/"+this.DepotAgent.telephone+"/"+this.DepotAgent.nom+"/"+this.DepotAgent.description+"/"+this.DepotAgent.montant;
-   let res= this._zuuluService.depotAgent(requete);
+   this._zuuluService.depotAgent(requete).then(res =>{
     console.log(res);
+   });
+    
   }
   methodWallet(){
     this.DepotClient.paiementMethod = 'Wallet';
