@@ -8,13 +8,12 @@ import { ZuuluService } from '../services/zuulu.service';
 })
 export class ZuuluComponent implements OnInit {
 
-  DepotAgent = {telephone:'',nom:'',description:'',montant:''}
+  DepotAgent = {telephone:'',nom:'',description:'',montant:''};
   depotAgent(){
-    let requete = "1/"+this.DepotAgent.telephone+"/"+this.DepotAgent.nom+"/"+this.DepotAgent.description+"/"+this.DepotAgent.montant;
-   this._zuuluService.depotAgent(requete).then(res =>{
-    console.log(res);
-   });
-    
+	   let requete = "1/"+parseInt(this.DepotAgent.montant)+"/"+this.DepotAgent.telephone+"/"+this.DepotAgent.nom+"/"+this.DepotAgent.description;
+	   this._zuuluService.depotAgent(requete).then(res =>{
+		   console.log(res);
+	   });
   }
   methodWallet(){
     this.DepotClient.paiementMethod = 'Wallet';
@@ -26,7 +25,7 @@ export class ZuuluComponent implements OnInit {
   }
   DepotClient = {telephone:'',nom:'',description:'',montant:'',paiementMethod:''}
   depotClient(){
-    let requete = "2/"+this.DepotClient.telephone+"/"+this.DepotClient.nom+"/"+this.DepotClient.description+"/"+parseInt(this.DepotClient.montant)+"/"+this.DepotClient.paiementMethod;
+    let requete = "2/"+parseInt(this.DepotClient.montant)+"/"+this.DepotClient.telephone+"/"+this.DepotClient.nom+"/"+this.DepotClient.description+"/"+this.DepotClient.paiementMethod;
     this._zuuluService.depotClient(requete).then();
     console.log(this.DepotClient);
   }

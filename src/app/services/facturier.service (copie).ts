@@ -13,7 +13,7 @@ export class FacturierService {
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
 //  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
 
-  private link = "http://127.0.0.1/backendProductiveEsquisse/index.php";
+  private link = "https://mysentool.pro/index.php";
 
 
   private headers = new Headers();
@@ -48,14 +48,11 @@ export class FacturierService {
     });
   }
 
-  public detailreglementsde(reference_client:string,numeroTelephone:string,numeroFacture:String):Promise<any>{
-    //let reEspParams={tokenParam:this.token,reference_client:reference_client,numeroTelephone:numeroTelephone,numeroFacture:numeroFacture};
-    let requete="9/"+reference_client+"/"+numeroTelephone+"/"+numeroFacture;
-    let reEspParams={tokenParam:this.token,requestParam:requete};
-    //let url=this.link+"/facturier-sen/detailreglementsde";
-    let url=this.link+"/zuulu/zuulu";
-    let params="requestParam="+JSON.stringify(reEspParams);
-    /*return new Promise( (resolve, reject) => {
+  public detailreglementsde(reference_client:string):Promise<any>{
+    let reEspParams={token:this.token,reference_client:reference_client};
+    let url=this.link+"/facturier-sen/detailreglementsde";
+    let params="params="+JSON.stringify(reEspParams);
+    return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
         data =>{
           console.log(data)
@@ -69,11 +66,6 @@ export class FacturierService {
           console.log("Finish")
         }
       );
-    });*/
-    return new Promise((resolve,reject)=>{
-		this.http.post(url,params,{headers:this.headers}).subscribe(response =>{
-		   console.log(response);
-		});
     });
   }
 

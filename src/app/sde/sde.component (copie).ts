@@ -38,24 +38,35 @@ export class SdeComponent implements OnInit {
   @ViewChild('modalsde') public modalsde:ModalDirective;
 
   detailfactursde(){
-   /* this.detailfacturesde={errorCode:0,reference_client:"",reference_facture:"",client:'nom du client',montant:1,echeance:"12/3/2018",service:"wizall"};
+    this.detailfacturesde={errorCode:0,reference_client:"",reference_facture:"",client:'nom du client',montant:1,echeance:"12/3/2018",service:"wizall"};
     this.etat1=false;
     this.etat2=false;
     this.etat3=false;
     this._facturierService.detailreglementsde(this.refClientSDE,this.numeroTelephone,this.numeroFacture).then(response =>{
-      console.log(typeof response);
-      console.log(response);
-      if(response.status==200){
-			setTimeout(()=>{
-				this._facturierService.getReponse(response["_body"]).then(rep =>{
-					if(rep["_body"]!="-1" && rep["_body"].contains("#")){
-					    let data=rep["_body"].split("#");
-					}
-					
-				});
-			},30000);
+      console.log(typeof response)
+      if(response.errorCode==0){
+        if(typeof response.response !== 'object') {
+          this.etat1=true;
+          this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        }
+        else if(response.response.length==0) this.etat3=true;
+        else{
+          let une = response.response[0];
+          this.etat2=true;
+          this.detailfacturesde.service = response.typeservice;
+          this.detailfacturesde.reference_client = une.reference_client;
+          this.detailfacturesde.reference_facture=une.reference_facture;
+          this.detailfacturesde.client=une.prenom+" "+une.nom;
+          this.detailfacturesde.echeance=une.date_echeance;
+          this.detailfacturesde.montant=une.montant;
+        }
+        this.modalsde.show();
+      }else{
+        console.log("je suis la")
+        this.etat1=true;
+        this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+        this.modalsde.show();
       }
-     
 
     }).catch(response => {
       console.log(response);
@@ -70,7 +81,7 @@ export class SdeComponent implements OnInit {
       }
       this.etat1=true;
       this.modalsde.show();
-    });*/
+    });
   }
 
   showmodalsde(){

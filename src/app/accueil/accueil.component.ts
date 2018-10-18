@@ -53,6 +53,7 @@ export class AccueilComponent implements OnInit {
   ecom:boolean=false;
   airtime:boolean=false;
   wari:boolean=false;
+  zuulu:boolean=false;
   
 
   indexOp:number=0;
@@ -184,6 +185,7 @@ export class AccueilComponent implements OnInit {
           this.ecom=false;
           this.airtime=false;
           this.wari=false;
+          this.zuulu=false;
 
       }
       if(api=="TIGOCASH"){
@@ -204,6 +206,7 @@ export class AccueilComponent implements OnInit {
           this.ecom=false;
           this.airtime=false;
           this.wari=false;
+          this.zuulu=false;
 
       }
       if(api=="POSTECASH"){
@@ -224,6 +227,7 @@ export class AccueilComponent implements OnInit {
           this.ecom=false;
           this.airtime=false;
           this.wari=false;
+          this.zuulu=false;
       }
       if(api=="E-MONEY"){
         this.em=true;
@@ -243,6 +247,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
       if(api=="WIZALL"){
@@ -263,6 +268,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
       }
       if(api=="TNT"){
         this.Tnt=true;
@@ -282,6 +288,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
       if(api=="SDE"){
@@ -302,6 +309,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
       if(api=="RAPIDO"){
@@ -322,6 +330,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
       if(api=="WOYOFAL"){
@@ -342,6 +351,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
       if(api=="SENELEC"){
@@ -362,6 +372,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
       if(api=="OOLU"){
@@ -382,6 +393,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
       }
     if(api=="GESTIONREPORTING"){
@@ -402,6 +414,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
     }
     if(api=="DEMANDEPRET"){
@@ -422,6 +435,7 @@ export class AccueilComponent implements OnInit {
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
+        this.zuulu=false;
 
     }
     if(api=="GUIDEUTILISATION"){
@@ -442,6 +456,7 @@ export class AccueilComponent implements OnInit {
       this.ecom=false;
       this.airtime=false;
       this.wari=false;
+      this.zuulu=false;
 
     }
     if(api=="ECOMMERCE"){
@@ -461,7 +476,8 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.airtime=false;
-       this.wari=false;
+      this.wari=false;
+      this.zuulu=false;
 
     }
     if(api=="AIRTIME"){
@@ -483,11 +499,35 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.wari=false;
+      this.zuulu=false;
 
     }
     if(api=="WARI"){
       console.log("wari");
       this.wari=true;
+      this.airtime=false;
+      this.ecom=false;
+      this.guide=false;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+      this.zuulu=false;
+
+    }
+    if(api=="ZUULU"){
+      console.log("zuulu");
+      this.zuulu=true;
+      this.wari=false;
       this.airtime=false;
       this.ecom=false;
       this.guide=false;

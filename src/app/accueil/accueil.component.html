@@ -302,9 +302,8 @@
     <div id="page-wrapper" class="row" style="padding-top: 3rem; ">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" id="routeContainDisplayer">
            <!-- <router-outlet (change)="changerna($event)"></router-outlet>-->
-           <router-outlet ></router-outlet>
-
-         <!-- <app-postcash *ngIf="pc" (changementPc)="postcash($event)" ></app-postcash>
+          <!-- <router-outlet ></router-outlet>-->
+           <app-postcash *ngIf="pc" (changementPc)="postcash($event)" ></app-postcash>
            <app-orange-money-component *ngIf="om" (changementOm)="orangeMoney($event)" ></app-orange-money-component>
            <app-expresso *ngIf="em" (changementEm)="expresso($event)"></app-expresso>
            <app-tigo-component *ngIf="tc" (changementTc)="tigocash($event)" ></app-tigo-component>
@@ -321,11 +320,9 @@
            <app-e-commerce *ngIf="ecom"></app-e-commerce>
            <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>
            <app-wari *ngIf="wari"></app-wari>
-
-           <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>-->
-
-           
-          </div> 
+           <app-zuulu *ngIf="zuulu"></app-zuulu>
+           <!--<app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>-->
+          </div>
     </div>
     <div class="sidebar-nav navbar-collapse" id="facturers" style="background-color: transparent ;">
 
@@ -337,9 +334,10 @@
           <li class="cursor" role="presentation" (click)="afficheApi('WOYOFAL')" ><a> <img src="assets/icoservice-woyofal.png" /> Recharge <b>WOYOFAL</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('SENELEC')" ><a><img src="assets/icoservice-senelec.png" />Paiement <b>SENELEC</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('AIRTIME')" ><a><img src="assets/airtime.jpg" />Paiement <b>AIRTIME</b> </a></li>
-          <li class="cursor" role="presentation" (click)="afficheApi('WARI')" ><a><img src="assets/warilogo.png" /><b>Wari</b></a></li>
+         <!-- <li class="cursor" role="presentation" (click)="afficheApi('WARI')" ><a><img src="assets/warilogo.png" /><b>Wari</b></a></li>-->
           <li class="cursor" role="presentation" (click)="afficheApi('CANAL')" ><a><img src="assets/canal.png" />Paiement <b>CANAL</b> </a></li>
           <li class="cursor" role="presentation" (click)="afficheApi('OOLU')" ><a><img src="assets/icoservice-oolu.png" />Paiement <b>Oolu Solar</b> </a></li>
+          <li class="cursor" role="presentation" (click)="afficheApi('ZUULU')" ><a><img src="assets/icoservice-oolu.png" />Paiement <b>ZUULU</b> </a></li>
           <li role="presentation" style="border-bottom: hidden;">&nbsp;</li>
         </ul>
     </div>
