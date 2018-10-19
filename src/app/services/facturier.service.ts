@@ -73,8 +73,21 @@ export class FacturierService {
     return new Promise((resolve,reject)=>{
 		this.http.post(url,params,{headers:this.headers}).subscribe(response =>{
 		   console.log(response);
+		   resolve(response);
 		});
     });
+  }
+  public getReponse(file:string){
+	let params="param="+JSON.stringify({file:file,token:this.token});
+	let url=this.link+"/zuulu/getReponse";
+	return new Promise((resolve,reject)=>{
+		this.http.post(url,params,{headers:this.headers}).subscribe(reponse =>{
+			console.log(reponse);
+			resolve(reponse);
+		});
+		
+	});
+	
   }
 
   public validerrapido(telephone:string,montant:string,badge:string):Promise<any>{
