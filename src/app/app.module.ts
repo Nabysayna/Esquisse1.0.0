@@ -39,6 +39,7 @@ import { EFinancierService} from './tnt/tntservices';
 
 import { TigocashService } from './services/tigocash.service';
 import { AirtimeService } from './services/airtime.service';
+import { ControleService } from './services/controle.service';
 
 
 
@@ -375,7 +376,8 @@ import { ZuuluService } from './services/zuulu.service';
     WariService,
     TarifsService,
     AirtimeService,
-    ZuuluService
+    ZuuluService,
+    ControleService
   ],
   bootstrap: [AppComponent]
 })

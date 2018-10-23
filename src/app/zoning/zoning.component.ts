@@ -1676,7 +1676,7 @@ public cashOutPIN(objet:any){
   /***************************Debut FACTURIERS ******************************/
 
   paiemantsde(objet){
-    this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
+   /* this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
       console.log("********************************************************")
       console.log(resp) ;
 
@@ -1718,7 +1718,7 @@ public cashOutPIN(objet:any){
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
-    });
+    });*/
   }
 
   validerrapido(objet){

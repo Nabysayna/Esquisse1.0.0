@@ -24,6 +24,8 @@ export class SenelecComponent implements OnInit {
   police:string;
   num_facture:string;
   dataImpression:any;
+  telephone:string;
+  loading:boolean=false;
   constructor(private _facturierService : FacturierService) { }
 
   /******************************************************************************************************/
@@ -45,13 +47,15 @@ export class SenelecComponent implements OnInit {
   showmodalsenelec(){
     this.adejaclick = false;
     this.detailfactsenelec();
+    this.loading=true;
   }
   hidemodalsenelec(){
     this.modalsenelec.hide();
     this.police = undefined;
     this.num_facture = undefined;
+    this.loading=false;
   }
-  detailfactsenelec(){
+ /* detailfactsenelec(){
     this.detailfacturesenelec={errorCode:0,police:"5",numeroFacture:"5",nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
     this.etat1=false;
     this.etat2=false;
@@ -93,10 +97,88 @@ export class SenelecComponent implements OnInit {
       this.etat1=true;
       this.modalsenelec.show();
     });
+  }*/
+  detailfactsenelec(){
+    console.log("youpi");
+    this._facturierService.detailfacturesenelec(this.police,this.num_facture,this.telephone).then(reponse =>{
+		console.log(reponse);
+		let tontou=reponse["_body"].trim();
+		setTimeout(()=>{
+			this._facturierService.getReponse(tontou).then(rep => {
+			   console.log(rep);
+			   let Tontou=rep["_body"].trim();
+			   if(Tontou!="no"){
+					this.handlerSenelecResponse(Tontou,0);
+			   }else{
+					let ident=setInterval(()=>{
+					    this._facturierService.getReponse(tontou).then(rep1=>{
+							this.handlerSenelecResponse(rep1["_body"].trim(),ident);
+						});
+					},5000);
+			   }
+			});
+		},10000);
+		this.modalsenelec.show();
+    });
+  }
+  totalFacture(){
+	return parseInt(this.detailfacturesenelec.montant)+500;
+  }
+  handlerSenelecResponse(tontou,id){
+	 if(tontou!="no"){
+		if(tontou.search("#")!=-1){
+			let data=tontou.split("#");
+			this.etat2=true;
+			this.loading=false;
+			this.detailfacturesenelec.service = "senelec";
+			this.detailfacturesenelec.police=data[0];
+			this.detailfacturesenelec.numeroFacture=data[1];
+			//this.detailfacturesenelec.nomclient=resp.response[0].client;
+			this.detailfacturesenelec.montant=data[2];
+			this.detailfacturesenelec.dateecheance=data[3];
+			if(parseInt(id)!=0){
+					  clearInterval(id);
+			}
+		   
+		}else{
+			this.etat2=true;
+			switch(parseInt(tontou)){
+				case 400:{
+				    this.loading=false;
+					this.detailfacturesenelec.errorCode="Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
+					if(parseInt(id)!=0){
+					  clearInterval(id);
+					}
+					break;
+				}
+				case 600:{
+				    this.loading=false;
+					this.detailfacturesenelec.errorCode="Numero facture ou reference incorrect";
+					if(parseInt(id)!=0){
+					  clearInterval(id);
+					}
+					break;
+				}
+				case 700:{
+				    this.loading=false;
+					this.detailfacturesenelec.errorCode = "Facture deja payée";
+					if(parseInt(id)!=0){
+					  clearInterval(id);
+					}
+					break;
+				}
+				default:{
+					break;
+				}
+			
+			}
+		}
+	  }
+	
   }
 
   validerpaimentsenelec(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service,telephone:this.telephone}));
     this.increment();
     this.hidemodalsenelec();
   }

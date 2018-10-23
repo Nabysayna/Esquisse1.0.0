@@ -10,18 +10,26 @@
             <form name="transnat" #formsde="ngForm" (ngSubmit)="showmodalsde()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
               <div class="form-inline">
                 <label>Réfèrence client :</label>
-                <input class="form-control" type="text" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"  class="form-control" placeholder="Numéro du client" required autofocus>
-                
+                <input   style=" border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"   placeholder="reference" required autofocus>
+              </div>
+              <div *ngIf="refBool">
+                   <p class="alert alert-danger">format reference client incorrect</p>
               </div>
               <div class="form-inline">
 				<label>Numero de Facture</label>
-				<input type="text" [(ngModel)]="numeroFacture" name="numeroFacture" class="form-control" />
+				<input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" (keyup)="reinitialiseBool()" placeholder="numero facture" type="text" [(ngModel)]="numeroFacture" name="numeroFacture" />
+              </div>
+              <div *ngIf="numFactBool">
+				<p class="alert alert-danger">format numero facture incorrect</p>
               </div>
               <div class="form-inline">
 				<label>Numero Telephone Client</label>
-				<input type="text" [(ngModel)]="numeroTelephone" name="numeroTelephone" class="form-control" />
+				<input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" class="input" (keyup)="reinitialiseBool()" placeholder="telephone client" type="text" [(ngModel)]="numeroTelephone" name="numeroTelephone"  />
               </div>
-              <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsde.form.valid" />
+              <div *ngIf="telBool">
+				<p class="alert alert-danger">format numero telephone incorrect</p>
+              </div>
+              <input style="border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;"  type="submit" class="btn btn-success"  />
             </form>
             <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
           </div>
@@ -44,12 +52,16 @@
         <div *ngIf="etat3">
           <p class="alert alert-info">Facture inexistante ou déja payée</p>
         </div>
+        <div *ngIf="waiting">
+			<p>Operation en cour ...</p>
+        </div>
         <div *ngIf="etat2">
           <p><strong>Réf. Client: {{detailfacturesde.reference_client}}</strong></p>
           <p><strong>Réf. Facture: {{detailfacturesde.reference_facture}}</strong></p>
           <!--<p><strong>Client: {{detailfacturesde.client}}</strong></p>-->
           <p><strong>Montant: {{detailfacturesde.montant}} FCFA</strong></p>
           <p><strong>Frais: 500 FCFA</strong></p>
+          <p><strong>Total {{totalFacture(detailfacturesde.montant)}}</strong></p>
           <p><strong>Date Echeance: {{detailfacturesde.echeance}}</strong></p>
         </div>
       </div>

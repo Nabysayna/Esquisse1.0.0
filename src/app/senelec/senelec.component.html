@@ -17,6 +17,12 @@
                           <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.num_facture" name="verifiernuminput" id="num_facture"   placeholder="Numéro du client" required autofocus>
                         </div>
                     </div>
+                    <div class="form-group row">
+						 <label class="col-lg-3 col-md-5 col-xs-5 col-sm-5" style="margin-top:1.5rem;text-align:left">Numero Telephone :</label>
+						 <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+							<input type="text" style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" placeholder="telephone" class="form-control" autocomplete="off" [(ngModel)]="telephone" name="telephone" />
+						 </div>
+                    </div>
                     <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsenelec.form.valid" />
                 </form>
                 <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
@@ -26,7 +32,7 @@
 </div>
 <div bsModal #modalsenelec="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold';">
 
-	<div class="modal-dialog modal-sm">
+	<div class="modal-dialog modal-sm modal-lg modal-xs modal-md">
 		<div class="modal-content" >
       <div class="modal-header">
         <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalsenelec()">
@@ -35,19 +41,41 @@
         <h4 class="modal-title" id="myModalLabel">Informations Facture Senelec</h4>
       </div>
       <div class="modal-body">
+		<div *ngIf="loading" class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+		  <img style="width:100%;height:100px" src="../../assets/91.gif" alt="chargement en cour ..." />
+		  <p>chargement en cour ...</p>
+        </div>
         <div *ngIf="etat1 ">
           <p class="alert alert-danger">{{detailfacturesenelec.errorCode}}</p>
         </div>
         <div *ngIf="etat3">
           <p class="alert alert-info">Facture inexistante ou déja payée</p>
         </div>
-        <div *ngIf="etat2">
-          <p><strong>Police: {{detailfacturesenelec.police}}</strong></p>
-          <p><strong>Numéro de facture: {{detailfacturesenelec.numeroFacture}}</strong></p>
-          <p><strong>Client: {{detailfacturesenelec.nomclient}}</strong></p>
-          <p><strong>Montant: {{detailfacturesenelec.montant}} FCFA</strong></p>
-          <p><strong>Frais: 500 FCFA</strong></p>
-          <p><strong>Date Echeance: {{detailfacturesenelec.dateecheance}}</strong></p>
+        <div style="width:60%;margin-left:auto;margin-right:auto" *ngIf="etat2">
+			<div class="row">
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong style="text-align:left">Police  :</strong></div>
+				<div class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong style="margin-left:0%">{{detailfacturesenelec.police}}</strong></div>
+			</div>
+			<div class="row">
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>Numero de facture  :</strong></div>
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>{{detailfacturesenelec.numeroFacture}}</strong></div>
+			</div>
+			<div class="row">
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>Montant :</strong></div>
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>{{detailfacturesenelec.montant}}</strong></div>
+			</div>
+			<div class="row">
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>Frais :</strong></div>
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>500</strong></div>
+			</div>
+			<div class="row">
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>Total :</strong></div>
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>{{totalFacture()}}</strong></div>
+			</div>
+			<div class="row">
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>Date Echeance :</strong></div>
+				<div style="text-align:left" class="col-lg-4 col-md-4 col-xs-4 col-sm-4"><strong>{{detailfacturesenelec.dateecheance}}</strong></div>
+			</div>
         </div>
       </div>
       <div class="modal-footer">

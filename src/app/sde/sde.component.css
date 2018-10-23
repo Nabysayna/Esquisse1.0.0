@@ -98,6 +98,10 @@ label{
 #paiefact select{
 	margin-left: 1rem ;
 }
+.input{
+   border-radius: 2rem 0rem 2rem 2rem;
+   border: 1px solid #36a9e0;
+}
 
 
 

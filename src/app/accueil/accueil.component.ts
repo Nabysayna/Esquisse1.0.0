@@ -54,7 +54,7 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
-  
+  impression:boolean=false;
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -186,6 +186,7 @@ export class AccueilComponent implements OnInit {
           this.airtime=false;
           this.wari=false;
           this.zuulu=false;
+          this.impression=false;
 
       }
       if(api=="TIGOCASH"){
@@ -207,6 +208,7 @@ export class AccueilComponent implements OnInit {
           this.airtime=false;
           this.wari=false;
           this.zuulu=false;
+          this.impression=false;
 
       }
       if(api=="POSTECASH"){
@@ -228,6 +230,7 @@ export class AccueilComponent implements OnInit {
           this.airtime=false;
           this.wari=false;
           this.zuulu=false;
+          this.impression=false;
       }
       if(api=="E-MONEY"){
         this.em=true;
@@ -248,6 +251,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="WIZALL"){
@@ -269,6 +273,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
       }
       if(api=="TNT"){
         this.Tnt=true;
@@ -289,6 +294,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="SDE"){
@@ -310,6 +316,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="RAPIDO"){
@@ -331,6 +338,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="WOYOFAL"){
@@ -352,6 +360,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="SENELEC"){
@@ -373,6 +382,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="OOLU"){
@@ -394,6 +404,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
     if(api=="GESTIONREPORTING"){
@@ -415,6 +426,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
     }
     if(api=="DEMANDEPRET"){
@@ -436,6 +448,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
     }
     if(api=="GUIDEUTILISATION"){
@@ -457,6 +470,7 @@ export class AccueilComponent implements OnInit {
       this.airtime=false;
       this.wari=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="ECOMMERCE"){
@@ -478,6 +492,7 @@ export class AccueilComponent implements OnInit {
       this.airtime=false;
       this.wari=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="AIRTIME"){
@@ -500,6 +515,7 @@ export class AccueilComponent implements OnInit {
       this.om=false;
       this.wari=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="WARI"){
@@ -522,6 +538,7 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="ZUULU"){
@@ -544,6 +561,7 @@ export class AccueilComponent implements OnInit {
       this.pc=false;
       this.tc=false;
       this.om=false;
+      this.impression=false;
 
     }
   }
@@ -1838,8 +1856,27 @@ geolocaliser(){
 			   if(etat.data.operateur!=2 && etat.data.operateur!=6 && etat.data.operateur!=3 && etat.data.operateur!=1 && etat.etats.color=='green'){
 
 					 sessionStorage.setItem('dataImpression', JSON.stringify(imprime));
-					 this.router.navigate(['accueil']);
-					 setTimeout(()=>this.router.navigate(['accueil/impression']),100);
+					 this.airtime=false;
+					  this.ecom=false;
+					  this.guide=false;
+					  this.pret=false;
+					  this.gestionReporting=false;
+					  this.oolu=false;
+					  this.senelec=false;
+					  this.woyofal=false;
+					  this.rapido=false;
+					  this.Sde=false;
+					  this.Tnt=false;
+					  this.wizall=false;
+					  this.em=false;
+					  this.pc=false;
+					  this.tc=false;
+					  this.om=false;
+					  this.wari=false;
+					  this.zuulu=false;
+					  this.impression=true;
+					// this.router.navigate(['accueil']);
+					 //setTimeout(()=>this.router.navigate(['accueil/impression']),100);
 				}
 
 				   this.process.splice(etat.etats.id,1);
@@ -2901,50 +2938,149 @@ retrieveOperationInfo(item : any) : string{
   /***************************Debut FACTURIERS ******************************/
 
   paiemantsde(objet){
-    this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
-      console.log("********************************************************")
-      console.log(resp) ;
+    this._facturierService.paimentsde(objet.data.reference_client,objet.data.telephone,objet.data.reference_facture,objet.data.montant).then( resp =>{
+      console.log("********************************************************");
+      let serverResponse=resp["_body"].trim();
+      setTimeout(()=>{
+		this._facturierService.getReponse(serverResponse).then(tontou =>{
+			let TonTou=tontou["_body"].trim();
+			if(TonTou!="no"){
+					switch(parseInt(TonTou)){
+						case 200:{
+							let donnees=TonTou.split("#");
+							objet.dataI = {
+							apiservice:'facturier',
+							service:'sde',
+							infotransaction:{
+							client:{
+							  transactionApi: 256665,
+							  transactionBBS: 'x-x-x-x',
+							  reference_client: objet.data.reference_client,
+							  reference_facture: objet.data.reference_facture,
+							  client: "bbs invest",
+							  date_echeance: objet.data.echeance,
+							  montant: objet.data.montant,
+							 },
 
-      if( (typeof resp !== 'object') && (typeof resp !== 'number') && (typeof resp === 'string') && !resp.match("transactionid")) {
-        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
-        objet.etats.etat=true;
-        objet.etats.load='terminated';
-        objet.etats.color='red';
-      }
-      else if( ( typeof resp.transactionid != "undefined" ) ||  ((typeof resp === 'string') && resp.match("transactionid"))){
-        objet.dataI = {
-          apiservice:'facturier',
-          service:'sde',
-          infotransaction:{
-            client:{
-              transactionApi: resp.transactionid,
-              transactionBBS: 'x-x-x-x',
-              reference_client: resp.reference_client,
-              reference_facture: resp.reference_facture,
-              client: resp.prenom+" "+resp.nom,
-              date_echeance: resp.date_echeance,
-              montant: resp.montant,
-            },
+							},
+						   };
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='green';
+							this.updateCaution();
+							break;
+						}
+						case 400:{
+							objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='red';
+							break;
+						}
+						case 600:{
+							objet.etats.errorCode = "Numero facture ou reference incorrect"
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='red';
+							break;
+						}
+						case 700:{
+							objet.etats.errorCode = "Facture deja payée."
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='red';
+							break;
+						}
+						case 800:{
+						    objet.etats.color='orange';
+						    objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+							break;
+						}
+						default :{
+							break;
+						}
+					}
+			}else{
+			     let timer=setInterval(()=>{
+					this._facturierService.getReponse(serverResponse).then(reponse =>{
+						let rep=reponse["_body"].trim();
+						if(rep!="no"){
+							switch(parseInt(rep)){
+								case 200:{
+									//let donnees=TonTou.split("#");
+									objet.dataI = {
+									apiservice:'facturier',
+									service:'sde',
+									infotransaction:{
+									client:{
+									  transactionApi: 256665,
+									  transactionBBS: 'x-x-x-x',
+									  reference_client: objet.data.reference_client,
+									  reference_facture: objet.data.reference_facture,
+									  client: "bbs invest",
+									  date_echeance: objet.data.echeance,
+									  montant: objet.data.montant,
+									 },
 
-          },
-        }
-        objet.etats.etat=true;
-        objet.etats.load='terminated';
-        objet.etats.color='green';
-        this.updateCaution();
-
-      }else{
-        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
-        objet.etats.etat=true;
-        objet.etats.load='terminated';
-        objet.etats.color='red';
-      }
+									},
+								   };
+									objet.etats.etat=true;
+									objet.etats.load='terminated';
+									objet.etats.color='green';
+									this.updateCaution();
+									clearInterval(timer);
+									break;
+									
+								}
+								case 400:{
+									objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+									objet.etats.etat=true;
+									objet.etats.load='terminated';
+									objet.etats.color='red';
+									clearInterval(timer);
+									break;
+								}
+								case 600:{
+									objet.etats.errorCode = "Numero facture ou reference incorrect"
+									objet.etats.etat=true;
+									objet.etats.load='terminated';
+									objet.etats.color='red';
+									clearInterval(timer);
+									break;
+								}
+								case 700:{
+									objet.etats.errorCode = "Facture deja payée."
+									objet.etats.etat=true;
+									objet.etats.load='terminated';
+									objet.etats.color='red';
+									clearInterval(timer);
+									break;
+								}
+							   case 800:{
+									objet.etats.color='orange';
+									objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+									break;
+						        }
+							  default :{
+									break;
+								}
+					}
+							
+						}
+					});
+					
+			     },5000);
+			}
+			
+		});
+      },10000);
     }).catch(response => {
       objet.etats.errorCode = response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
     });
+    
   }
 
   validerrapido(objet){
@@ -3012,7 +3148,7 @@ retrieveOperationInfo(item : any) : string{
     });
   }
 
-  validerpaimentsenelec(objet){
+ /* validerpaimentsenelec(objet){
     this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
       if(typeof resp !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -3055,7 +3191,12 @@ retrieveOperationInfo(item : any) : string{
       objet.etats.load='terminated';
       objet.etats.color='red';
     });
-  }
+  }*/
+   validerpaimentsenelec(objet){
+		this._facturierService.validerpaimentsenelec().then(reponse =>{
+			console.log(reponse);
+		});
+   }
 
   validerwoyofal(objet){
    console.log('nns');
