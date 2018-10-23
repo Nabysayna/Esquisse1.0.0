@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from "@angular/http";
 @Injectable()
 export class ZuuluService {
-  private link = "http://192.168.1.115/backendProductiveEsquisse/index.php";
+  private link = "http://127.0.0.1/backendProductiveEsquisse/index.php";
 
   private headers=new Headers();
   private token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
@@ -16,13 +16,14 @@ export class ZuuluService {
   public depotAgent(requete:any): Promise<any>{
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
     let link=this.link+"/zuulu/zuulu";
+    console.log(params);
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {console.log(res);return res} ).catch(error => {console.log(error);return 'bad' });
   }
 
   public depotClient(requete:any): Promise<any>{
     let params="requestParam="+JSON.stringify({requestParam : requete, tokenParam : this.token});
-    let link=this.link+"/om-sen/requerirControllerOM";
-    return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return 'bad' });
+    let link=this.link+"/zuulu/zuulu";
+    return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {console.log(res);return res} ).catch(error => {return 'bad' });
   }
 
   
