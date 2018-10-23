@@ -55,6 +55,7 @@ export class AccueilComponent implements OnInit {
   wari:boolean=false;
   zuulu:boolean=false;
   impression:boolean=false;
+  canal:boolean=false;
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -187,14 +188,37 @@ export class AccueilComponent implements OnInit {
           this.wari=false;
           this.zuulu=false;
           this.impression=false;
+          this.canal=false;
 
       }
+      if(api=='CANAL'){
+        this.om=false;
+        this.tc=false;
+        this.em=false;
+        this.pc=false;
+        this.wizall=false;
+        this.Tnt=false;
+        this.Sde=false;
+        this.rapido=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+        this.airtime=false;
+        this.wari=false;
+        this.zuulu=false;
+        this.canal=true;
+    }
       if(api=="TIGOCASH"){
           this.tc=true;
           this.om=false;
           this.em=false;
           this.pc=false;
           this.wizall=false;
+          this.canal=false;
           this.Tnt=false;
           this.Sde=false;
           this.rapido=false;
@@ -217,6 +241,7 @@ export class AccueilComponent implements OnInit {
           this.om=false;
           this.em=false
           this.wizall=false;
+          this.canal=false;
           this.Tnt=false;
           this.Sde=false;
           this.rapido=false;
@@ -238,6 +263,8 @@ export class AccueilComponent implements OnInit {
         this.tc=false;
         this.om=false;
         this.wizall=false;
+        this.canal=false;
+
         this.Tnt=false;
         this.Sde=false;
         this.rapido=false;
@@ -258,6 +285,7 @@ export class AccueilComponent implements OnInit {
         this.wizall=true;
         this.em=false;
         this.pc=false;
+        this.canal=false;
         this.tc=false;
         this.om=false;
         this.Tnt=false;
@@ -279,6 +307,7 @@ export class AccueilComponent implements OnInit {
         this.Tnt=true;
         this.wizall=false;
         this.em=false;
+        this.canal=false;
         this.pc=false;
         this.tc=false;
         this.om=false;
@@ -303,6 +332,7 @@ export class AccueilComponent implements OnInit {
         this.wizall=false;
         this.em=false;
         this.pc=false;
+        this.canal=false;
         this.tc=false;
         this.om=false;
         this.rapido=false;
@@ -327,6 +357,7 @@ export class AccueilComponent implements OnInit {
         this.em=false;
         this.pc=false;
         this.tc=false;
+        this.canal=false;
         this.om=false;
         this.woyofal=false;
         this.senelec=false;
@@ -350,6 +381,7 @@ export class AccueilComponent implements OnInit {
         this.em=false;
         this.pc=false;
         this.tc=false;
+        this.canal=false;
         this.om=false;
         this.senelec=false;
         this.oolu=false;
@@ -372,6 +404,7 @@ export class AccueilComponent implements OnInit {
         this.wizall=false;
         this.em=false;
         this.pc=false;
+        this.canal=false;
         this.tc=false;
         this.om=false;
         this.oolu=false;
@@ -402,6 +435,7 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.canal=false;
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
@@ -420,6 +454,7 @@ export class AccueilComponent implements OnInit {
         this.pc=false;
         this.tc=false;
         this.om=false;
+        this.canal=false;
         this.pret=false;
         this.guide=false;
         this.ecom=false;
@@ -440,6 +475,7 @@ export class AccueilComponent implements OnInit {
         this.Tnt=false;
         this.wizall=false;
         this.em=false;
+        this.canal=false;
         this.pc=false;
         this.tc=false;
         this.om=false;
@@ -461,6 +497,7 @@ export class AccueilComponent implements OnInit {
       this.rapido=false;
       this.Sde=false;
       this.Tnt=false;
+      this.canal=false;
       this.wizall=false;
       this.em=false;
       this.pc=false;
@@ -483,6 +520,7 @@ export class AccueilComponent implements OnInit {
       this.woyofal=false;
       this.rapido=false;
       this.Sde=false;
+      this.canal=false;
       this.Tnt=false;
       this.wizall=false;
       this.em=false;
@@ -504,6 +542,7 @@ export class AccueilComponent implements OnInit {
       this.gestionReporting=false;
       this.oolu=false;
       this.senelec=false;
+      this.canal=false;
       this.woyofal=false;
       this.rapido=false;
       this.Sde=false;
@@ -520,6 +559,7 @@ export class AccueilComponent implements OnInit {
     }
     if(api=="WARI"){
       console.log("wari");
+      this.canal=false;
       this.wari=true;
       this.airtime=false;
       this.ecom=false;
@@ -557,6 +597,7 @@ export class AccueilComponent implements OnInit {
       this.Sde=false;
       this.Tnt=false;
       this.wizall=false;
+      this.canal=false;
       this.em=false;
       this.pc=false;
       this.tc=false;
