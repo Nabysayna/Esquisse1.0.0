@@ -38,6 +38,21 @@ export class CanalComponent implements OnInit {
     {libelle:'Date à date Prestige'},
 
   ]
+  TitreAbonner = [
+    {libelle:'1-Monsieur'},
+    {libelle:'2-Madame'},
+    {libelle:'3-Mademoille'},
+    {libelle:'4-Societé'},
+  ]
+  TypeIdentite = [
+    {libelle:'Carte d\'identité'},
+    {libelle:'Passport'},
+    {libelle:'PERMIS DE CONDUIRE'},
+    {libelle:'STAT'},
+    {libelle:'VAD'},
+  ]
+  NewAbonnement ={distributeur:0,titre:'',nom:'',typeIdentite:'',pays:0,residence:'',codePostale:'',
+          adresse:'',mail:'',phone:'',debut:'',offre:'',ville:'',offrePricipal:''}
   formReach:number = 1;
   abonnementChoose:any =null;
   getAbonner(i){
