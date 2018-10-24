@@ -199,9 +199,16 @@ export class FacturierService {
       );
     });
   }*/
-  public validerpaimentsenelec():Promise<any>{
-	return new Promise((resolve,reject)=>{
-	    resolve("nice na");
+  public validerpaimentsenelec(police:string,num_facture:string,montant:string,telephone:string):Promise<any>{
+    let requete="12/"+montant+"/"+police+"/"+num_facture+"/"+telephone;
+    let url=this.link+"/zuulu/zuulu";
+    let Params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
+    return new Promise((resolve,reject)=>{
+      this.http.post(url,Params,{headers:this.headers}).subscribe(reponse =>{
+        console.log(reponse);
+        resolve(reponse);
+      });
+	   
 		
 	});
 	

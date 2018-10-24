@@ -1770,7 +1770,7 @@ public cashOutPIN(objet:any){
   }
 
   validerpaimentsenelec(objet){
-    this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
+   /* this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
       if(typeof resp !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
@@ -1810,7 +1810,7 @@ public cashOutPIN(objet:any){
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
-    });
+    });*/
   }
 
   validerwoyofal(objet){

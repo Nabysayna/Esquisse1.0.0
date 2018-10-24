@@ -14,6 +14,7 @@ import { AirtimeService } from "../services/airtime.service";
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
 import { ZoningComponent } from 'app/zoning/zoning.component';
+//import { clearInterval } from 'timers';
 
 
 class Article {
@@ -2998,7 +2999,7 @@ retrieveOperationInfo(item : any) : string{
 							  transactionBBS: 'x-x-x-x',
 							  reference_client: objet.data.reference_client,
 							  reference_facture: objet.data.reference_facture,
-							  client: "bbs invest",
+							  client: "",
 							  date_echeance: objet.data.echeance,
 							  montant: objet.data.montant,
 							 },
@@ -3234,8 +3235,143 @@ retrieveOperationInfo(item : any) : string{
     });
   }*/
    validerpaimentsenelec(objet){
-		this._facturierService.validerpaimentsenelec().then(reponse =>{
-			console.log(reponse);
+		this._facturierService.validerpaimentsenelec(objet.data.police,objet.data.num_facture,objet.data.montant,objet.data.telephone).then(reponse =>{
+      console.log(reponse);
+      let tontou=reponse["_body"].trim();
+      setTimeout(()=>{
+        this._facturierService.getReponse(tontou).then(rep =>{
+          let Tontou=rep["_body"].trim();
+          if(Tontou!="no"){
+            switch(parseInt(Tontou)){
+              case 200:{
+                objet.dataI = {
+                  apiservice:'facturier',
+                  service:'senelec',
+                  infotransaction:{
+                    client:{
+                      transactionApi: "y-y-y-y",
+                      transactionBBS: 'x-x-x-x',
+                      police: objet.data.police,
+                      numfacture: objet.data.num_facture,
+                      client: "",
+                      montant: objet.data.montant,
+                      dateecheance: objet.data.echeance,
+                    },
+        
+                  },
+                }
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='green';
+                this.updateCaution();
+
+              }
+              case 400:{
+                objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                break;
+              }
+              case 600:{
+                objet.etats.errorCode = "Numero facture ou reference incorrect"
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                break; 
+              }
+              case 700:{
+                objet.etats.errorCode = "Facture deja payée."
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                break; 
+              }
+              case 800:{
+                objet.etats.color='orange';
+								objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+								break;
+              }
+              default :{
+                break;
+              }
+
+            }
+
+          }else{
+            let timer=setInterval(()=>{
+              this._facturierService.getReponse(tontou).then(rep =>{
+                let t=rep["_body"].trim();
+                if(t!="no"){
+                  switch(parseInt(t)){
+                    case 200:{
+                      objet.dataI = {
+                        apiservice:'facturier',
+                        service:'senelec',
+                        infotransaction:{
+                          client:{
+                            transactionApi: "y-y-y-y",
+                            transactionBBS: 'x-x-x-x',
+                            police: objet.data.police,
+                            numfacture: objet.data.num_facture,
+                            client: "",
+                            montant: objet.data.montant,
+                            dateecheance: objet.data.echeance,
+                          },
+              
+                        },
+                      }
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='green';
+                      this.updateCaution();
+                      clearInterval(timer);
+                      break;
+                    }
+                    case 400:{
+                      objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+                      break;
+                    }
+                    case 600:{
+                      objet.etats.errorCode = "Numero facture ou reference incorrect"
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+                      break; 
+                    }
+                    case 700:{
+                      objet.etats.errorCode = "Facture deja payée."
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+                      break; 
+                    }
+                    case 800:{
+                      objet.etats.color='orange';
+                      objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+                      clearInterval(timer);
+                      break;
+                    }
+                    default :{
+                      break;
+                    }
+
+                  }
+
+                }
+
+              });
+
+            },5000);
+          }
+        });
+      },10000);
 		});
    }
 

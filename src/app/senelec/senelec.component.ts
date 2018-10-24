@@ -178,7 +178,7 @@ export class SenelecComponent implements OnInit {
   }
 
   validerpaimentsenelec(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service,telephone:this.telephone}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Facturier senelec','operateur':8,'operation':4,'montant':this.detailfacturesenelec.montant,'police':this.police,'num_facture':this.num_facture,'service':this.detailfacturesenelec.service,'telephone':this.telephone,'echeance':this.detailfacturesenelec.dateecheance}));
     this.increment();
     this.hidemodalsenelec();
   }
