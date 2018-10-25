@@ -1,7 +1,7 @@
 <div class="col-sm-12">
   <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
       <div class="panel-heading">
-          <h2>WARI</h2>
+          <h2>CANAL</h2>
 
       </div>
       <!-- /.panel-heading -->
@@ -11,463 +11,239 @@
       <div class="panel-body">
           <!-- Nav tabs -->
           <div id="om-options">
-              <a href="#envoi" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Envoi</a>
-
-              <a href="#retrait" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()" data-toggle="tab">Retrait </a>
+            <a href="#envoi" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Réabonnement</a>
+            <a href="#recrutement" style="padding-left: 4rem; padding-right: 4rem;" (click)="reinitialise()"  data-toggle="tab">Recrutement</a>
           </div>
-
+          
+       
+   
           <!-- Tab panes -->
             <div class="tab-content">
-              <div class="tab-pane fade col-sm-12 col-xs-12 in" id="retrait">
-                <h2>Retrait</h2>
-                <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
-                <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
-                    
-                <div *ngIf="!retraitcodeconfirme" >
-                      <form name="transnat" (ngSubmit)="retraitrecherche()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width: 67%;">
-                          <form style="width: 100%;">
-                          <div class="form-inline" style="width: 100%;">
-                              <div class="form-check form-check-inline">
-                                  <input  [(ngModel)]="this.codewariRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Code Wari" checked>
-                                  <label class="form-check-label" for="exampleRadios1">
-                                    Code Wari
-                                  </label>
-                                  <input [(ngModel)]="this.moyenpayementRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="retrait avec moyen de paiement">
-                                  <label class="form-check-label" for="exampleRadios2">
-                                    Retrait avec moyen de paiement (carte, voucher , wari pass ect.)
-                                  </label>
-                                </div>
-                          </div>
-                        </form>
-                          <div class="form-inline" style="width: 100%;">
-                              <label style="margin-top:1.5rem;" class="col-lg-3 col-md-3">Quel est le code wari:</label>
-                              <div class="form-group col-lg-8 col-md-8">
-                                  <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" (keyup)="verifNumber($event)" [(ngModel)]="this.code" name="verifiernuminput" id="code"  class="form-control" placeholder="code du client" required autofocus>
-                              </div>
-                          </div>
-                          <form style="width: 100%;">
-                          <div class="form-inline" style="width: 50%;">
-                              <div class="form-check form-check-inline">
-                                  <input [(ngModel)]="this.wariRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="retrait" checked>
-                                  <label class="form-check-label" for="exampleRadios1">
-                                    Retrait
-                                  </label>
-                                  <input [(ngModel)]="this.rembourchementRadio" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="rembourchement">
-                                  <label class="form-check-label" for="exampleRadios2">
-                                    Rembourchement
-                                  </label>
-                              </div>
-                          </div>
-                          </form>
-                          <div class="form-inline" style="width: 100%; text-align:center" >
-                              <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success"/>
-                          </div>
-                      </form>
-                </div>
-                <div class="row"  *ngIf="retraitcodeconfirme==true" id="retraitsuite" style="width:60%">
-                    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                        <form>
-                            <fieldset>
-                              <legend>Envoyeur</legend>
-                              <div class="row">
-                                <div class="col-lg-3 col-md-3">
-                                  <label style="margin-top:1.5rem">prenom</label>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" class="textinput" [(ngModel)]="prenomA" name="prenomA" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-lg-3 col-md-3">
-                                  <label style="margin-top:1.5rem">nom</label>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" class="textinput" [(ngModel)]="nomA" name="nomA" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-3 col-md-3">
-                                    <label style="margin-top:1.5rem">Adresse</label>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8">
-                                    <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="adresseA" name="adresseA" />
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-lg-3 col-md-3">
-                                  <label style="margin-top:1.5rem">Cellulaire</label>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="cellulaireA" name="cellulaireA" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-lg-3 col-md-3">
-                                  <label style="margin-top:1.5rem">Montant (fca)</label>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="montant" name="montant" />
-                                </div>
-                              </div>
-                            </fieldset>
-                          </form>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                        <form>
-                            <fieldset>
-                              <legend>Beneficiaire</legend>
-                              <div class="row">
-                                <div class="col-lg-3 col-md-3">
-                                  <label style="margin-top:1.5rem">prenom</label>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="prenomB" name="prenom" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-lg-3 col-md-3">
-                                  <label style="margin-top:1.5rem">nom</label>
-                                </div>
-                                <div class="col-lg-8 col-md-8">
-                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="nomB" name="nom" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-3 col-md-3">
-                                    <label style="margin-top:1.5rem">type de piéce</label>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8">
-                                      <select class="input-control" style="margin-top: 12%;margin-left: 2%;width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
-                                          <option value="CNI">CNI</option>
-                                          <!-- <option value="idcard">Pasport</option> -->
-                                      </select>                                   
-                                  </div>
-                                </div>
-                              <div class="row">
-                                  <div class="col-lg-3 col-md-3">
-                                    <label style="margin-top:1.5rem">numéro</label>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8">
-                                    <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="numero" name="numero" />
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-3 col-md-3">
-                                    <label style="margin-top:1.5rem">pays</label>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8">
-                                      <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
-                                          <option value="Sénégal">Sénégal</option>
-                                      </select>                                 
-                                   </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-3 col-md-3">
-                                    <label style="margin-top:1.5rem">date de delivrance</label>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8">
-                                    <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datededelivrance" name="datededelivrance" />
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-lg-3 col-md-3">
-                                    <label style="margin-top:1.5rem">date de validité</label>
-                                  </div>
-                                  <div class="col-lg-8 col-md-8">
-                                    <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datedevalidite" name="datedevalidite" />
-                                  </div>
-                              </div>
-                            </fieldset>
-                          </form>
-                    </div>
-                    <div class="form-inline" style="width: 100%; text-align:center" >
-                        <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="retraitconfirmer()" value="valider"/>
-                    </div>
-                </div>
-
-              </div>
-
               <div class="tab-pane fade col-sm-12 col-xs-12" id="envoi">
-                      <h2>Envoi</h2>
+                      <h2>Réabonnement</h2>
                       <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
                       <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
                       <div class="row" style="width:60%">
                           <div class="row" style="text-align:center;">
-                              <div class="col-lg-3 col-md-3">
-                                <label style="margin-top:1.5rem">choisir un pays de destination</label>
+
+                             
+                              <div >
+                                  <div class="row">
+                                      <form name="validVerifierNum" (ngSubmit)="validAbonnement()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;">
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numero Abonné </label>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.abonne" name="ab" id=""   class="form-control"  >
+                                          </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> nom Abonné </label>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.nom" name="nom" id=""   class="form-control"  >
+                                          </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> prenom Abonné </label>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.prenom" name="prenom" id=""   class="form-control"  >
+                                          </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Téléphone Abonneé </label>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.tel" name="tel" id=""   class="form-control"  >
+                                          </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                            <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro décodeur Abonneé </label>
+                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.numeroDecodeur" name="tel" id=""   class="form-control"  >
+                                         </div>
+                                         <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                            <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro carte  Abonneé </label>
+                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.numeroCarte" name="tel" id=""   class="form-control"  >
+                                        </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Nombre de mois </label>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="nombreMois" name="nbr"  class="form-control"  >
+                                          </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Bouquet </label>
+                                              <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Bouquet"  name="Bouquet" id="Bouquet"   class="form-control"   >
+                                                <option >-----------Choisir le bouquet-------------</option>
+                                                <option *ngFor="let l of listeBouquet" (click)="getMontant()" value="{{l.libelle}}">{{l.libelle}}</option>
+                                              </select>
+                                          </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Offres optionnelles </label>
+                                            <div class="col-md-8 col-1g-8">
+                                                <label class="control-label" for="" style=" color: black;">
+                                                    <input  type="checkbox" name="monsieur" id="monsieur" (click)="getCharme()" title="5000" value="1" [(ngModel)]="charme">CHARME
+                                                </label>
+                                                
+                                                <label *ngIf="Bouquet != 'Date à date Access'" class="control-label" for="" style=" color: black;">
+                                                  <input  type="checkbox" name="pvd" id="pvd" (click)="getPVD()" value="1" [(ngModel)]="pvd">PVD
+                                                </label>
+                                                <label *ngIf="Bouquet != 'Date à date Access'" class="control-label" for="" style=" color: black;">
+                                                    <input type="checkbox" name="deuxEcran" id="deuxEcran" (click)="get2EECRAN()" value="1"  [(ngModel)]="deuxiemeEcran">2E ECRAN
+                                                </label>
+                                              </div>
+                                             </div>
+                                             <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                                <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Montant net à payer </label>
+                                                <div class="row">
+                                                  <div class="col-1g-8">
+                                                      <ul class="list-group">
+                                                          <li class="list-group-item" style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;font-size: 3rem;font-family: fantasy;padding: 0;">{{montantNet}} FCFA</li>
+                                                      </ul>
+                                                     <!-- <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" (click)="getMontant()" [(ngModel)]="montantNet" name="montant"  readonly  class="form-control"  >-->
+                                                  </div>
+                                                  <div class="col-1g-3">
+                                                    <input *ngIf="nombreMois > 0" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-info" (click)="showmodalventecredit()"  value="Chaines"/>
+                                                    <input *ngIf="nombreMois <= 0" disabled style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-default" (click)="getMontant()"  value="Chaines"/>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                          <div class="col-md-8 col-lg-8"style="width: 100%; text-align:center" >
+                                              <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="validAbonnement()"  value="valider"/>
+                                            </div> 
+                                      </form> 
+                                  </div>
                               </div>
-                              <div class="col-lg-8 col-md-8">
-                                  <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.paysdestination" name="paysdestination">
-                                      <option value="Sénégal">Sénégal</option>
-                                  </select>                                 
-                               </div>
                           </div>
-                          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                              <form>
-                                  <fieldset>
-                                    <legend>Envoyeur</legend>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">prenom</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" class="textinput" [(ngModel)]="prenomA" name="prenom" />
-                                      </div>
+                          
+                      </div>
+                      
+              </div>
+
+              <div class="tab-pane fade col-sm-12 col-xs-12" id="recrutement">
+                <h2>Recrutement</h2>
+                <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
+                <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
+                <div class="row" style="width:60%">
+                    <div class="row" style="text-align:center;">
+
+                        <div >
+                            <div class="row">
+                                <form name="validVerifierNum" (ngSubmit)="validRecrutement()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;">
+
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                      <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Titre </label>
+                                      <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.titre" name="titre" id="titre"   class="form-control"  required autofocus>
+                                        <option >-----------Choisir titre du client-------------</option>
+                                        <option *ngFor="let l of TitreAbonner" value="{{l.libelle}}">{{l.libelle}}</option>
+                                      </select>
                                     </div>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">nom</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" class="textinput" [(ngModel)]="nomA" name="nomA" />
-                                      </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for="verifiernuminput"> nom Abonneé </label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.nom" name="nom" id=""     class="form-control"  required autofocus>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3">
-                                          <label style="margin-top:1.5rem">Adresse</label>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8">
-                                          <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="adresseA" name="adresseA" />
-                                        </div>
+                                
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for="verifiernuminput"> prenom Abonneé </label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.prenom" name="prenom" id=""     class="form-control"  required autofocus>
                                     </div>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">Cellulaire</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="cellulaireA" name="cellulaireA" />
-                                      </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                      <label  class="col-md-8 col-1g-8" for="verifiernuminput">CNI (Carte Nationale D'Identité) </label>
+                                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.cni" name="cni" id=""     class="form-control"  required autofocus>
                                     </div>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">Montant (fca)</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="montant" name="montant" />
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3">
-                                          <label style="margin-top:1.5rem">Motif</label>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8">
-                                            <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="motif" name="motif">
-                                                <option value="Sénégal">Aide Scolaire</option>
-                                                <option value="Sénégal">Assistance Familiale</option>
-                                                <option value="Sénégal">Construction Immobiliére</option>
-                                                <option value="Sénégal">Réglement de Bien</option>
-                                                <option value="Sénégal">Réglement de Services</option>
-                                                <option value="Sénégal">Autres</option>
-                                                <!-- <option value="idcard">Pasport</option> -->
-                                            </select>                                   
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3">
-                                          <label style="margin-top:1.5rem">Type de piéce</label>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8">
-                                            <select class="input-control" style="margin-top: 12%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
-                                                <option value="CNI">CNI</option>
-                                                <!-- <option value="idcard">Pasport</option> -->
-                                            </select>                                   
-                                        </div>
-                                    </div>
-                                  </fieldset>
-                                </form>
-                                <form>
-                                    <fieldset>
-                                      <legend style="font-size:small">information sur la piéce d'identification</legend>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">numero</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="numero" name="numero" />
-                                          </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">pays</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                              <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
-                                                  <option value="Sénégal">Sénégal</option>
-                                              </select>                                 
-                                           </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">date de delivrance</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datededelivrance" name="datededelivrance" />
-                                          </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">date de validité</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datedevalidite" name="datedevalidite" />
-                                          </div>
-                                      </div>
-                                    </fieldset>
-                                  </form>
-                          </div>
-                          <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                              <form>
-                                  <fieldset>
-                                    <legend>Beneficiaire</legend>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">prenom</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="prenomB" name="prenomB" />
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">nom</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="nomB" name="nomB" />
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3">
-                                          <label style="margin-top:1.5rem">Adresse</label>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8">
-                                          <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="adresseB" name="adresseB" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-lg-3 col-md-3">
-                                        <label style="margin-top:1.5rem">Cellulaire</label>
-                                      </div>
-                                      <div class="col-lg-8 col-md-8">
-                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="cellulaireB" name="cellulaireB" />
-                                      </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for="">Ville </label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.ville" name="ville" id=""  class="form-control"  required autofocus>
                                     </div>
 
-                                  </fieldset>
-                                </form>
-                                <form>
-                                    <fieldset>
-                                      <legend style="font-size:small">Mode de réception</legend>
-                                      <div class="form-inline" style="width: 100%;">
-                                          <div class="form-check form-check-inline">
-                                              <input  [(ngModel)]="this.espece" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="espece" checked >
-                                              <label class="form-check-label" for="exampleRadios1">
-                                                Éspece
-                                              </label>
-                                              <input [(ngModel)]="this.wallet" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="wallet">
-                                              <label class="form-check-label" for="exampleRadios2">
-                                               Wallet
-                                              </label>
-                                              <input [(ngModel)]="this.compte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="compte">
-                                              <label class="form-check-label" for="exampleRadios2">
-                                                Compte
-                                              </label>
-                                              <input [(ngModel)]="this.carte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="carte">
-                                              <label class="form-check-label" for="exampleRadios2">
-                                                Carte
-                                              </label>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                      <label  class="col-md-8 col-1g-8" for="">Adresse </label>
+                                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.adresse" name="adr"  class="form-control"  required autofocus>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for=""> E-mail</label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.mail" name="mail"  class="form-control"  required autofocus>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                      <label  class="col-md-8 col-1g-8" for=""> Téléphone</label>
+                                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.phone" name="tel"  class="form-control"  required autofocus>
+                                     </div>
+                                     <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro Décodeur</label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.numeroDecoudeur" name="ndec"  class="form-control"  required autofocus>
+                                    </div>
+                                     
+                                     <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for="">Nombre de mois </label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="nombreMois" name="nbrM" id=""   class="form-control"  required autofocus>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for=""> Bouquet </label>
+                                        <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Bouquet" name="Bouquet" id="Bouquet"   class="form-control"  required autofocus>
+                                          <option >-----------Choisir le bouquet-------------</option>
+                                          <option *ngFor="let l of listeBouquetR" value="{{l.libelle}}">{{l.libelle}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for=""> Offres optionnelles </label>
+                                      <div class="col-md-8 col-1g-8">
+                                          <label class="control-label" for="" style=" color: black;">
+                                              <input  type="checkbox" name="monsieur" id="monsieur" (click)="getCharme()" title="5000" value="1" [(ngModel)]="charme">CHARME
+                                          </label>
+                                          
+                                          <label *ngIf="Bouquet != 'Date à date Access'" class="control-label" for="" style=" color: black;">
+                                            <input  type="checkbox" name="pvd" id="pvd" (click)="getPVD()" value="1" [(ngModel)]="pvd">PVD
+                                          </label>
+                                          <label *ngIf="Bouquet != 'Date à date Access'" class="control-label" for="" style=" color: black;">
+                                              <input type="checkbox" name="deuxEcran" id="deuxEcran" (click)="get2EECRAN()" value="1"  [(ngModel)]="deuxiemeEcran">2E ECRAN
+                                          </label>
+                                        </div>
+                                       </div>
+                                       <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                          <label  class="col-md-8 col-1g-8" for=""> Montant net à payer </label>
+                                          <div class="row">
+                                            <div class="col-1g-8">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item" style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;font-size: 3rem;font-family: fantasy;padding: 0;">{{montantNet}} FCFA</li>
+                                                </ul>
+                                               <!-- <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" (click)="getMontant()" [(ngModel)]="montantNet" name="montant"  readonly  class="form-control"  >-->
                                             </div>
+                                            <div class="col-1g-3">
+                                              <input *ngIf="nombreMois > 0" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-info" (click)="showmodalventecredit()"  value="Chaines"/>
+                                              <input *ngIf="nombreMois <= 0" disabled style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-default" (click)="getMontant()"  value="Chaines"/>
+                                            </div>
+                                          </div>
                                       </div>
-                                    </fieldset>
-                                  </form>
-                          </div>      
-                      </div>
-                      <div class="row" style="width: 100%; text-align:center" >
-                          <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="envoyer()" value="valider"/>
-                      </div>  
+                                    <div class="col-md-8 col-lg-8"style="width: 100%; text-align:center" >
+                                        <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="validRecrutement()" [disabled]="!verifiernum.form.valid" value="valider"/>
+                                      </div> 
+                                </form> 
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
               </div>
+
           </div>
       </div>
   </div>
 </div>
-<div bsModal #envoiModal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #modalventecredit="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
-   <div class="modal-dialog modal-sm">
-      <div class="modal-content" >
-        <div class="modal-header">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="hideAddChildModal()">
-          <span aria-hidden="true">&times;</span>
-          </button>
-            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
-       </div>
-       <div class="modal-body">
-
-       <div>
-         <form class="form">
-           <div class="form-group">
-             <label >numero client : {{this.numclient}}</label>
-           </div>
-           <div class="form-group">
-             <label >montant : {{this.mnt}}</label>
-           </div>
-         </form>
-
-       </div>
-       </div>
-       <div class="modal-footer">
-        <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;deposer()" class="btn btn-success" />
-        <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="fermer" (click)="hideAddChildModal()" class="btn btn-danger" />
-       </div>
-    </div>
+    <div class="modal-dialog modal-lg">
+       <div class="modal-content" >
+         <div class="modal-header">
+       <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalventecredit()">
+           <span aria-hidden="true">&times;</span>
+           </button>
+           <h2  class="modal-title" id="myModalLabel"><strong>{{Bouquet}}</strong></h2>
+        </div>
+        <div class="modal-body">
+            <div>
+                <img *ngIf="Bouquet == 'Date à date Evasion' " style="width: 80rem;box-shadow: 1px 1px 8px black;" src="../../assets/ÉVASION.png" alt="">
+                <img *ngIf="Bouquet == 'Date à date Les Chaines canal+ & Access' " style="width: 80rem;box-shadow: 1px 1px 8px black;" src="../../assets/Access+.png" alt="">
+                <img *ngIf="Bouquet == 'Date à date Access' " style="width: 80rem;box-shadow: 1px 1px 8px black;" src="../../assets/ACCESS.png" alt="">
+                <img *ngIf="Bouquet == 'Date à date Tout Canal+' " style="width: 80rem;box-shadow: 1px 1px 8px black;" src="../../assets/TOUT CANAL+.png" alt="">
+                <img *ngIf="Bouquet == 'Date à date ESSENTIEL+' " style="width: 80rem;box-shadow: 1px 1px 8px black;" src="../../assets/Essentiel+.png" alt="">
+                <img *ngIf="Bouquet == 'Date à date Les Chaines canal+ & Evasion'" style="width: 80rem;box-shadow: 1px 1px 8px black;" src="../../assets/EVASION+.png" alt="">
+            </div>
+         </div>
+        <div class="modal-footer">
+           
+          </div>
+     </div>
+   </div>
+  
   </div>
-
-</div>
-
-<div bsModal #modalretrait="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-
-   <div class="modal-dialog modal-sm">
-      <div class="modal-content" >
-        <div class="modal-header">
-      <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalretraitcode()">
-          <span aria-hidden="true">&times;</span>
-          </button>
-            <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation.</h4>
-       </div>
-       <div class="modal-body">
-
-       <div>
-         <form class="form">
-           <div class="form-group">
-             <label >Code de retrait : {{this.coderetrait}}</label>
-           </div>
-           <div class="form-group">
-             <label >Prénom : {{this.prenom}}</label>
-           </div>
-           <div class="form-group">
-             <label >Nom : {{this.nom}}</label>
-           </div>
-           <div class="form-group">
-             <label >Date De Naissance: {{this.date}}</label>
-           </div>
-           <div class="form-group">
-             <label >Numéro CNI : {{this.cni}}</label>
-           </div>
-           <div class="form-group">
-             <label >Numéro Client : {{this.numclient}}</label>
-           </div>
-           <div class="form-group">
-             <label >Montant : {{this.mnt}}</label>
-           </div>
-         </form>
-
-       </div>
-       </div>
-       <div class="modal-footer">
-        <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="valider" [disabled]="adejaclick==true" (click)="adejaclick=true;retraitAvecCode()" class="btn btn-success" />
-        <input style="margin: 1rem;border-radius: 2rem 0rem 2rem 2rem;" type="button" value="annuler" (click)="hidemodalretraitcode()" class="btn btn-danger" />
-       </div>
-    </div>
-    </div>
-</div>
 
 <div *ngIf="this.loading">
   <app-loader></app-loader>

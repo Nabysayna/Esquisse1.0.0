@@ -31,7 +31,7 @@
                             <div class="col-sm-4">
                               <label class="label-control" for="datejour">Date par jour:</label>
                               <div class="row">
-                                <input style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="date" id="datejour" name="datejour" [(ngModel)]="selectionjour" />
+                                <input  type="date" id="datejour" name="datejour" [(ngModel)]="selectionjour" />
                                 <button type="button" class="btn btn-primary btn-sm" (click)="historiquejour()" [disabled]="selectionjour==undefined" >Chercher</button>
                               </div>
                             </div>

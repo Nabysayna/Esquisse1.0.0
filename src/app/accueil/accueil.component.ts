@@ -13,7 +13,12 @@ import {TarifsService} from "../services/tarifs.service";
 import { AirtimeService } from "../services/airtime.service";
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
+
 import {WariService} from "../services/wari.service";
+
+import { ZoningComponent } from 'app/zoning/zoning.component';
+//import { clearInterval } from 'timers';
+
 
 
 class Article {
@@ -54,8 +59,13 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
+<<<<<<< HEAD
 
 
+=======
+  impression:boolean=false;
+  canal:boolean=false;
+>>>>>>> 095718be6bc6a4ac9241ec0a16dff2d5b7e34c87
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -187,14 +197,38 @@ export class AccueilComponent implements OnInit {
           this.airtime=false;
           this.wari=false;
           this.zuulu=false;
+          this.impression=false;
+          this.canal=false;
 
       }
+      if(api=='CANAL'){
+        this.om=false;
+        this.tc=false;
+        this.em=false;
+        this.pc=false;
+        this.wizall=false;
+        this.Tnt=false;
+        this.Sde=false;
+        this.rapido=false;
+        this.woyofal=false;
+        this.senelec=false;
+        this.oolu=false;
+        this.gestionReporting=false;
+        this.pret=false;
+        this.guide=false;
+        this.ecom=false;
+        this.airtime=false;
+        this.wari=false;
+        this.zuulu=false;
+        this.canal=true;
+    }
       if(api=="TIGOCASH"){
           this.tc=true;
           this.om=false;
           this.em=false;
           this.pc=false;
           this.wizall=false;
+          this.canal=false;
           this.Tnt=false;
           this.Sde=false;
           this.rapido=false;
@@ -208,6 +242,7 @@ export class AccueilComponent implements OnInit {
           this.airtime=false;
           this.wari=false;
           this.zuulu=false;
+          this.impression=false;
 
       }
       if(api=="POSTECASH"){
@@ -216,6 +251,7 @@ export class AccueilComponent implements OnInit {
           this.om=false;
           this.em=false
           this.wizall=false;
+          this.canal=false;
           this.Tnt=false;
           this.Sde=false;
           this.rapido=false;
@@ -229,6 +265,7 @@ export class AccueilComponent implements OnInit {
           this.airtime=false;
           this.wari=false;
           this.zuulu=false;
+          this.impression=false;
       }
       if(api=="E-MONEY"){
         this.em=true;
@@ -236,6 +273,8 @@ export class AccueilComponent implements OnInit {
         this.tc=false;
         this.om=false;
         this.wizall=false;
+        this.canal=false;
+
         this.Tnt=false;
         this.Sde=false;
         this.rapido=false;
@@ -249,12 +288,14 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="WIZALL"){
         this.wizall=true;
         this.em=false;
         this.pc=false;
+        this.canal=false;
         this.tc=false;
         this.om=false;
         this.Tnt=false;
@@ -270,11 +311,13 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
       }
       if(api=="TNT"){
         this.Tnt=true;
         this.wizall=false;
         this.em=false;
+        this.canal=false;
         this.pc=false;
         this.tc=false;
         this.om=false;
@@ -290,6 +333,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="SDE"){
@@ -298,6 +342,7 @@ export class AccueilComponent implements OnInit {
         this.wizall=false;
         this.em=false;
         this.pc=false;
+        this.canal=false;
         this.tc=false;
         this.om=false;
         this.rapido=false;
@@ -311,6 +356,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="RAPIDO"){
@@ -321,6 +367,7 @@ export class AccueilComponent implements OnInit {
         this.em=false;
         this.pc=false;
         this.tc=false;
+        this.canal=false;
         this.om=false;
         this.woyofal=false;
         this.senelec=false;
@@ -332,6 +379,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="WOYOFAL"){
@@ -343,6 +391,7 @@ export class AccueilComponent implements OnInit {
         this.em=false;
         this.pc=false;
         this.tc=false;
+        this.canal=false;
         this.om=false;
         this.senelec=false;
         this.oolu=false;
@@ -353,6 +402,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="SENELEC"){
@@ -364,6 +414,7 @@ export class AccueilComponent implements OnInit {
         this.wizall=false;
         this.em=false;
         this.pc=false;
+        this.canal=false;
         this.tc=false;
         this.om=false;
         this.oolu=false;
@@ -374,6 +425,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
       if(api=="OOLU"){
@@ -393,8 +445,10 @@ export class AccueilComponent implements OnInit {
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
+        this.canal=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
       }
     if(api=="GESTIONREPORTING"){
@@ -410,12 +464,14 @@ export class AccueilComponent implements OnInit {
         this.pc=false;
         this.tc=false;
         this.om=false;
+        this.canal=false;
         this.pret=false;
         this.guide=false;
         this.ecom=false;
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
     }
     if(api=="DEMANDEPRET"){
@@ -429,6 +485,7 @@ export class AccueilComponent implements OnInit {
         this.Tnt=false;
         this.wizall=false;
         this.em=false;
+        this.canal=false;
         this.pc=false;
         this.tc=false;
         this.om=false;
@@ -437,6 +494,7 @@ export class AccueilComponent implements OnInit {
         this.airtime=false;
         this.wari=false;
         this.zuulu=false;
+        this.impression=false;
 
     }
     if(api=="GUIDEUTILISATION"){
@@ -449,6 +507,7 @@ export class AccueilComponent implements OnInit {
       this.rapido=false;
       this.Sde=false;
       this.Tnt=false;
+      this.canal=false;
       this.wizall=false;
       this.em=false;
       this.pc=false;
@@ -458,6 +517,7 @@ export class AccueilComponent implements OnInit {
       this.airtime=false;
       this.wari=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="ECOMMERCE"){
@@ -470,6 +530,7 @@ export class AccueilComponent implements OnInit {
       this.woyofal=false;
       this.rapido=false;
       this.Sde=false;
+      this.canal=false;
       this.Tnt=false;
       this.wizall=false;
       this.em=false;
@@ -479,6 +540,7 @@ export class AccueilComponent implements OnInit {
       this.airtime=false;
       this.wari=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="AIRTIME"){
@@ -490,6 +552,7 @@ export class AccueilComponent implements OnInit {
       this.gestionReporting=false;
       this.oolu=false;
       this.senelec=false;
+      this.canal=false;
       this.woyofal=false;
       this.rapido=false;
       this.Sde=false;
@@ -501,10 +564,12 @@ export class AccueilComponent implements OnInit {
       this.om=false;
       this.wari=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="WARI"){
       console.log("wari");
+      this.canal=false;
       this.wari=true;
       this.airtime=false;
       this.ecom=false;
@@ -523,6 +588,7 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.zuulu=false;
+      this.impression=false;
 
     }
     if(api=="ZUULU"){
@@ -541,10 +607,12 @@ export class AccueilComponent implements OnInit {
       this.Sde=false;
       this.Tnt=false;
       this.wizall=false;
+      this.canal=false;
       this.em=false;
       this.pc=false;
       this.tc=false;
       this.om=false;
+      this.impression=false;
 
     }
   }
@@ -1927,8 +1995,27 @@ geolocaliser(){
 			   if(etat.data.operateur!=2 && etat.data.operateur!=6 && etat.data.operateur!=3 && etat.data.operateur!=1 && etat.etats.color=='green'){
 
 					 sessionStorage.setItem('dataImpression', JSON.stringify(imprime));
-					 this.router.navigate(['accueil']);
-					 setTimeout(()=>this.router.navigate(['accueil/impression']),100);
+					 this.airtime=false;
+					  this.ecom=false;
+					  this.guide=false;
+					  this.pret=false;
+					  this.gestionReporting=false;
+					  this.oolu=false;
+					  this.senelec=false;
+					  this.woyofal=false;
+					  this.rapido=false;
+					  this.Sde=false;
+					  this.Tnt=false;
+					  this.wizall=false;
+					  this.em=false;
+					  this.pc=false;
+					  this.tc=false;
+					  this.om=false;
+					  this.wari=false;
+					  this.zuulu=false;
+					  this.impression=true;
+					// this.router.navigate(['accueil']);
+					 //setTimeout(()=>this.router.navigate(['accueil/impression']),100);
 				}
 
 				   this.process.splice(etat.etats.id,1);
@@ -2989,50 +3076,171 @@ retrieveOperationInfo(item : any) : string{
   /***************************Debut FACTURIERS ******************************/
 
   paiemantsde(objet){
-    this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
-      console.log("********************************************************")
-      console.log(resp) ;
+    this._facturierService.paimentsde(objet.data.reference_client,objet.data.telephone,objet.data.reference_facture,objet.data.montant).then( resp =>{
+      console.log("********************************************************");
+      let serverResponse=resp["_body"].trim();
+      setTimeout(()=>{
+		this._facturierService.getReponse(serverResponse).then(tontou =>{
+			let TonTou=tontou["_body"].trim();
+			if(TonTou!="no"){
+					switch(parseInt(TonTou)){
+						case 200:{
+							let donnees=TonTou.split("#");
+							objet.dataI = {
+							apiservice:'facturier',
+							service:'sde',
+							infotransaction:{
+							client:{
+							  transactionApi: 256665,
+							  transactionBBS: 'x-x-x-x',
+							  reference_client: objet.data.reference_client,
+							  reference_facture: objet.data.reference_facture,
+							  client: "",
+							  date_echeance: objet.data.echeance,
+							  montant: objet.data.montant,
+							 },
 
-      if( (typeof resp !== 'object') && (typeof resp !== 'number') && (typeof resp === 'string') && !resp.match("transactionid")) {
-        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
-        objet.etats.etat=true;
-        objet.etats.load='terminated';
-        objet.etats.color='red';
-      }
-      else if( ( typeof resp.transactionid != "undefined" ) ||  ((typeof resp === 'string') && resp.match("transactionid"))){
-        objet.dataI = {
-          apiservice:'facturier',
-          service:'sde',
-          infotransaction:{
-            client:{
-              transactionApi: resp.transactionid,
-              transactionBBS: 'x-x-x-x',
-              reference_client: resp.reference_client,
-              reference_facture: resp.reference_facture,
-              client: resp.prenom+" "+resp.nom,
-              date_echeance: resp.date_echeance,
-              montant: resp.montant,
-            },
+							},
+						   };
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='green';
+							this.updateCaution();
+							break;
+						}
+						case 400:{
+							objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='red';
+							break;
+						}
+						case 600:{
+							objet.etats.errorCode = "Numero facture ou reference incorrect"
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='red';
+							break;
+						}
+						case 700:{
+							objet.etats.errorCode = "Facture deja payée."
+							objet.etats.etat=true;
+							objet.etats.load='terminated';
+							objet.etats.color='red';
+							break;
+						}
+						case 800:{
+						    objet.etats.color='orange';
+						    objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+							break;
+						}
+						default :{
+							break;
+						}
+					}
+			}else{
+          let nb=0;
+			     let timer=setInterval(()=>{
+             if(nb<15){
+                this._facturierService.getReponse(serverResponse).then(reponse =>{
+                  let rep=reponse["_body"].trim();
+                  if(rep!="no"){
+                    switch(parseInt(rep)){
+                      case 200:{
+                        //let donnees=TonTou.split("#");
+                        objet.dataI = {
+                        apiservice:'facturier',
+                        service:'sde',
+                        infotransaction:{
+                        client:{
+                          transactionApi: 256665,
+                          transactionBBS: 'x-x-x-x',
+                          reference_client: objet.data.reference_client,
+                          reference_facture: objet.data.reference_facture,
+                          client: "bbs invest",
+                          date_echeance: objet.data.echeance,
+                          montant: objet.data.montant,
+                        },
 
-          },
-        }
-        objet.etats.etat=true;
-        objet.etats.load='terminated';
-        objet.etats.color='green';
-        this.updateCaution();
+                        },
+                        };
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='green';
+                        this.updateCaution();
+                        clearInterval(timer);
+                        break;
 
-      }else{
-        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
-        objet.etats.etat=true;
-        objet.etats.load='terminated';
-        objet.etats.color='red';
-      }
+                      }
+                      case 400:{
+                        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        clearInterval(timer);
+                        break;
+                      }
+                      case 600:{
+                        objet.etats.errorCode = "Numero facture ou reference incorrect"
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        clearInterval(timer);
+                        break;
+                      }
+                      case 700:{
+                        objet.etats.errorCode = "Facture deja payée."
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        clearInterval(timer);
+                        break;
+                      }
+                      case 800:{
+                        objet.etats.color='orange';
+                        objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+                        break;
+                          }
+                      default :{
+                        break;
+                      }
+                }
+
+                  }
+                });
+
+          }else{
+            this._facturierService.annulation(serverResponse).then(rep =>{
+              let serverRep=rep["_body"].trim();
+              console.log(serverRep);
+              if(serverRep=="ko"){
+                objet.etats.errorCode = "Operation annule.";
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                clearInterval(timer);
+              }else{
+                if(serverRep=="200"){
+                  objet.etats.etat=true;
+                  objet.etats.load='terminated';
+                  objet.etats.color='green';
+                  clearInterval(timer);
+                }
+              }
+            });
+          }
+        },5000);
+			}
+
+		});
+      },10000);
     }).catch(response => {
       objet.etats.errorCode = response;
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
     });
+
   }
 
   validerrapido(objet){
@@ -3100,7 +3308,7 @@ retrieveOperationInfo(item : any) : string{
     });
   }
 
-  validerpaimentsenelec(objet){
+ /* validerpaimentsenelec(objet){
     this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
       if(typeof resp !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -3143,7 +3351,172 @@ retrieveOperationInfo(item : any) : string{
       objet.etats.load='terminated';
       objet.etats.color='red';
     });
-  }
+  }*/
+   validerpaimentsenelec(objet){
+		this._facturierService.validerpaimentsenelec(objet.data.police,objet.data.num_facture,objet.data.montant,objet.data.telephone).then(reponse =>{
+      console.log(reponse);
+      let tontou=reponse["_body"].trim();
+      setTimeout(()=>{
+        this._facturierService.getReponse(tontou).then(rep =>{
+          let Tontou=rep["_body"].trim();
+          if(Tontou!="no"){
+            switch(parseInt(Tontou)){
+              case 200:{
+                objet.dataI = {
+                  apiservice:'facturier',
+                  service:'senelec',
+                  infotransaction:{
+                    client:{
+                      transactionApi: "y-y-y-y",
+                      transactionBBS: 'x-x-x-x',
+                      police: objet.data.police,
+                      numfacture: objet.data.num_facture,
+                      client: "",
+                      montant: objet.data.montant,
+                      dateecheance: objet.data.echeance,
+                    },
+
+                  },
+                }
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='green';
+                this.updateCaution();
+                break;
+
+              }
+              case 400:{
+                objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                break;
+              }
+              case 600:{
+                objet.etats.errorCode = "Numero facture ou reference incorrect"
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                break;
+              }
+              case 700:{
+                objet.etats.errorCode = "Facture deja payée."
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                break;
+              }
+              case 800:{
+                objet.etats.color='orange';
+								objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+								break;
+              }
+              default :{
+                break;
+              }
+
+            }
+
+          }else{
+            let nb=0;
+            let timer=setInterval(()=>{
+              if(nb<15){
+                nb++;
+              this._facturierService.getReponse(tontou).then(rep =>{
+                let t=rep["_body"].trim();
+                if(t!="no"){
+                  switch(parseInt(t)){
+                    case 200:{
+                      objet.dataI = {
+                        apiservice:'facturier',
+                        service:'senelec',
+                        infotransaction:{
+                          client:{
+                            transactionApi: "y-y-y-y",
+                            transactionBBS: 'x-x-x-x',
+                            police: objet.data.police,
+                            numfacture: objet.data.num_facture,
+                            client: "",
+                            montant: objet.data.montant,
+                            dateecheance: objet.data.echeance,
+                          },
+
+                        },
+                      }
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='green';
+                      this.updateCaution();
+                      clearInterval(timer);
+                      break;
+                    }
+                    case 400:{
+                      objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+                      break;
+                    }
+                    case 600:{
+                      objet.etats.errorCode = "Numero facture ou reference incorrect";
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+                      break;
+                    }
+                    case 700:{
+                      objet.etats.errorCode = "Facture deja payée.";
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+                      break;
+                    }
+                    case 800:{
+                      objet.etats.color='orange';
+                      objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+                      clearInterval(timer);
+                      break;
+                    }
+                    default :{
+                      break;
+                    }
+
+                  }
+
+                }
+
+              });
+
+            }else{
+              this._facturierService.annulation(tontou).then(rep =>{
+                let serverRep=rep["_body"].trim();
+                console.log(serverRep);
+                if(serverRep=="ko"){
+                  objet.etats.errorCode = "Operation annule.";
+                  objet.etats.etat=true;
+                  objet.etats.load='terminated';
+                  objet.etats.color='red';
+                  clearInterval(timer);
+                }else{
+                  if(serverRep=="200"){
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='green';
+                    clearInterval(timer);
+                  }
+                }
+              });
+
+            }
+           },10000);
+          }
+        });
+      },30000);
+		});
+   }
 
   validerwoyofal(objet){
    console.log('nns');

@@ -39,6 +39,7 @@ import { EFinancierService} from './tnt/tntservices';
 
 import { TigocashService } from './services/tigocash.service';
 import { AirtimeService } from './services/airtime.service';
+import { ControleService } from './services/controle.service';
 
 
 
@@ -197,6 +198,7 @@ import { CanalComponent } from './canal/canal.component';
 import { AssuranceComponent } from './assurance/assurance.component';
 import { ZuuluComponent } from './zuulu/zuulu.component';
 import { ZuuluService } from './services/zuulu.service';
+import { CanalService } from './services/canal.service';
 
 
 
@@ -375,7 +377,12 @@ import { ZuuluService } from './services/zuulu.service';
     WariService,
     TarifsService,
     AirtimeService,
-    ZuuluService
+    ZuuluService,
+<<<<<<< HEAD
+    CanalService
+=======
+    ControleService
+>>>>>>> 047185fe301619dc6a3e557dfc39793ebd68326d
   ],
   bootstrap: [AppComponent]
 })
