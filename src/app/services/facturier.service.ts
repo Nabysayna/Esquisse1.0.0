@@ -102,6 +102,18 @@ export class FacturierService {
 	});
 	
   }
+  public annulation(file:string){
+    let params="param="+JSON.stringify({file:file,token:this.token});
+    let url=this.link+"/zuulu/annulation";
+    return new Promise((resolve,reject)=>{
+      this.http.post(url,params,{headers:this.headers}).subscribe(reponse =>{
+        console.log(reponse);
+        resolve(reponse);
+      });
+      
+    });
+
+  }
 
   public validerrapido(telephone:string,montant:string,badge:string):Promise<any>{
     let reEspParams={token:this.token,telephone:telephone,montant:montant,badge:badge};

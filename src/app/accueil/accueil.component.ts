@@ -3043,75 +3043,97 @@ retrieveOperationInfo(item : any) : string{
 						}
 					}
 			}else{
+          let nb=0;
 			     let timer=setInterval(()=>{
-					this._facturierService.getReponse(serverResponse).then(reponse =>{
-						let rep=reponse["_body"].trim();
-						if(rep!="no"){
-							switch(parseInt(rep)){
-								case 200:{
-									//let donnees=TonTou.split("#");
-									objet.dataI = {
-									apiservice:'facturier',
-									service:'sde',
-									infotransaction:{
-									client:{
-									  transactionApi: 256665,
-									  transactionBBS: 'x-x-x-x',
-									  reference_client: objet.data.reference_client,
-									  reference_facture: objet.data.reference_facture,
-									  client: "bbs invest",
-									  date_echeance: objet.data.echeance,
-									  montant: objet.data.montant,
-									 },
+             if(nb<15){
+                this._facturierService.getReponse(serverResponse).then(reponse =>{
+                  let rep=reponse["_body"].trim();
+                  if(rep!="no"){
+                    switch(parseInt(rep)){
+                      case 200:{
+                        //let donnees=TonTou.split("#");
+                        objet.dataI = {
+                        apiservice:'facturier',
+                        service:'sde',
+                        infotransaction:{
+                        client:{
+                          transactionApi: 256665,
+                          transactionBBS: 'x-x-x-x',
+                          reference_client: objet.data.reference_client,
+                          reference_facture: objet.data.reference_facture,
+                          client: "bbs invest",
+                          date_echeance: objet.data.echeance,
+                          montant: objet.data.montant,
+                        },
 
-									},
-								   };
-									objet.etats.etat=true;
-									objet.etats.load='terminated';
-									objet.etats.color='green';
-									this.updateCaution();
-									clearInterval(timer);
-									break;
-									
-								}
-								case 400:{
-									objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
-									objet.etats.etat=true;
-									objet.etats.load='terminated';
-									objet.etats.color='red';
-									clearInterval(timer);
-									break;
-								}
-								case 600:{
-									objet.etats.errorCode = "Numero facture ou reference incorrect"
-									objet.etats.etat=true;
-									objet.etats.load='terminated';
-									objet.etats.color='red';
-									clearInterval(timer);
-									break;
-								}
-								case 700:{
-									objet.etats.errorCode = "Facture deja payée."
-									objet.etats.etat=true;
-									objet.etats.load='terminated';
-									objet.etats.color='red';
-									clearInterval(timer);
-									break;
-								}
-							   case 800:{
-									objet.etats.color='orange';
-									objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
-									break;
-						        }
-							  default :{
-									break;
-								}
-					}
-							
-						}
-					});
-					
-			     },5000);
+                        },
+                        };
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='green';
+                        this.updateCaution();
+                        clearInterval(timer);
+                        break;
+                        
+                      }
+                      case 400:{
+                        objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        clearInterval(timer);
+                        break;
+                      }
+                      case 600:{
+                        objet.etats.errorCode = "Numero facture ou reference incorrect"
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        clearInterval(timer);
+                        break;
+                      }
+                      case 700:{
+                        objet.etats.errorCode = "Facture deja payée."
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='red';
+                        clearInterval(timer);
+                        break;
+                      }
+                      case 800:{
+                        objet.etats.color='orange';
+                        objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+                        break;
+                          }
+                      default :{
+                        break;
+                      }
+                }
+                    
+                  }
+                });
+				
+          }else{
+            this._facturierService.annulation(serverResponse).then(rep =>{
+              let serverRep=rep["_body"].trim();
+              console.log(serverRep);
+              if(serverRep=="ko"){
+                objet.etats.errorCode = "Operation annule.";
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+                clearInterval(timer);
+              }else{
+                if(serverRep=="200"){
+                  objet.etats.etat=true;
+                  objet.etats.load='terminated';
+                  objet.etats.color='green';
+                  clearInterval(timer);
+                }
+              }
+            });
+          }   
+        },5000);
 			}
 			
 		});
@@ -3264,6 +3286,7 @@ retrieveOperationInfo(item : any) : string{
                 objet.etats.load='terminated';
                 objet.etats.color='green';
                 this.updateCaution();
+                break;
 
               }
               case 400:{
@@ -3299,7 +3322,10 @@ retrieveOperationInfo(item : any) : string{
             }
 
           }else{
+            let nb=0;
             let timer=setInterval(()=>{
+              if(nb<15){
+                nb++;
               this._facturierService.getReponse(tontou).then(rep =>{
                 let t=rep["_body"].trim();
                 if(t!="no"){
@@ -3329,7 +3355,7 @@ retrieveOperationInfo(item : any) : string{
                       break;
                     }
                     case 400:{
-                      objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                      objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
                       objet.etats.etat=true;
                       objet.etats.load='terminated';
                       objet.etats.color='red';
@@ -3337,7 +3363,7 @@ retrieveOperationInfo(item : any) : string{
                       break;
                     }
                     case 600:{
-                      objet.etats.errorCode = "Numero facture ou reference incorrect"
+                      objet.etats.errorCode = "Numero facture ou reference incorrect";
                       objet.etats.etat=true;
                       objet.etats.load='terminated';
                       objet.etats.color='red';
@@ -3345,7 +3371,7 @@ retrieveOperationInfo(item : any) : string{
                       break; 
                     }
                     case 700:{
-                      objet.etats.errorCode = "Facture deja payée."
+                      objet.etats.errorCode = "Facture deja payée.";
                       objet.etats.etat=true;
                       objet.etats.load='terminated';
                       objet.etats.color='red';
@@ -3368,10 +3394,31 @@ retrieveOperationInfo(item : any) : string{
 
               });
 
-            },5000);
+            }else{
+              this._facturierService.annulation(tontou).then(rep =>{
+                let serverRep=rep["_body"].trim();
+                console.log(serverRep);
+                if(serverRep=="ko"){
+                  objet.etats.errorCode = "Operation annule.";
+                  objet.etats.etat=true;
+                  objet.etats.load='terminated';
+                  objet.etats.color='red';
+                  clearInterval(timer);
+                }else{
+                  if(serverRep=="200"){
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='green';
+                    clearInterval(timer);
+                  }
+                }
+              });
+              
+            }
+           },10000);
           }
         });
-      },10000);
+      },30000);
 		});
    }
 
