@@ -2,7 +2,6 @@
   <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
       <div class="panel-heading">
           <h2>WARI</h2>
-
       </div>
       <!-- /.panel-heading -->
 
@@ -22,9 +21,9 @@
                 <h2>Retrait</h2>
                 <h3 *ngIf="retraitreussi" class="alert alert-success">Retrait reussi!</h3>
                 <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
-                    
+
                 <div *ngIf="!retraitcodeconfirme" >
-                      <form name="transnat" (ngSubmit)="retraitrecherche()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width: 67%;">
+                      <form name="transnat" (ngSubmit)="retraitThread()" #formretrait="ngForm" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;width: 67%;">
                           <form style="width: 100%;">
                           <div class="form-inline" style="width: 100%;">
                               <div class="form-check form-check-inline">
@@ -65,6 +64,14 @@
                       </form>
                 </div>
                 <div class="row"  *ngIf="retraitcodeconfirme==true" id="retraitsuite" style="width:60%">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-lg-5 col-md-5">
+                            <input style="padding-left:1rem;width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" class="textinput" [(ngModel)]="prenomCaisse" name="prenomCaisse" placeholder="Nom caisse"/>
+                        </div>
+                        <div class="offset-2 col-lg-5 col-md-5">
+                          <input style="padding-left:1rem; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" class="textinput" [(ngModel)]="nomCaisse" name="nomCaisse"  placeholder="Prenom caisse"/>
+                        </div>
+                    </div>
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                         <form>
                             <fieldset>
@@ -140,7 +147,7 @@
                                       <select class="input-control" style="margin-top: 12%;margin-left: 2%;width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
                                           <option value="CNI">CNI</option>
                                           <!-- <option value="idcard">Pasport</option> -->
-                                      </select>                                   
+                                      </select>
                                   </div>
                                 </div>
                               <div class="row">
@@ -158,7 +165,7 @@
                                   <div class="col-lg-8 col-md-8">
                                       <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
                                           <option value="Sénégal">Sénégal</option>
-                                      </select>                                 
+                                      </select>
                                    </div>
                               </div>
                               <div class="row">
@@ -194,10 +201,10 @@
                       <div class="row" style="width:100%">
                           <div class="form-inline" style="text-align:center;">
                               <div class="col-lg-10 col-md-10 col-xs-10 col-sm-10">
-								  <label>choisir un pays de destination</label>
+								                  <label>choisir un pays de destination</label>
                                   <select class="input-control" style="border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;margin-left:5em" class="textinput" [(ngModel)]="this.paysdestination" name="paysdestination">
                                       <option value="Sénégal">Sénégal</option>
-                                  </select>                                 
+                                  </select>
                                </div>
                           </div>
                           <div *ngIf="infoEnv">
@@ -257,8 +264,8 @@
                                                 <option value="Sénégal">Réglement de Bien</option>
                                                 <option value="Sénégal">Réglement de Services</option>
                                                 <option value="Sénégal">Autres</option>
-                                                 <option value="idcard">Pasport</option> 
-                                            </select>                                   
+                                                 <option value="idcard">Pasport</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -268,54 +275,56 @@
                                         <div class="col-lg-8 col-md-8">
                                             <select class="input-control" style="margin-top: 12%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
                                                 <option value="CNI">CNI</option>
-                                                <option value="idcard">Pasport</option> 
-                                            </select>                                   
+                                                <option value="idcard">Pasport</option>
+                                            </select>
                                         </div>
                                     </div>-->
                                   </fieldset>
                                 </form>
-                               <!-- <form>
-                                    <fieldset>
-                                      <legend style="font-size:small">information sur la piéce d'identification</legend>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">numero</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="numero" name="numero" />
-                                          </div>
+                               <!--
+                              <form>
+                                <fieldset>
+                                  <legend style="font-size:small">information sur la piéce d'identification</legend>
+                                  <div class="row">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">numero</label>
                                       </div>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">pays</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                              <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
-                                                  <option value="Sénégal">Sénégal</option>
-                                              </select>                                 
-                                           </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="number" [(ngModel)]="numero" name="numero" />
                                       </div>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">date de delivrance</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datededelivrance" name="datededelivrance" />
-                                          </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">pays</label>
                                       </div>
-                                      <div class="row">
-                                          <div class="col-lg-3 col-md-3">
-                                            <label style="margin-top:1.5rem">date de validité</label>
-                                          </div>
-                                          <div class="col-lg-8 col-md-8">
-                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datedevalidite" name="datedevalidite" />
-                                          </div>
+                                      <div class="col-lg-8 col-md-8">
+                                          <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
+                                              <option value="Sénégal">Sénégal</option>
+                                          </select>
+                                        </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">date de delivrance</label>
                                       </div>
-                                    </fieldset>
-                                  </form>-->
+                                      <div class="col-lg-8 col-md-8">
+                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datededelivrance" name="datededelivrance" />
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">date de validité</label>
+                                      </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="date" [(ngModel)]="datedevalidite" name="datedevalidite" />
+                                      </div>
+                                  </div>
+                                </fieldset>
+                              </form>
+                                -->
                           </div>
                           <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-							      <div class="row">
+							                      <div class="row">
                                         <div class="col-lg-3 col-md-3">
                                           <label style="margin-top:1.5rem">Motif</label>
                                         </div>
@@ -327,8 +336,8 @@
                                                 <option value="Sénégal">Réglement de Bien</option>
                                                 <option value="Sénégal">Réglement de Services</option>
                                                 <option value="Sénégal">Autres</option>
-                                                 <option value="idcard">Pasport</option> 
-                                            </select>                                   
+                                                 <option value="idcard">Pasport</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -338,8 +347,8 @@
                                         <div class="col-lg-8 col-md-8">
                                             <select class="input-control" style="margin-top: 12%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="typepiece" name="typepiece">
                                                 <option value="CNI">CNI</option>
-                                                <option value="idcard">Pasport</option> 
-                                            </select>                                   
+                                                <option value="idcard">Pasport</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <form>
@@ -360,7 +369,7 @@
                                           <div class="col-lg-6 col-md-6">
                                               <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="this.pays" name="pays">
                                                   <option value="Sénégal">Sénégal</option>
-                                              </select>                                 
+                                              </select>
                                            </div>
                                       </div>
                                       <div class="row">
@@ -381,7 +390,201 @@
                                       </div>
                                     </fieldset>
                                   </form>
-                             <!-- <form>
+                                  <form >
+                                    <fieldset>
+                                      <legend style="font-size:small">Mode de Paiement</legend>
+                                      <div class="form-inline" style="width: 100%;">
+                                          <div class="form-check form-check-inline">
+                                              <input  [(ngModel)]="this.especeEn" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="espece" checked (click)="mp=0">
+                                              <label class="form-check-label" for="exampleRadios1">
+                                                Éspece
+                                              </label>
+                                              <input [(ngModel)]="this.carteEn" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="carte" (click)="mp=1">
+                                              <label class="form-check-label" for="exampleRadios2">
+                                               Carte
+                                              </label>
+                                              <input [(ngModel)]="this.waripassEn" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="wari pass" (click)="mp=2">
+                                              <label class="form-check-label" for="exampleRadios2">
+                                                Wari pass
+                                              </label>
+                                              <input [(ngModel)]="this.voucherEn" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Voucher" (click)="mp=4">
+                                              <label class="form-check-label" for="exampleRadios2">
+                                                Voucher
+                                              </label>
+                                              <input [(ngModel)]="this.walletEn" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Wallet" (click)="mp=3">
+                                              <label class="form-check-label" for="exampleRadios2">
+                                                Wallet
+                                              </label>
+                                            </div>
+                                      </div>
+                                    </fieldset>
+                                  </form>
+
+                                  <form *ngIf="!mpEspece">
+                                    <fieldset>
+                                      <div class="row" *ngIf="mpCarte==true">
+                                        <div class="col-lg-3 col-md-3" >
+                                          <label style="margin-top:1.5rem">Type Carte</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                          <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mpTypeCarte" name="motif">
+                                            <option value="Passport">Passport</option>
+                                            <option value="CNI">CNI</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="row" *ngIf="mpCarte==true">
+                                        <div class="col-lg-3 col-md-3">
+                                          <label style="margin-top:1.5rem">Numéro Carte</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                          <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mpNumeroCarte" name="nomB" />
+                                        </div>
+                                      </div>
+                                      <div class="row" *ngIf="mpCarte==true">
+                                          <div class="col-lg-3 col-md-3">
+                                            <label style="margin-top:1.5rem">Type Compte</label>
+                                          </div>
+                                          <div class="col-lg-8 col-md-8">
+                                            <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mpTypeCompte" name="motif">
+                                                <option value="Sénégal">Aide Scolaire</option>
+                                                <option value="Sénégal">Assistance Familiale</option>
+                                                <option value="Sénégal">Construction Immobiliére</option>
+                                                <option value="Sénégal">Réglement de Bien</option>
+                                                <option value="Sénégal">Réglement de Services</option>
+                                                <option value="Sénégal">Autres</option>
+                                                <option value="idcard">Pasport</option>
+                                            </select>
+                                          </div>
+                                      </div>
+                                      <div class="row" *ngIf="(mpVoucher==true) || (mpWallet==true)">
+                                        <div class="col-lg-3 col-md-3">
+                                          <label style="margin-top:1.5rem">Partenaire</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                          <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mpPartenaire" name="motif">
+                                              <option value="Sénégal">Aide Scolaire</option>
+                                              <option value="Sénégal">Assistance Familiale</option>
+                                              <option value="Sénégal">Construction Immobiliére</option>
+                                              <option value="Sénégal">Réglement de Bien</option>
+                                              <option value="Sénégal">Réglement de Services</option>
+                                              <option value="Sénégal">Autres</option>
+                                              <option value="idcard">Pasport</option>
+                                          </select>
+                                        </div>
+                                       </div>
+                                       <div class="row" *ngIf="mpVoucher==true">
+                                          <div class="col-lg-3 col-md-3">
+                                            <label style="margin-top:1.5rem">Code Voucher</label>
+                                          </div>
+                                          <div class="col-lg-8 col-md-8">
+                                            <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mpCodeVoucher" name="nomB" />
+                                          </div>
+                                      </div>
+                                      <div class="row" *ngIf="(mpVoucher==true) || (mpWallet==true)">
+                                        <div class="col-lg-3 col-md-3">
+                                          <label style="margin-top:1.5rem">Celulaire</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                          <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mpCellulaier" name="nomB" />
+                                        </div>
+                                      </div>
+                                    </fieldset>
+                                  </form>
+
+                                  <form *ngIf="mp==1 || mp==2 || mp==3 || mp==4">
+                                      <fieldset>
+                                          <div class="row" *ngIf="mp==1">
+                                            <div class="col-lg-3 col-md-3" >
+                                              <label style="margin-top:1.5rem">Type Carte</label>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8">
+                                              <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mrTypeCarte" name="motif">
+                                                <option value="Sénégal">Aide Scolaire</option>
+                                                <option value="Sénégal">Assistance Familiale</option>
+                                                <option value="Sénégal">Construction Immobiliére</option>
+                                                <option value="Sénégal">Réglement de Bien</option>
+                                                <option value="Sénégal">Réglement de Services</option>
+                                                <option value="Sénégal">Autres</option>
+                                                 <option value="idcard">Pasport</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                          <div class="row" *ngIf="mp==1">
+                                              <div class="col-lg-3 col-md-3">
+                                                <label style="margin-top:1.5rem">Numéro Carte</label>
+                                              </div>
+                                              <div class="col-lg-8 col-md-8">
+                                                <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrNumeroCarte" name="nomB" />
+                                              </div>
+                                            </div>
+                                            <div class="row" *ngIf="mp==1">
+                                                <div class="col-lg-3 col-md-3">
+                                                  <label style="margin-top:1.5rem">Type Compte</label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                  <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mrTypeCompte" name="motif">
+                                                      <option value="Sénégal">Aide Scolaire</option>
+                                                      <option value="Sénégal">Assistance Familiale</option>
+                                                      <option value="Sénégal">Construction Immobiliére</option>
+                                                      <option value="Sénégal">Réglement de Bien</option>
+                                                      <option value="Sénégal">Réglement de Services</option>
+                                                      <option value="Sénégal">Autres</option>
+                                                      <option value="idcard">Pasport</option>
+                                                  </select>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="(mp==2) || (mp==3) || (mp==4)">
+                                              <div class="col-lg-3 col-md-3">
+                                                <label style="margin-top:1.5rem">Partenaire</label>
+                                              </div>
+                                              <div class="col-lg-8 col-md-8">
+                                                <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mrPartenaire" name="motif">
+                                                    <option value="Sénégal">Aide Scolaire</option>
+                                                    <option value="Sénégal">Assistance Familiale</option>
+                                                    <option value="Sénégal">Construction Immobiliére</option>
+                                                    <option value="Sénégal">Réglement de Bien</option>
+                                                    <option value="Sénégal">Réglement de Services</option>
+                                                    <option value="Sénégal">Autres</option>
+                                                    <option value="idcard">Pasport</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="row" *ngIf="mp==4">
+                                                <div class="col-lg-3 col-md-3">
+                                                  <label style="margin-top:1.5rem">Code Voucher</label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrCodeVoucher" name="nomB" />
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="(mp==2) || (mp==4)">
+                                                <div class="col-lg-3 col-md-3">
+                                                  <label style="margin-top:1.5rem">Celulaire</label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrCellulaier" name="nomB" />
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="(mp==2)">
+                                              <div class="col-lg-3 col-md-3">
+                                                <label style="margin-top:1.5rem">Numéro Compte</label>
+                                              </div>
+                                              <div class="col-lg-8 col-md-8">
+                                                <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrNumeroCompte" name="nomB" />
+                                              </div>
+                                            </div>
+                                            <div class="row" *ngIf="(mp==3)">
+                                                <div class="col-lg-3 col-md-3">
+                                                  <label style="margin-top:1.5rem">Wari Secure</label>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8">
+                                                  <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="wariSecure" name="nomB" />
+                                                </div>
+                                            </div>
+                                      </fieldset>
+                                  </form>
+                                  <!-- <form>
                                   <fieldset>
                                     <legend>Beneficiaire</legend>
                                     <div class="row">
@@ -444,10 +647,10 @@
                                       </div>
                                     </fieldset>
                                   </form>-->
-                            </div>      
+                            </div>
                          </div>
                          <div style="width:80%;margin-left:auto;margin-right:auto;" *ngIf="infoBen" class="row">
-						    <form style="width:100%">
+						                    <form style="width:100%">
                                   <fieldset style="width:100%">
                                     <legend>Beneficiaire</legend>
                                     <div class="row">
@@ -490,35 +693,119 @@
                                       <legend style="font-size:small">Mode de réception</legend>
                                       <div class="form-inline" style="width: 100%;">
                                           <div class="form-check form-check-inline">
-                                              <input  [(ngModel)]="this.espece" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="espece" checked="checked" />
+                                              <input  [(ngModel)]="this.espece" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="espece" checked="checked" (click)="mr=0"/>
                                               <label class="form-check-label" for="exampleRadios1">
                                                 Éspece
                                               </label>
-                                              <input [(ngModel)]="this.wallet" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="wallet" />
+                                              <input [(ngModel)]="this.wallet" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="wallet" (click)="mr=2"/>
                                               <label class="form-check-label" for="exampleRadios2">
                                                Wallet
                                               </label>
-                                              <input [(ngModel)]="this.compte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="compte" />
+                                              <input [(ngModel)]="this.compte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="compte" (click)="mr=3"/>
                                               <label class="form-check-label" for="exampleRadios2">
                                                 Compte
                                               </label>
-                                              <input [(ngModel)]="this.carte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="carte" />
+                                              <input [(ngModel)]="this.carte" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="carte" (click)="mr=1"/>
                                               <label class="form-check-label" for="exampleRadios2">
                                                 Carte
                                               </label>
                                             </div>
                                       </div>
                                     </fieldset>
-                               </form>
+                                </form>
+                                <form *ngIf="mr==1 || mr==2 || mr==3 || mr==4">
+                                  <fieldset>
+                                    <div class="row" *ngIf="mr==1">
+                                      <div class="col-lg-3 col-md-3" >
+                                        <label style="margin-top:1.5rem">Type Carte</label>
+                                      </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mrTypeCarte" name="motif">
+                                          <option value="Sénégal">Aide Scolaire</option>
+                                          <option value="Sénégal">Assistance Familiale</option>
+                                          <option value="Sénégal">Construction Immobiliére</option>
+                                          <option value="Sénégal">Réglement de Bien</option>
+                                          <option value="Sénégal">Réglement de Services</option>
+                                          <option value="Sénégal">Autres</option>
+                                           <option value="idcard">Pasport</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="row" *ngIf="mr==1">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">Numéro Carte</label>
+                                      </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrNumeroCarte" name="nomB" />
+                                      </div>
+                                    </div>
+                                    <div class="row" *ngIf="mr==1">
+                                        <div class="col-lg-3 col-md-3">
+                                          <label style="margin-top:1.5rem">Type Compte</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                          <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mrTypeCompte" name="motif">
+                                              <option value="Sénégal">Aide Scolaire</option>
+                                              <option value="Sénégal">Assistance Familiale</option>
+                                              <option value="Sénégal">Construction Immobiliére</option>
+                                              <option value="Sénégal">Réglement de Bien</option>
+                                              <option value="Sénégal">Réglement de Services</option>
+                                              <option value="Sénégal">Autres</option>
+                                              <option value="idcard">Pasport</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="(mr==2) || (mr==3) || (mr==4)">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">Partenaire</label>
+                                      </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <select class="input-control" style="margin-top: 7%;margin-left: 2%; width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" [(ngModel)]="mrPartenaire" name="motif">
+                                            <option value="Sénégal">Aide Scolaire</option>
+                                            <option value="Sénégal">Assistance Familiale</option>
+                                            <option value="Sénégal">Construction Immobiliére</option>
+                                            <option value="Sénégal">Réglement de Bien</option>
+                                            <option value="Sénégal">Réglement de Services</option>
+                                            <option value="Sénégal">Autres</option>
+                                            <option value="idcard">Pasport</option>
+                                        </select>
+                                      </div>
+                                     </div>
+                                     <div class="row" *ngIf="mr==6">
+                                        <div class="col-lg-3 col-md-3">
+                                          <label style="margin-top:1.5rem">Code Voucher</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8">
+                                          <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrCodeVoucher" name="nomB" />
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="(mr==2)">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">Celulaire</label>
+                                      </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrCellulaier" name="nomB" />
+                                      </div>
+                                    </div>
+                                    <div class="row" *ngIf="(mr==3)">
+                                      <div class="col-lg-3 col-md-3">
+                                        <label style="margin-top:1.5rem">Numéro Compte</label>
+                                      </div>
+                                      <div class="col-lg-8 col-md-8">
+                                        <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="textinput" type="text" [(ngModel)]="mrNumeroCompte" name="nomB" />
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                                </form>
                          </div>
                       </div>
                       <div class="row" style="width: 50%; text-align:center" >
-						  <span style="cursor:pointer" *ngIf="btnPrecedant"  (click)="precedant()" ><img height="30px" width="50px" src="assets/fGauche.jpeg" /><b>Precedant</b></span>
-						  <!--<button *ngIf="btnPrecedant" (click)="precedant()" class="btn btn-primary">precedant</button>-->
-						  <span style="cursor:pointer" *ngIf="btnSuivant"  (click)="suivant()" ><img height="30px" width="50px" src="assets/fDroit.jpeg" /><b>Suivant</b></span>
-						  <!--<button *ngIf="btnSuivant" (click)="suivant()" class="btn btn-primary">suivant</button>-->
-                          <input *ngIf="btnValider" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="envoyer()" value="valider"/>
-                      </div>  
+                          <span style="cursor:pointer" *ngIf="btnPrecedant"  (click)="precedant()" ><img height="30px" width="50px" src="assets/fGauche.jpeg" /><b>Precedant</b></span>
+                          <!--<button *ngIf="btnPrecedant" (click)="precedant()" class="btn btn-primary">precedant</button>-->
+                          <span style="cursor:pointer" *ngIf="btnSuivant"  (click)="suivant()" ><img height="30px" width="50px" src="assets/fDroit.jpeg" /><b>Suivant</b></span>
+                          <!--<button *ngIf="btnSuivant" (click)="suivant()" class="btn btn-primary">suivant</button>-->
+                          <input *ngIf="btnValider" style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="envoyerThread()" value="valider"/>
+                      </div>
               </div>
           </div>
       </div>

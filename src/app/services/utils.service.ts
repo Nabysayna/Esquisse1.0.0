@@ -104,7 +104,7 @@ export class UtilsService {
     let url = this.link+"/utils-sen/geolocationRegistration";
     let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, geoposition:data});
     let params = 'params='+datas;
-    return this._http.post(url,params,{headers:this.headers}).toPromise().then( res => {return res} ).catch(error => {return error });
+    return this._http.post(url,params,{headers:this.headers}).toPromise().then( res => { console.log(res);return res} ).catch(error => {return error });
   }
 
 
