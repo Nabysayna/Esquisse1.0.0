@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ng2-bootstrap';
+import { CanalService } from '../services/canal.service';
 
 @Component({
   selector: 'app-canal',
@@ -13,20 +15,12 @@ export class CanalComponent implements OnInit {
   pvd:any;
   deuxiemeEcran:any;
   montantNet:any;
-  Abonnement =[
-    {abonne:11623826,c:1,tel:'779854080',nom:'DIENG',prenom:'Aliou',pays:'Senegal',codePostale:'Sn013003',ville:'Dakar / diamalaye',Adresse:'Diamalaye 2 n 37',option:'Access',annuler:'',ret:'Non',ci:'14070495048190',societe:''},
-    {abonne:11623827,c:1,tel:'772224080',nom:'BARRY',prenom:'Ablaye',pays:'Senegal',codePostale:'Sn013003',ville:'Dakar / diamalaye',Adresse:'Diamalaye 2 n 35',option:'EVASION',annuler:'',ret:'Non',ci:'14070495048190',societe:''},
-    {abonne:11623828,c:1,tel:'773654080',nom:'NDIAYE',prenom:'Naby',pays:'Senegal',codePostale:'Sn013003',ville:'Dakar / parcelle',Adresse:'parcelle 2 n 37',option:'Access',annuler:'',ret:'Non',ci:'14070495048190',societe:''},
-    {abonne:11623829,c:1,tel:'779854080',nom:'DIOP',prenom:'Djibi',pays:'Senegal',codePostale:'Sn013003',ville:'Dakar / Yoff',Adresse:'Yoff 2 n 37',option:'EVASION',annuler:'',ret:'Non',ci:'14070495048190',societe:''},
-  ]
+  //Abonnement = {abonne:0,c:0,tel:'',nom:'',prenom:'',pays:'',codePostale:'',ville:'',Adresse:'',option:'',annuler:'',ret:'',ci:'',societe:''};
+  Abonnement = {abonne:0,tel:'',nom:'',prenom:'',numeroDecodeur:'',numeroCarte:'',formule:'',formuleOptionnelle:'',nombreMois:0,montant:0};
+
   validVerifierNum(){
     this.infoAbonner = [];
-      for(let a of this.Abonnement){
-        if(a.tel == this.verifierNumInput || a.nom == this.verifierNumInput || a.abonne == this.verifierNumInput){
-          this.infoAbonner.push(a);
-        }
-      }
-      console.log( this.infoAbonner);
+     
   }
   listeBouquet =[
     {libelle:'Date à date Access'},
@@ -35,8 +29,15 @@ export class CanalComponent implements OnInit {
     {libelle:'Date à date Les Chaines canal+ & Access'},
     {libelle:'Date à date Les Chaines canal+ & Evasion'},
     {libelle:'Date à date Tout Canal+'},
-    {libelle:'Date à date Prestige'},
-
+    //{libelle:'Date à date Prestige'},
+  ]
+  listeBouquetR =[
+    {libelle:'Date à date Access'},
+    {libelle:'Date à date Evasion'},
+    {libelle:'Date à date Les Chaines canal+ & Access'},
+    {libelle:'Date à date Les Chaines canal+ & Evasion'},
+    {libelle:'Date à date Tout Canal+'},
+    //{libelle:'Date à date Prestige'},
   ]
   TitreAbonner = [
     {libelle:'1-Monsieur'},
@@ -51,9 +52,19 @@ export class CanalComponent implements OnInit {
     {libelle:'STAT'},
     {libelle:'VAD'},
   ]
-  NewAbonnement ={distributeur:0,titre:'',nom:'',typeIdentite:'',pays:0,residence:'',codePostale:'',
-          adresse:'',mail:'',phone:'',debut:'',offre:'',ville:'',offrePricipal:''}
+
+  NewAbonnement ={titre:'',nom:'',prenom:'',cni:'',pays:0,
+          adresse:'',mail:'',phone:'',formule:'',ville:'',nombreMois:0,numeroDecoudeur:0,montant:0}
+
   formReach:number = 1;
+  validRecrutement(){
+    this.NewAbonnement.formule = this.Bouquet;
+    this.NewAbonnement.montant = this.montantNet;
+    this.NewAbonnement.nombreMois = this.nombreMois;
+    this.NewAbonnement.pays = 149;
+    console.log(this.NewAbonnement);
+    
+  }
   abonnementChoose:any =null;
   getAbonner(i){
     this.abonnementChoose = this.infoAbonner[i];
@@ -70,7 +81,7 @@ export class CanalComponent implements OnInit {
      }else if(this.prixCharme != 0){
       this.prixCharme = 0;
      }
-
+     this.getMontant();
   }
   prixPVD:number=0;
   getPVD(){
@@ -81,6 +92,7 @@ export class CanalComponent implements OnInit {
       this.prixPVD = 0;
       console.log(this.prixPVD);
     }
+    this.getMontant();
   }
   prix2Ecran:number=0;
   get2EECRAN(){
@@ -90,9 +102,9 @@ export class CanalComponent implements OnInit {
       
     }else if(this.prix2Ecran != 0){
       this.prix2Ecran = 0;
-      console.log(this.prix2Ecran);
-      
+      console.log(this.prix2Ecran);   
     }
+    this.getMontant();
   }
   getMontant(){
     this.montantNet = 0;
@@ -113,18 +125,53 @@ export class CanalComponent implements OnInit {
     }
     this.montantNet = this.montantNet * this.nombreMois;
   }
+
   validAbonnement(){
-    console.log(this.Bouquet);
-    
+    this.Abonnement.formule = this.Bouquet;
+    this.Abonnement.montant = this.montantNet;
+    this.Abonnement.nombreMois = this.nombreMois;
+    console.log(this.Abonnement);
+    this._canal.abonnement(this.Abonnement).then(res =>{
+      console.log(res);
+    });
   }
   reinitialise(){
-    this.formReach = 1;
+   /* this.formReach = 1;
     this.abonnementChoose = null;
-    this.infoAbonner = [];
+    this.infoAbonner = [];*/
+    this.Bouquet = '';
+    this.nombreMois = 0;
+    this.montantNet = 0;
+
   }
-  constructor() { }
+  @ViewChild('modalventecredit') public modalventecredit:ModalDirective;
+  showmodalventecredit(){
+    this.modalventecredit.show();
+  }
+  hidemodalventecredit(){
+    this.modalventecredit.hide();
+  }
+  constructor(public _canal:CanalService) { }
 
   ngOnInit() {
+    //this.getMontant();
+    this.montantNet = 0;
+    if(this.Bouquet == 'Date à date Access'){
+      this.montantNet = this.montantNet + 5000 + this.prixCharme;
+    }else if(this.Bouquet == 'Date à date Evasion')  {
+      this.montantNet = this.montantNet + 10000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
+    }else if(this.Bouquet == 'Date à date Date à date ESSENTIEL+')  {
+      this.montantNet = this.montantNet + 12000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
+    }else if(this.Bouquet == 'Date à date  Les Chaines canal+ & Access')  {
+      this.montantNet = this.montantNet + 15000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
+    }else if(this.Bouquet == 'Date à date Les Chaines canal+ & Evasion')  {
+      this.montantNet = this.montantNet + 20000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
+    }else if(this.Bouquet == 'Date à date Tout Canal+')  {
+      this.montantNet = this.montantNet + 40000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
+    }else if(this.Bouquet == 'Date à date Prestige')  {
+      this.montantNet = this.montantNet + 30000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
+    }
+    this.montantNet = this.montantNet * this.nombreMois;
   }
 
 }

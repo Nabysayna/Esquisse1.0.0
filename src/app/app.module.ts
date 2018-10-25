@@ -197,6 +197,7 @@ import { CanalComponent } from './canal/canal.component';
 import { AssuranceComponent } from './assurance/assurance.component';
 import { ZuuluComponent } from './zuulu/zuulu.component';
 import { ZuuluService } from './services/zuulu.service';
+import { CanalService } from './services/canal.service';
 
 
 
@@ -375,7 +376,8 @@ import { ZuuluService } from './services/zuulu.service';
     WariService,
     TarifsService,
     AirtimeService,
-    ZuuluService
+    ZuuluService,
+    CanalService
   ],
   bootstrap: [AppComponent]
 })
