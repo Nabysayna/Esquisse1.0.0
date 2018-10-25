@@ -1676,7 +1676,7 @@ public cashOutPIN(objet:any){
   /***************************Debut FACTURIERS ******************************/
 
   paiemantsde(objet){
-    this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
+   /* this._facturierService.paimentsde(Number(objet.data.montant),objet.data.reference_client,objet.data.reference_facture,objet.data.service).then( resp =>{
       console.log("********************************************************")
       console.log(resp) ;
 
@@ -1718,7 +1718,7 @@ public cashOutPIN(objet:any){
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
-    });
+    });*/
   }
 
   validerrapido(objet){
@@ -1770,7 +1770,7 @@ public cashOutPIN(objet:any){
   }
 
   validerpaimentsenelec(objet){
-    this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
+   /* this._facturierService.validerpaimentsenelec(objet.data.montant,objet.data.police,objet.data.num_facture,objet.data.service).then(resp =>{
       if(typeof resp !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
         objet.etats.etat=true;
@@ -1810,7 +1810,7 @@ public cashOutPIN(objet:any){
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
-    });
+    });*/
   }
 
   validerwoyofal(objet){

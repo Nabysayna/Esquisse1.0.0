@@ -25,7 +25,7 @@ export class FacturierService {
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     console.log(this.token);
     }
-
+/*
   public paimentsde(montant : number, reference_client : string,reference_facture :string ,service :string) : Promise<any> {
     let reEspParams = {token:this.token, reference_client:reference_client,reference_facture:reference_facture, service:service, montant : montant} ;
     let url=this.link+"/facturier-sen/reglementsde";
@@ -47,7 +47,7 @@ export class FacturierService {
       );
     });
   }
-
+ */
   public detailreglementsde(reference_client:string,numeroTelephone:string,numeroFacture:String):Promise<any>{
     //let reEspParams={tokenParam:this.token,reference_client:reference_client,numeroTelephone:numeroTelephone,numeroFacture:numeroFacture};
     let requete="9/"+reference_client+"/"+numeroTelephone+"/"+numeroFacture;
@@ -76,6 +76,19 @@ export class FacturierService {
 		   resolve(response);
 		});
     });
+  }
+  public paimentsde(reference:string,telephone:string,numeroFacture,montant:string):Promise<any>{
+      let requete="10/"+montant+"/"+reference+"/"+numeroFacture+"/"+telephone;
+      let url=this.link+"/zuulu/zuulu";
+      let params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
+      return new Promise((resolve,reject) =>{
+          console.log(params);
+          this.http.post(url,params,{headers:this.headers}).subscribe(rep =>{
+			console.log(rep);
+			resolve(rep);
+		  });
+      });
+	
   }
   public getReponse(file:string){
 	let params="param="+JSON.stringify({file:file,token:this.token});
@@ -133,7 +146,7 @@ export class FacturierService {
     });
   }
 
-  public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
+ /* public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
     let reEspParams={token:this.token,police:police,num_facture:numfacture};
     let url=this.link+"/facturier-sen/detailreglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
@@ -148,13 +161,25 @@ export class FacturierService {
         },
         error => reject(JSON.parse("-11")),
         () => {
-          console.log("Finish")
+          console.log("Finish");
         }
       );
     });
+  }*/
+  public detailfacturesenelec(police:string,numfacture:string,telephone:string):Promise<any>{
+    let url=this.link+"/zuulu/zuulu";
+    let requete="11/"+police+"/"+numfacture+"/"+telephone;
+    let params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
+	return new Promise((resolve,reject) =>{
+	    console.log("something");
+	    this.http.post(url,params,{headers:this.headers}).subscribe(reponse => {
+	       console.log(reponse);
+		   resolve(reponse);
+	    });
+	});
   }
 
-  public validerpaimentsenelec(montant:number,police:string,num_facture:string,service:string):Promise<any>{
+ /* public validerpaimentsenelec(montant:number,police:string,num_facture:string,service:string):Promise<any>{
     let reEspParams={token:this.token,montant:montant,police:police,num_facture:num_facture,service:service};
     let url=this.link+"/facturier-sen/reglementsenelec";
     let params="params="+JSON.stringify(reEspParams);
@@ -173,6 +198,20 @@ export class FacturierService {
         }
       );
     });
+  }*/
+  public validerpaimentsenelec(police:string,num_facture:string,montant:string,telephone:string):Promise<any>{
+    let requete="12/"+montant+"/"+police+"/"+num_facture+"/"+telephone;
+    let url=this.link+"/zuulu/zuulu";
+    let Params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
+    return new Promise((resolve,reject)=>{
+      this.http.post(url,Params,{headers:this.headers}).subscribe(reponse =>{
+        console.log(reponse);
+        resolve(reponse);
+      });
+	   
+		
+	});
+	
   }
 
   public payeroolusolar(tel:string,numcompte:string,mtt:string):Promise<string>{
