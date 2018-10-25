@@ -28,6 +28,7 @@ export class AuthenticationService {
       console.log("-------111-----------")
       this._authService.authentifier({login:email, pwd:sha1(password)}).subscribe(
         response => {
+          console.log(response);
           if( response != 'false' ){
             sessionStorage.setItem('headToken', response.split("#")[1] );
             resolve(response);

@@ -13,7 +13,7 @@ import {TarifsService} from "../services/tarifs.service";
 import { AirtimeService } from "../services/airtime.service";
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
-import { ZoningComponent } from 'app/zoning/zoning.component';
+import {WariService} from "../services/wari.service";
 
 
 class Article {
@@ -54,7 +54,8 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
-  
+
+
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -78,8 +79,8 @@ export class AccueilComponent implements OnInit {
   solde : number ;
   s:number=0;
   currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-  
-  
+
+
   /**/
 
   @ViewChild('newoperation') public newOperation:ElementRef;
@@ -89,7 +90,7 @@ export class AccueilComponent implements OnInit {
   messageGeolocation : any ;
   sessionGlob:any;
 
-  constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService,private airtimeService:AirtimeService){}
+  constructor(private _wariservice:WariService,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService,private airtimeService:AirtimeService){}
  // constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private airtimeService:AirtimeService){}
 
   //constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
@@ -120,7 +121,7 @@ export class AccueilComponent implements OnInit {
           this.updateCaution() ;
         }
       )
-    
+
   }
   retrieveAlerteMessage(){
     var periodicVerifier = setInterval(()=>{
@@ -548,7 +549,7 @@ export class AccueilComponent implements OnInit {
     }
   }
   beus(){
-     
+
      // this.om[0].style.visibility='visible';
       this.om[0].style["background-color"]='green';
       this.om[0].style["display"]='block';
@@ -610,7 +611,7 @@ geolocaliser(){
   orangeMoney($event){
      // console.log("fila wara change");
      // console.log($event);
-      
+
         let infoOperation:any;
         if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
           infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
@@ -647,7 +648,7 @@ geolocaliser(){
             }
         }
       console.log("youpi");
-    
+
   }
   tigocash($event){
     let infoOperation:any;
@@ -713,6 +714,7 @@ geolocaliser(){
       }
    }
   }
+
   postcash($event){
     let infoOperation:any;
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
@@ -744,7 +746,7 @@ geolocaliser(){
           }
           default:break;
         }
-        
+
 
       }
     }
@@ -816,6 +818,7 @@ geolocaliser(){
     }
 
   }
+
   facturier(){
     let infoOperation:any;
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
@@ -858,9 +861,69 @@ geolocaliser(){
     }
 
   }
+
+  warii($event){
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      let operateur=sesion.data.operateur;
+      this.process.push(sesion);
+      let operation=sesion.data.operation;
+      sessionStorage.removeItem('curentProcess');
+      if(operateur==8){
+        let operation=sesion.data.operation;
+        console.log('Wari');
+
+        switch(operation){
+             case 1:{
+                  this.wariEnvoi(sesion);
+                  break;
+             }
+            case 2:{
+                 this.wariRetraitRecherche(sesion);
+                 break;
+            }
+            case 3:{
+                 this.wariRetraitConfirme(sesion);
+                 break;
+            }
+            default : break;
+         }
+      }
+    }
+  }
+
+  wariEnvoi (objet:any){
+    this._wariservice.envoi(objet.data.token,objet.data.datas).then( response => {
+        console.log(response);
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+    });
+  }
+
+  wariRetraitRecherche (objet:any){
+    this._wariservice.retaitrerecherche(objet.data.token,objet.data.datas).then( response => {
+        console.log(response)
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+    });
+  }
+
+  wariRetraitConfirme (objet:any){
+    this._wariservice.retaitconfirmer(objet.data.token,objet.data.datas).then( response => {
+        console.log(response);
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='green';
+    });
+  }
+
   Airtime($event){
-     let infoOperation:any;
-     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
 		  infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
 		  let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
 		  let operateur=sesion.data.operateur;
@@ -877,7 +940,7 @@ geolocaliser(){
 /******************************************************************************************************/
 
   processus(){
-   
+
     setInterval(()=>{
 
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
@@ -888,7 +951,7 @@ geolocaliser(){
           console.log("mag = "+mag);
         }
      else{
-          
+
            console.log(this.om[0].style);
            this.om[0].style["background-color"]='blue';
            console.log(this.om[0].style);
@@ -1099,15 +1162,41 @@ geolocaliser(){
               }
               default : break;
           }
+
+          break;
        }
-        default:break;
+
+      case 10 : {
+        let operation=sesion.data.operation;
+        console.log('Wari');
+
+        switch(operation){
+             case 1:{
+                  //this.wariEnvoi(sesion);
+                  break;
+             }
+
+            case 2:{
+                 //this.wariRetraitRecherche(sesion);
+                 break;
+            }
+
+            case 3:{
+                 //this.wariRetraitConfirme(sesion);
+                 break;
+            }
+            default : break;
+         }
+      }
+
+      default:break;
       }
     }
     else{
      console.log('not nice');
     }
   },3000);
-  
+
   }
 
 
@@ -1147,14 +1236,14 @@ geolocaliser(){
           objet.etats.color='red';
           objet.etats.errorCode='0';
           this.updateOpInLastedFifteen('om-depot',id);
-         
+
         }else
         if(resp._body.match('-12')){
           objet.etats.etat=true;
           objet.etats.load='terminated';
           objet.etats.color='red';
           objet.etats.errorCode='-12';
-         
+
         }
         else{
           setTimeout(()=>{
@@ -1167,7 +1256,7 @@ geolocaliser(){
                 objet.etats.color='green';
                // this.addOpInLastedFifteen('om-depot',requete);
                 this.updateCaution();
-              
+
               }
               else{
                 if(donnee!='-1'){
@@ -1177,7 +1266,7 @@ geolocaliser(){
                   objet.etats.errorCode=donnee;
                   this.updateOpInLastedFifteen('om-depot',id);
                   this.updateOpInLastedFifteen('om-depot',id);
-                
+
                 }
                 else{
                   let periodicVerifierOMDepot = setInterval(()=>{
@@ -1252,7 +1341,7 @@ geolocaliser(){
     });
 
   }
- 
+
 /******************************************************************************************************/
 
    retirer(objet:any){
@@ -1368,7 +1457,7 @@ geolocaliser(){
                         }
                       });
                       },10000);
-                    
+
                   }
                 }
               });
@@ -1415,7 +1504,7 @@ geolocaliser(){
    retraitAvecCode(objet:any){
     let requete = "3/"+objet.data.coderetrait+"/"+objet.data.prenom+"/"+objet.data.nomclient+"/"+objet.data.date+"/"+objet.data.cni+"/"+objet.data.num+"/"+objet.data.montant;
     let id=this.repeatedInLastFifteen('om-retraitcode', requete);
-    if (id==-1){ 
+    if (id==-1){
       requete = requete+'R';
     }
 
@@ -1500,7 +1589,7 @@ geolocaliser(){
                   });
                 },10000);
               }
-            
+
             }
           });
         },30000);
@@ -1587,7 +1676,7 @@ geolocaliser(){
                      objet.etats.color='red';
                      objet.etats.errorCode=donnee;
                      this.updateOpInLastedFifteen('om-vente-credit',id);
-                   
+
                   }
                   else{
                         let periodicVerifierOMAcheterCredit = setInterval(()=>{
@@ -1616,7 +1705,7 @@ geolocaliser(){
                               this._omService.demanderAnnulationOM(resp._body.trim().toString()).then(rep =>{
                                 let donnee=rep._body.trim().toString();
                                  console.log('si bir annulation bi');
-                                
+
                                 if(donnee!='w'){
                                   objet.etats.etat=true;
                                   objet.etats.load='wait';
@@ -1797,7 +1886,7 @@ geolocaliser(){
 
       this._postCashService.achatcodewoyofal(objet.data.montant+'',objet.data.compteur+'').then(postcashwebserviceList => {
         if( (typeof postcashwebserviceList.errorCode != "undefined") && postcashwebserviceList.errorCode == "0" && postcashwebserviceList.errorMessage == ""){
-        
+
         objet.dataI = {
             apiservice:'postecash',
             service:'achatcodewayafal',
@@ -1858,7 +1947,6 @@ geolocaliser(){
 
 
   validnabon(objet:any){
-
     this._tntService.abonner(objet.data.token, objet.data.prenom,objet.data.nomclient, objet.data.tel,objet.data.cni, objet.data.chip, objet.data.carte, objet.data.duree, objet.data.typedebouquet).then( response =>
       {
 
@@ -2394,7 +2482,7 @@ retrieveOperationInfo(item : any) : string{
 		if(item.etats.errorCode=="1" || item.etats.errorCode==1){
 			return "Operation Reussie";
 		}
-    
+
     }
 
 
@@ -2613,7 +2701,7 @@ retrieveOperationInfo(item : any) : string{
     let requete = "4/"+objet.data.coderetrait+"/"+objet.data.typepiece+"/"+objet.data.numeropiece+"/"+objet.data.montant+"/"+objet.data.num;
     console.log(requete);
     let id=this.repeatedInLastFifteen('tc-retrait', requete);
-    
+
     if (id==-1){
       objet.etats.etat=true;
       objet.etats.load='terminated';
@@ -3126,7 +3214,7 @@ retrieveOperationInfo(item : any) : string{
 
           },
         }
-        
+
         sessionStorage.setItem('dataImpression', JSON.stringify(this.dataImpression));
         objet.etats.etat=true;
         objet.etats.load='terminated';
@@ -3150,7 +3238,7 @@ retrieveOperationInfo(item : any) : string{
 
 /*********************************/
 /*********************************/
- 
+
 
   annulerOperation(){
     console.log("Opèration annulée ...") ;
@@ -3177,7 +3265,7 @@ retrieveOperationInfo(item : any) : string{
   }
 
   /**************************************** */
-  /*--------------Encoures------------------*/ 
+  /*--------------Encoures------------------*/
 
  // @ViewChild('containerEncour', {read: ViewContainerRef}) containerEncour: ViewContainerRef;
 
@@ -3185,9 +3273,9 @@ retrieveOperationInfo(item : any) : string{
   components = [];
 
 
-  draggableComponentClass = ZoningComponent;
+  // draggableComponentClass = ZoningComponent;
   n:number=0;
-  
+
   /*addComponent(sesion) {
 
    // let infoOperation={'etat':false,'id':1,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
@@ -3196,7 +3284,7 @@ retrieveOperationInfo(item : any) : string{
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.draggableComponentClass);
     const component = this.containerEncour.createComponent(componentFactory);
-  
+
     // Push the component so that we can keep track of which components are created
     this.components.push(component);
     console.log(this.components.length);
@@ -3258,7 +3346,7 @@ retrieveOperationInfo(item : any) : string{
 							 objet.etats.load='loader';
 							 objet.etats.color='orange';
 							 objet.etats.errorCode=donnee;
-                        
+
                         }
                     */
                   }
@@ -3311,7 +3399,7 @@ retrieveOperationInfo(item : any) : string{
               },30000);
       }
 		});
-  
+
   }
 
 }
