@@ -20,7 +20,7 @@ export class SenelecComponent implements OnInit {
   errorMessage : any ;
 
   service:string;
-  detailfacturesenelec:any={errorCode:0,police:"12545555",numeroFacture:"156665",nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
+  detailfacturesenelec:any={errorCode:0,police:"125455",numeroFacture:"156665",nom_client:'nom du client',montant:50000,dateecheance:"12/3/2018"};
   police:string;
   num_facture:string;
   dataImpression:any;
@@ -54,6 +54,12 @@ export class SenelecComponent implements OnInit {
     this.police = undefined;
     this.num_facture = undefined;
     this.loading=false;
+    this.etat2=false;
+    this.detailfacturesenelec.service = "senelec";
+    this.detailfacturesenelec.police="";
+    this.detailfacturesenelec.numeroFacture="";
+    this.detailfacturesenelec.montant="";
+    this.detailfacturesenelec.dateecheance="";
   }
  /* detailfactsenelec(){
     this.detailfacturesenelec={errorCode:0,police:"5",numeroFacture:"5",nomclient:'nom du client',montant:1,dateecheance:"12/3/2018",service:"12/3/2018"};
@@ -110,14 +116,32 @@ export class SenelecComponent implements OnInit {
 			   if(Tontou!="no"){
 					this.handlerSenelecResponse(Tontou,0);
 			   }else{
+          let nb=0;
 					let ident=setInterval(()=>{
-					    this._facturierService.getReponse(tontou).then(rep1=>{
-							this.handlerSenelecResponse(rep1["_body"].trim(),ident);
-						});
-					},5000);
+            if(nb<10){
+                nb++;
+                this._facturierService.getReponse(tontou).then(rep1=>{
+                this.handlerSenelecResponse(rep1["_body"].trim(),ident);
+              });
+           }else{
+             this._facturierService.annulation(tontou).then(rep =>{
+                let reponse=rep["_body"].trim();
+                if(reponse=="ko"){
+                  this.detailfacturesenelec.errorCode="Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
+                  this.etat1=true;
+                  clearInterval(ident);
+                  this.loading=false;
+                }else{
+                  this.loading=false;
+                  clearInterval(ident);
+                }
+
+             });
+           }
+					},10000);
 			   }
 			});
-		},10000);
+		},30000);
 		this.modalsenelec.show();
     });
   }
@@ -144,7 +168,7 @@ export class SenelecComponent implements OnInit {
 			this.etat2=true;
 			switch(parseInt(tontou)){
 				case 400:{
-				    this.loading=false;
+				  this.loading=false;
 					this.detailfacturesenelec.errorCode="Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
 					if(parseInt(id)!=0){
 					  clearInterval(id);

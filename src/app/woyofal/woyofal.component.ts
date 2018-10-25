@@ -10,6 +10,7 @@ export class WoyofalComponent implements OnInit {
   compteur:string;
   montant:number;
   adejaclick:boolean = false;
+  telephone:string;
 
   constructor() {}
 

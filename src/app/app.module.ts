@@ -378,11 +378,8 @@ import { CanalService } from './services/canal.service';
     TarifsService,
     AirtimeService,
     ZuuluService,
-<<<<<<< HEAD
-    CanalService
-=======
+    CanalService,
     ControleService
->>>>>>> 047185fe301619dc6a3e557dfc39793ebd68326d
   ],
   bootstrap: [AppComponent]
 })
