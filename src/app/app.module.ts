@@ -379,7 +379,6 @@ import { CanalService } from './services/canal.service';
     AirtimeService,
     ZuuluService,
     CanalService,
-
     ControleService
   ],
   bootstrap: [AppComponent]
