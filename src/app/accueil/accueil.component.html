@@ -55,12 +55,18 @@
                     <div>{{item.data.nom}}</div>
                   </div>
                 <ng-template #popTemplate >
+                  <div *ngIf="item.data.operateur==10">
+                      <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">{{retrieveOperationInfo(item)}}</div>
+                      <div *ngIf="item.data.operation==1">
+                          <div>Infos : "Infos"</div><br>
+                      </div>
+                  </div>
                   <!-- OM -->
                   <div *ngIf="item.data.operateur==2">
                     <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold ;">{{retrieveOperationInfo(item)}}</div>
                     <div *ngIf="item.data.operation==1">
-                      <div>Montant : {{item.data.montant}}</div><br>
-                      <div>Numéro Client :{{item.data.num}}</div><br>
+                        <div>Montant : {{item.data.montant}}</div><br>
+                        <div>Numéro Client :{{item.data.num}}</div><br>
                     </div>
                     <div *ngIf="item.data.operation==2">
                       <div>Montant : {{item.data.montant}}</div><br>
@@ -294,7 +300,7 @@
                 </ng-template>
 
               </div>
-            
+
           </div>
         </div>
         <!-- /.navbar-static-side -->
@@ -319,7 +325,7 @@
            <app-guideusercaisse *ngIf="guide"></app-guideusercaisse>
            <app-e-commerce *ngIf="ecom"></app-e-commerce>
            <app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>
-           <app-wari *ngIf="wari"></app-wari>
+           <app-wari *ngIf="wari" (changementwari)="warii($event)"></app-wari>
            <app-zuulu *ngIf="zuulu"></app-zuulu>
            <app-impression *ngIf="impression"></app-impression>
            <app-canal *ngIf="canal"></app-canal>
@@ -374,9 +380,9 @@
             </button>
         </div>
         <div class="modal-body" style="text-align: center ;">
-            <h1>Faites patienter le client ; Votre requete est en cours de traitement.</h1> 
+            <h1>Faites patienter le client ; Votre requete est en cours de traitement.</h1>
             <input style="border: 1px solid #ffff; color:#ffff;padding:2rem; " type="button" class="btn btn-success" (click)="this.waitingmodal.hide();" value="OK" />
-        
+
           </div>
       </div>
     </div>
