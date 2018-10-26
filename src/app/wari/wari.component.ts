@@ -96,7 +96,7 @@ export class WariComponent implements OnInit {
       let moyenpaiement = this.codewariRadio || this.moyenpayementRadio;
       let type = this.wariRadio || this.rembourchementRadio;
 
-      let datas = "2" + "]" + moyenpaiement+ "]" + this.code + "]" + type;
+      let datas = "2" + "[" + moyenpaiement+ "[" + this.code + "[" + type;
       //let datas = this.code;
       this.loading = true ;
       this.erreur = false ;
@@ -111,14 +111,15 @@ export class WariComponent implements OnInit {
     retraitrechercheThread (){
       let moyenpaiement = this.codewariRadio || this.moyenpayementRadio;
       let type = this.wariRadio || this.rembourchementRadio;
-      let datas = "2" + "]" + moyenpaiement+ "]" + this.code + "]" + type;
+      let datas = "2" + "[" + moyenpaiement+ "[" + this.code + "[" + type;
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wari retrait','operateur':10,'operation':2,'datas':datas,'token':this.token}));
-      this.reinitialise();
     }
 
     retraitconfirmer () {
-      let datas = "2"+ "]" + this.prenomA + "]" +this.nomA+ "]" +this.adresseA + "]" +this.cellulaireA+ "]" +this.montant+ "]" +this.prenomB + "]" +this.nomB+ "]" +this.typepiece+"]"+this.numero+ "]" +this.pays+ "]" +this.datededelivrance+ "]" +this.datedevalidite+ "]" + this.prenomCaisse+ "]"+ this.nomCaisse;
-      //let datas ="2"+ "/" + this.prenomEnvoyeur + "/" +this.nomEnvoyeur+ "/" +this.adresseEnvoyeur + "/" +this.cellulaireEnvoyeur+ "/" + "/" +this.montant+ "/" +this.prenomBeneficiaire + "/" +this.nomBeneficiaire+ "/" +this.typepieceBeneficiaire+"/"+this.numeroPieceBeneficiaire+ "/" +this.paysBeneficiaire+ "/" +this.datededelivranceBeneficiaire+ "/" +this.datedevaliditeBeneficiaire;
+      let moyenpaiement = this.codewariRadio || this.moyenpayementRadio;
+      let type = this.wariRadio || this.rembourchementRadio;
+      let datas = this.typepiece+"["+this.numero+ "[" +this.pays+ "[" +this.datededelivrance+ "[" +this.datedevalidite+ "]" + "2" + "[" + moyenpaiement+ "[" + this.code + "[" + type;
+      //let datas = "2"+ "[" + this.prenomA + "[" +this.nomA+ "[" +this.adresseA + "[" +this.cellulaireA+ "[" +this.montant+ "[" +this.prenomB + "[" +this.nomB+ "[" +this.typepiece+"["+this.numero+ "[" +this.pays+ "[" +this.datededelivrance+ "[" +this.datedevalidite+ "[" + this.prenomCaisse+ "["+ this.nomCaisse;
       console.log(datas);
       this.loading = true ;
       this.erreur = false ;
@@ -134,7 +135,7 @@ export class WariComponent implements OnInit {
         let moyenpaiement = this.codewariRadio || this.moyenpayementRadio;
         let type = this.wariRadio || this.rembourchementRadio;
         if(this.estvalideRetrait2){
-          let datas = "2"+ "]" + this.prenomA + "]" +this.nomA+ "]" +this.adresseA + "]" +this.cellulaireA+ "]" +this.montant+ "]" +this.prenomB + "]" +this.nomB+ "]" +this.typepiece+"]"+this.numero+ "]" +this.pays+ "]" +this.datededelivrance+ "]" +this.datedevalidite+ "]" + this.prenomCaisse+ "]"+ this.nomCaisse;
+          let datas = "2"+ "[" + this.prenomA + "[" +this.nomA+ "[" +this.adresseA + "[" +this.cellulaireA+ "[" +this.montant+ "[" +this.prenomB + "[" +this.nomB+ "[" +this.typepiece+"["+this.numero+ "[" +this.pays+ "[" +this.datededelivrance+ "[" +this.datedevalidite+ "[" + this.prenomCaisse+ "["+ this.nomCaisse;
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wari retrait','operateur':10,'operation':3,'datas':datas,'token':this.token}));
           this.increment();
           this.reinitialise();
@@ -148,7 +149,7 @@ export class WariComponent implements OnInit {
         let moyenpaiement = this.codewariRadio || this.moyenpayementRadio;
         let type = this.wariRadio || this.rembourchementRadio;
         if(this.estvalideRetrait1(moyenpaiement,type)){
-          let datas = "2" + "]" + moyenpaiement+ "]" + this.code + "]" + type;
+          let datas = "2" + "[" + moyenpaiement+ "[" + this.code + "[" + type;
           sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wari retrait','operateur':10,'operation':2,'datas':datas,'token':this.token}));
           this.increment();
           this.retraitcodeconfirme=true;
@@ -161,7 +162,7 @@ export class WariComponent implements OnInit {
         let modereception = this.espece || this.wallet || this.compte || this.carte;
         let modepaiment = this.especeEn || this.carteEn || this.waripassEn || this.voucherEn || this.walletEn;
 
-        let datas = "1"+ "]" + this.prenomA + "]" +this.nomA+ "]" +this.adresseA + "]" +this.cellulaireA+ "]" +this.typepiece + "]" +this.pays+ "]" +this.datededelivrance+ "]" +this.datedevalidite + "]" + this.montant+ "]" +this.motif+ "]" + modepaiment +  "]"+this.numero + "]" +this.prenomB + "]" +this.nomB+ "]" +this.adresseB + "]" +this.cellulaireB+ "]" +  modereception;
+        let datas = "1"+ "[" + this.prenomA + "[" +this.nomA+ "[" +this.adresseA + "[" +this.cellulaireA+ "[" +this.typepiece + "[" +this.pays+ "[" +this.datededelivrance+ "[" +this.datedevalidite + "[" + this.montant+ "[" +this.motif+ "[" + modepaiment +  "["+this.numero + "[" +this.prenomB + "[" +this.nomB+ "[" +this.adresseB + "[" +this.cellulaireB+ "[" +  modereception;
         console.log(datas);
         //let datas = "1"+ "/" + this.prenomEnvoyeur + "/" +this.nomEnvoyeur+ "/" +this.adresseEnvoyeur + "/" +this.cellulaireEnvoyeur+ "/" +this.montantEnvoyeur+ "/" +this.motifEnvoyeur+ "/" +this.typepieceEnvoyeur + "/"+this.numeroPieceEnvoyeur+ "/" +this.paysEnvoyeur+ "/" +this.datededelivranceEnvoyeur+ "/" +this.datedevaliditeEnvoyeur + "/" + this.prenomBeneficiaire + "/" +this.nomBeneficiaire+ "/" +this.adresseBeneficiaire + "/" +this.cellulaireBeneficiaire+ "/" +  modereceptionBeneficiaire;
         this.loading = true ;
@@ -180,14 +181,14 @@ export class WariComponent implements OnInit {
       modereception = this.espece || this.wallet || this.compte || this.carte;
       modepaiment = this.especeEn || this.carteEn || this.waripassEn || this.voucherEn || this.walletEn;
       if(this.estvalideEnvoi(modereception,modepaiment)){
-        let datas = "1"+ "]" + this.prenomA + "]" +this.nomA+ "]" +this.adresseA + "]" +this.cellulaireA+ "]" +this.typepiece +this.pays+ "]" +this.datededelivrance+ "]" +this.datedevalidite + "]" + this.montant+ "]" +this.motif+ "]" + modepaiment +  "]"+this.numero + "]" +this.prenomB + "]" +this.nomB+ "]" +this.adresseB + "]" +this.cellulaireB+ "]" +  modereception;
+        let datas = "1"+ "[" + this.prenomA + "[" +this.nomA+ "[" +this.adresseA + "[" +this.cellulaireA+ "[" +this.typepiece +this.pays+ "[" +this.datededelivrance+ "[" +this.datedevalidite + "[" + this.montant+ "[" +this.motif+ "[" + modepaiment +  "["+this.numero + "[" +this.prenomB + "[" +this.nomB+ "[" +this.adresseB + "[" +this.cellulaireB+ "[" +  modereception;
         sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'Wari envoi','operateur':10,'operation':1,'datas':datas}));
         console.log(datas);
         this.increment();
+        this.reinitialise();
       }else{
         alert("Vous avez oublié de remplir un champ !")
       }
-      this.reinitialise();
     }
 
     reinitialise(){

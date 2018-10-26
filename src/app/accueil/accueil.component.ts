@@ -59,13 +59,9 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
-<<<<<<< HEAD
 
-
-=======
   impression:boolean=false;
   canal:boolean=false;
->>>>>>> 095718be6bc6a4ac9241ec0a16dff2d5b7e34c87
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -939,7 +935,7 @@ geolocaliser(){
       this.process.push(sesion);
       let operation=sesion.data.operation;
       sessionStorage.removeItem('curentProcess');
-      if(operateur==8){
+      if(operateur==10){
         let operation=sesion.data.operation;
         console.log('Wari');
 
