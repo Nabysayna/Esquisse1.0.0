@@ -8,24 +8,36 @@
           <!-- Tab panes -->
           <div id="sde" style="width:50%;margin-left:auto;margin-right:auto;">
             <form name="transnat" #formsde="ngForm" (ngSubmit)="showmodalsde()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
-              <div class="form-inline">
-                <label>Réfèrence client :</label>
-                <input   style=" border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"   placeholder="reference" required autofocus>
+              <div class="row">
+                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                    <label style="width:100%;text-align: left">Réfèrence client :</label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                   <input   style=" border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;text-align: left" type="text" autocomplete="off" [(ngModel)]="this.refClientSDE" name="verifiernuminput" id="numclient"   placeholder="reference" required autofocus>
+                </div>
               </div>
               <div *ngIf="refBool">
                    <p class="alert alert-danger">format reference client incorrect</p>
               </div>
-              <div class="form-inline">
-				<label>Numero de Facture</label>
-				<input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" (keyup)="reinitialiseBool()" placeholder="numero facture" type="text" [(ngModel)]="numeroFacture" name="numeroFacture" />
+              <div class="row">
+                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+			          	<label style="width:100%;text-align: left">Numero de Facture :</label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                  <input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;text-align:left" (keyup)="reinitialiseBool()" placeholder="numero facture" type="text" [(ngModel)]="numeroFacture" name="numeroFacture" />
+                </div>
               </div>
               <div *ngIf="numFactBool">
 				<p class="alert alert-danger">format numero facture incorrect</p>
               </div>
-              <div class="form-inline">
-				<label>Numero Telephone Client</label>
-				<input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" class="input" (keyup)="reinitialiseBool()" placeholder="telephone client" type="text" [(ngModel)]="numeroTelephone" name="numeroTelephone"  />
-              </div>
+              <div class="row">
+                <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
+                  <label style="width:100%;text-align: left">Numero Telephone Client :</label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+			          	<input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;text-align: left" class="input" (keyup)="reinitialiseBool()" placeholder="telephone client" type="text" [(ngModel)]="numeroTelephone" name="numeroTelephone"  />
+                </div>
+                </div>
               <div *ngIf="telBool">
 				<p class="alert alert-danger">format numero telephone incorrect</p>
               </div>

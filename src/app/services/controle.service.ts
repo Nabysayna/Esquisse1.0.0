@@ -65,5 +65,19 @@ export class ControleService {
 	}
 	
   }
+  verifCompteur(compteur:string){
+    let compt=compteur.split("");
+    if(compteur!="" && compteur!=undefined){
+      for(let i=0;i<compt.length;i++){
+        if(!this.isNumber(compt[i])){
+          return false;
+         }
+        }
+          return true;
+    }else{
+      return false;
+    }
+
+  }
 
 }
