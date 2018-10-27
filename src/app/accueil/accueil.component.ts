@@ -59,10 +59,6 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
-<<<<<<< HEAD
-=======
-
->>>>>>> 9b4b324751fcbe82cb3e61e8bfa284de475a1620
   impression:boolean=false;
   canal:boolean=false;
 
@@ -3408,6 +3404,13 @@ retrieveOperationInfo(item : any) : string{
               case 800:{
                 objet.etats.color='orange';
 								objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
+								break;
+              }
+              case 0:{
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='red';
+								objet.etats.errorCode="Vous n'etes pas autorise a effectue cette transaction.";
 								break;
               }
               default :{

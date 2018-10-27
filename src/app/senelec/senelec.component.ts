@@ -118,7 +118,7 @@ export class SenelecComponent implements OnInit {
 			   }else{
           let nb=0;
 					let ident=setInterval(()=>{
-            if(nb<10){
+            if(nb<15){
                 nb++;
                 this._facturierService.getReponse(tontou).then(rep1=>{
                 this.handlerSenelecResponse(rep1["_body"].trim(),ident);

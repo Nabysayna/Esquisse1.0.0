@@ -59,14 +59,30 @@ export class SdeComponent implements OnInit {
 					if(rep["_body"].trim()!="no"){
 					   this.handlerSdeResponse(rep["_body"],0);
 					}else{
+						let nb=0;
 						let timer=setInterval(()=>{
-							this._facturierService.getReponse(response["_body"]).then(rep1 =>{
-							     this.handlerSdeResponse(rep1["_body"],timer);
-							});
+							if(nb<15){
+								nb++;
+								this._facturierService.getReponse(response["_body"]).then(rep1 =>{
+									 console.log(rep1);
+										this.handlerSdeResponse(rep1["_body"],parseInt(timer.toString()));
+								});
+						  }else{
+							 this._facturierService.annulation(response["_body"].trim()).then(tontou =>{
+								 let ton=tontou["_body"].trim();
+								 if(ton=="ko"){
+										this.waiting=false;
+										this.etat1=true;
+										this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Veuillez reessayer plus tard.";
+										console.log("nii la beugué");
+										clearInterval(timer);
+								 }
+							 });
+						 }
 						},10000);
 					}
 				});
-			},5000);
+			},30000);
 	  }
       
     }).catch(response => {
@@ -125,12 +141,18 @@ export class SdeComponent implements OnInit {
 					clearInterval(timer);
 					break;
 				}
+				case "0":{
+					this.waiting=false;
+					this.detailfacturesde.errorCode = "Vous n'etes pas autorise a effectue cette transaction.";
+					clearInterval(timer);
+					break;
+			}
 				default:{
 				    this.waiting=false;
-					this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard";
-					clearInterval(timer);
-					console.log("si defaul bi");
-					break;
+						this.detailfacturesde.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard";
+						clearInterval(timer);
+						console.log("si defaul bi");
+						break;
 				}
 			}
 		}
