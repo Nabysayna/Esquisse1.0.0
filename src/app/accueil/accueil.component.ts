@@ -3074,6 +3074,12 @@ retrieveOperationInfo(item : any) : string{
     this._facturierService.paimentsde(objet.data.reference_client,objet.data.telephone,objet.data.reference_facture,objet.data.montant).then( resp =>{
       console.log("********************************************************");
       let serverResponse=resp["_body"].trim();
+    if(serverResponse=="0"){
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+      objet.etats.errorCode="Vous n'etes pas autorise a effectue cette transaction.";
+    }else{
       setTimeout(()=>{
 		this._facturierService.getReponse(serverResponse).then(tontou =>{
 			let TonTou=tontou["_body"].trim();
@@ -3229,6 +3235,7 @@ retrieveOperationInfo(item : any) : string{
 
 		});
       },10000);
+    }
     }).catch(response => {
       objet.etats.errorCode = response;
       objet.etats.etat=true;
@@ -3351,6 +3358,12 @@ retrieveOperationInfo(item : any) : string{
 		this._facturierService.validerpaimentsenelec(objet.data.police,objet.data.num_facture,objet.data.montant,objet.data.telephone).then(reponse =>{
       console.log(reponse);
       let tontou=reponse["_body"].trim();
+      if(tontou=="0"){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode="Vous n'etes pas autorise a effectue cette transaction.";
+      }else{
       setTimeout(()=>{
         this._facturierService.getReponse(tontou).then(rep =>{
           let Tontou=rep["_body"].trim();
@@ -3381,21 +3394,21 @@ retrieveOperationInfo(item : any) : string{
 
               }
               case 400:{
-                objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='red';
                 break;
               }
               case 600:{
-                objet.etats.errorCode = "Numero facture ou reference incorrect"
+                objet.etats.errorCode = "Numero facture ou reference incorrect";
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='red';
                 break;
               }
               case 700:{
-                objet.etats.errorCode = "Facture deja payée."
+                objet.etats.errorCode = "Facture deja payée.";
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='red';
@@ -3404,13 +3417,6 @@ retrieveOperationInfo(item : any) : string{
               case 800:{
                 objet.etats.color='orange';
 								objet.etats.errorCode='Votre requete est en cour de traitement veuillez patienter svp.';
-								break;
-              }
-              case 0:{
-                objet.etats.etat=true;
-                objet.etats.load='terminated';
-                objet.etats.color='red';
-								objet.etats.errorCode="Vous n'etes pas autorise a effectue cette transaction.";
 								break;
               }
               default :{
@@ -3517,6 +3523,7 @@ retrieveOperationInfo(item : any) : string{
           }
         });
       },30000);
+     }
 		});
    }
 
