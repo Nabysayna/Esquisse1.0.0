@@ -59,6 +59,7 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
+<<<<<<< HEAD
 //<<<<<<< HEAD
 
 
@@ -66,6 +67,10 @@ export class AccueilComponent implements OnInit {
   impression:boolean=false;
   canal:boolean=false;
 //>>>>>>> 095718be6bc6a4ac9241ec0a16dff2d5b7e34c87
+=======
+  impression:boolean=false;
+  canal:boolean=false;
+>>>>>>> 48ad71e67f39ced957b5ff4197945b58ae18a48c
 
   indexOp:number=0;
   quinzeMinutes = 900000;
@@ -939,7 +944,7 @@ geolocaliser(){
       this.process.push(sesion);
       let operation=sesion.data.operation;
       sessionStorage.removeItem('curentProcess');
-      if(operateur==8){
+      if(operateur==10){
         let operation=sesion.data.operation;
         console.log('Wari');
 
@@ -3079,6 +3084,12 @@ retrieveOperationInfo(item : any) : string{
     this._facturierService.paimentsde(objet.data.reference_client,objet.data.telephone,objet.data.reference_facture,objet.data.montant).then( resp =>{
       console.log("********************************************************");
       let serverResponse=resp["_body"].trim();
+    if(serverResponse=="0"){
+      objet.etats.etat=true;
+      objet.etats.load='terminated';
+      objet.etats.color='red';
+      objet.etats.errorCode="Vous n'etes pas autorise a effectue cette transaction.";
+    }else{
       setTimeout(()=>{
 		this._facturierService.getReponse(serverResponse).then(tontou =>{
 			let TonTou=tontou["_body"].trim();
@@ -3234,6 +3245,7 @@ retrieveOperationInfo(item : any) : string{
 
 		});
       },10000);
+    }
     }).catch(response => {
       objet.etats.errorCode = response;
       objet.etats.etat=true;
@@ -3356,6 +3368,12 @@ retrieveOperationInfo(item : any) : string{
 		this._facturierService.validerpaimentsenelec(objet.data.police,objet.data.num_facture,objet.data.montant,objet.data.telephone).then(reponse =>{
       console.log(reponse);
       let tontou=reponse["_body"].trim();
+      if(tontou=="0"){
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+        objet.etats.errorCode="Vous n'etes pas autorise a effectue cette transaction.";
+      }else{
       setTimeout(()=>{
         this._facturierService.getReponse(tontou).then(rep =>{
           let Tontou=rep["_body"].trim();
@@ -3386,21 +3404,21 @@ retrieveOperationInfo(item : any) : string{
 
               }
               case 400:{
-                objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard."
+                objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Veulliez reessayer plus tard.";
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='red';
                 break;
               }
               case 600:{
-                objet.etats.errorCode = "Numero facture ou reference incorrect"
+                objet.etats.errorCode = "Numero facture ou reference incorrect";
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='red';
                 break;
               }
               case 700:{
-                objet.etats.errorCode = "Facture deja payée."
+                objet.etats.errorCode = "Facture deja payée.";
                 objet.etats.etat=true;
                 objet.etats.load='terminated';
                 objet.etats.color='red';
@@ -3515,10 +3533,11 @@ retrieveOperationInfo(item : any) : string{
           }
         });
       },30000);
+     }
 		});
    }
 
-  validerwoyofal(objet){
+ /* validerwoyofal(objet){
    console.log('nns');
     this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
       console.log(response) ;
@@ -3565,6 +3584,153 @@ retrieveOperationInfo(item : any) : string{
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
+    });
+  }*/
+  validerwoyofal(objet){
+    this._facturierService.validerwoyofal(objet.data.montant,objet.data.compteur,objet.data.telephone).then(reponse => {
+      console.log(reponse);
+      let rep=reponse["_body"].trim();
+      if(rep=="0"){
+        objet.etats.errorCode = "Vous etes pas autorise a effectue cette operation";
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+
+      }else{
+        setTimeout(()=>{
+          this._facturierService.getReponse(rep).then(reponse =>{
+            let rep1=reponse["_body"].trim();
+            if(rep1!="no"){
+              if(rep1.search("#")!=-1){
+                let data=rep1.split("#");
+                objet.dataI = {
+                  apiservice:'facturier',
+                  service:'achatcodewayafal',
+                  infotransaction:{
+                    client:{
+                      transactionPostCash: "y-y-y-y",
+                      transactionBBS: 'x-x-x-x',
+                      codewoyafal: data[2],
+                      montant: objet.data.montant,
+                      compteur: objet.data.compteur,
+                    },
+                  },
+                };
+                objet.etats.etat=true;
+                objet.etats.load='terminated';
+                objet.etats.color='green';
+                this.updateCaution();
+
+              }else{
+                switch(parseInt(rep1)){
+                  case 400:{
+                    objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='red';
+                    break;
+                  }
+                  case 700:{
+                    objet.etats.errorCode = "Une erreur s'est produite lors du traitement de votre requete.Merci de contacter le service client"
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='red';
+                    break;
+                  }
+                  case -200:{
+                    objet.etats.errorCode = "Merci de contacter le service client pour la recuperation de votre code woyofal."
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='red';
+                    break;
+                  }
+                  default :{
+                    break;
+                  }
+                }
+              }
+            }else{
+              let nb=0;
+                let timer=setInterval(()=>{
+                  if(nb<10){
+                    nb++;
+                  this._facturierService.getReponse(rep).then(reponse2 =>{
+                    let repwo=reponse2["_body"].trim();
+                    if(repwo!="no"){
+                      if(repwo.search("#")!=-1){
+                        let data=rep.split("#");
+                        objet.dataI = {
+                          apiservice:'facturier',
+                          service:'achatcodewayafal',
+                          infotransaction:{
+                            client:{
+                              transactionPostCash: "y-y-y-y",
+                              transactionBBS: 'x-x-x-x',
+                              codewoyafal: data[2],
+                              montant: objet.data.montant,
+                              compteur: objet.data.compteur,
+                            },
+                          },
+                        };
+                        objet.etats.etat=true;
+                        objet.etats.load='terminated';
+                        objet.etats.color='green';
+                        this.updateCaution();
+                        clearInterval(timer);
+                      }else{
+                        switch(parseInt(repwo)){
+                          case 400:{
+                            objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
+                            objet.etats.etat=true;
+                            objet.etats.load='terminated';
+                            objet.etats.color='red';
+                            clearInterval(timer);
+                            break;
+                          }
+                          case 700:{
+                            objet.etats.errorCode = "Une erreur s'est produite lors du traitement de votre requete.Merci de contacter le service client"
+                            objet.etats.etat=true;
+                            objet.etats.load='terminated';
+                            objet.etats.color='red';
+                            clearInterval(timer);
+                            break;
+                          }
+                          case -200:{
+                            objet.etats.errorCode = "Merci de contacter le service client pour la recuperation de votre code woyofal."
+                            objet.etats.etat=true;
+                            objet.etats.load='terminated';
+                            objet.etats.color='red';
+                            clearInterval(timer);
+                            break;
+                          }
+                          default:{
+                            break;
+                          }
+                          
+
+                        }
+                      }
+                   }
+                  });
+                }else{
+                  this._facturierService.annulation(rep).then(rep =>{
+                    if(rep["_body"].trim()=="ko"){
+                      objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client.";
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      clearInterval(timer);
+
+                    }
+                  });
+                }
+                },5000);
+            }
+          });
+        },30000);
+
+      }
+
     });
   }
   validatedebitercarte(objet:any){

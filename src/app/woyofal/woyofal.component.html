@@ -40,9 +40,12 @@
 								    <label  style="width:100%;margin-top:1.5rem; text-align:left">Telephone :</label>
                 </div>
                 <div class="col-lg-5 col-md-5 col-xs-5 col-sm-5">
-                    <input style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;text-align:left" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.telephone" name="telephone" id="numclient"   placeholder="Numéro du client" required autofocus>
+                    <input (keyup)="reinitialise()"  style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;text-align:left" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.telephone" name="telephone" id="numclient"   placeholder="Numéro du client" required autofocus>
 							  </div>
-							</div>
+              </div>
+              <div *ngIf="telBool">
+                <P class="alert alert-danger">Numero telephone incorrect</P>
+              </div>
                             <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formwoyofal.form.valid" />
 
                         </form>
@@ -54,7 +57,7 @@
     </div>
 </div>
 <div bsModal #modalwoyofal="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm modal-lg modal-md modal-xs">
+  <div class="modal-dialog  modal-lg modal-md ">
     <div class="modal-content" >
       <div class="modal-header">
         <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalwoyofal()">

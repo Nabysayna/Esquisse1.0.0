@@ -1814,7 +1814,7 @@ public cashOutPIN(objet:any){
   }
 
   validerwoyofal(objet){
-    this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
+   /* this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
       console.log(response) ;
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -1858,7 +1858,7 @@ public cashOutPIN(objet:any){
       objet.etats.etat=true;
       objet.etats.load='terminated';
       objet.etats.color='red';
-    });
+    });*/
   }
 
   /**************************************FIN****************************************/

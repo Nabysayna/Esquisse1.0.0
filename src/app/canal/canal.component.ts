@@ -135,14 +135,18 @@ export class CanalComponent implements OnInit {
   }
 
   validAbonnement(){
-    this.Abonnement.formule = this.Bouquet;
+   /* this.Abonnement.formule = this.Bouquet;
     this.Abonnement.montant = this.montantNet;
     this.Abonnement.nombreMois = this.nombreMois;
     console.log(this.Abonnement);
     this._canal.abonnement(1,this.Abonnement.nom,this.Abonnement.prenom,this.Abonnement.tel,this.Abonnement.abonne,this.Abonnement.numeroDecodeur,this.Abonnement.numeroCarte,this.Abonnement.formule,this.Abonnement.montant,this.Abonnement.nombreMois,this.NewAbonnement.charme,this.NewAbonnement.pvr,this.NewAbonnement.deuxiemeEcran).then(res =>{
       console.log(res);
+<<<<<<< HEAD
     });
     this.reinitialise()
+=======
+    });*/
+>>>>>>> 48ad71e67f39ced957b5ff4197945b58ae18a48c
   }
   reinitialise(){
    /* this.formReach = 1;

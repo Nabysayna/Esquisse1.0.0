@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http,Headers} from "@angular/http";
 import 'rxjs/add/operator/map';
+import { resolve } from 'url';
 
 
 
@@ -72,7 +73,7 @@ export class FacturierService {
     });*/
     return new Promise((resolve,reject)=>{
 		this.http.post(url,params,{headers:this.headers}).subscribe(response =>{
-		   console.log(response);
+		  // console.log(response);
 		   resolve(response);
 		});
     });
@@ -82,10 +83,10 @@ export class FacturierService {
       let url=this.link+"/zuulu/zuulu";
       let params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
       return new Promise((resolve,reject) =>{
-          console.log(params);
+         // console.log(params);
           this.http.post(url,params,{headers:this.headers}).subscribe(rep =>{
-			console.log(rep);
-			resolve(rep);
+           // console.log(rep);
+            resolve(rep);
 		  });
       });
 	
@@ -95,7 +96,7 @@ export class FacturierService {
 	let url=this.link+"/zuulu/getReponse";
 	return new Promise((resolve,reject)=>{
 		this.http.post(url,params,{headers:this.headers}).subscribe(reponse =>{
-			console.log(reponse);
+		//	console.log(reponse);
 			resolve(reponse);
 		});
 		
@@ -136,7 +137,7 @@ export class FacturierService {
     });
   }
 
-  public validerwoyofal(montant:string,compteur:string):Promise<any>{
+ /* public validerwoyofal(montant:string,compteur:string):Promise<any>{
     let reEspParams={token:this.token,montant:montant,compteur:compteur};
     let url=this.link+"/facturier-sen/achatcodewoyofal";
     let params="params="+JSON.stringify(reEspParams);
@@ -156,6 +157,18 @@ export class FacturierService {
         }
       );
     });
+  }*/
+  public validerwoyofal(montant:string,compteur:string,telephone:string):Promise<any>{
+    let url=this.link+"/zuulu/zuulu";
+    let requete="13/"+montant+"/"+compteur+"/"+telephone;
+    let params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
+    return new Promise((resolve,reject)=>{
+      this.http.post(url,params,{headers:this.headers}).subscribe(rep => {
+        console.log(rep);
+        resolve(rep);
+      });
+    });
+
   }
 
  /* public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
