@@ -16,7 +16,7 @@ export class CanalComponent implements OnInit {
   deuxiemeEcran:any;
   montantNet:any;
   //Abonnement = {abonne:0,c:0,tel:'',nom:'',prenom:'',pays:'',codePostale:'',ville:'',Adresse:'',option:'',annuler:'',ret:'',ci:'',societe:''};
-  Abonnement = {abonne:0,tel:'',nom:'',prenom:'',numeroDecodeur:'',numeroCarte:'',formule:'',formuleOptionnelle:'',nombreMois:0,montant:0};
+  Abonnement = {abonne:0,tel:'',nom:'',prenom:'',numeroDecodeur:'',numeroCarte:'',formule:'',formuleOptionnelle:'',nombreMois:0,montant:0,charme:'',pvr:'',deuxiemeEcran:''};
 
   validVerifierNum(){
     this.infoAbonner = [];
@@ -40,10 +40,10 @@ export class CanalComponent implements OnInit {
     //{libelle:'Date à date Prestige'},
   ]
   TitreAbonner = [
-    {libelle:'1-Monsieur'},
-    {libelle:'2-Madame'},
-    {libelle:'3-Mademoille'},
-    {libelle:'4-Societé'},
+    {libelle:'Monsieur'},
+    {libelle:'Madame'},
+    {libelle:'Mademoille'},
+    {libelle:'Societé'},
   ]
   TypeIdentite = [
     {libelle:'Carte d\'identité'},
@@ -54,7 +54,7 @@ export class CanalComponent implements OnInit {
   ]
 
   NewAbonnement ={titre:'',nom:'',prenom:'',cni:'',pays:0,
-          adresse:'',mail:'',phone:'',formule:'',ville:'',nombreMois:0,numeroDecoudeur:0,montant:0}
+          adresse:'',mail:'',tel:'',formule:'',ville:'',nombreMois:0,numeroDecoudeur:0,montant:0,charme:'',pvr:'',deuxiemeEcran:''}
 
   formReach:number = 1;
   validRecrutement(){
@@ -62,8 +62,9 @@ export class CanalComponent implements OnInit {
     this.NewAbonnement.montant = this.montantNet;
     this.NewAbonnement.nombreMois = this.nombreMois;
     this.NewAbonnement.pays = 149;
+    this._canal.Recrutement(2,this.NewAbonnement.titre,this.NewAbonnement.nom,this.NewAbonnement.prenom,this.NewAbonnement.cni,this.NewAbonnement.ville,this.NewAbonnement.adresse,this.NewAbonnement.mail,this.NewAbonnement.tel,this.NewAbonnement.numeroDecoudeur,this.NewAbonnement.formule,this.NewAbonnement.montant,this.NewAbonnement.nombreMois,this.NewAbonnement.charme,this.NewAbonnement.pvr,this.NewAbonnement.deuxiemeEcran)
     console.log(this.NewAbonnement);
-    
+    this.reinitialise();
   }
   abonnementChoose:any =null;
   getAbonner(i){
@@ -78,8 +79,12 @@ export class CanalComponent implements OnInit {
   getCharme(){
      if(this.prixCharme == 0){
       this.prixCharme = 6000;
+      this.Abonnement.charme ='charme';
+      this.NewAbonnement.charme = 'charme';
      }else if(this.prixCharme != 0){
       this.prixCharme = 0;
+      this.Abonnement.charme ="";
+      this.NewAbonnement.charme = "";
      }
      this.getMontant();
   }
@@ -87,22 +92,25 @@ export class CanalComponent implements OnInit {
   getPVD(){
     if(this.prixPVD == 0){
       this.prixPVD = 5000;
-      console.log(this.prixPVD);
+      this.Abonnement.pvr ='PVD';
+      this.NewAbonnement.pvr = 'PVD';
     }else  if(this.prixPVD != 0){
       this.prixPVD = 0;
-      console.log(this.prixPVD);
-    }
+      this.Abonnement.pvr ="";
+      this.NewAbonnement.pvr = "";  
+      }
     this.getMontant();
   }
   prix2Ecran:number=0;
   get2EECRAN(){
     if(this.prix2Ecran == 0){
       this.prix2Ecran = 6000;
-      console.log(this.prix2Ecran);
-      
+      this.Abonnement.deuxiemeEcran ='2E ECRAN';
+      this.NewAbonnement.deuxiemeEcran = '2E ECRAN';      
     }else if(this.prix2Ecran != 0){
       this.prix2Ecran = 0;
-      console.log(this.prix2Ecran);   
+      this.Abonnement.deuxiemeEcran ="";
+      this.NewAbonnement.deuxiemeEcran = ""; 
     }
     this.getMontant();
   }
@@ -112,9 +120,9 @@ export class CanalComponent implements OnInit {
       this.montantNet = this.montantNet + 5000 + this.prixCharme;
     }else if(this.Bouquet == 'Date à date Evasion')  {
       this.montantNet = this.montantNet + 10000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Date à date ESSENTIEL+')  {
+    }else if(this.Bouquet == 'Date à date ESSENTIEL+')  {
       this.montantNet = this.montantNet + 12000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date  Les Chaines canal+ & Access')  {
+    }else if(this.Bouquet == 'Date à date Les Chaines canal+ & Access')  {
       this.montantNet = this.montantNet + 15000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
     }else if(this.Bouquet == 'Date à date Les Chaines canal+ & Evasion')  {
       this.montantNet = this.montantNet + 20000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
@@ -131,9 +139,10 @@ export class CanalComponent implements OnInit {
     this.Abonnement.montant = this.montantNet;
     this.Abonnement.nombreMois = this.nombreMois;
     console.log(this.Abonnement);
-    this._canal.abonnement(1,this.Abonnement.nom,this.Abonnement.prenom,this.Abonnement.tel,this.Abonnement.abonne,this.Abonnement.numeroDecodeur,this.Abonnement.numeroCarte,this.Abonnement.formule,this.Abonnement.montant,this.Abonnement.nombreMois).then(res =>{
+    this._canal.abonnement(1,this.Abonnement.nom,this.Abonnement.prenom,this.Abonnement.tel,this.Abonnement.abonne,this.Abonnement.numeroDecodeur,this.Abonnement.numeroCarte,this.Abonnement.formule,this.Abonnement.montant,this.Abonnement.nombreMois,this.NewAbonnement.charme,this.NewAbonnement.pvr,this.NewAbonnement.deuxiemeEcran).then(res =>{
       console.log(res);
     });
+    this.reinitialise()
   }
   reinitialise(){
    /* this.formReach = 1;
@@ -142,36 +151,63 @@ export class CanalComponent implements OnInit {
     this.Bouquet = '';
     this.nombreMois = 0;
     this.montantNet = 0;
+    this.Abonnement.abonne =null;
+    this.Abonnement.charme = null;
+    this.Abonnement.deuxiemeEcran = null;
+    this.Abonnement.formule = null;
+    this.Abonnement.formuleOptionnelle = null;
+    this.Abonnement.montant = null;
+    this.Abonnement.nom = null;
+    this.Abonnement.nombreMois = null;
+    this.Abonnement.numeroCarte = null;
+    this.Abonnement.numeroDecodeur = null;
+    this.Abonnement.prenom = null;
+    this.Abonnement.pvr = null;
+    this.Abonnement.tel
+    this.NewAbonnement.adresse = null;
+    this.NewAbonnement.charme = null;
+    this.NewAbonnement.cni = null;
+    this.NewAbonnement.deuxiemeEcran = null;
+    this.NewAbonnement.formule = null;
+    this.NewAbonnement.mail = null;
+    this.NewAbonnement.montant = null;
+    this.NewAbonnement.nom = null;
+    this.NewAbonnement.nombreMois = null;
+    this.NewAbonnement.numeroDecoudeur = null;
+    this.NewAbonnement.pays = null;
+    this.NewAbonnement.prenom = null;
+    this.NewAbonnement.pvr = null;
+    this.NewAbonnement.tel =null;
+    this.NewAbonnement.titre = null;
+    this.NewAbonnement.ville = null;
 
   }
   @ViewChild('modalventecredit') public modalventecredit:ModalDirective;
+  @ViewChild('reabonnement') public reabonnement:ModalDirective;
+  @ViewChild('recrutement') public recrutement:ModalDirective;
   showmodalventecredit(){
     this.modalventecredit.show();
   }
+  showmodalreabonnement(){
+    this.reabonnement.show();
+  }
+  showmodalrecrutement(){
+    this.recrutement.show();
+  }
   hidemodalventecredit(){
     this.modalventecredit.hide();
+  }
+  hidereabonnement(){
+    this.reabonnement.hide();
+  }
+  hiderecrutement(){
+    this.recrutement.hide();
   }
   constructor(public _canal:CanalService) { }
 
   ngOnInit() {
     //this.getMontant();
-    this.montantNet = 0;
-    if(this.Bouquet == 'Date à date Access'){
-      this.montantNet = this.montantNet + 5000 + this.prixCharme;
-    }else if(this.Bouquet == 'Date à date Evasion')  {
-      this.montantNet = this.montantNet + 10000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Date à date ESSENTIEL+')  {
-      this.montantNet = this.montantNet + 12000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date  Les Chaines canal+ & Access')  {
-      this.montantNet = this.montantNet + 15000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Les Chaines canal+ & Evasion')  {
-      this.montantNet = this.montantNet + 20000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Tout Canal+')  {
-      this.montantNet = this.montantNet + 40000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Prestige')  {
-      this.montantNet = this.montantNet + 30000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }
-    this.montantNet = this.montantNet * this.nombreMois;
+    this.getMontant()
   }
 
 }

@@ -59,13 +59,13 @@ export class AccueilComponent implements OnInit {
   airtime:boolean=false;
   wari:boolean=false;
   zuulu:boolean=false;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 
-=======
+//=======
   impression:boolean=false;
   canal:boolean=false;
->>>>>>> 095718be6bc6a4ac9241ec0a16dff2d5b7e34c87
+//>>>>>>> 095718be6bc6a4ac9241ec0a16dff2d5b7e34c87
 
   indexOp:number=0;
   quinzeMinutes = 900000;

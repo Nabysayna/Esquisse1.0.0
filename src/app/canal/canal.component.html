@@ -54,10 +54,7 @@
                                             <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro carte  Abonneé </label>
                                             <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.numeroCarte" name="tel" id=""   class="form-control"  >
                                         </div>
-                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
-                                              <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Nombre de mois </label>
-                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="nombreMois" name="nbr"  class="form-control"  >
-                                          </div>
+                                      
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Bouquet </label>
                                               <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Bouquet"  name="Bouquet" id="Bouquet"   class="form-control"   >
@@ -65,6 +62,10 @@
                                                 <option *ngFor="let l of listeBouquet" (click)="getMontant()" value="{{l.libelle}}">{{l.libelle}}</option>
                                               </select>
                                           </div>
+                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                            <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Nombre de mois </label>
+                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" (keyup)="getMontant()" [(ngModel)]="nombreMois" name="nbr"  class="form-control"  >
+                                        </div>
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Offres optionnelles </label>
                                             <div class="col-md-8 col-1g-8">
@@ -85,7 +86,7 @@
                                                 <div class="row">
                                                   <div class="col-1g-8">
                                                       <ul class="list-group">
-                                                          <li class="list-group-item" style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;font-size: 3rem;font-family: fantasy;padding: 0;">{{montantNet}} FCFA</li>
+                                                          <li class="list-group-item" style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;font-size: 3rem;font-family: fantasy;padding: 0;" >{{montantNet}} FCFA</li>
                                                       </ul>
                                                      <!-- <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" (click)="getMontant()" [(ngModel)]="montantNet" name="montant"  readonly  class="form-control"  >-->
                                                   </div>
@@ -96,7 +97,7 @@
                                                 </div>
                                             </div>
                                           <div class="col-md-8 col-lg-8"style="width: 100%; text-align:center" >
-                                              <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="validAbonnement()"  value="valider"/>
+                                              <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="showmodalreabonnement()"  value="valider"/>
                                             </div> 
                                       </form> 
                                   </div>
@@ -153,23 +154,23 @@
                                     </div>
                                     <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                       <label  class="col-md-8 col-1g-8" for=""> Téléphone</label>
-                                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.phone" name="tel"  class="form-control"  required autofocus>
+                                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.tel" name="tel"  class="form-control"  required autofocus>
                                      </div>
                                      <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                         <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro Décodeur</label>
                                         <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="NewAbonnement.numeroDecoudeur" name="ndec"  class="form-control"  required autofocus>
                                     </div>
-                                     
-                                     <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
-                                        <label  class="col-md-8 col-1g-8" for="">Nombre de mois </label>
-                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="nombreMois" name="nbrM" id=""   class="form-control"  required autofocus>
-                                    </div>
+                                    
                                     <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                         <label  class="col-md-8 col-1g-8" for=""> Bouquet </label>
                                         <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Bouquet" name="Bouquet" id="Bouquet"   class="form-control"  required autofocus>
                                           <option >-----------Choisir le bouquet-------------</option>
                                           <option *ngFor="let l of listeBouquetR" value="{{l.libelle}}">{{l.libelle}}</option>
                                         </select>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
+                                        <label  class="col-md-8 col-1g-8" for="">Nombre de mois </label>
+                                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" (keyup)="getMontant()" [(ngModel)]="nombreMois" name="nbrM" id=""   class="form-control"  required autofocus>
                                     </div>
                                     <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                         <label  class="col-md-8 col-1g-8" for=""> Offres optionnelles </label>
@@ -202,7 +203,7 @@
                                           </div>
                                       </div>
                                     <div class="col-md-8 col-lg-8"style="width: 100%; text-align:center" >
-                                        <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="validRecrutement()" [disabled]="!verifiernum.form.valid" value="valider"/>
+                                        <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="showmodalrecrutement()" [disabled]="!verifiernum.form.valid" value="valider"/>
                                       </div> 
                                 </form> 
                             </div>
@@ -244,7 +245,126 @@
    </div>
   
   </div>
+  <div bsModal #reabonnement="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
+    <div class="modal-dialog modal-sm">
+       <div class="modal-content" >
+         <div class="modal-header">
+       <button type="button" class="close pull-right" aria-label="Close" (click)="hidereabonnement()">
+           <span aria-hidden="true">&times;</span>
+           </button>
+           <h2  class="modal-title" id="myModalLabel"><strong>{{Bouquet}}</strong></h2>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form class="form">
+                    <div class="form-group">
+                        <label >Numéro abonné : {{Abonnement.abonne}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Nom : {{Abonnement.nom}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Prenom : {{Abonnement.prenom}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Téléphone : {{Abonnement.tel}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >No découdeur : {{Abonnement.numeroDecodeur}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >No carte : {{Abonnement.numeroCarte}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Formule : {{Bouquet}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >nombre Mois : {{nombreMois}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Offres Optionnelles : {{Abonnement.charme}} {{Abonnement.pvr}} {{Abonnement.deuxiemeEcran}} </label>
+                    </div>
+                    <div class="form-group">
+                        <label >Montant : {{montantNet}} FCFA </label>
+                    </div>
+                </form>
+
+            </div>
+         </div>
+        <div class="modal-footer">
+            <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="validAbonnement();hidereabonnement()"  value="valider"/>
+            <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-danger" (click)="hidereabonnement()"  value="Annuler"/>
+        </div>
+     </div>
+   </div>
+  
+  </div>
+  <div bsModal #recrutement="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-sm">
+       <div class="modal-content" >
+         <div class="modal-header">
+       <button type="button" class="close pull-right" aria-label="Close" (click)="hiderecrutement()">
+           <span aria-hidden="true">&times;</span>
+           </button>
+           <h2  class="modal-title" id="myModalLabel"><strong>{{Bouquet}}</strong></h2>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form class="form">
+                    <div class="form-group">
+                        <label >Titre : {{NewAbonnement.titre}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Nom : {{NewAbonnement.nom}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Prenom : {{NewAbonnement.prenom}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >CNI : {{NewAbonnement.cni}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Ville : {{NewAbonnement.ville}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Adresse : {{NewAbonnement.adresse}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >E-mail : {{NewAbonnement.mail}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Téléphone : {{NewAbonnement.tel}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >No découdeur : {{NewAbonnement.numeroDecodeur}}</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label >Formule : {{Bouquet}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >nombre Mois : {{nombreMois}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label >Offres Optionnelles : {{NewAbonnement.charme}} {{NewAbonnement.pvr}} {{NewAbonnement.deuxiemeEcran}} </label>
+                    </div>
+                    <div class="form-group">
+                        <label >Montant : {{montantNet}} FCFA </label>
+                    </div>
+                </form>
+
+            </div>
+         </div>
+        <div class="modal-footer">
+            <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-success" (click)="validRecrutement();hiderecrutement()"  value="valider"/>
+            <input style=" border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="button" class="btn btn-danger" (click)="hiderecrutement()"  value="Annuler"/>
+        </div>
+     </div>
+   </div>
+  
+  </div>
 <div *ngIf="this.loading">
   <app-loader></app-loader>
 </div>
