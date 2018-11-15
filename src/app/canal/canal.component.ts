@@ -17,6 +17,11 @@ export class CanalComponent implements OnInit {
   montantNet:any;
   //Abonnement = {abonne:0,c:0,tel:'',nom:'',prenom:'',pays:'',codePostale:'',ville:'',Adresse:'',option:'',annuler:'',ret:'',ci:'',societe:''};
   Abonnement = {abonne:0,tel:'',nom:'',prenom:'',numeroDecodeur:'',numeroCarte:'',formule:'',formuleOptionnelle:'',nombreMois:0,montant:0,charme:'',pvr:'',deuxiemeEcran:''};
+  abonnement = [
+    {abonne:145236,tel:779854080,nom:'Ndiaye',prenom:'Naby',numeroDecodeur:'146856652165',numeroCarte:154651418646,formule:'Date à date Access',formuleOptionnelle:'',nombreMois:1,montant:5000,charme:'',pvr:'',deuxiemeEcran:''},
+    {abonne:166236,tel:772224080,nom:'Ndiaye',prenom:'Naby',numeroDecodeur:'146856652165',numeroCarte:154651418646,formule:'Date à date Access',formuleOptionnelle:'',nombreMois:1,montant:5000,charme:'',pvr:'',deuxiemeEcran:''},
+    {abonne:111236,tel:779994080,nom:'Ndiaye',prenom:'Naby',numeroDecodeur:'146856652165',numeroCarte:154651418646,formule:'Date à date Access',formuleOptionnelle:'',nombreMois:1,montant:5000,charme:'',pvr:'',deuxiemeEcran:''}
+  ];
 
   validVerifierNum(){
     this.infoAbonner = [];
@@ -145,6 +150,34 @@ export class CanalComponent implements OnInit {
     });
     this.reinitialise()
 
+  }
+  reachAbonne:number;
+  displayReabonnement:number =1;
+  reachResult:any =[];
+  rechercher(){
+    this.reachResult =[];
+    for(let a of this.abonnement){
+      console.log(a.abonne+" "+this.reachAbonne);     
+      if(a.abonne == this.reachAbonne || a.numeroCarte == this.reachAbonne || a.tel == this.reachAbonne ){
+        this.reachResult.push(a)
+        this.displayReabonnement=2;
+      }
+    }
+    let tel = "00221"+this.reachAbonne
+    console.log(tel);
+    
+    console.log(this.reachResult);
+    
+  }
+  clickAbonnement(i){
+    this.reachResult
+    this.Abonnement.abonne = this.reachResult[i].abonne;
+    this.Abonnement.nom = this.reachResult[i].nom;
+    this.Abonnement.prenom = this.reachResult[i].prenom;
+    this.Abonnement.tel = this.reachResult[i].tel;
+    this.Abonnement.numeroDecodeur = this.reachResult[i].numeroDecodeur;
+    this.Abonnement.numeroCarte = this.reachResult[i].numeroCarte;
+    this.displayReabonnement=3;
   }
   reinitialise(){
    /* this.formReach = 1;

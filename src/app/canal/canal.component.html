@@ -25,39 +25,73 @@
                       <h3 *ngIf="echecretrait" class="alert alert-success">Echec de l'operation reussi!</h3>
                       <div class="row" style="width:60%">
                           <div class="row" style="text-align:center;">
-
+                                <div *ngIf="displayReabonnement ==1">
+                                    <form name="validVerifierNum" (ngSubmit)="rechercher()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;">
+                                        <label style="text-align:center" class="col-md-12 col-1g-12" for="verifiernuminput"> Numéro abonné, Numéro carte ou Téléphone </label>
+                                        <div class="col-md-12 col-lg-12">
+                                            <input style=" width:95%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" [(ngModel)]="reachAbonne" name="verifiernuminput" id="verifiernuminput"  class="form-control" placeholder="Numéro du chip ou de la carte" required autofocus>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12" style="text-align:center">
+                                            <input style=" border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" class="btn btn-success" [disabled]="!verifiernum.form.valid" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div *ngIf="reachResult.length > 0 && displayReabonnement == 2 ">
+                                    <table class="table table-striped table-bordered table-hover" id="tab_classe">
+                                        <thead>
+                                            <tr><th>Numero Abonneé</th>
+                                                <th>Nom</th>
+                                                <th>Prenom</th>
+                                                <th>Téléphone </th>
+                                                <th>Option majeure  </th>
+                                                <th>numeroCarte </th>
+                                              
+                                             </tr>
+                                                </thead>
+                                            <tbody>
+                                                <tr *ngFor="let a of reachResult;let i=index">
+                                                    <td><a style="cursor: pointer;" (click)="clickAbonnement(i)"> {{a.abonne}}</a></td>
+                                                    <td>{{a.nom}}</td>
+                                                    <td>{{a.prenom}}</td>
+                                                    <td>{{a.tel}}</td>
+                                                    <td>{{a.formule}}</td>
+                                                    <td>{{a.numeroDecodeur}}</td>
+                                                </tr>  
+                                            </tbody>
+                                        </table>
+                                </div>
                              
-                              <div >
+                              <div *ngIf="displayReabonnement ==3">
                                   <div class="row">
                                       <form name="validVerifierNum1" (ngSubmit)="validAbonnement()" #verifiernum ="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;">
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numero Abonné </label>
-                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.abonne" name="ab" id=""   class="form-control"  required autofocus>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" readonly type="text" [(ngModel)]="Abonnement.abonne" name="ab" id=""   class="form-control"  required autofocus>
                                           </div>
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> nom Abonné </label>
-                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.nom" name="nom" id=""   class="form-control" required autofocus>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" readonly type="text" [(ngModel)]="Abonnement.nom" name="nom" id=""   class="form-control" required autofocus>
                                           </div>
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> prenom Abonné </label>
-                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.prenom" name="prenom" id=""   class="form-control" required autofocus>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" readonly type="text" [(ngModel)]="Abonnement.prenom" name="prenom" id=""   class="form-control" required autofocus>
                                           </div>
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Téléphone Abonneé </label>
-                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.tel" name="tel" id=""   class="form-control" required autofocus>
+                                              <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" readonly type="text" [(ngModel)]="Abonnement.tel" name="tel" id=""   class="form-control" required autofocus>
                                           </div>
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                             <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro décodeur Abonneé </label>
-                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.numeroDecodeur" name="tel" id=""   class="form-control" required autofocus>
+                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" readonly type="text" [(ngModel)]="Abonnement.numeroDecodeur" name="tel" id=""   class="form-control" required autofocus>
                                          </div>
                                          <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                             <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Numéro carte  Abonneé </label>
-                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Abonnement.numeroCarte" name="tel" id=""   class="form-control" required autofocus>
+                                            <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" readonly type="text" [(ngModel)]="Abonnement.numeroCarte" name="tel" id=""   class="form-control" required autofocus>
                                         </div>
                                       
                                           <div class="col-md-8 col-lg-8" style=" margin-left: 13rem; ">
                                               <label  class="col-md-8 col-1g-8" for="verifiernuminput"> Bouquet </label>
-                                              <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" [(ngModel)]="Bouquet"  name="Bouquet" id="Bouquet"   class="form-control"  required autofocus>
+                                              <select style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" (keyup)="getMontant()" [(ngModel)]="Bouquet"  name="Bouquet" id="Bouquet"   class="form-control"  required autofocus>
                                                 <option >-----------Choisir le bouquet-------------</option>
                                                 <option *ngFor="let l of listeBouquet" (click)="getMontant()" value="{{l.libelle}}">{{l.libelle}}</option>
                                               </select>
