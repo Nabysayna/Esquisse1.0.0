@@ -155,7 +155,7 @@ export class CanalComponent implements OnInit {
   displayReabonnement:number =1;
   reachResult:any =[];
   rechercher(){
-    this.reachResult =[];
+   /* this.reachResult =[];
     for(let a of this.abonnement){
       console.log(a.abonne+" "+this.reachAbonne);     
       if(a.abonne == this.reachAbonne || a.numeroCarte == this.reachAbonne || a.tel == this.reachAbonne ){
@@ -166,8 +166,10 @@ export class CanalComponent implements OnInit {
     let tel = "00221"+this.reachAbonne
     console.log(tel);
     
-    console.log(this.reachResult);
-    
+    console.log(this.reachResult);*/
+    this._canal.Recherhe(this.reachAbonne).then(res =>{
+      console.log(res);
+    }) 
   }
   clickAbonnement(i){
     this.reachResult
