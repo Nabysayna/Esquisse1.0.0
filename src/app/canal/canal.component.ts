@@ -39,8 +39,8 @@ export class CanalComponent implements OnInit {
   listeBouquetR =[
     {libelle:'Date à date Access'},
     {libelle:'Date à date Evasion'},
-    {libelle:'Date à date Les Chaines canal+ & Access'},
-    {libelle:'Date à date Les Chaines canal+ & Evasion'},
+    {libelle:'Date à date Les Chaines canal+  Access'},
+    {libelle:'Date à date Les Chaines canal+  Evasion'},
     {libelle:'Date à date Tout Canal+'},
     //{libelle:'Date à date Prestige'},
   ]
@@ -127,9 +127,9 @@ export class CanalComponent implements OnInit {
       this.montantNet = this.montantNet + 10000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
     }else if(this.Bouquet == 'Date à date ESSENTIEL+')  {
       this.montantNet = this.montantNet + 12000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Les Chaines canal+ & Access')  {
+    }else if(this.Bouquet == 'Date à date Les Chaines canal+  Access')  {
       this.montantNet = this.montantNet + 15000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
-    }else if(this.Bouquet == 'Date à date Les Chaines canal+ & Evasion')  {
+    }else if(this.Bouquet == 'Date à date Les Chaines canal+  Evasion')  {
       this.montantNet = this.montantNet + 20000 + this.prixCharme + this.prixPVD + this.prix2Ecran;
     }else if(this.Bouquet == 'Date à date Tout Canal+')  {
       this.montantNet = this.montantNet + 40000 + this.prixCharme + this.prixPVD + this.prix2Ecran;

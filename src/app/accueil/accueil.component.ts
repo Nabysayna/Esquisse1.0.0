@@ -11,6 +11,7 @@ import {UtilsService} from "../services/utils.service";
 import {AuthService} from "../services/auth.service";
 import {TarifsService} from "../services/tarifs.service";
 import { AirtimeService } from "../services/airtime.service";
+import { EmoneyPhoneServiceService } from "../services/emoney-phone-service.service";
 
 import { ModalDirective } from 'ng2-bootstrap/modal';
 
@@ -96,7 +97,7 @@ export class AccueilComponent implements OnInit {
   messageGeolocation : any ;
   sessionGlob:any;
 
-  constructor(private _wariservice:WariService,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService,private airtimeService:AirtimeService){}
+  constructor(private _wariservice:WariService,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService,private airtimeService:AirtimeService,private Emservice:EmoneyPhoneServiceService){}
  // constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private airtimeService:AirtimeService){}
 
   //constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
@@ -762,11 +763,13 @@ geolocaliser(){
           let operation=sesion.data.operation;
           switch(operation){
           case 1:{
-                this.cashInEmoney(sesion);
+              //this.cashInEmoney(sesion);
+              this.depotEmoney(sesion);
                 break;
           }
           case 2:{
-              this.cashOutEmoney(sesion);
+             // this.cashOutEmoney(sesion);
+             this.retraitEmoney(sesion);
               break;
           }
           case 3:{
@@ -2523,8 +2526,10 @@ retrieveOperationInfo(item : any) : string{
     /* EXPRESSO */
     if(item.data.operateur==7 ){
 
-      if (item.etats.errorCode=='-1' || item.etats.errorCode=='1')
-        return "Impossible de se connecter au serveur du partenaire. Merci de réessayer plus tard." ;
+      if (item.etats.errorCode=='-1')
+        return "" ;
+      if (item.etats.errorCode=='1')
+        return "" ;
       if (item.etats.errorCode=='2')
         return "Cette requête n'est pas authorisée" ;
       if (item.etats.errorCode=='51')
@@ -2533,8 +2538,8 @@ retrieveOperationInfo(item : any) : string{
         return "Numéro de téléphone invalide." ;
       if (item.etats.errorCode=='2')
         return "Cette requête n'est pas authorisée" ;
-      if (item.etats.errorCode=='7')
-        return "Votre compte a été verrouillé, contactez le service client." ;
+      if (item.etats.errorCode=='-7')
+        return "Votre demande de retrait a echoué." ;
       if (item.etats.errorCode=='9')
         return "Votre compte est à l'état inactif." ;
 
@@ -3929,6 +3934,143 @@ retrieveOperationInfo(item : any) : string{
               },30000);
       }
 		});
+
+  }
+  depotEmoney(objet:any){
+    this.Emservice.depot(objet.data.mnt,objet.data.numclient).then(rep =>{
+      console.log(rep);
+      if(parseInt(rep.status)==200){
+        let reponse=rep['_body'].trim().toString();
+        if(reponse=='0'){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode=reponse;
+        }else{
+          if(reponse=='-12'){
+            objet.etats.etat=true;
+            objet.etats.load='terminated';
+            objet.etats.color='red';
+            objet.etats.errorCode='-12';
+           }else{
+             setTimeout(()=>{
+               this.Emservice.getReponse(reponse).then(rep2 =>{
+                 console.log(rep2);
+                 let reponse2=rep2['_body'].trim().toString();
+                 if(reponse2=='1'){
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='green';
+                    objet.etats.errorCode=reponse2;
+                 }else{
+                    if(reponse2!='-1'){
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      objet.etats.errorCode=reponse2;
+                    }else{
+                      let idinterval=setInterval(()=>{
+                        this.Emservice.getReponse(reponse).then(rep3 =>{
+                          console.log(rep3);
+                          let reponse3=rep3['_body'].trim().toString();
+                          if(reponse3=='1'){
+                            objet.etats.etat=true;
+                            objet.etats.load='terminated';
+                            objet.etats.color='green';
+                            objet.etats.errorCode=reponse2;
+                            clearInterval(idinterval);
+                          }else{
+                            if(reponse3!='-1'){
+                             objet.etats.etat=true;
+                             objet.etats.load='terminated';
+                             objet.etats.color='red';
+                             objet.etats.errorCode=reponse3;
+                             clearInterval(idinterval) ;
+                            }
+                          }
+                        });
+                      },10000);
+                    }
+                 }
+               });
+             },17000);
+           }
+        }
+      }else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+
+      }
+    });
+  }
+  retraitEmoney(objet:any){
+    this.Emservice.retrait(objet.data.montant,objet.data.tel).then(rep =>{
+      console.log(rep);
+      if(parseInt(rep['status'])==200){
+        let reponse=rep['_body'].trim().toString();
+        if(reponse=='0'){
+          objet.etats.etat=true;
+          objet.etats.load='terminated';
+          objet.etats.color='red';
+          objet.etats.errorCode=reponse;
+        }else{
+          if(reponse=='-12'){
+            objet.etats.etat=true;
+            objet.etats.load='terminated';
+            objet.etats.color='red';
+            objet.etats.errorCode='-12';
+           }else{
+             setTimeout(()=>{
+               this.Emservice.getReponse(reponse).then(rep2 =>{
+                 console.log(rep2);
+                 let reponse2=rep2['_body'].trim().toString();
+                 if(reponse2=='1'){
+                    objet.etats.etat=true;
+                    objet.etats.load='terminated';
+                    objet.etats.color='green';
+                    objet.etats.errorCode=reponse2;
+                 }else{
+                    if(reponse2!='-1'){
+                      objet.etats.etat=true;
+                      objet.etats.load='terminated';
+                      objet.etats.color='red';
+                      objet.etats.errorCode=reponse2;
+                    }else{
+                      let idinterval=setInterval(()=>{
+                        this.Emservice.getReponse(reponse).then(rep3 =>{
+                          console.log(rep3);
+                          let reponse3=rep3['_body'].trim().toString();
+                          if(reponse3=='1'){
+                            objet.etats.etat=true;
+                            objet.etats.load='terminated';
+                            objet.etats.color='green';
+                            objet.etats.errorCode=reponse2;
+                            clearInterval(idinterval);
+                          }else{
+                            if(reponse3!='-1'){
+                             objet.etats.etat=true;
+                             objet.etats.load='terminated';
+                             objet.etats.color='red';
+                             objet.etats.errorCode=reponse3;
+                             clearInterval(idinterval) ;
+                            }
+                          }
+                        });
+                      },10000);
+                    }
+                 }
+               });
+             },17000);
+           }
+        }
+      }else{
+        objet.etats.etat=true;
+        objet.etats.load='terminated';
+        objet.etats.color='red';
+
+      }
+    });
 
   }
 
