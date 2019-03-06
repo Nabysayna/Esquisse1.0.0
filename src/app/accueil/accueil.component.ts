@@ -3533,9 +3533,9 @@ retrieveOperationInfo(item : any) : string{
 		});
    }
 
- /* validerwoyofal(objet){
+  validerwoyofal(objet){
    console.log('nns');
-    this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur).then(response =>{
+    this._facturierService.validerwoyofal(objet.data.montant, objet.data.compteur,objet.data.telephone,'').then(response =>{
       console.log(response) ;
       if(typeof response !== 'object') {
         objet.etats.errorCode = "Votre requête n'a pas pu être traitée correctement. Merci de contacter le service client."
@@ -3581,9 +3581,16 @@ retrieveOperationInfo(item : any) : string{
       objet.etats.load='terminated';
       objet.etats.color='red';
     });
+  }
+  /*validerwoyofal(objet){
+    console.log("avant");
+    this._facturierService.validerwoyofal(objet.data.montant,objet.data.compteur,objet.data.telephone,'postcash').then(rep =>{
+      console.log(rep);
+    });
+
   }*/
-  validerwoyofal(objet){
-    this._facturierService.validerwoyofal(objet.data.montant,objet.data.compteur,objet.data.telephone).then(reponse => {
+ /* validerwoyofal(objet){
+    this._facturierService.validerwoyofal(objet.data.montant,objet.data.compteur,objet.data.telephone,'postcash').then(reponse => {
       console.log(reponse);
       let rep=reponse["_body"].trim();
       if(rep=="0"){
@@ -3728,7 +3735,7 @@ retrieveOperationInfo(item : any) : string{
       }
 
     });
-  }
+  }*/
   validatedebitercarte(objet:any){
     console.log("validateretraitespecesanscarte");
     this._postCashService.debitercarte('00221'+objet.data.telephone+'',''+objet.data.montant,''+ objet.data.codevalidation).then(postcashwebserviceList => {
