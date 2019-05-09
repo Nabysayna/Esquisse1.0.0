@@ -92,7 +92,9 @@ export class ExpressoComponent implements OnInit {
 
   public faireretraitsimple(){
     this.hidemodalretrait();
-    this.expressocashwebservice.cashout(this.numclient, this.mnt).then(expressocashwebserviceList => {
+    sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money retrait','operateur':7,'operation':2,montant:this.mnt,tel:this.numclient}));
+    this.increment();
+   /* this.expressocashwebservice.cashout(this.numclient, this.mnt).then(expressocashwebserviceList => {
        console.log(expressocashwebserviceList);
       if(!expressocashwebserviceList.match("cURL Error #:")){
         this.infoRetraitsimple = JSON.parse(JSON.parse(expressocashwebserviceList));
@@ -109,16 +111,16 @@ export class ExpressoComponent implements OnInit {
         this.echecretrait = true;
         this.retraitreussi= false;
       }
-    });
+    });*/
   }
 
 
 /*************************** RETRAIT *************************************/
   public faireretraitsimpleConfirm(){
 
-      this.hidemodalretraitConfirm();
+    /*  this.hidemodalretraitConfirm();
       sessionStorage.setItem('curentProcess',JSON.stringify({'nom':'E-Money depot','operateur':7,'operation':2,'transactionReference':this.transactionReference,'OTP':this.OTP,montant:this.mnt,tel:this.numclient}));
-      this.increment();
+      this.increment();*/
   }
 
 /************************************************************************/

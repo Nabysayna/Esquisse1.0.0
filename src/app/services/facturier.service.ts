@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http,Headers} from "@angular/http";
 import 'rxjs/add/operator/map';
 import { resolve } from 'url';
+import { promise } from '../../../node_modules/protractor';
 
 
 
@@ -12,9 +13,9 @@ export class FacturierService {
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
-//  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
+  private link = "https://sentool.bbstvnet.com/index.php";
 
-  private link = "http://127.0.0.1/backendProductiveEsquisse/index.php";
+  //private link = "http://127.0.0.1/backendProductiveEsquisse/index.php";
 
 
   private headers = new Headers();
@@ -137,14 +138,14 @@ export class FacturierService {
     });
   }
 
- /* public validerwoyofal(montant:string,compteur:string):Promise<any>{
-    let reEspParams={token:this.token,montant:montant,compteur:compteur};
+  public validerwoyofal(montant:string,compteur:string,telephone:string,service:string):Promise<any>{
+    let reEspParams={token:this.token,montant:montant,compteur:compteur,service:service};
     let url=this.link+"/facturier-sen/achatcodewoyofal";
     let params="params="+JSON.stringify(reEspParams);
     return new Promise( (resolve, reject) => {
       this.http.post(url,params,{headers:this.headers}).map(res => res.json()).catch(res => "-12").subscribe(
         data =>{
-          console.log("**WOYOFAL**")
+          console.log("**WOYOFAL rasta**")
           console.log(data)
           if(typeof data === 'boolean') reject(JSON.parse("-11"))
           else if((typeof data === 'string') && data.match("{") && data.match("}")) resolve(JSON.parse(data))
@@ -157,8 +158,8 @@ export class FacturierService {
         }
       );
     });
-  }*/
-  public validerwoyofal(montant:string,compteur:string,telephone:string):Promise<any>{
+  }
+ /* public validerwoyofal(montant:string,compteur:string,telephone:string):Promise<any>{
     let url=this.link+"/zuulu/zuulu";
     let requete="13/"+montant+"/"+compteur+"/"+telephone;
     let params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
@@ -169,7 +170,16 @@ export class FacturierService {
       });
     });
 
-  }
+  }*/
+ /* public woyofalPostcash(montant:string,compteur:string,telephone:string){
+    let url=this.link+"/postcash-sen/woyofal";
+    let params="requestParam="+JSON.stringify({tokenParam:this.token,montant:montant,compteur:compteur,telephone:telephone});
+    return new Promise((resolve,reject)=>{
+      this.http.post(url,params,{headers:this.headers}).subscribe(rep =>{
+        resolve(rep);
+      });
+    });
+  }*/
 
  /* public detailfacturesenelec(police:string,numfacture:string):Promise<any>{
     let reEspParams={token:this.token,police:police,num_facture:numfacture};
@@ -192,9 +202,9 @@ export class FacturierService {
     });
   }*/
   public detailfacturesenelec(police:string,numfacture:string,telephone:string):Promise<any>{
-    let url=this.link+"/zuulu/zuulu";
+    let url=this.link+"/facturier-sen/detailreglementsenelec";
     let requete="11/"+police+"/"+numfacture+"/"+telephone;
-    let params="requestParam="+JSON.stringify({tokenParam:this.token,requestParam:requete});
+    let params="requestParam="+JSON.stringify({token:this.token,police:police,num_facture:numfacture});
 	return new Promise((resolve,reject) =>{
 	    console.log("something");
 	    this.http.post(url,params,{headers:this.headers}).subscribe(reponse => {

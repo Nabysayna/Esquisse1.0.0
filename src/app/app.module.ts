@@ -40,6 +40,7 @@ import { EFinancierService} from './tnt/tntservices';
 import { TigocashService } from './services/tigocash.service';
 import { AirtimeService } from './services/airtime.service';
 import { ControleService } from './services/controle.service';
+import { EmoneyPhoneServiceService } from './services/emoney-phone-service.service';
 
 
 
@@ -383,7 +384,8 @@ import { TranfertInternationnalComponent } from './tranfert-internationnal/tranf
     AirtimeService,
     ZuuluService,
     CanalService,
-    ControleService
+    ControleService,
+    EmoneyPhoneServiceService
   ],
   bootstrap: [AppComponent]
 })

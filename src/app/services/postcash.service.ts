@@ -6,13 +6,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PostCashService {
 
-  //private link = "https://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
+  private link = "https://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://abonnement.bbstvnet.com/crmbbs/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/backend-SB-Admin-BS4-Angular-4/index.php";
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
 //  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
 
-  private link = "https://mysentool.pro/index.php";
+ // private link = "https://mysentool.pro/index.php";
 
   private headers=new Headers();
   private token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
