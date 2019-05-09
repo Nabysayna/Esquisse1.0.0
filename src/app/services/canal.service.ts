@@ -28,6 +28,12 @@ export class CanalService {
     //console.log(params);
     return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {console.log(res);return res} ).catch(error => {console.log(error);return error });
   }
+  public ResultRecherhe(requete:any): Promise<any>{
+    let params="requestParam="+JSON.stringify({requete : requete});
+    let link="http://51.38.234.197/backendprod/horsSentiersBattus/scripts/canal/getRespVerif.php";
+    //console.log(params);
+    return this.http.post(link,params,{headers:this.headers}).toPromise().then( res => {console.log(res);return res} ).catch(error => {console.log(error);return error });
+  }
  // 51.38.234.197/backendprod/horsSentiersBattus/scripts/canal/verifcanal.php
   constructor(private http:Http) {
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');

@@ -62,10 +62,12 @@ export class AccueilComponent implements OnInit {
 
   impression:boolean=false;
   canal:boolean=false;
+  MICROCRED:boolean=false;
+  transfertInternationnal:boolean = false;
 
   indexOp:number=0;
   quinzeMinutes = 900000;
-  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL','WARI'] ;
+  registredAPIs : string [] = ['POSTECASH', 'ORANGEMONEY', 'E-MONEY', 'TIGOCASH', 'WIZALL','WARI','MICROCRED'] ;
   oms=[
        {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"col-xs-2 col-sm-2 loader","etat":0},
        {"style":{'display':'block','visibility':'visible','background-color': 'grey','color':'white','border-radius': '10px 10px 10px 10px','margin-bottom': '2px'},"class":"row loader","etat":0},
@@ -195,6 +197,8 @@ export class AccueilComponent implements OnInit {
           this.zuulu=false;
           this.impression=false;
           this.canal=false;
+          this.MICROCRED=false;
+          this.transfertInternationnal = false;
 
       }
       if(api=='CANAL'){
@@ -217,6 +221,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.canal=true;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
     }
       if(api=="TIGOCASH"){
           this.tc=true;
@@ -239,6 +245,9 @@ export class AccueilComponent implements OnInit {
           this.wari=false;
           this.zuulu=false;
           this.impression=false;
+          this.MICROCRED = false;
+          this.transfertInternationnal = false;
+
 
       }
       if(api=="POSTECASH"){
@@ -262,6 +271,9 @@ export class AccueilComponent implements OnInit {
           this.wari=false;
           this.zuulu=false;
           this.impression=false;
+          this.MICROCRED = false;
+          this.transfertInternationnal = false;
+
       }
       if(api=="E-MONEY"){
         this.em=true;
@@ -285,7 +297,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
-
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
       }
       if(api=="WIZALL"){
         this.wizall=true;
@@ -308,6 +321,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
       }
       if(api=="TNT"){
         this.Tnt=true;
@@ -330,6 +345,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
 
       }
       if(api=="SDE"){
@@ -353,6 +370,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
 
       }
       if(api=="RAPIDO"){
@@ -376,6 +395,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
 
       }
       if(api=="WOYOFAL"){
@@ -399,6 +420,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
 
       }
       if(api=="SENELEC"){
@@ -422,7 +445,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
-
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
       }
       if(api=="OOLU"){
         this.oolu=true;
@@ -445,7 +469,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
-
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
       }
     if(api=="GESTIONREPORTING"){
         this.gestionReporting=true;
@@ -468,6 +493,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
 
     }
     if(api=="DEMANDEPRET"){
@@ -491,6 +518,8 @@ export class AccueilComponent implements OnInit {
         this.wari=false;
         this.zuulu=false;
         this.impression=false;
+        this.MICROCRED = false;
+        this.transfertInternationnal = false;
 
     }
     if(api=="GUIDEUTILISATION"){
@@ -514,6 +543,8 @@ export class AccueilComponent implements OnInit {
       this.wari=false;
       this.zuulu=false;
       this.impression=false;
+      this.MICROCRED = false;
+      this.transfertInternationnal = false;
 
     }
     if(api=="ECOMMERCE"){
@@ -537,6 +568,8 @@ export class AccueilComponent implements OnInit {
       this.wari=false;
       this.zuulu=false;
       this.impression=false;
+      this.MICROCRED = false;
+      this.transfertInternationnal = false;
 
     }
     if(api=="AIRTIME"){
@@ -561,6 +594,8 @@ export class AccueilComponent implements OnInit {
       this.wari=false;
       this.zuulu=false;
       this.impression=false;
+      this.MICROCRED = false;
+      this.transfertInternationnal = false;
 
     }
     if(api=="WARI"){
@@ -585,6 +620,8 @@ export class AccueilComponent implements OnInit {
       this.om=false;
       this.zuulu=false;
       this.impression=false;
+      this.MICROCRED = false;
+      this.transfertInternationnal = false;
 
     }
     if(api=="ZUULU"){
@@ -609,8 +646,63 @@ export class AccueilComponent implements OnInit {
       this.tc=false;
       this.om=false;
       this.impression=false;
+      this.MICROCRED = false;
+      this.transfertInternationnal = false;
 
     }
+    if(api=="MICROCRED"){
+      console.log("zuulu");
+      this.zuulu=false;
+      this.wari=false;
+      this.airtime=false;
+      this.ecom=false;
+      this.guide=false;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.canal=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+      this.impression=false;
+      this.MICROCRED = true;
+      this.transfertInternationnal = false;
+
+    }
+    if(api=="transfertInternationnal"){
+      console.log("zuulu");
+      this.zuulu=false;
+      this.wari=false;
+      this.airtime=false;
+      this.ecom=false;
+      this.guide=false;
+      this.pret=false;
+      this.gestionReporting=false;
+      this.oolu=false;
+      this.senelec=false;
+      this.woyofal=false;
+      this.rapido=false;
+      this.Sde=false;
+      this.Tnt=false;
+      this.wizall=false;
+      this.canal=false;
+      this.em=false;
+      this.pc=false;
+      this.tc=false;
+      this.om=false;
+      this.impression=false;
+      this.MICROCRED = false;
+      this.transfertInternationnal = true;
+
+    }
+    
   }
   beus(){
 
@@ -883,6 +975,33 @@ geolocaliser(){
 
   }
 
+  tranfertInternationnal($event){
+    console.log('Si bir event bi ');
+    
+    let infoOperation:any;
+    if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
+      infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
+      let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      this.process.push(sesion);
+
+      let operateur=sesion.data.operateur;
+      console.log(sesion);
+      if(operateur == 11){
+        let operation=sesion.data.operation;
+        switch(operation){
+          case 1 :{
+
+          }
+
+        }
+      }
+      sesion.etats.etat=true;
+      sesion.etats.load='terminated';
+      sesion.etats.color='green';
+      
+      
+    }
+  }
   facturier(){
     let infoOperation:any;
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
@@ -2009,7 +2128,8 @@ geolocaliser(){
 					  this.om=false;
 					  this.wari=false;
 					  this.zuulu=false;
-					  this.impression=true;
+            this.impression=true;
+            this.transfertInternationnal=false;
 					// this.router.navigate(['accueil']);
 					 //setTimeout(()=>this.router.navigate(['accueil/impression']),100);
 				}
@@ -2076,8 +2196,6 @@ geolocaliser(){
                 }
               }
             );
-
-
         }else{
            objet.etats.etat=true;
            objet.etats.load='terminated';

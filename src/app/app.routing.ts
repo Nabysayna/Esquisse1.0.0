@@ -64,6 +64,9 @@ import { WariComponent } from './wari/wari.component';
 import { CanalComponent } from './canal/canal.component';
 import { AssuranceComponent } from './assurance/assurance.component';
 import { ZuuluComponent } from './zuulu/zuulu.component';
+import { MicroCredComponent } from './micro-cred/micro-cred.component';
+import { TranfertInternationnalComponent } from './tranfert-internationnal/tranfert-internationnal.component';
+
 
 const appRoutes: Routes = [
     { path: '', component: AuthComponentComponent },
@@ -99,7 +102,9 @@ const appRoutes: Routes = [
                 {path: 'airtime',component:AirtimeComponent},
                 {path: 'canal', component:CanalComponent},
                 {path: 'assurance', component:AssuranceComponent},
-                {path: 'zuulu', component:ZuuluComponent}
+                {path: 'zuulu', component:ZuuluComponent},
+                {path: 'micro_cred', component:MicroCredComponent},
+                {path: 'transfertInternationnal', component:TranfertInternationnalComponent}
     		]
     },
     { path: 'accueiladmmpdv', component: AccueilAdminMultiPdvComponent, canActivate: [AuthGuard],
@@ -136,7 +141,7 @@ const appRoutes: Routes = [
                     {path: 'gestionnaire', component: GestionnaireComponent},
                     {path: 'impressionadminpdv', component: ImpressionadminpdvComponent},
                     {path: 'annonce', component: AnnoncesuperviseurComponent},
-
+                    
                 ]
             }
         ]

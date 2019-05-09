@@ -1,0 +1,157 @@
+<div class="col-sm-12" style="font-family:'caviar dreams bold';">
+  <div class="panel panel-default" style="margin-top: 5rem;">
+      <div class="panel-heading" style="margin-left: -26rem;"><h2>MICROCRED</h2></div>
+      <div class="cover" style="margin-left: -26rem;"></div>
+        <div class="panel-body">
+            <button *ngIf='etap > 0' class="btn btn-info" style="margin-top: -6rem;float: left;" (click)="retour()">Retour</button>
+            <div *ngIf='etap == 0' class="col-lg-10 col-sm-10 col-xs-10" id="woyofal">
+              <form name="transnat" #formsenelec="ngForm" (ngSubmit)="recherche()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                  <div class="row">
+                      <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                        <label style="margin-top:1.5rem;text-align:left">Numero du compte :</label>
+                      </div>
+                      <div class="col-lg-7 col-md-7 col-xs-7 col-sm-7">
+                        <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.client" name="verifiernuminput" id="police"   placeholder="Numéro du client" required autofocus>
+                      </div>
+                  </div>
+                  <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formsenelec.form.valid" />
+              </form>
+              <p *ngIf="message==true">Erreur : {{ errorMessage }}</p>
+         </div>
+         <div *ngIf="etap == 1" class="col-lg-8 col-sm-8 col-xs-8"style=" margin-left: 3rem; ">
+              <ul class="list-group">
+                <li class="list-group-item"><strong style="text-transform: uppercase;font-size: 4rem">{{getClient.prenom}} {{getClient.nom}}</strong></li>
+                <li class="list-group-item">client:<strong>{{getClient.numero}}</strong></li>
+                <li class="list-group-item">téléphone:<strong> {{getClient.tel}}</strong></li>
+              </ul>
+              <div>
+                <button class="btn btn-warning" (click)="showAddChildModal();tanneuDepot()">Dépôt</button>
+                <button class="btn btn-warning" (click)="showAddChildModal();tanneuRetrait()">Retrait</button>
+                <button class="btn btn-warning" (click)="showAddChildModal();tanneuTransfert()">Transfert </button>
+              </div>
+         </div>
+         <div *ngIf="etap == 2" class="col-lg-8 col-sm-8 col-xs-8"style=" margin-left: 3rem; ">
+          <ul class="list-group">
+            <li class="list-group-item"><strong style="text-transform: uppercase;font-size: 3rem">{{getClient.prenom}} {{getClient.nom}}</strong></li>
+            <li class="list-group-item">client:<strong>{{getClient.numero}}</strong></li>
+            <li class="list-group-item">téléphone:<strong> {{getClient.tel}}</strong></li>
+          </ul>
+          <form name="transnat" #formDepot="ngForm" (ngSubmit)="depot()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+              <div class="row" *ngIf="opChoice == 1">
+                  <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                     <label style="margin-top:1.5rem;text-align:left">Montant:</label>
+                     <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.montant" name="verifiernuminput" id="police"   placeholder="Numéro du client" required autofocus>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                    <label style="margin-top:1.5rem;text-align:left">Motif (facultatif) :</label>
+                    <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.motif" name="verifiernuminput" id="police"   placeholder="Numéro du client" >
+                  </div>
+                  <div *ngIf="opChoice == 1" class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                    <label style="margin-top:1.5rem;text-align:left"> SMS supplémentaire au :  </label>
+                    <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.smsSup" name="verifiernuminput" id="police"   placeholder="77 123 45 96 (facultatif)" >
+                </div>
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                  <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success"  [disabled]="!formDepot.form.valid"/>
+                </div>
+              </div> 
+          </form>
+          <form name="transnat" #formRetrait="ngForm" (ngSubmit)="retrait()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+            <div class="row" *ngIf="opChoice == 2">
+              <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                <label style="margin-top:1.5rem;text-align:left">Montant:</label>
+                <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.montant" name="verifiernuminput" id="police"   placeholder="Numéro du client" required autofocus>
+              </div>
+              <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                <label style="margin-top:1.5rem;text-align:left">Motif (facultatif) :</label>
+                <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.motif" name="verifiernuminput" id="police"   placeholder="Numéro du client" >
+              </div>
+              <div style=" margin-top: 4rem;" ><input type="checkbox" (click)="getFrais()"  name="frais" id="idFrais"> frais inclus </div>
+              <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"   type="submit" class="btn btn-success"  [disabled]="!formRetrait.form.valid"/>
+              </div>
+            </div> 
+           </form> 
+          <div class="row" *ngIf="opChoice == 3 ">
+            <div *ngIf=" suitTranfer == 0">
+              <form name="transnat"  style="margin-top: 2rem;margin-bottom: 2rem;">
+                  <div class="row">
+                      <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                         <label style="margin-top:1.5rem;text-align:left">Numero du compte :</label>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                          <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="clientTransfer" name="verifiernuminput" id="police"   placeholder="Numéro du client" required autofocus>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                        <input *ngIf="clientTransfer != undefined" style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success" (click)="rechercheForTransfer()" />
+                      </div>
+                  </div>
+              </form>
+            </div >
+             <a *ngIf="getClientTrans != undefined" class="badge badge-warning" style="width: 60rem; height: 32px; font-size: 3rem; " (click)="showAddChildModal1()">{{getClientTrans.prenom}} {{getClientTrans.nom}} {{getClientTrans.tel}} </a>
+              <div  *ngIf=" suitTranfer == 2">
+                  <form name="transnat" #formTransfert="ngForm" (ngSubmit)="transfert()" autocomplete="on" style="margin-top: 2rem;margin-bottom: 2rem;">
+                  <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                      <label style="margin-top:1.5rem;text-align:left">Montant:</label>
+                      <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.montant" name="verifiernuminput" id="police"   placeholder="Numéro du client" required autofocus>
+                   </div>
+                   <div  class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                     <label style="margin-top:1.5rem;text-align:left">Motif (facultatif) :</label>
+                     <input style=" width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" class="form-control"  type="text" autocomplete="off" [(ngModel)]="this.motif" name="verifiernuminput" id="police"   placeholder="Numéro du client" >
+                   </div>
+                   <div  class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                   <!-- <div style=" margin-top: 2rem;float: left"><input type="checkbox" name="sansfrais" id="idSanFrais"> <span> Fournir ce service gratuitement au client </span>  </div>-->
+                    <div style=" margin-top: 2rem;float: left"><input type="checkbox" (click)='getFraisTransfert()' name="frais" id="idFraisTrans"> <span style=" margin-top: 0rem;">frais inclus</span>  </div>
+                   </div>
+                   <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <input style="border-radius: 2rem 0rem 2rem 2rem;margin-top: 1rem;"  type="submit" class="btn btn-success" [disabled]="!formTransfert.form.valid"  />
+                  </div>
+                  </form>
+                 </div>
+               </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div bsModal #modalsenelec="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold';">
+
+<div class="modal-dialog modal-sm">
+  <div class="modal-content" >
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalsenelec()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title" id="myModalLabel">CHOISIR UN COMPTE</h4>
+    </div>
+    <div class="modal-body">
+        <a class="badge badge-warning" style="width: 27rem;height: 22px;font-size: 1.5rem;cursor: pointer;margin-top: -1rem;" (click)="tanneuCompte(compte1)">{{compte1}}</a> 
+        <a class="badge badge-warning" style="width: 27rem;height: 22px;font-size: 1.5rem;cursor: pointer;margin-top: 0rem;" (click)="tanneuCompte(compte2)">{{compte2}}</a>
+    </div>
+    <div class="modal-footer">
+      <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="annuler" (click)="HideAddChildModal()" class="btn btn-danger" />
+    </div>
+  </div>
+</div>
+</div>
+<div bsModal #modalTransfer="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="font-family:'caviar dreams bold';">
+
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalsenelec()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">CHOISIR UN COMPTE</h4>
+        </div>
+        <div class="modal-body">
+            <a class="badge badge-warning" style="width: 27rem;height: 22px;font-size: 1.5rem;cursor: pointer;margin-top: -1rem;" (click)="tanneuComptetrans(compteT1)">{{compteT1}}</a> 
+            <a class="badge badge-warning" style="width: 27rem;height: 22px;font-size: 1.5rem;cursor: pointer;margin-top: 0rem;" (click)="tanneuComptetrans(compteT2)">{{compteT2}}</a>
+        </div>
+        <div class="modal-footer">
+          <input style="border-radius: 2rem 0rem 2rem 2rem;" type="button" value="annuler" (click)="HideAddChildModal1()" class="btn btn-danger" />
+        </div>
+      </div>
+    </div>
+    </div>
+<div *ngIf="this.loading">
+  <app-loader></app-loader>
+</div>

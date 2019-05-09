@@ -59,7 +59,7 @@ export class CanalComponent implements OnInit {
   ]
 
   NewAbonnement ={titre:'',nom:'',prenom:'',cni:'',pays:0,
-          adresse:'',mail:'',tel:'',formule:'',ville:'',nombreMois:0,numeroDecoudeur:0,montant:0,charme:'',pvr:'',deuxiemeEcran:''}
+          adresse:'',mail:'',tel:'',formule:'',ville:'',nombreMois:0,numeroDecoudeur:'',montant:0,charme:'',pvr:'',deuxiemeEcran:''}
 
   formReach:number = 1;
   validRecrutement(){
@@ -138,7 +138,7 @@ export class CanalComponent implements OnInit {
     }
     this.montantNet = this.montantNet * this.nombreMois;
   }
-
+  disabledButton:number = 1;
   validAbonnement(){
     this.Abonnement.formule = this.Bouquet;
     this.Abonnement.montant = this.montantNet;
@@ -149,42 +149,52 @@ export class CanalComponent implements OnInit {
 
     });
     this.reinitialise()
-
+    this.displayReabonnement = 1;
   }
   reachAbonne:number;
   displayReabonnement:number =1;
   reachResult:any =[];
+  loading:boolean = false;
   rechercher(){
-   /* this.reachResult =[];
-    for(let a of this.abonnement){
-      console.log(a.abonne+" "+this.reachAbonne);     
-      if(a.abonne == this.reachAbonne || a.numeroCarte == this.reachAbonne || a.tel == this.reachAbonne ){
-        this.reachResult.push(a)
-        this.displayReabonnement=2;
-      }
-    }
-    let tel = "00221"+this.reachAbonne
-    console.log(tel);
-    
-    console.log(this.reachResult);*/
+    this.disabledButton=2
     this._canal.Recherhe(this.reachAbonne).then(res =>{
-      console.log(res);
+      let numFile = res['_body'];
+      console.log(res['_body']);
+      this.loading=true;
+      setTimeout(()=> this._canal.ResultRecherhe(numFile).then(res =>{ let result=res['_body'];
+      this.numAb = result.split('[')[0];
+      this.nomAb = result.split('[')[2];
+      this.prenomAb = result.split('[')[3];
+      this.telAb = result.split('[')[7];
+      this.formuleAb = result.split('[')[8];
+      this.matAb = result.split('[')[11];
+      this.displayReabonnement=2;
+      this.loading=false;
+    }), 10000);
     }) 
+   
   }
-  clickAbonnement(i){
+  numAb:any;
+  nomAb:any;
+  prenomAb:any;
+  telAb:any;
+  formuleAb:any;
+  matAb:any;
+  abonnerFound:any
+ 
+ 
+  clickAbonnement(){
     this.reachResult
-    this.Abonnement.abonne = this.reachResult[i].abonne;
-    this.Abonnement.nom = this.reachResult[i].nom;
-    this.Abonnement.prenom = this.reachResult[i].prenom;
-    this.Abonnement.tel = this.reachResult[i].tel;
-    this.Abonnement.numeroDecodeur = this.reachResult[i].numeroDecodeur;
-    this.Abonnement.numeroCarte = this.reachResult[i].numeroCarte;
+    this.Abonnement.abonne = this.numAb;
+    this.Abonnement.nom = this.nomAb;
+    this.Abonnement.prenom = this.prenomAb;
+    this.Abonnement.tel = '-';
+    this.Abonnement.numeroDecodeur = this.matAb;
+    this.Abonnement.numeroCarte = '-';
+    console.log(this.matAb);
     this.displayReabonnement=3;
   }
   reinitialise(){
-   /* this.formReach = 1;
-    this.abonnementChoose = null;
-    this.infoAbonner = [];*/
     this.Bouquet = '';
     this.nombreMois = 0;
     this.montantNet = 0;
@@ -217,7 +227,8 @@ export class CanalComponent implements OnInit {
     this.NewAbonnement.tel =null;
     this.NewAbonnement.titre = null;
     this.NewAbonnement.ville = null;
-
+    this.displayReabonnement = 1;
+    this.reachAbonne = null; 
   }
   @ViewChild('modalventecredit') public modalventecredit:ModalDirective;
   @ViewChild('reabonnement') public reabonnement:ModalDirective;

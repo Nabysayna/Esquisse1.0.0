@@ -87,6 +87,7 @@ export class TntComponent implements OnInit {
   ngOnInit() { }
 @Input() bbstnt:number=0;
 @Output() changementTnt=new EventEmitter();
+
 increment(){
   this.bbstnt++;
   this.changementTnt.emit(this.bbstnt);

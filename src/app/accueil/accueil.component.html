@@ -21,7 +21,7 @@
           <ul>
             <li class="cursor" role="presentation" (click)="afficheApi('GESTIONREPORTING')"><a><b>GESTION REPORTING</b> </a></li>
             <li class="cursor" role="presentation" (click)="afficheApi('DEMANDEPRET')" ><a><b>DEMANDE DE PRET</b> </a></li>
-            <li class="cursor" role="presentation" (click)="afficheApi('GUIDEUTILISATION')"><a><b>Guide d'utilisation</b> </a></li>
+            <li class="cursor" role="presentation" (click)="afficheApi('transfertInternationnal')"><a><b>Transfèrt internationnal</b> </a></li>
           </ul>
         </div>
         <div class="navbar-inverse sidebar" role="navigation" id="leftsidemenu" style="background-color: transparent !important;">
@@ -143,6 +143,25 @@
                     </div>
                     <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold;">
                       {{retrieveOperationInfo(item)}}
+                    </div>
+
+                  </div>
+                  <!-- Transfert internationnal-->
+                  <div *ngIf="item.data.operateur==11">
+                    <div *ngIf="item.etats.errorCode!='*'" style="color:red ; font-weight: bold;">
+                      {{retrieveOperationInfo(item)}}
+                    </div>
+                    <div *ngIf="item.etats.errorCode =='*'">
+                      <div *ngIf="item.data.operation==1">
+                        <div>Prénom émetteur: {{item.data.prenom_emet}}</div><br>
+                        <div>Nom émetteur :{{item.data.nom_emet}}</div><br>
+                        <div>Prénom bénéficiaire: {{item.data.prenom_benef}}</div><br>
+                        <div>Nom bénéficiaire :{{item.data.nom_benef}}</div><br>
+                        <div>Numéro transastion: {{item.data.NumeroTransaction}}</div><br>
+                        <div>Code transaction :{{item.data.codeTransation}}</div><br>
+                        <div>Montant emis: {{item.data.montant_paye}}</div><br>
+                        <div>Montant payer :{{item.data.montant_emis}} Fcfa</div><br>
+                      </div>
                     </div>
 
                   </div>
@@ -291,12 +310,14 @@
 
                   </div>
                   <div *ngIf="item.data.operateur==9">
-					  <div *ngIf="item.etats.errorCode!='*'" [ngStyle]="{'color':item.etats.errorCode==1?'green':'red' , 'font-weight': 'bold' }">
-                         {{retrieveOperationInfo(item)}}
-                      </div>
-					  <div>Numero :{{item.data.numero}}</div><br/>
-					  <div>Montant :{{item.data.montant}}</div>
+                    <div *ngIf="item.etats.errorCode!='*'" [ngStyle]="{'color':item.etats.errorCode==1?'green':'red' , 'font-weight': 'bold' }">
+                      {{retrieveOperationInfo(item)}}
+                    </div>
+                    <div>Numero :{{item.data.numero}}</div><br/>
+                    <div>Montant :{{item.data.montant}}</div>
                   </div>
+                  
+                  
                 </ng-template>
 
               </div>
@@ -329,6 +350,8 @@
            <app-zuulu *ngIf="zuulu"></app-zuulu>
            <app-impression *ngIf="impression"></app-impression>
            <app-canal *ngIf="canal"></app-canal>
+           <app-micro-cred *ngIf="MICROCRED"></app-micro-cred>
+           <app-tranfert-internationnal *ngIf="transfertInternationnal" (changementTranfertInternationnal)='tranfertInternationnal($event)'></app-tranfert-internationnal>
            <!--<app-airtime (changementAirtime)="Airtime($event)" *ngIf="airtime"></app-airtime>-->
           </div>
     </div>
