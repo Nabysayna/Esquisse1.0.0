@@ -977,7 +977,25 @@ geolocaliser(){
     }
 
   }
-
+  retraitInternationnal(object:any){
+    object.dataI = {
+      apiservice:'Transfert internationnal',
+      service:'retrait',
+      infotransaction:{
+        client:{
+          transactionBBS: "1234525",
+          prenom_emet:object.data.prenom_emet,
+          nom_emet:object.data.nom_emet,
+          prenom_benef:object.data.prenom_benef,
+          nom_benef:object.data.nom_benef,
+          code_transaction:object.data.codeTransation,
+          numero_transaction:object.data.noTransaction,
+          montant: object.data.montant_payer,
+        }
+      }
+    }  
+  }
+  imprimer:any;
   tranfertInternationnal($event){
     console.log('Si bir event bi ');
     
@@ -985,6 +1003,7 @@ geolocaliser(){
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){
       infoOperation={'etat':false,'id':this.process.length,'load':'loader','color':'', 'errorCode':'*', nbtour:0};
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
+      this.imprimer={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       this.process.push(sesion);
 
       let operateur=sesion.data.operateur;
@@ -993,16 +1012,13 @@ geolocaliser(){
         let operation=sesion.data.operation;
         switch(operation){
           case 1 :{
-
+            this.retraitInternationnal(sesion)
           }
-
         }
       }
       sesion.etats.etat=true;
       sesion.etats.load='terminated';
-      sesion.etats.color='green';
-      
-      
+      sesion.etats.color='green'; 
     }
   }
   facturier(){

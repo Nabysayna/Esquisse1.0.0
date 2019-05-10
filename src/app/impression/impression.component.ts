@@ -21,6 +21,9 @@ export class ImpressionComponent implements OnInit {
 
   ngOnInit():void {
     this.dataImpression = JSON.parse(sessionStorage.getItem('dataImpression'));
+    console.log('this.dataImpression');
+    console.log(JSON.parse(sessionStorage.getItem('dataImpression')));
+    
     this.operateur = JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
