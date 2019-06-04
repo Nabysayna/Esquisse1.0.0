@@ -18,6 +18,7 @@ import { ModalDirective } from 'ng2-bootstrap/modal';
 import {WariService} from "../services/wari.service";
 
 import { ZoningComponent } from 'app/zoning/zoning.component';
+import { TransfertinternationnalService } from 'app/services/transfertinternationnal.service';
 //import { clearInterval } from 'timers';
 
 
@@ -99,7 +100,7 @@ export class AccueilComponent implements OnInit {
   messageGeolocation : any ;
   sessionGlob:any;
 
-  constructor(private _wariservice:WariService,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService,private airtimeService:AirtimeService,private Emservice:EmoneyPhoneServiceService){}
+  constructor(private _tranfertService:TransfertinternationnalService,private _wariservice:WariService,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private _utilsService:UtilsService,private _authService:AuthService,private airtimeService:AirtimeService,private Emservice:EmoneyPhoneServiceService){}
  // constructor(private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService,private airtimeService:AirtimeService){}
 
   //constructor(private componentFactoryResolver: ComponentFactoryResolver,private _postCashService: PostCashService, private _tntService:TntService, private router: Router, private _wizallService : WizallService, private _omService:OrangemoneyService, private _tcService: TigocashService, private expressocashwebservice : ExpressocashService, private _facturierService : FacturierService, private utilitaire : UtilsService,private _tarifsService:TarifsService){}
@@ -978,6 +979,7 @@ geolocaliser(){
 
   }
   retraitInternationnal(object:any){
+    //this._transfertInternationnal.validerRetrait;
     object.dataI = {
       apiservice:'Transfert internationnal',
       service:'retrait',
@@ -997,7 +999,6 @@ geolocaliser(){
   }
   imprimer:any;
   tranfertInternationnal($event){
-    console.log('Si bir event bi ');
     
     let infoOperation:any;
     if(sessionStorage.getItem('curentProcess')!="" && sessionStorage.getItem('curentProcess')!=undefined){

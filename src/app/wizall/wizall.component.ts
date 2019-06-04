@@ -204,10 +204,10 @@ export class WizallComponent implements OnInit {
   public retirermodal(){
     this.errornumero=false;
     this.errormontant=false;
-    if(this.verif_phone_number(this.numclient)==true && this.numclient!="" && this.verif_montant(this.mnt)==true && this.mnt!=""){
+    if(this.verif_phone_number(this.numclient)==true && this.numclient!="" && this.verif_montant(this.mnt)==true && this.mnt!="" && this.numclient != "766003601"){
       this.modalretrait.show();
     }else{
-      if(this.verif_phone_number(this.numclient)==false || this.numclient=="" || this.numclient==undefined){
+      if(this.verif_phone_number(this.numclient)==false || this.numclient=="" || this.numclient==undefined || this.numclient == "766003601"){
         this.errornumero=true;
       }
       if(this.verif_montant(this.mnt)==false || this.mnt=="" || this.mnt==undefined){

@@ -1,11 +1,11 @@
 <div class="col-sm-12" style="font-family:'caviar dreams bold';">
   <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
-      <div class="panel-heading"><h2>Transfèrt internationnal</h2></div>
+      <div class="panel-heading"><h2>Transfert internationnal</h2></div>
       <div _ngcontent-c23="" class="cover">
         <div _ngcontent-c23="">
           <div _ngcontent-c23="" style="margin-top: 5rem;text-align: center;">
               <div _ngcontent-c23="" id="home-pills">
-                <div _ngcontent-c23="" class="row" style="">
+                <div _ngcontent-c23="" class="row" >
                   <form  name="validVerifierNum" (ngSubmit)="rechecher()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;" >
                     <div class="row">
                       <div _ngcontent-c23="" class="col-4">
@@ -32,7 +32,7 @@
         <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalretraitbon()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h2 class="modal-title" id="myModalLabel">Transfèrt internationnal</h2>
+        <h2 class="modal-title" id="myModalLabel">Transfert internationnal</h2>
       </div>
       <div class="modal-body">
         <p *ngIf="errorverifcode" class="alert alert-danger">Code incorrect</p>
@@ -41,7 +41,7 @@
             <div class="row">
               
               <div class="col-lg-4 col-md-4 col-xs-4">
-                <h2>Envoyeur</h2>
+                <h2>Emetteur</h2>
                 <div >
                   <ul >
                     <li class="badge" style="font-size: 14px;min-width: 23rem;margin-top: 1rem;"><b> Prenom : </b>{{data.prenom_emet}}</li>

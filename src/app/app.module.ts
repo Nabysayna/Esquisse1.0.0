@@ -202,6 +202,7 @@ import { ZuuluService } from './services/zuulu.service';
 import { CanalService } from './services/canal.service';
 import { MicroCredComponent } from './micro-cred/micro-cred.component';
 import { TranfertInternationnalComponent } from './tranfert-internationnal/tranfert-internationnal.component';
+import { TransfertinternationnalService } from './services/transfertinternationnal.service';
 
 
 
@@ -385,7 +386,8 @@ import { TranfertInternationnalComponent } from './tranfert-internationnal/tranf
     ZuuluService,
     CanalService,
     ControleService,
-    EmoneyPhoneServiceService
+    EmoneyPhoneServiceService,
+    TransfertinternationnalService
   ],
   bootstrap: [AppComponent]
 })

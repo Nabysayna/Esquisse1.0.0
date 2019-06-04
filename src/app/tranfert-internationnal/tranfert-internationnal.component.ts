@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
+import { TransfertinternationnalService } from 'app/services/transfertinternationnal.service';
 
 @Component({
   selector: 'app-tranfert-internationnal',
@@ -86,6 +86,7 @@ export class TranfertInternationnalComponent implements OnInit {
   "partenaire":"AFXOFSNBVST"}
 
   rechecher(){
+    
     this.errorverifcode = false;
     this.showmodalretraitbonachat();
     if(this.verifiernuminput =="1234571352"){
@@ -114,7 +115,7 @@ export class TranfertInternationnalComponent implements OnInit {
     //console.log(sessionStorage.getItem('curentProcess'));
     this.hidemodalretraitbonachat();
   }
-  constructor() { }
+  constructor(private _tranfertService:TransfertinternationnalService) { }
 
   ngOnInit() {
   }
