@@ -110,7 +110,7 @@ export class TranfertInternationnalComponent implements OnInit {
   }
   token : string = JSON.parse(sessionStorage.getItem('currentUser')).baseToken ;
   retirer(){
-    sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'transfert internationnal','operateur':11,'operation':1,'nom_emet':this.data.nom_emet,'prenom_emet':this.data.prenom_emet,'nom_benef':this.data.nom_benef,'prenom_benef':this.data.prenom_benef,'noTransaction':this.data.NumeroTransaction,'codeTransation':this.data.codeTransaction,'montant_payer':this.data.montant_paye,'montant_emis':this.data.montant_emis}));
+    sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'transfert internationnal','operateur':11,'operation':1,'nom_emet':this.data.nom_emet,'prenom_emet':this.data.prenom_emet,'nom_benef':this.data.nom_benef,'prenom_benef':this.data.prenom_benef,'noTransaction':this.data.NumeroTransaction,'codeTransation':this.data.codeTransaction,'montant_payer':this.data.montant_paye,'montant_emis':this.data.montant_emis,'typepiece':this.type_piece,'numeropiece':this.num_card}));
     this.increment();
     //console.log(sessionStorage.getItem('curentProcess'));
     this.hidemodalretraitbonachat();

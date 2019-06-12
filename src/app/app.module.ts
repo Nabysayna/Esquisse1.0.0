@@ -203,6 +203,14 @@ import { CanalService } from './services/canal.service';
 import { MicroCredComponent } from './micro-cred/micro-cred.component';
 import { TranfertInternationnalComponent } from './tranfert-internationnal/tranfert-internationnal.component';
 import { TransfertinternationnalService } from './services/transfertinternationnal.service';
+import { MasterAgentPdvDashboardComponent } from './master-agent-pdv/master-agent-pdv-dashboard/master-agent-pdv-dashboard.component';
+import { MasterAgentPdvCreditationCcComponent } from './master-agent-pdv/master-agent-pdv-creditation-cc/master-agent-pdv-creditation-cc.component';
+import { MasterAgentPdvDemandeRetraitComponent } from './master-agent-pdv/master-agent-pdv-demande-retrait/master-agent-pdv-demande-retrait.component';
+import { MasterAgentPdvMonitoringComponent } from './master-agent-pdv/master-agent-pdv-monitoring/master-agent-pdv-monitoring.component';
+import { MasterAgentPdvStatusPdvComponent } from './master-agent-pdv/master-agent-pdv-status-pdv/master-agent-pdv-status-pdv.component';
+import { MasterAgentPdvStatusReclamationComponent } from './master-agent-pdv/master-agent-pdv-status-reclamation/master-agent-pdv-status-reclamation.component';
+import { MasterAgentPdvSuivipointComponent } from './master-agent-pdv/master-agent-pdv-suivipoint/master-agent-pdv-suivipoint.component';
+import { MasterAgentPdvUpdateCautionComponent } from './master-agent-pdv/master-agent-pdv-update-caution/master-agent-pdv-update-caution.component';
 
 
 
@@ -324,6 +332,14 @@ import { TransfertinternationnalService } from './services/transfertinternationn
     ZuuluComponent,
     MicroCredComponent,
     TranfertInternationnalComponent,
+    MasterAgentPdvDashboardComponent,
+    MasterAgentPdvCreditationCcComponent,
+    MasterAgentPdvDemandeRetraitComponent,
+    MasterAgentPdvMonitoringComponent,
+    MasterAgentPdvStatusPdvComponent,
+    MasterAgentPdvStatusReclamationComponent,
+    MasterAgentPdvSuivipointComponent,
+    MasterAgentPdvUpdateCautionComponent,
   ],
   imports: [
     BrowserModule,
