@@ -10,7 +10,7 @@ export class AdminpdvService {
   //private link = "http://localhost/backup-sb-admin/new-backend-esquise/index.php";
 //  private link = "https://sentool.bbstvnet.com/sslayer/index.php";
 
-  private link = "https://mysentool.pro/index.php";
+  private link = "https://sentool.bbstvnet.com/index.php";
 
   private headers = new Headers();
   private basetoken:any;

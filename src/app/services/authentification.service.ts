@@ -59,6 +59,8 @@ export class AuthenticationService {
     return new Promise( (resolve, reject)=> {
       this._authService.authentificationPhaseTwo({tokentemporaire:smsCode}).subscribe(
         response => {
+
+          console.log(response) ;
           var resp:AuthResponse=JSON.parse(response);
           console.log("11------------") ;
           console.log(resp) ;

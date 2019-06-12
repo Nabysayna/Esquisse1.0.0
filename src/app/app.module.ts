@@ -211,6 +211,8 @@ import { MasterAgentPdvStatusPdvComponent } from './master-agent-pdv/master-agen
 import { MasterAgentPdvStatusReclamationComponent } from './master-agent-pdv/master-agent-pdv-status-reclamation/master-agent-pdv-status-reclamation.component';
 import { MasterAgentPdvSuivipointComponent } from './master-agent-pdv/master-agent-pdv-suivipoint/master-agent-pdv-suivipoint.component';
 import { MasterAgentPdvUpdateCautionComponent } from './master-agent-pdv/master-agent-pdv-update-caution/master-agent-pdv-update-caution.component';
+import { AccueilMasterAgentPdvComponent } from './accueil-master-agent-pdv/accueil-master-agent-pdv.component';
+import { AuthMaster } from './_guards/master.guard';
 
 
 
@@ -340,6 +342,7 @@ import { MasterAgentPdvUpdateCautionComponent } from './master-agent-pdv/master-
     MasterAgentPdvStatusReclamationComponent,
     MasterAgentPdvSuivipointComponent,
     MasterAgentPdvUpdateCautionComponent,
+    AccueilMasterAgentPdvComponent,
   ],
   imports: [
     BrowserModule,
@@ -403,7 +406,8 @@ import { MasterAgentPdvUpdateCautionComponent } from './master-agent-pdv/master-
     CanalService,
     ControleService,
     EmoneyPhoneServiceService,
-    TransfertinternationnalService
+    TransfertinternationnalService,
+    AuthMaster
   ],
   bootstrap: [AppComponent]
 })

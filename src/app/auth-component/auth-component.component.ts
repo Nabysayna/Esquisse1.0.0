@@ -101,6 +101,8 @@ export class AuthComponentComponent implements OnInit,AfterViewInit {
         }
       }else if ( access === 1 ){
         this.router.navigate(['/accueiladmmpdv']);
+      }else if ( access === 5 ){
+        this.router.navigate(['/accueilmasterpdv']);
       }else {
         this.phase2fakevalues = false ;
         this.fromSMS = ''  ;
