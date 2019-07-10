@@ -89,16 +89,16 @@
               <td>
                 <b>Nom emetteur:  </b> {{dataImpression.infotransaction.client.prenom_emet}}<br>
                 <b>Prenom emetteur:  </b>{{dataImpression.infotransaction.client.nom_emet}}<br>
-                <b>Nom beneficiaire:  </b>{{dataImpression.infotransaction.client.nom_benef}}<br>
-                <b>Prenom beneficiaire:  </b>{{dataImpression.infotransaction.client.prenom_benef}}<br>
-
+                <b>pays emetteur:  </b> {{dataImpression.infotransaction.client.pays_emet}}<br>
+                <b>Nom bénéficiaire:  </b>{{dataImpression.infotransaction.client.nom_benef}}<br>
               </td>
               <td width="100px">&nbsp;&nbsp;</td>
               
               <td>
-                <b>numéro transaction:  </b>{{dataImpression.infotransaction.client.numero_transaction}}<br>
-                <b>code transaction:  </b>{{dataImpression.infotransaction.client.code_transaction}}<br>
-                <b>Montant à payer:  </b>{{dataImpression.infotransaction.client.montant}}<br>
+                <b>Prenom bénéficiaire:  </b>{{dataImpression.infotransaction.client.prenom_benef}}<br>
+                <b>Pays bénéficiaire:  </b>{{dataImpression.infotransaction.client.pays_benef}}<br>
+                <b>code transaction:  </b> <strong>  {{dataImpression.infotransaction.client.codetransaction}} </strong><br>
+                <b>Montant envoyé:  </b>{{dataImpression.infotransaction.client.montant_emis}} {{dataImpression.infotransaction.client.devise_emission}}<br>
               </td>
             </tr>
           </table>

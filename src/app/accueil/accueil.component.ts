@@ -1019,7 +1019,10 @@ geolocaliser(){
           adresse_benef: object.data.info.adresse_benef,
           montant_emis: object.data.info.montant_emis,
           devise_emission:object.data.info.devise_emission,
-       
+          //"success":200,
+          codetransaction:"2234573289",
+          //"status":"0",
+          //"designationstatus":"TRANSFERT EN ATTENTE DE PAIEMENT"
         }
       }
     }  

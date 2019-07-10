@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { TransfertinternationnalService } from 'app/services/transfertinternationnal.service';
+import { StylesCompileDependency } from '@angular/compiler';
 
 @Component({
   selector: 'app-tranfert-internationnal',
@@ -92,7 +93,14 @@ export class TranfertInternationnalComponent implements OnInit {
 
   @ViewChild('modalretraitbonachat') public modalretraitbonachat:ModalDirective;
   @ViewChild('modalretrait') public modalretrait:ModalDirective;
+  @ViewChild('modalenvoie') public modalenvoie:ModalDirective;
 
+  public showmodalenvoie(){
+    this.modalenvoie.show();
+  }public hidemodalenvoie(){
+    this.modalenvoie.hide();
+    this.reinitialiser();
+  }
   
   public showmodalretrait(){
     this.adejaclick1 = false;
@@ -185,27 +193,36 @@ export class TranfertInternationnalComponent implements OnInit {
     //console.log(sessionStorage.getItem('curentProcess'));
     this.hidemodalretraitbonachat();
   }
+  envoyerInit(){
+    this.showmodalenvoie()
+  }
   envoyer(){
     
    
-    for(let i of this.listPays){
+   /* for(let i of this.listPays){
       if(i.alpha2 == this.envoie.pays_emet){
         this.indicePaysSender =i;
       }
       if(i.alpha2 == this.envoie.pays_benef){
         this.indicePaysReceiver =i;
       }
-      
-    }
+    }*/
     
-    console.log(this.indicePaysSender);
-    console.log(this.indicePaysReceiver);
-    this.envoie.devise_emission = this.indicePaysSender.currencies[0];
-    this.envoie.devise_paiement = this.indicePaysReceiver.currencies[0];
+    let emetteur = this.listPays.filter(pays => pays.alpha2 == this.envoie.pays_emet);
+    let recepteur = this.listPays.filter(pays => pays.alpha2 == this.envoie.pays_benef);
+
+    //this.hidemodalenvoie();
+    console.log("emetteur");
+    console.log(emetteur[0].currencies[0]);
+    console.log("recepteur");
+    console.log(recepteur);
+    this.envoie.devise_emission = emetteur[0].currencies[0];
+    this.envoie.devise_paiement = recepteur[0].currencies[0];
     this.envoie.telephoneport_benef =this.envoie.telephone_benef
     console.log(this.envoie);
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'transfert internationnal','operateur':11,'operation':2,'info':this.envoie}));
     this.increment();
+    this.hidemodalenvoie();
   
   }
  

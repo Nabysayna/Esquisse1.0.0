@@ -6,8 +6,8 @@
           
         <div class="panel-body">
             <div id="om-options"> 
-                <a href="#home-pills" (click)="typeenvoie = false;etapEnvoie =1"  style=""   data-toggle="tab"> Retrait</a>
-                <a href="#profile-pills" style="" (click)="typeenvoie = false;etapEnvoie =1"  data-toggle="tab">Envoie</a>
+                <a href="#home-pills" (click)="typeenvoie = false;etapEnvoie =1"    data-toggle="tab"> Retrait</a>
+                <a href="#profile-pills"  (click)="typeenvoie = false;etapEnvoie =1"  data-toggle="tab">Envoie</a>
              </div>
           <div class="tab-content" style="width: 100%">
               <div class="tab-pane fade in" style="width:100%" id="home-pills">
@@ -29,11 +29,11 @@
           <div class="tab-pane fade in" style="width:100%" id="profile-pills">
             
               <div *ngIf="!typeenvoie" id="om-options" style="margin-top: 4.5rem"> 
-                  <a (click)="typeenvoie = true;optionEnvoie = 1;etapEnvoie =1" style=""   data-toggle="tab"> Envoie cash to cash</a>
-                  <a (click)="typeenvoie = true;optionEnvoie = 2;etapEnvoie =1" style=""  data-toggle="tab">Envoie cash to compte</a>
-                  <a (click)="typeenvoie = true ;optionEnvoie =3;etapEnvoie =1" style=""  data-toggle="tab">Envoie cash to wallet</a>
+                  <a (click)="typeenvoie = true;optionEnvoie = 1;etapEnvoie =1"    data-toggle="tab"> Envoie cash to cash</a>
+                  <a (click)="typeenvoie = true;optionEnvoie = 2;etapEnvoie =1"   data-toggle="tab">Envoie cash to compte</a>
+                  <a (click)="typeenvoie = true ;optionEnvoie =3;etapEnvoie =1"   data-toggle="tab">Envoie cash to wallet</a>
                </div>
-               <form *ngIf="typeenvoie"  name="validVerifierNum" (ngSubmit)="envoyer()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;" >
+               <form *ngIf="typeenvoie"  name="validVerifierNum" (ngSubmit)="envoyerInit()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;" >
                 <div class="col-lg-12 col-md-12 col-sm-12 ">
                   <fieldset>
                       <legend *ngIf="etapEnvoie == 1">Emetteur</legend>
@@ -263,6 +263,54 @@
   </div>
 
 </div>
+<div bsModal #modalenvoie="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodalenvoie()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Fenêtre de confirmation envoie.</h4>
+        </div>
+        <div class="modal-body">
+  
+          <div>
+            <form class="form">
+              <div class="form-group">
+                <label >Prénom émetteur : {{envoie.prenom_benef}}</label>
+              </div>
+              <div class="form-group">
+                <label >Nom émetteur : {{envoie.nom_benef}}</label>
+              </div>
+              <div class="form-group">
+                <label >Pays émetteur : {{envoie.pays_emet}}</label>
+              </div>
+              
+              <div class="form-group">
+                  <label >Prénom bénéficiaire : {{envoie.prenom_benef}}</label>
+                </div>
+                <div class="form-group">
+                  <label >Nom bénéficiaire : {{envoie.nom_benef}}</label>
+                </div>
+                <div class="form-group">
+                  <label >Pays bénéficiaire : {{envoie.pays_benef}}</label>
+                </div>
+                <div class="form-group">
+                  <label >Montant Transaction : {{nombreFormate(envoie.montant_emis)}} {{envoie.devise_emission}}</label>
+                </div>
+            </form>
+  
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" value="valider" [disabled]="adejaclick1==true" (click)="adejaclick=true;envoyer()" class="btn btn-success" />
+          <input type="button" value="fermer" (click)="hidemodalenvoie()" class="btn btn-danger" />
+        </div>
+      </div>
+    </div>
+  
+  </div>
 
 <div *ngIf="this.loading">
   <app-loader></app-loader>
