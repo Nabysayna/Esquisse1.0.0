@@ -223,6 +223,9 @@ export class TranfertInternationnalComponent implements OnInit {
     sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'transfert internationnal','operateur':11,'operation':2,'info':this.envoie}));
     this.increment();
     this.hidemodalenvoie();
+    this.typeenvoie = false;
+    this.etapEnvoie =1
+
   
   }
  
