@@ -1,29 +1,145 @@
-<div class="col-sm-12" style="font-family:'caviar dreams bold';">
+<div class="" style="width:50%;margin-left: auto;margin-right: auto">
   <div class="panel panel-default" style="margin-top: 5rem;margin-left: -26rem;">
       <div class="panel-heading"><h2>Transfert internationnal</h2></div>
-      <div _ngcontent-c23="" class="cover">
-        <div _ngcontent-c23="">
-          <div _ngcontent-c23="" style="margin-top: 5rem;text-align: center;">
-              <div _ngcontent-c23="" id="home-pills">
-                <div _ngcontent-c23="" class="row" >
-                  <form  name="validVerifierNum" (ngSubmit)="rechecher()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;" >
-                    <div class="row">
-                      <div _ngcontent-c23="" class="col-4">
-                        <label _ngcontent-c23="" class="col-md-12 col-1g-12" for="verifiernuminput" style="text-align:center"> Code de retrait </label>
-                      </div>
-                      <div _ngcontent-c23="" class="col-6" style=" margin-left: 11rem;">
-                          <input _ngcontent-c23="" [(ngModel)]="verifiernuminput" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Code de retrait" required style="width:80%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" ng-reflect-required="" ng-reflect-name="verifiernuminput">
-                      </div>
-                      <div _ngcontent-c23="" class="col-2" style="text-align:center">
-                          <input _ngcontent-c23="" class="btn btn-success" style=" border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" [disabled]="!verifiernum.form.valid" >
-                      </div>
+      <div  class="cover"></div>
+        
+          
+        <div class="panel-body">
+            <div id="om-options"> 
+                <a href="#home-pills" (click)="typeenvoie = false;etapEnvoie =1"  style=""   data-toggle="tab"> Retrait</a>
+                <a href="#profile-pills" style="" (click)="typeenvoie = false;etapEnvoie =1"  data-toggle="tab">Envoie</a>
+             </div>
+          <div class="tab-content" style="width: 100%">
+              <div class="tab-pane fade in" style="width:100%" id="home-pills">
+                <h2>Retrait</h2>
+                 <form  name="validVerifierNum" (ngSubmit)="rechecher()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;" >
+                  <div class="row">
+                    <div  class="col-4">
+                      <label  class="col-md-12 col-1g-12" for="verifiernuminput" style="text-align:center"> Code de retrait </label>
                     </div>
-                  </form>
-              </div>
-            </div>
+                    <div  class="col-6" style=" margin-left: 11rem;">
+                        <input  [(ngModel)]="verifiernuminput" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Code de retrait" required style="width:80%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" ng-reflect-required="" ng-reflect-name="verifiernuminput">
+                    </div>
+                    <div  class="col-2" style="text-align:center">
+                        <input  class="btn btn-success" style=" border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" [disabled]="!verifiernum.form.valid" >
+                    </div>
+                  </div>
+                </form>
+          </div>
+          <div class="tab-pane fade in" style="width:100%" id="profile-pills">
+            
+              <div *ngIf="!typeenvoie" id="om-options" style="margin-top: 4.5rem"> 
+                  <a (click)="typeenvoie = true;optionEnvoie = 1;etapEnvoie =1" style=""   data-toggle="tab"> Envoie cash to cash</a>
+                  <a (click)="typeenvoie = true;optionEnvoie = 2;etapEnvoie =1" style=""  data-toggle="tab">Envoie cash to compte</a>
+                  <a (click)="typeenvoie = true ;optionEnvoie =3;etapEnvoie =1" style=""  data-toggle="tab">Envoie cash to wallet</a>
+               </div>
+               <form *ngIf="typeenvoie"  name="validVerifierNum" (ngSubmit)="envoyer()" #verifiernum="ngForm" autocomplete="on" style="margin-bottom: 2rem; text-align: -webkit-left;" >
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                  <fieldset>
+                      <legend *ngIf="etapEnvoie == 1">Emetteur</legend>
+                      <legend *ngIf="etapEnvoie == 2">Bénéficiaire</legend>
+                      <legend *ngIf="etapEnvoie == 3">Info-transaction</legend>
+                      <div class="row">
+                      <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Nom </label>
+                        <input  [(ngModel)]="envoie.nom_emet" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="nom emetteur" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                      <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;"> Prenom </label>
+                        <input  [(ngModel)]="envoie.prenom_emet" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Prenom emetteur" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">
+                      </div>
+                      <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6">
+                          <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Téléphone </label>
+                          <input  [(ngModel)]="envoie.telephoneport_emet" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Téléphone emetteur" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                      <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6">
+                            <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;"> Adresse emetteur </label>
+                            <input  [(ngModel)]="envoie.adresse_emet" autofocus=""  class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="adresse emetteur" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                           
+                      </div>
+                      <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">ville</label>
+                        <input  [(ngModel)]="envoie.ville_emet" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Ville emetteur" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                     
+                      <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6"> 
+                         <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;">Pays emetteur</label>
+                        <select style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="envoie.pays_emet" name="nationalite">
+                          <option>*************choisissez le pays*******************</option>   
+                          <option *ngFor="let pays of listPays;let i = index"  value="{{pays.alpha2}}">{{pays.name}}</option>   
+                        </select>
+                     </div>
+
+                     <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Nom </label>
+                        <input  [(ngModel)]="envoie.nom_benef" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="nom bénéficiaire" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                      <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;"> Prenom </label>
+                        <input  [(ngModel)]="envoie.prenom_benef" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Prenom bénéficiaire" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">
+                      </div>
+                      <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6">
+                          <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Téléphone </label>
+                          <input  [(ngModel)]="envoie.telephone_benef" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Téléphone bénéficiaire" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                      <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6">
+                            <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;"> Adresse </label>
+                            <input  [(ngModel)]="envoie.adresse_benef" autofocus=""  class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="adresse bénéficiaire" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                           
+                      </div>
+                      <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">ville</label>
+                        <input  [(ngModel)]="envoie.ville_benef" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Ville bénéficiaire" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                     
+                      <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6"> 
+                         <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;">Pays destination </label>
+                        <select style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="envoie.pays_benef" name="nationalite">
+                          <option>*************choisissez le pays*******************</option>   
+                          <option *ngFor="let pays of listPays; let i=index"  value="{{pays.alpha2}}">{{pays.name}}</option>   
+                        </select>
+                     </div>
+                        
+                      <div *ngIf="etapEnvoie==3" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Montant à envoyer</label>
+                        <input  [(ngModel)]="envoie.montant_emis" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Montant à envoyer" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                        
+                      <div *ngIf="etapEnvoie==3 && optionEnvoie == 2" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Numero compte bancaire</label>
+                        <input  [(ngModel)]="envoie.compteacrediter" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Numero compte bancaire" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                          
+                      <div *ngIf="etapEnvoie==3 && optionEnvoie == 2" class="col-lg-6 col-md-6 col-sm-6">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Nom de la banque</label>
+                        <input  [(ngModel)]="envoie.banqueacrediter" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Nom de la banque" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                      </div>
+                      
+                      <div *ngIf="etapEnvoie==3 && optionEnvoie == 3" class="col-lg-6 col-md-6 col-sm-6">
+                          <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Numero compte wallet</label>
+                          <input  [(ngModel)]="envoie.numerowalletcrediter" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Numero compte wallet" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                        </div>
+                            
+                        <div *ngIf="etapEnvoie==3 && optionEnvoie == 3" class="col-lg-6 col-md-6 col-sm-6">
+                          <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Nom de la wallet</label>
+                          <input  [(ngModel)]="envoie.nomwallercrediter" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Nom de la wallet" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                        </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="row">
+                  <div  class="col-2" style="text-align:center">
+                      <input *ngIf="etapEnvoie==3"  class="btn btn-success" style=" border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="submit" [disabled]="!verifiernum.form.valid" >
+                      <input *ngIf="etapEnvoie==3"  class="btn btn-danger" (click)="reinitialiser()" style=" border-radius: 2rem 0rem 2rem 2rem; margin-top: 1rem;" type="reset"  >
+                      <button *ngIf="etapEnvoie==1" (click)="this.etapEnvoie = 2" type="button" class="btn btn-danger" style="border:none;background-color: transparent;" > <i class="fa fa-arrow-right" style="font-size:3rem;" ></i></button>
+                      <button *ngIf="etapEnvoie==2 || etapEnvoie==3" (click)="this.etapEnvoie = 1" type="button" class="btn btn-danger" style="border:none;background-color: transparent;" > <i class="fa fa-arrow-left" style="font-size:3rem;" ></i></button>
+                      <button *ngIf="etapEnvoie==2" (click)="this.etapEnvoie = 3" type="button" class="btn btn-danger" style="border:none;background-color: transparent;" > <i class="fa fa-arrow-right" style="font-size:3rem;" ></i></button>
+                    </div>
+                </div>
+              </form>
+        </div>
+            
         </div>
    </div>
- </div>
+ 
  <div bsModal #modalretraitbonachat="bs-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
   <div class="modal-dialog modal-lg">

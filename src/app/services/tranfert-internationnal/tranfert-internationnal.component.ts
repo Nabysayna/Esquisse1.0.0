@@ -17,77 +17,7 @@ export class TranfertInternationnalComponent implements OnInit {
   verifiernuminput:string="";
   type_piece:string="";
   num_card:string="";
-  typeenvoie:boolean=false;
-  etapEnvoie:number=1;
-  listPays:any = [];
-  optionEnvoie:number = 0;
-  indicePaysSender:any;
-  indicePaysReceiver:any;
-  
 
-  envoie ={
-  "devise_emission":"",
-	"montant_emis":"",
-	"devise_paiement":"",
-	"montant_paye":"",
-	"paysdestination":"",
-	"produit":"",
-	"frais_devise_paiement":"",
-	"nom_emet":"",
-	"prenom_emet":"",
-	"telephoneport_emet":"",
-	"adresse_emet":"",
-  "pays_emet":"",
-	"ville_emet":"",
-	"nom_benef":"",
-	"prenom_benef":"",
-	"telephone_benef":"",
-	"telephoneport_benef":"",
-	"adresse_benef":"",
-	"ville_benef":"",
-	"pays_benef":"",
-	"compteacrediter":"",
-  "banqueacrediter":"",
-  "numerowalletcrediter":"",
-  "nomwallercrediter":""
-  }
-  getCountryReceiver(i){
-    this.indicePaysReceiver = this.listPays[i];
-  }
-  getCountrySender(i){
-    this.indicePaysSender = this.listPays[i];
-  }
- 
-
-
-  reinitialiser(){
-    this.envoie ={
-      "devise_emission":"",
-      "montant_emis":"",
-      "devise_paiement":"",
-      "montant_paye":"",
-      "paysdestination":"",
-      "produit":"",
-      "frais_devise_paiement":"",
-      "nom_emet":"",
-      "prenom_emet":"",
-      "telephoneport_emet":"",
-      "adresse_emet":"",
-      "pays_emet":"",
-      "ville_emet":"",
-      "nom_benef":"",
-      "prenom_benef":"",
-      "telephone_benef":"",
-      "telephoneport_benef":"",
-      "adresse_benef":"",
-      "ville_benef":"",
-      "pays_benef":"",
-      "compteacrediter":"",
-      "banqueacrediter":"",
-      "numerowalletcrediter":"",
-      "nomwallercrediter":""
-      }
-  }
 
 
   @ViewChild('modalretraitbonachat') public modalretraitbonachat:ModalDirective;
@@ -185,51 +115,9 @@ export class TranfertInternationnalComponent implements OnInit {
     //console.log(sessionStorage.getItem('curentProcess'));
     this.hidemodalretraitbonachat();
   }
-  envoyer(){
-    
-   
-    for(let i of this.listPays){
-      if(i.alpha2 == this.envoie.pays_emet){
-        this.indicePaysSender =i;
-      }
-      if(i.alpha2 == this.envoie.pays_benef){
-        this.indicePaysReceiver =i;
-      }
-      
-    }
-    
-    console.log(this.indicePaysSender);
-    console.log(this.indicePaysReceiver);
-    this.envoie.devise_emission = this.indicePaysSender.currencies[0];
-    this.envoie.devise_paiement = this.indicePaysReceiver.currencies[0];
-    this.envoie.telephoneport_benef =this.envoie.telephone_benef
-    console.log(this.envoie);
-    sessionStorage.setItem('curentProcess',JSON.stringify({'token':this.token,'nom':'transfert internationnal','operateur':11,'operation':2,'info':this.envoie}));
-    this.increment();
-  
-  }
- 
   constructor(private _tranfertService:TransfertinternationnalService) { }
 
-
-
   ngOnInit() {
-    var countries = require('country-data').countries;
-    this.listPays = countries.all;
-   /* console.log(this.listPays);
-    for(let p of countries){
-      //console.log(p.name);
-      
-    }
-    let pays = countries.all;
-    console.log("second");
-    for(let pa of pays){
-      console.log(pa.name);
-      
-    }*/
-    console.log(countries.all[200].alpha2);
-    console.log(countries.all[200].name);
-    
   }
 
 }

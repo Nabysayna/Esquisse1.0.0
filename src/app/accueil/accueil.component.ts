@@ -997,6 +997,33 @@ geolocaliser(){
       }
     }  
   }
+  envoieInternationnal(object:any){
+    //this._transfertInternationnal.validerRetrait;
+    console.log('envoie Transfere internationnale');
+    console.log(object);
+    object.dataI = {
+      apiservice:'Transfert internationnal',
+      service:'envoie',
+      infotransaction:{
+        client:{
+          transactionBBS: "1234525",
+          prenom_emet:object.data.info.prenom_emet,
+          nom_emet:object.data.info.nom_emet,
+          ville_emet:object.data.info.ville_emet,
+          pays_emet:object.data.info.pays_emet,
+          adresse_emet:object.data.info.adresse_emet,
+          prenom_benef:object.data.info.prenom_benef,
+          nom_benef:object.data.info.nom_benef,
+          ville_benef:object.data.info.ville_benef,
+          pays_benef:object.data.info.pays_benef,
+          adresse_benef: object.data.info.adresse_benef,
+          montant_emis: object.data.info.montant_emis,
+          devise_emission:object.data.info.devise_emission,
+       
+        }
+      }
+    }  
+  }
   imprimer:any;
   tranfertInternationnal($event){
     
@@ -1006,14 +1033,18 @@ geolocaliser(){
       let sesion={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       this.imprimer={'data':JSON.parse(sessionStorage.getItem('curentProcess')),'etats':infoOperation,'dataI':''};
       this.process.push(sesion);
-
+      console.log(this.process);
+      
       let operateur=sesion.data.operateur;
       console.log(sesion);
       if(operateur == 11){
         let operation=sesion.data.operation;
         switch(operation){
           case 1 :{
-            this.retraitInternationnal(sesion)
+            this.retraitInternationnal(sesion);
+          }
+          case 2 :{
+            this.envoieInternationnal(sesion);
           }
         }
       }
