@@ -24,6 +24,8 @@ export class TranfertInternationnalComponent implements OnInit {
   optionEnvoie:number = 0;
   indicePaysSender:any;
   indicePaysReceiver:any;
+  pays_emet:string;
+  pays_benef:string;
   
 
   envoie ={
@@ -199,23 +201,26 @@ export class TranfertInternationnalComponent implements OnInit {
   envoyer(){
     
    
-   /* for(let i of this.listPays){
+   for(let i of this.listPays){
       if(i.alpha2 == this.envoie.pays_emet){
         this.indicePaysSender =i;
       }
       if(i.alpha2 == this.envoie.pays_benef){
         this.indicePaysReceiver =i;
       }
-    }*/
+    }
     
-    let emetteur = this.listPays.filter(pays => pays.alpha2 == this.envoie.pays_emet);
-    let recepteur = this.listPays.filter(pays => pays.alpha2 == this.envoie.pays_benef);
-
+    let emetteur = this.listPays.filter(pays => pays.name == this.pays_emet);
+    let recepteur = this.listPays.filter(pays => pays.name == this.pays_benef)
+    //this.envoie.pays_emet = emetteur[0].
+  
     //this.hidemodalenvoie();
-    console.log("emetteur");
-    console.log(emetteur[0].currencies[0]);
+    console.log(emetteur);
+    console.log(this.pays_emet);
     console.log("recepteur");
-    console.log(recepteur);
+    console.log(this.pays_benef);
+    this.envoie.pays_emet = emetteur[0].alpha2;
+    this.envoie.pays_benef = recepteur[0].alpha2;
     this.envoie.devise_emission = emetteur[0].currencies[0];
     this.envoie.devise_paiement = recepteur[0].currencies[0];
     this.envoie.telephoneport_benef =this.envoie.telephone_benef

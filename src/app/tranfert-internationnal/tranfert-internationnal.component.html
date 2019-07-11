@@ -62,11 +62,15 @@
                       </div>
                      
                       <div *ngIf="etapEnvoie==1" class="col-lg-6 col-md-6 col-sm-6"> 
-                         <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;">Pays emetteur</label>
-                        <select style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="envoie.pays_emet" name="nationalite">
+                        <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;">Pays emetteur</label>
+                       <!-- <select style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="envoie.pays_emet" name="nationalite">
                           <option>*************choisissez le pays*******************</option>   
                           <option *ngFor="let pays of listPays;let i = index"  value="{{pays.alpha2}}">{{pays.name}}</option>   
-                        </select>
+                        </select>-->
+                        <input list="ice-cream-flavors" id="ice-cream-choice" style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="pays_emet" name="nationalite" />
+                        <datalist id="ice-cream-flavors">
+                          <option *ngFor="let pays of listPays;let i = index"  value="{{pays.name}}">{{pays.name}}</option>   
+                        </datalist>
                      </div>
 
                      <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6">
@@ -92,10 +96,10 @@
                      
                       <div *ngIf="etapEnvoie==2" class="col-lg-6 col-md-6 col-sm-6"> 
                          <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;font-size: 14px;">Pays destination </label>
-                        <select style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="envoie.pays_benef" name="nationalite">
-                          <option>*************choisissez le pays*******************</option>   
-                          <option *ngFor="let pays of listPays; let i=index"  value="{{pays.alpha2}}">{{pays.name}}</option>   
-                        </select>
+                         <input list="ice-cream-flavors" id="ice-cream-choice" style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;"  class="textinput" [(ngModel)]="pays_benef" name="nationalite" />
+                         <datalist id="ice-cream-flavors">
+                           <option *ngFor="let pays of listPays;let i = index"  value="{{pays.name}}">{{pays.name}}</option>   
+                         </datalist>
                      </div>
                         
                       <div *ngIf="etapEnvoie==3" class="col-lg-6 col-md-6 col-sm-6">
