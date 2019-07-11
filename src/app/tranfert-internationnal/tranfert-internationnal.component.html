@@ -104,7 +104,7 @@
                         
                       <div *ngIf="etapEnvoie==3" class="col-lg-6 col-md-6 col-sm-6">
                         <label  for="verifiernuminput" style="text-align:center;margin-left: 2rem;margin-left: 2rem;font-size: 14px;">Montant à envoyer</label>
-                        <input  [(ngModel)]="envoie.montant_emis" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Montant à envoyer" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="text" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
+                        <input  [(ngModel)]="envoie.montant_emis" autofocus="" class="form-control ng-pristine ng-invalid ng-touched" id="verifiernuminput" name="verifiernuminput" placeholder="Montant à envoyer" required style="width:100%;border-radius: 2rem 0rem 2rem 2rem;border: 1px solid #36a9e0;" type="number" ng-reflect-required="" ng-reflect-name="verifiernuminput">                         
                       </div>
                         
                       <div *ngIf="etapEnvoie==3 && optionEnvoie == 2" class="col-lg-6 col-md-6 col-sm-6">
